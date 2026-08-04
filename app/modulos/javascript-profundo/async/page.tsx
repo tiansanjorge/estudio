@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosAsync } from "@/lib/modules/async/escenarios";
 
 export const metadata: Metadata = {
-  title: "Async — Frontend Study Lab",
+  title: "Async — Dev Study Lab",
   description:
     "async/await es azúcar sintáctico sobre Promises: cómo se pausa una función async sin bloquear el resto del programa.",
 };

@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosPropDrilling } from "@/lib/modules/react-core/prop-drilling";
 
 export const metadata: Metadata = {
-  title: "Props — Frontend Study Lab",
+  title: "Props — Dev Study Lab",
   description:
     "Props es simplemente un objeto. Entender eso resuelve la mitad de las dudas típicas sobre cómo se comunican los componentes.",
 };

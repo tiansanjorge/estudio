@@ -9,7 +9,7 @@ import { metodosHttp } from "@/lib/modules/http/metodos";
 import { statusCodes } from "@/lib/modules/http/status-codes";
 
 export const metadata: Metadata = {
-  title: "Métodos y status codes — Frontend Study Lab",
+  title: "Métodos y status codes — Dev Study Lab",
   description:
     "Los métodos HTTP y los códigos de status que devuelve el servidor en cada respuesta.",
 };

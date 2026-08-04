@@ -9,7 +9,7 @@ export function Navbar() {
           href="/"
           className="text-sm font-semibold tracking-tight text-foreground"
         >
-          Frontend Study Lab
+          Dev Study Lab
         </Link>
         <ThemeToggle />
       </nav>

@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosForms } from "@/lib/modules/react-core/forms-escenarios";
 
 export const metadata: Metadata = {
-  title: "Forms — Frontend Study Lab",
+  title: "Forms — Dev Study Lab",
   description:
     "Un input controlado no solo lee lo que el usuario tipea: React decide qué mostrar en cada render. Sin setState, el input deja de responder.",
 };

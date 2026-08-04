@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosHydration } from "@/lib/modules/react-rendering/hydration-escenarios";
 
 export const metadata: Metadata = {
-  title: "Hydration — Frontend Study Lab",
+  title: "Hydration — Dev Study Lab",
   description:
     "El servidor manda HTML ya armado. Hydration es el momento en que React lo reutiliza y lo conecta con JavaScript, en vez de volver a construirlo desde cero.",
 };

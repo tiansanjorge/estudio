@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { pasosArbolComponentes } from "@/lib/modules/react-core/arbol";
 
 export const metadata: Metadata = {
-  title: "Componentes — Frontend Study Lab",
+  title: "Componentes — Dev Study Lab",
   description:
     "Un componente de React es una función que describe UI. Componer esas funciones es lo que arma toda la interfaz.",
 };

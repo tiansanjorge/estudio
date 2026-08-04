@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosClosures } from "@/lib/modules/closures/escenarios";
 
 export const metadata: Metadata = {
-  title: "Closures — Frontend Study Lab",
+  title: "Closures — Dev Study Lab",
   description:
     "Cómo una función retiene acceso a las variables de su scope léxico, incluso después de que la función que la creó ya terminó.",
 };

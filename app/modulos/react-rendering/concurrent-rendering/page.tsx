@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { pasosConcurrente } from "@/lib/modules/react-rendering/concurrent-escenarios";
 
 export const metadata: Metadata = {
-  title: "Concurrent Rendering — Frontend Study Lab",
+  title: "Concurrent Rendering — Dev Study Lab",
   description:
     "No todas las actualizaciones son igual de urgentes. startTransition le dice a React cuáles puede posponer, interrumpir o descartar sin que el usuario lo note.",
 };

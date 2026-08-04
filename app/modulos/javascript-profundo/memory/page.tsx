@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosMemory } from "@/lib/modules/memory/escenarios";
 
 export const metadata: Metadata = {
-  title: "Memory — Frontend Study Lab",
+  title: "Memory — Dev Study Lab",
   description:
     "Cómo decide el motor de JavaScript qué objetos liberar de memoria, y las fugas más comunes en apps de frontend.",
 };

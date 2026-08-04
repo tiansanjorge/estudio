@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { protocolosHttp } from "@/lib/modules/http/protocolos";
 
 export const metadata: Metadata = {
-  title: "HTTP/1.1 vs HTTP/2 vs HTTP/3 — Frontend Study Lab",
+  title: "HTTP/1.1 vs HTTP/2 vs HTTP/3 — Dev Study Lab",
   description:
     "Cómo evolucionó el transporte de HTTP para dejar de bloquear peticiones entre sí.",
 };

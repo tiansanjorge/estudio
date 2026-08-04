@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosFetch } from "@/lib/modules/http/fetch-lifecycle";
 
 export const metadata: Metadata = {
-  title: "Fetch/XHR y manejo de requests — Frontend Study Lab",
+  title: "Fetch/XHR y manejo de requests — Dev Study Lab",
   description:
     "Cómo se resuelve la Promise de fetch, cuándo rechaza de verdad, y cómo cancelar requests para evitar race conditions.",
 };

@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosPromises } from "@/lib/modules/promises/escenarios";
 
 export const metadata: Metadata = {
-  title: "Promises — Frontend Study Lab",
+  title: "Promises — Dev Study Lab",
   description:
     "Los tres estados de una Promise, cómo se propagan los errores en una cadena, y las diferencias entre Promise.all, race, allSettled y any.",
 };

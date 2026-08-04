@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { directivasCache } from "@/lib/modules/http/cache-directivas";
 
 export const metadata: Metadata = {
-  title: "Caching HTTP — Frontend Study Lab",
+  title: "Caching HTTP — Dev Study Lab",
   description:
     "Cómo Cache-Control, ETag y la revalidación deciden si una petición va al servidor o se resuelve con una copia local.",
 };

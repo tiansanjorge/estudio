@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosFiber } from "@/lib/modules/react-rendering/fiber-escenarios";
 
 export const metadata: Metadata = {
-  title: "Fiber — Frontend Study Lab",
+  title: "Fiber — Dev Study Lab",
   description:
     "Fiber es el motor interno que le permite a React pausar, retomar y priorizar trabajo de render, en vez de renderizar todo de una sola vez sin poder parar.",
 };

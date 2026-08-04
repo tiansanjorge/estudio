@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosComparacion } from "@/lib/modules/http/rest-vs-graphql";
 
 export const metadata: Metadata = {
-  title: "REST vs GraphQL vs WebSockets — Frontend Study Lab",
+  title: "REST vs GraphQL vs WebSockets — Dev Study Lab",
   description:
     "Tres formas distintas de comunicar cliente y servidor, y cuándo conviene cada una.",
 };

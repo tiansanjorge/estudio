@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { pasosCommit } from "@/lib/modules/react-rendering/commit-escenarios";
 
 export const metadata: Metadata = {
-  title: "Commit — Frontend Study Lab",
+  title: "Commit — Dev Study Lab",
   description:
     "Commit es el momento en que React realmente toca el DOM. Ahí conectan los refs, corren los layout effects, y recién después el navegador pinta la pantalla.",
 };

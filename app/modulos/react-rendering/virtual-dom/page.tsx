@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { pasosVirtualDom } from "@/lib/modules/react-rendering/virtual-dom-escenarios";
 
 export const metadata: Metadata = {
-  title: "Virtual DOM — Frontend Study Lab",
+  title: "Virtual DOM — Dev Study Lab",
   description:
     "El Virtual DOM no es una tecnología misteriosa: son árboles de objetos JavaScript planos, baratos de crear y comparar, antes de tocar el DOM real.",
 };

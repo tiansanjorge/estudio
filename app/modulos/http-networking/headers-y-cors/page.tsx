@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { headersHttp } from "@/lib/modules/http/headers";
 
 export const metadata: Metadata = {
-  title: "Headers y CORS — Frontend Study Lab",
+  title: "Headers y CORS — Dev Study Lab",
   description:
     "Los headers HTTP más comunes y cómo el navegador decide si una petición cross-origin está permitida.",
 };

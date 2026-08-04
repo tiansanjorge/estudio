@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosComposicion } from "@/lib/modules/react-core/composicion";
 
 export const metadata: Metadata = {
-  title: "Composition — Frontend Study Lab",
+  title: "Composition — Dev Study Lab",
   description:
     "React no tiene herencia de componentes. En su lugar, arma UIs complejas combinando piezas chicas — composición en vez de configuración.",
 };

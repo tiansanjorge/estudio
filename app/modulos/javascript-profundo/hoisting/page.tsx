@@ -9,7 +9,7 @@ import { escenariosHoisting } from "@/lib/modules/hoisting/escenarios";
 import { casosHoisting } from "@/lib/modules/hoisting/casos";
 
 export const metadata: Metadata = {
-  title: "Hoisting — Frontend Study Lab",
+  title: "Hoisting — Dev Study Lab",
   description:
     "Antes de ejecutar una sola línea, JS ya escaneó el scope y registró declaraciones en memoria. Eso es hoisting, y no funciona igual para var, let, const y funciones.",
 };

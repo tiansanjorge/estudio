@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Frontend Study Lab",
+  title: "Dev Study Lab",
   description:
-    "Plataforma interactiva para estudiar Frontend a través de visualizaciones, simulaciones y playgrounds.",
+    "Plataforma interactiva para estudiar desarrollo de software a través de visualizaciones, simulaciones y playgrounds.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

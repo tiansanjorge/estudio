@@ -6,11 +6,11 @@ export default function Home() {
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 py-16 sm:px-8">
       <header className="flex flex-col gap-4">
         <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
-          Frontend Study Lab
+          Dev Study Lab
         </h1>
         <p className="max-w-xl text-lg leading-7 text-muted-foreground">
           Laboratorios interactivos para entender cómo funciona realmente el
-          frontend, no solo memorizar definiciones.
+          desarrollo de software, no solo memorizar definiciones.
         </p>
       </header>
 

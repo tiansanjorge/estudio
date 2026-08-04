@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosReconciliation } from "@/lib/modules/react-rendering/reconciliation-escenarios";
 
 export const metadata: Metadata = {
-  title: "Reconciliation — Frontend Study Lab",
+  title: "Reconciliation — Dev Study Lab",
   description:
     "React decide qué reutilizar y qué destruir comparando tipos, posición y keys — no comparando el árbol entero elemento por elemento.",
 };

@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosScope } from "@/lib/modules/scope/escenarios";
 
 export const metadata: Metadata = {
-  title: "Scope — Frontend Study Lab",
+  title: "Scope — Dev Study Lab",
   description:
     "Cómo JavaScript decide, para cada variable, en qué scope de la cadena la encuentra — y qué pasa cuando dos scopes usan el mismo nombre.",
 };

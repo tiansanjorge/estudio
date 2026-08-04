@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosState } from "@/lib/modules/react-core/state-escenarios";
 
 export const metadata: Metadata = {
-  title: "State — Frontend Study Lab",
+  title: "State — Dev Study Lab",
   description:
     "El estado que actualizás con setState no cambia en el momento — programa un re-render. Esa asincronía explica casi todos los bugs de contadores en React.",
 };

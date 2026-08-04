@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosKeys } from "@/lib/modules/react-core/keys-escenarios";
 
 export const metadata: Metadata = {
-  title: "Keys — Frontend Study Lab",
+  title: "Keys — Dev Study Lab",
   description:
     "React usa las keys para saber qué elemento de una lista es 'el mismo' entre renders. Elegirlas mal hace que el estado se pegue a la posición equivocada.",
 };

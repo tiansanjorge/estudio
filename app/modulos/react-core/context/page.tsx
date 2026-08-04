@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosContext } from "@/lib/modules/react-core/context-escenarios";
 
 export const metadata: Metadata = {
-  title: "Context — Frontend Study Lab",
+  title: "Context — Dev Study Lab",
   description:
     "Context distribuye un valor a cualquier descendiente sin pasarlo por props en cada nivel intermedio — con sus propios trade-offs de performance.",
 };

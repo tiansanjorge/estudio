@@ -7,7 +7,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosEventLoop } from "@/lib/modules/event-loop/escenarios";
 
 export const metadata: Metadata = {
-  title: "Event Loop — Frontend Study Lab",
+  title: "Event Loop — Dev Study Lab",
   description:
     "Entendé cómo JavaScript ejecuta código asincrónico siendo un lenguaje de un solo hilo.",
 };

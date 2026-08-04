@@ -8,7 +8,7 @@ import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { pasosFases } from "@/lib/modules/react-rendering/fases";
 
 export const metadata: Metadata = {
-  title: "Render — Frontend Study Lab",
+  title: "Render — Dev Study Lab",
   description:
     "Renderizar no es lo mismo que actualizar el DOM. Es el momento en que React llama a tus componentes para averiguar qué debería mostrarse.",
 };
