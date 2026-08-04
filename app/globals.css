@@ -56,26 +56,6 @@
   --error-soft: #7f1d1d;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not(.light) {
-    --background: #18181b;
-    --surface: #1f1f23;
-    --foreground: #e4e4e7;
-    --muted-foreground: #a1a1aa;
-    --border: #27272a;
-    --accent: #34d399;
-    --accent-soft: #064e3b;
-    --success: #34d399;
-    --success-soft: #064e3b;
-    --info: #38bdf8;
-    --info-soft: #0c4a6e;
-    --warning: #fbbf24;
-    --warning-soft: #78350f;
-    --error: #f87171;
-    --error-soft: #7f1d1d;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
