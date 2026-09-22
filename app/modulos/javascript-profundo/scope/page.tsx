@@ -5,7 +5,16 @@ import { ScopeSimulador } from "@/components/modulo/ScopeSimulador";
 import { ScopeResolver } from "@/components/modulo/ScopeResolver";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosScope } from "@/lib/modules/scope/escenarios";
+import { entrevistaScope } from "@/lib/modules/scope/entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaScope.filter((p) => p.nivel === 1),
+  2: entrevistaScope.filter((p) => p.nivel === 2),
+  3: entrevistaScope.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Scope — Dev Study Lab",
@@ -49,6 +58,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Un var declarado en el nivel superior de un módulo ES termina como propiedad de window?",
+    opciones: [
+      "Sí, igual que en un script clásico",
+      "No, cada módulo ES tiene su propio scope de nivel superior, aislado del objeto global",
+      "Solo si el módulo se carga de forma síncrona",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Los módulos ES aíslan su scope de nivel superior de otros módulos y del objeto global. Un script clásico, en cambio, comparte un único scope global entre todos los <script> de la página.",
+  },
+  {
+    pregunta:
+      "¿Por qué se evita el statement `with` en JavaScript moderno?",
+    opciones: [
+      "Porque está deprecado solo por convención, pero funciona igual que antes",
+      "Porque mete propiedades de un objeto en el scope chain dinámicamente, impidiendo que el motor optimice la resolución de variables, y está prohibido en strict mode",
+      "Porque no funciona con arrow functions",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El motor no puede saber en tiempo de compilación si un nombre es una variable o una propiedad del objeto. La alternativa moderna para lo mismo es destructuring explícito.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Qué diferencia a la Temporal Dead Zone de simplemente 'la variable no existe todavía'?",
+    opciones: [
+      "No hay diferencia, es lo mismo",
+      "typeof sobre una variable no declarada da 'undefined' sin error, pero typeof sobre una variable en TDZ lanza ReferenceError",
+      "La TDZ solo aplica a var, no a let/const",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "let/const se hoistean pero no se inicializan: quedan en un estado 'muerto' desde el inicio del bloque hasta su declaración. Acceder ahí, incluso con typeof, lanza ReferenceError.",
+  },
+  {
+    pregunta:
+      "¿Por qué un `eval` dentro de una función puede afectar la performance de código que no lo usa directamente?",
+    opciones: [
+      "No la afecta, eval está aislado en su propio scope",
+      "El motor no puede garantizar qué variables podría crear o modificar eval dinámicamente, así que desactiva optimizaciones de resolución de variables para toda la función que lo contiene",
+      "Solo afecta la performance si eval está en el scope global",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Los motores optimizan la resolución de variables analizando estáticamente el scope en tiempo de compilación. Un eval (o with) rompe esa garantía y fuerza una resolución más lenta, tipo diccionario, en toda la función.",
+  },
+];
+
 export default function ScopePage() {
   return (
     <ModuloLayout
@@ -56,6 +119,20 @@ export default function ScopePage() {
       titulo="Scope"
       descripcion="Cada variable vive en un scope, y cada scope está anidado dentro de otro. Entender esa cadena es la base para entender closures, hoisting y casi todo lo demás en JS."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -154,6 +231,10 @@ export default function ScopePage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>¿Qué imprime cada console.log, y por qué el segundo no da 15?</p>
@@ -185,6 +266,167 @@ console.log(total);`}
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Cada módulo ES tiene su propio scope de nivel superior, aislado
+            de otros módulos y del objeto global: declarar algo con{" "}
+            <code>let</code>/<code>const</code>/<code>function</code> ahí
+            no lo cuelga de <code>window</code>. Un script clásico
+            (<code>{"<script>"}</code> sin <code>type=&quot;module&quot;</code>)
+            comparte, en cambio, un único scope global entre todos los
+            scripts de la página — un <code>var</code> en su nivel superior
+            sí termina como propiedad de <code>window</code>. Los módulos
+            además son strict mode por defecto.
+          </p>
+          <p>
+            El statement <code>with</code> mete las propiedades de un
+            objeto en el scope chain de forma dinámica, así que el motor no
+            puede saber en tiempo de compilación si un nombre es una
+            variable o una propiedad del objeto — está prohibido en strict
+            mode. La alternativa moderna para lo mismo, sin ambigüedad, es
+            destructuring: <code>const {"{ a, b }"} = objeto</code>.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Asumir que Node y el navegador manejan el scope de nivel
+              superior igual.
+            </strong>{" "}
+            Node envuelve cada archivo CommonJS en una función (module
+            wrapper), así que un var de &quot;nivel superior&quot; en
+            realidad vive en el scope de esa función, no en el global real.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Usar with (o depender de código legacy que lo use).
+            </strong>{" "}
+            Rompe la resolución estática de variables y está prohibido en
+            strict mode.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Preferir ES Modules sobre scripts clásicos para evitar
+            colisiones de nombres en el scope global compartido entre
+            librerías de terceros.
+          </li>
+          <li>
+            Usar destructuring en vez de with para &quot;traer&quot;
+            propiedades de un objeto de configuración al scope local de
+            una función.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <code>let</code> y <code>const</code> también se hoistean al
+            tope de su scope de bloque, pero a diferencia de{" "}
+            <code>var</code> no se inicializan con <code>undefined</code>:
+            quedan en la{" "}
+            <strong className="text-foreground">
+              Temporal Dead Zone (TDZ)
+            </strong>{" "}
+            desde el inicio del bloque hasta su declaración. Acceder ahí
+            lanza <code>ReferenceError</code>, incluso con{" "}
+            <code>typeof</code> — a diferencia de una variable no
+            declarada, donde <code>typeof</code> da <code>&apos;undefined&apos;</code>{" "}
+            sin error.
+          </p>
+          <p>
+            Una function declaration dentro de un bloque, en modo no
+            estricto, tiene un comportamiento de compatibilidad legacy
+            (&quot;Annex B&quot;) específico de navegadores: queda además
+            asignada como var en el scope contenedor, visible incluso
+            fuera del bloque. Motores no basados en navegador o en strict
+            mode no están obligados a implementarlo, así que el mismo
+            código puede comportarse distinto según el entorno.
+          </p>
+          <p>
+            Un <code>eval</code> (o, históricamente, <code>with</code>)
+            dentro de una función impide que el motor sepa en tiempo de
+            compilación qué variables podrían crearse o modificarse
+            dinámicamente, así que desactiva las optimizaciones de
+            resolución de variables para{" "}
+            <strong className="text-foreground">toda la función</strong>{" "}
+            que lo contiene, no solo para el código dentro del eval.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Confundir TDZ con &quot;la variable vale undefined&quot;.
+            </strong>{" "}
+            Acceder a una variable en TDZ lanza ReferenceError, no da
+            undefined como pasaría con var.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Declarar function declarations sueltas dentro de bloques en
+              modo no estricto.
+            </strong>{" "}
+            Su comportamiento (Annex B) varía entre motores y modos —
+            preferir siempre strict mode y function expressions asignadas
+            a let/const dentro de bloques.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Usar la TDZ a favor: declarar variables lo más cerca posible de
+            su primer uso hace que cualquier acceso fuera de orden falle
+            rápido y explícito, en vez de propagar un undefined silencioso.
+          </li>
+          <li>
+            Evitar eval en código de alto rendimiento (parsers, hot paths)
+            sabiendo que su sola presencia des-optimiza toda la función
+            contenedora.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }
