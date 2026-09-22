@@ -14,6 +14,9 @@ import { entrevistaUtilityTypes } from "./utility-types/entrevista";
 import { entrevistaDiscriminatedUnions } from "./discriminated-unions/entrevista";
 import { entrevistaStructuralVsNominal } from "./structural-vs-nominal/entrevista";
 import { entrevistaStrictMode } from "./strict-mode/entrevista";
+import { entrevistaComponentes } from "./react-core/componentes-entrevista";
+import { entrevistaProps } from "./react-core/props-entrevista";
+import { entrevistaState } from "./react-core/state-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -132,5 +135,26 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "strict-mode",
     moduloTitulo: "Trade-offs de strict mode",
     preguntas: entrevistaStrictMode,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "componentes",
+    moduloTitulo: "Componentes",
+    preguntas: entrevistaComponentes,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "props",
+    moduloTitulo: "Props",
+    preguntas: entrevistaProps,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "state",
+    moduloTitulo: "State",
+    preguntas: entrevistaState,
   },
 ];

@@ -5,7 +5,16 @@ import { PropsArbolSimulador } from "@/components/modulo/PropsArbolSimulador";
 import { PropsInspector } from "@/components/modulo/PropsInspector";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosPropDrilling } from "@/lib/modules/react-core/prop-drilling";
+import { entrevistaProps } from "@/lib/modules/react-core/props-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaProps.filter((p) => p.nivel === 1),
+  2: entrevistaProps.filter((p) => p.nivel === 2),
+  3: entrevistaProps.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Props — Dev Study Lab",
@@ -49,6 +58,58 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Qué riesgo tiene hacer {...props} sin filtrar sobre un elemento del DOM?",
+    opciones: [
+      "Ninguno, React filtra automáticamente lo que no corresponde",
+      "Cualquier prop que no sea un atributo HTML válido termina como atributo desconocido en el DOM, con warning en consola",
+      "Hace que el componente sea más lento",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Además del warning, se pierde control sobre la API pública del componente: cualquiera puede pasar cualquier prop, incluso colisionando con una manejada internamente.",
+  },
+  {
+    pregunta:
+      "¿Qué reemplaza a defaultProps en componentes de función modernos?",
+    opciones: [
+      "Ya no se pueden dar valores por defecto a props",
+      "Valores por defecto en el destructuring de parámetros, JavaScript estándar sin API especial de React",
+      "Un hook llamado useDefaultProps",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es más simple y explícito en el mismo lugar donde se leen los props, sin depender de una propiedad estática separada que sincronizar con la firma del componente.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta: "Dentro de un componente, ¿podés leer props.key?",
+    opciones: [
+      "Sí, funciona como cualquier otro prop",
+      "No, key es un prop reservado que React intercepta antes de que llegue al objeto de props del componente",
+      "Solo en componentes de clase",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Si necesitás ese valor dentro del componente, hay que pasarlo también como un prop distinto con otro nombre — leer props.key siempre da undefined.",
+  },
+  {
+    pregunta:
+      "¿Por qué pasar un árbol costoso como children (en vez de crearlo inline) puede evitar re-renders innecesarios?",
+    opciones: [
+      "Porque children siempre se memoiza automáticamente por React",
+      "Porque quien creó ese elemento JSX más arriba no volvió a ejecutarse, así que sigue siendo la misma referencia y React puede saltear su reconciliación",
+      "Porque children nunca se renderiza si el padre cambia de estado",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es la base del patrón 'levantar el contenido, no el estado': si el padre que cambia de estado recibe ese árbol costoso como prop en vez de crearlo, React ve la misma referencia entre renders y salta esa parte.",
+  },
+];
+
 export default function PropsPage() {
   return (
     <ModuloLayout
@@ -56,6 +117,20 @@ export default function PropsPage() {
       titulo="Props"
       descripcion="Props es, ni más ni menos, un objeto que un componente recibe como argumento. Todo lo demás — children, valores por defecto, prop drilling — sale de esa idea simple."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -150,6 +225,10 @@ export default function PropsPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -209,6 +288,156 @@ function App() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Hacer spread de props sin filtrar (<code>{"{...props}"}</code>)
+            sobre un elemento del DOM arriesga terminar con atributos
+            desconocidos en el HTML real (warning de React) y pierde
+            control sobre la API pública del componente: cualquiera puede
+            pasar cualquier prop, incluso una que colisione con una
+            manejada internamente.
+          </p>
+          <p>
+            Los hooks reemplazaron el patrón{" "}
+            <strong className="text-foreground">render props</strong>{" "}
+            (children como función) para la mayoría de los casos de reuso
+            de lógica pura. Render props siguen siendo útiles cuando el
+            componente también necesita controlar parte del renderizado —
+            por ejemplo, un componente de lista que sabe paginar pero deja
+            que el consumidor decida cómo se ve cada fila.
+          </p>
+          <p>
+            <code>defaultProps</code> en componentes de función está en
+            desuso: la forma moderna es un valor por defecto en el
+            destructuring de parámetros, JavaScript estándar sin API
+            especial de React.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Spread ciego de props hacia el DOM sin filtrar.
+            </strong>{" "}
+            Termina en atributos HTML desconocidos y una API de componente
+            sin límites claros.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Usar defaultProps en componentes de función nuevos.
+            </strong>{" "}
+            Está deprecado; usar valores por defecto en el destructuring
+            directamente.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Render props para un componente de lista/tabla genérico que
+            controla la paginación pero delega el renderizado de cada
+            fila al consumidor.
+          </li>
+          <li>
+            Filtrar explícitamente qué props se reenvían al DOM en
+            componentes wrapper de un design system, en vez de spread
+            ciego.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <code>key</code> (y <code>ref</code> en componentes de función
+            sin forwardRef) es un prop reservado que React intercepta
+            antes de que llegue al objeto de props del componente. Leer{" "}
+            <code>props.key</code> dentro del componente siempre da{" "}
+            <code>undefined</code> — si se necesita ese valor internamente,
+            hay que pasarlo también como otro prop con distinto nombre.
+          </p>
+          <p>
+            Cuando un componente padre re-renderiza por un cambio de
+            estado local, React igual reconcilia sus hijos — salvo que un
+            elemento JSX se reciba como{" "}
+            <strong className="text-foreground">prop</strong> (por ejemplo{" "}
+            <code>children</code>) en vez de crearse en el cuerpo del
+            componente que cambió de estado. Ahí React ve la misma
+            referencia entre renders y puede saltear por completo la
+            reconciliación de ese subárbol — la base del patrón
+            &quot;levantar el contenido, no el estado&quot;.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Intentar leer props.key para lógica interna.
+            </strong>{" "}
+            Siempre es undefined; hay que duplicar el valor en otro prop.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Definir un árbol costoso dentro de un componente que cambia
+              de estado seguido.
+            </strong>{" "}
+            Se recrea (y reconcilia) en cada render, aunque no dependa del
+            estado que cambió — pasar como children desde más arriba lo
+            evita.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Envolver un árbol pesado (un gráfico, una tabla grande) como
+            children de un componente que maneja estado local frecuente
+            (un contador, un tooltip), para que no se reconciliate en cada
+            cambio de ese estado.
+          </li>
+          <li>
+            Diseñar componentes genéricos con un prop `id` explícito
+            además de `key`, sabiendo que key nunca es accesible
+            internamente.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }

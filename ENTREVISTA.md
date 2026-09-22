@@ -56,9 +56,9 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Trade-offs de `strict` mode (Nivel 1/2/3 + Entrevista)
 
 ### React Core
-- ☐ Componentes (Nivel 2/3 + Entrevista)
-- ☐ Props (Nivel 2/3 + Entrevista)
-- ☐ State (Nivel 2/3 + Entrevista)
+- ✅ Componentes (Nivel 1/2/3 + Entrevista)
+- ✅ Props (Nivel 1/2/3 + Entrevista)
+- ✅ State (Nivel 1/2/3 + Entrevista)
 - ☐ Composition (Nivel 2/3 + Entrevista)
 - ☐ Keys (Nivel 2/3 + Entrevista)
 - ☐ Context (Nivel 2/3 + Entrevista)

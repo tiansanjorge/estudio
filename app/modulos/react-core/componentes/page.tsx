@@ -5,7 +5,16 @@ import { ComponentesSimulador } from "@/components/modulo/ComponentesSimulador";
 import { ConstructorDeUI } from "@/components/modulo/ConstructorDeUI";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { pasosArbolComponentes } from "@/lib/modules/react-core/arbol";
+import { entrevistaComponentes } from "@/lib/modules/react-core/componentes-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaComponentes.filter((p) => p.nivel === 1),
+  2: entrevistaComponentes.filter((p) => p.nivel === 2),
+  3: entrevistaComponentes.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Componentes — Dev Study Lab",
@@ -49,6 +58,59 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Cuándo conviene un input no controlado (con ref) en vez de controlado?",
+    opciones: [
+      "Nunca, siempre es mejor controlado",
+      "Cuando no necesitás reaccionar a cada tecla, para evitar un re-render en cada cambio",
+      "Solo funciona con componentes de clase",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "En formularios grandes, controlar cada campo genera renders innecesarios en cada tecla. Un input no controlado deja que el DOM maneje su propio valor y se lee con una ref solo cuando hace falta.",
+  },
+  {
+    pregunta:
+      "¿Qué problema resuelve el patrón compound components (Tabs/Tab)?",
+    opciones: [
+      "Mejora la performance de renderizado",
+      "Evita una API con muchos props de coordinación, compartiendo estado implícito entre padre e hijos vía Context",
+      "Permite usar componentes de clase junto a hooks",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "En vez de que el padre le pase explícitamente cada dato a cada hijo por props, comparten estado a través de Context — una API declarativa donde la relación es implícita pero clara por convención.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "Un if renderiza <FormularioA/> o <FormularioB/> en la misma posición del árbol según una condición. Si la condición cambia, ¿qué pasa?",
+    opciones: [
+      "React actualiza el componente existente con los nuevos props",
+      "React desmonta por completo la instancia anterior (perdiendo su estado) y monta una nueva del otro tipo",
+      "React mantiene ambos montados y alterna cuál se muestra",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "React decide reconciliar o reemplazar comparando el TIPO del elemento en cada posición. Si el tipo cambia, es un reemplazo completo, no una actualización incremental.",
+  },
+  {
+    pregunta:
+      "<Hijo onClick={() => algo()} /> envuelto en React.memo — ¿evita el re-render de Hijo cuando Padre renderiza de nuevo?",
+    opciones: [
+      "Sí, siempre, porque memo compara profundamente las props",
+      "No: la función inline es una referencia nueva en cada render de Padre, y memo hace comparación superficial",
+      "Solo si Hijo no usa la prop onClick internamente",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Para que memo funcione ahí, la función necesita una referencia estable con useCallback, o pasarse desde afuera del componente si es verdaderamente constante.",
+  },
+];
+
 export default function ComponentesPage() {
   return (
     <ModuloLayout
@@ -56,6 +118,20 @@ export default function ComponentesPage() {
       titulo="Componentes"
       descripcion="Un componente es una función que recibe datos (props) y devuelve una descripción de UI. Componer funciones chicas es cómo se arma cualquier interfaz en React."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -147,6 +223,10 @@ export default function ComponentesPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -196,6 +276,153 @@ function Formulario() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Un input <strong className="text-foreground">controlado</strong>{" "}
+            (el valor vive en <code>useState</code> y se actualiza en cada{" "}
+            <code>onChange</code>) tiene sentido cuando necesitás
+            reaccionar a cada cambio en tiempo real: validación inline,
+            formatear el valor mientras se escribe. Uno{" "}
+            <strong className="text-foreground">no controlado</strong> (el
+            DOM maneja su propio valor, leído con una ref cuando hace
+            falta) evita un re-render de React en cada tecla — relevante
+            en formularios grandes.
+          </p>
+          <p>
+            El patrón{" "}
+            <strong className="text-foreground">
+              compound components
+            </strong>{" "}
+            (<code>Tabs</code>/<code>Tab</code>, <code>Select</code>/
+            <code>Option</code>) hace que varios componentes relacionados
+            compartan estado implícito vía Context, en vez de que el padre
+            le pase explícitamente cada dato a cada hijo por props —
+            reemplaza una API con muchos props de coordinación por
+            composición declarativa.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Descomponer en demasiados subcomponentes muy chicos, demasiado pronto.
+            </strong>{" "}
+            Agrega indirección y a menudo reintroduce el prop drilling que
+            se quería evitar.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Controlar todos los campos de un formulario grande sin
+              necesidad.
+            </strong>{" "}
+            Genera renders innecesarios del árbol completo en cada tecla
+            cuando no hace falta reaccionar por campo.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Compound components para una API de Tabs o Select más
+            declarativa, sin exponer props de coordinación al consumidor.
+          </li>
+          <li>
+            Inputs no controlados con ref + FormData para formularios
+            simples que solo necesitan el valor al enviar.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Si dos ramas de un if renderizan componentes DISTINTOS en la
+            misma posición del árbol, React no actualiza el existente: lo{" "}
+            <strong className="text-foreground">desmonta por completo</strong>{" "}
+            (perdiendo su estado interno) y monta una instancia nueva del
+            otro tipo. React decide reconciliar o reemplazar comparando el
+            tipo del elemento en cada posición, no la intención semántica
+            del código.
+          </p>
+          <p>
+            <code>React.memo</code> hace una comparación superficial de
+            props. Una prop objeto, array o función creada inline en el
+            JSX del padre es una referencia NUEVA en cada render, aunque
+            su contenido sea idéntico — memo no evita el re-render en ese
+            caso. Hace falta estabilizar esas referencias con{" "}
+            <code>useMemo</code>/<code>useCallback</code> para que memo
+            funcione de verdad.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Esperar que React preserve el estado al cambiar de tipo de
+              componente en la misma posición.
+            </strong>{" "}
+            Cambiar el tipo siempre implica desmontar y montar de nuevo,
+            sin importar cuán similares sean los dos componentes.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Envolver un componente en React.memo sin estabilizar las
+              props que le pasan.
+            </strong>{" "}
+            Si el padre sigue creando objetos/funciones inline, memo no
+            aporta nada.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Usar una key explícita para forzar el reseteo de un componente
+            (por ejemplo, un formulario al cambiar de entidad editada) en
+            vez de manejarlo con efectos.
+          </li>
+          <li>
+            Auditar props inline en componentes envueltos en memo como
+            primer paso al diagnosticar re-renders innecesarios.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }

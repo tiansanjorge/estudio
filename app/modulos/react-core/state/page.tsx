@@ -5,7 +5,16 @@ import { StateSimulador } from "@/components/modulo/StateSimulador";
 import { ContadorBatching } from "@/components/modulo/ContadorBatching";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosState } from "@/lib/modules/react-core/state-escenarios";
+import { entrevistaState } from "@/lib/modules/react-core/state-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaState.filter((p) => p.nivel === 1),
+  2: entrevistaState.filter((p) => p.nivel === 2),
+  3: entrevistaState.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "State — Dev Study Lab",
@@ -51,6 +60,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "En React 18, ¿qué pasa si llamás a dos setState dentro de un setTimeout?",
+    opciones: [
+      "Cada uno dispara su propio render por separado, igual que en React 17",
+      "Se agrupan automáticamente en un solo render (automatic batching), igual que dentro de un onClick",
+      "React ignora el segundo setState",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Antes de React 18, el batching solo ocurría dentro de handlers de eventos de React. Desde React 18, también aplica dentro de setTimeout, promesas y handlers nativos del DOM.",
+  },
+  {
+    pregunta:
+      "¿Por qué sincronizar estado derivado con un useEffect es casi siempre un antipatrón?",
+    opciones: [
+      "Porque useEffect no puede actualizar estado",
+      "Porque cuesta un render extra (el efecto corre después del render) y puede desincronizarse temporalmente; calcularlo directo durante el render es más simple",
+      "Porque useEffect solo funciona con props, no con estado",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Si un valor se puede calcular a partir de props o de otro estado existente, hacerlo directo en el render (o con useMemo si es costoso) evita el render extra y elimina el riesgo de desincronización.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "setN(5) cuando el estado n ya vale 5 — ¿React re-renderiza el componente?",
+    opciones: [
+      "Sí, siempre re-renderiza al llamar al setter",
+      "No: React usa Object.is para comparar, y si el valor primitivo es igual al actual, evita el re-render",
+      "Solo si el componente está envuelto en React.memo",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Esto aplica a valores primitivos comparados por valor. Con objetos/arrays, Object.is compara por referencia: un objeto nuevo con el mismo contenido sí dispara re-render.",
+  },
+  {
+    pregunta:
+      "¿Cuándo conviene useReducer en vez de varios useState sueltos?",
+    opciones: [
+      "Siempre, useReducer es preferible en todos los casos",
+      "Cuando hay varias piezas de estado relacionadas que cambian juntas según distintas acciones — centraliza la lógica de transición en una función testeable aparte",
+      "Solo en componentes de clase",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Con useState disperso, la lógica de mantener sincronizadas varias piezas de estado relacionadas queda repartida en handlers, más fácil de romper al agregar una acción nueva.",
+  },
+];
+
 export default function StatePage() {
   return (
     <ModuloLayout
@@ -58,6 +121,20 @@ export default function StatePage() {
       titulo="State"
       descripcion="Llamar al setter de useState no cambia una variable al instante: programa un re-render. Esa diferencia explica casi todos los bugs de 'el contador no suma lo que debería'."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -147,6 +224,10 @@ export default function StatePage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -183,6 +264,152 @@ export default function StatePage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <strong className="text-foreground">Automatic batching</strong>{" "}
+            significa que React agrupa varias llamadas a setState del
+            mismo tick en un único re-render. Antes de React 18, esto solo
+            pasaba dentro de handlers de eventos de React; dentro de un{" "}
+            <code>setTimeout</code>, una promesa resuelta, o un handler
+            nativo del DOM, cada setState disparaba su propio render.
+            Desde React 18, el batching es automático en todos esos
+            contextos también.
+          </p>
+          <p>
+            Guardar estado derivado en un <code>useState</code> propio
+            sincronizado con un <code>useEffect</code> es casi siempre un
+            antipatrón: si el valor se puede calcular a partir de props o
+            de otro estado existente, calcularlo directo durante el
+            render (o con <code>useMemo</code> si es costoso) evita un
+            render extra y el riesgo de que ambos estados queden
+            temporalmente desincronizados.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Esperar un valor de estado &quot;ya actualizado&quot; inmediatamente
+              después de un setState dentro de un callback async.
+            </strong>{" "}
+            El batching automático no cambia esto: el valor nuevo sigue
+            sin estar disponible hasta el siguiente render.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Un useEffect que solo existe para mantener sincronizados dos
+              estados.
+            </strong>{" "}
+            Casi siempre señala que uno de los dos no debería ser estado.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Lazy initializer (<code>useState(() =&gt; calculoCostoso())</code>)
+            para evitar recalcular un estado inicial costoso en cada
+            render, solo se ejecuta en el montaje.
+          </li>
+          <li>
+            Confiar en el batching automático de React 18 al disparar
+            varias actualizaciones relacionadas dentro de un handler
+            async, sin necesidad de agruparlas manualmente.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            React usa <code>Object.is</code> para comparar el valor nuevo
+            con el actual antes de programar un re-render: si son iguales,
+            React &quot;bail-outea&quot; ese render, incluso sin
+            memoización explícita. Para valores primitivos, esto compara
+            por valor. Para objetos y arrays, compara por referencia — un
+            objeto nuevo con el mismo contenido SÍ dispara re-render.
+          </p>
+          <p>
+            Cuando varias piezas de estado relacionadas cambian juntas
+            según distintas &quot;acciones&quot;,{" "}
+            <code>useReducer</code> centraliza la lógica de transición en
+            una función pura, testeable de forma aislada. Con{" "}
+            <code>useState</code> disperso, esa misma lógica queda
+            repartida entre varios handlers, más fácil de romper al
+            agregar una acción nueva y olvidar actualizar una pieza
+            relacionada.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Crear un objeto nuevo con el mismo contenido esperando que
+              React lo trate como &quot;sin cambios&quot;.
+            </strong>{" "}
+            Object.is compara por referencia en objetos — sí dispara
+            re-render aunque el contenido sea idéntico.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Mantener múltiples useState relacionados sin centralizar su
+              lógica de transición.
+            </strong>{" "}
+            Facilita bugs donde una acción nueva actualiza algunas piezas
+            de estado pero olvida otras.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Migrar a useReducer un estado de UI con transiciones tipo
+            idle/cargando/éxito/error, testeando el reducer de forma
+            aislada sin renderizar componentes.
+          </li>
+          <li>
+            Usar flushSync puntualmente cuando una medición del DOM
+            necesita que una actualización de estado ya se haya aplicado,
+            sabiendo que reintroduce el costo que el batching evita.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }
