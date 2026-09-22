@@ -11,3 +11,21 @@ export interface Categoria {
   titulo: string;
   modulos: Modulo[];
 }
+
+/**
+ * Nivel 1: fundamentos aplicados — de concepto a producción.
+ * Nivel 2: trade-offs y buenas prácticas — lo que distingue a un senior hablando.
+ * Nivel 3: edge cases y profundidad interna.
+ */
+export type Nivel = 1 | 2 | 3;
+
+export interface PreguntaEntrevista {
+  pregunta: string;
+  respuestaEs: string;
+  respuestaEn: string;
+  tradeoffs?: string;
+  repregunta?: string;
+  respuestaRepreguntaEs?: string;
+  respuestaRepreguntaEn?: string;
+  nivel: Nivel;
+}

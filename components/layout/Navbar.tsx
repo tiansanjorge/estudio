@@ -11,7 +11,15 @@ export function Navbar() {
         >
           Dev Study Lab
         </Link>
-        <ThemeToggle />
+        <div className="flex items-center gap-4">
+          <Link
+            href="/entrevista"
+            className="text-sm font-medium text-muted-foreground hover:text-foreground"
+          >
+            Entrevista
+          </Link>
+          <ThemeToggle />
+        </div>
       </nav>
     </header>
   );

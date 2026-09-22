@@ -1,4 +1,5 @@
 @AGENTS.md
+@ENTREVISTA.md
 
 # Frontend Study Lab
 

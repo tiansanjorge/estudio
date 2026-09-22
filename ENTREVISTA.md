@@ -1,0 +1,207 @@
+# Sistema de preparación para entrevistas técnicas
+
+Este archivo es el checklist maestro y las instrucciones de continuidad de un proyecto que se ejecuta en múltiples sesiones (el usuario tiene un plan de $20/mes y no lo hace de una sola vez). Cuando el usuario diga **"continuemos"** (o algo equivalente, como "seguimos" o "dale con el próximo"), sin más contexto:
+
+1. Buscar en el catálogo de abajo el primer módulo marcado `☐ pendiente`.
+2. Implementarlo siguiendo el patrón de referencia (Event Loop, ya hecho).
+3. Correr `npx tsc --noEmit` y `npx eslint <archivos tocados>` antes de dar por terminado.
+4. Marcar el módulo como `✅ hecho` en este archivo.
+5. Avisar brevemente qué se hizo y preguntar si se commitea (nunca commitear sin que lo pida).
+6. No re-litigar decisiones ya tomadas acá (niveles, bilingüe, estructura) — están cerradas. Si algo nuevo no encaja en el patrón, avisar y proponer alternativa, no improvisar en silencio.
+
+## Objetivo del usuario
+
+Conseguir trabajo como **Full Stack Engineer senior** (no "especializado en frontend" — está corrigiendo ese posicionamiento). Este repo cubre la preparación de **conceptos técnicos con profundidad y trade-offs, en español e inglés**. Entrevistas de RRHH y live coding se preparan por fuera, no acá.
+
+## Sistema de niveles (por módulo)
+
+Cada módulo tiene 3 niveles, todos con el mismo estándar de calidad (ninguno es "para junior"):
+
+- **Nivel 1 — Fundamentos aplicados**: el concepto y cómo se lleva de idea a producción. Es el piso parejo que hay que tener en TODO el catálogo antes de profundizar en ningún tema puntual (evita agujeros negros tipo "sé mucho de GraphQL pero no sé explicar un deploy").
+- **Nivel 2 — Trade-offs y buenas prácticas**: por qué se elige una alternativa sobre otra, patrones intermedios. Es lo que distingue a un senior hablando.
+- **Nivel 3 — Edge cases y profundidad interna**: detalles de implementación, límites del sistema, preguntas capciosas de procesos duros o de staff.
+
+El usuario decide por tema hasta qué nivel le conviene llegar; el catálogo entero debería tener Nivel 1, pero Nivel 2/3 son opcionales según prioridad.
+
+## Patrón de implementación (referencia: `event-loop`)
+
+Cada módulo, al completarse, toca estos archivos:
+
+1. **`lib/modules/<slug>/entrevista.ts`** — array de `PreguntaEntrevista` (tipo en `lib/modules/types.ts`). Cada pregunta: `pregunta`, `respuestaEs`, `respuestaEn`, `nivel` (1|2|3), y opcionalmente `tradeoffs`, `repregunta` + `respuestaRepreguntaEs`/`respuestaRepreguntaEn` (si hay repregunta, SIEMPRE con su respuesta redactada, no dejarla abierta).
+2. **`app/modulos/<categoria>/<slug>/page.tsx`** — se estructura con `<NivelTabs niveles={{1: <NivelUno/>, 2: <NivelDos/>, 3: <NivelTres/>}} />`. Cada `NivelX` es una función que devuelve un fragment con las secciones: Explicación, Playground/Visualización (**opcional en nivel 2/3**, solo si el concepto realmente lo amerita — no crear un simulador nuevo por costumbre), Errores comunes, Casos de uso, Quiz (`preguntasNivelX`), y Entrevista (`<EntrevistaSeccion preguntas={preguntasPorNivel[X]} />`).
+3. **`lib/modules/entrevista-registry.ts`** — agregar una entrada al array `bancoEntrevista` con `categoriaSlug`, `categoriaTitulo`, `moduloSlug`, `moduloTitulo` y las preguntas importadas.
+4. Si el módulo no existe todavía en `lib/modules/registry.ts` (categoría/módulo con `estado: "proximamente"` o directamente ausente), actualizar su `estado` a `"disponible"` (o agregar la entrada si la categoría estaba vacía).
+
+Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion`, `Quiz`, `RevelarSolucion`, `NivelTabs`, `EntrevistaSeccion`.
+
+## Catálogo maestro
+
+### JavaScript profundo
+- ✅ Event Loop (Nivel 1/2/3 + Entrevista) — referencia del patrón
+- ☐ Closures (Nivel 2/3 + Entrevista — Nivel 1 ya existe)
+- ☐ Promises (Nivel 2/3 + Entrevista)
+- ☐ Async (Nivel 2/3 + Entrevista)
+- ☐ Scope (Nivel 2/3 + Entrevista)
+- ☐ Hoisting (Nivel 2/3 + Entrevista)
+- ☐ Memory (Nivel 2/3 + Entrevista)
+- ☐ Prototypes & Clases (nuevo módulo, 3 niveles)
+- ☐ Módulos: ESM vs CommonJS (nuevo módulo, 3 niveles)
+- ☐ Iteradores y Generadores (nuevo módulo, 3 niveles)
+
+### TypeScript avanzado
+- ☐ Genéricos
+- ☐ Utility types
+- ☐ Discriminated unions & type narrowing
+- ☐ Structural typing vs nominal
+- ☐ Trade-offs de `strict` mode
+
+### React Core
+- ☐ Componentes (Nivel 2/3 + Entrevista)
+- ☐ Props (Nivel 2/3 + Entrevista)
+- ☐ State (Nivel 2/3 + Entrevista)
+- ☐ Composition (Nivel 2/3 + Entrevista)
+- ☐ Keys (Nivel 2/3 + Entrevista)
+- ☐ Context (Nivel 2/3 + Entrevista)
+- ☐ Forms (Nivel 2/3 + Entrevista)
+- ☐ Error Boundaries (nuevo módulo)
+- ☐ Portals (nuevo módulo)
+
+### React Rendering
+- ☐ Render (Nivel 2/3 + Entrevista)
+- ☐ Commit (Nivel 2/3 + Entrevista)
+- ☐ Reconciliation (Nivel 2/3 + Entrevista)
+- ☐ Fiber (Nivel 2/3 + Entrevista)
+- ☐ Virtual DOM (Nivel 2/3 + Entrevista)
+- ☐ Concurrent Rendering (Nivel 2/3 + Entrevista)
+- ☐ Hydration (Nivel 2/3 + Entrevista)
+
+### Hooks (categoría nueva, sin contenido aún)
+- ☐ useState
+- ☐ useEffect
+- ☐ useMemo
+- ☐ useCallback
+- ☐ useRef
+- ☐ useReducer
+- ☐ Custom Hooks
+
+### Estado
+- ☐ Context (gestión de estado, distinto del módulo de React Core)
+- ☐ Zustand
+- ☐ Redux Toolkit
+- ☐ TanStack Query
+- ☐ Cuándo NO usar una librería de estado global (trade-off explícito)
+
+### Performance (frontend)
+- ☐ Memoization
+- ☐ Lazy Loading
+- ☐ Code Splitting
+- ☐ Suspense
+- ☐ Virtualization
+- ☐ Bundle Size
+- ☐ Core Web Vitals
+
+### Accesibilidad
+- ☐ Semantic HTML & ARIA
+- ☐ Focus management
+- ☐ Navegación por teclado
+- ☐ Formularios accesibles
+- ☐ Testing de accesibilidad (axe)
+
+### Next.js
+- ☐ App Router vs Pages Router
+- ☐ Server Components vs Client Components
+- ☐ Data fetching & caching
+- ☐ SSR / SSG / ISR
+- ☐ Middleware & Edge runtime
+- ☐ Route handlers (API routes)
+
+### HTTP y Networking
+- ☐ Fundamentos de red (nuevo módulo: DNS, TCP/TLS handshake, "qué pasa cuando escribís una URL")
+- ☐ Métodos y status codes (Nivel 2/3 + Entrevista)
+- ☐ Headers y CORS (Nivel 2/3 + Entrevista)
+- ☐ Fetch/XHR y manejo de requests (Nivel 2/3 + Entrevista)
+- ☐ Caching HTTP (Nivel 2/3 + Entrevista)
+- ☐ REST vs GraphQL vs WebSockets (Nivel 2/3 + Entrevista)
+- ☐ HTTP/1.1 vs HTTP/2 vs HTTP/3 (Nivel 2/3 + Entrevista)
+
+### Testing
+- ☐ Pirámide de testing
+- ☐ Unit vs integration vs e2e
+- ☐ Mocking strategies (MSW)
+- ☐ TDD
+- ☐ Testing de componentes React (RTL)
+- ☐ Testing de APIs
+
+### Arquitectura
+- ☐ Monolito vs microservicios vs microfrontends
+- ☐ Clean / Hexagonal architecture
+- ☐ Design patterns comunes (factory, strategy, observer)
+- ☐ Feature-based vs layer-based folder structure
+- ☐ Contratos de API (OpenAPI)
+- ☐ Event-driven architecture
+
+### Seguridad
+- ☐ AuthN vs AuthZ
+- ☐ JWT & sesiones
+- ☐ OWASP Top 10 esencial
+- ☐ CORS / CSRF / XSS
+- ☐ RBAC / ABAC
+- ☐ Secrets management
+
+### Backend
+- ☐ Node.js runtime (event loop ya cubierto en JS profundo; acá enfoque en proceso/threads)
+- ☐ Diseño de APIs REST
+- ☐ Fastify / Express / NestJS — trade-offs
+- ☐ Validación de datos (Zod)
+- ☐ Manejo de errores y logging
+- ☐ Rate limiting
+- ☐ WebSockets / tiempo real
+- ☐ Colas y jobs asíncronos (BullMQ)
+- ☐ Arquitectura en capas (controller/service/repository)
+
+### Bases de datos (categoría nueva)
+- ☐ SQL vs NoSQL
+- ☐ Modelado relacional & normalización
+- ☐ Índices y query performance
+- ☐ Transacciones & ACID
+- ☐ Prisma / ORM — trade-offs
+- ☐ Migraciones
+- ☐ Postgres específico (constraints, JSONB)
+- ☐ Redis / caching
+- ☐ Nociones de escalabilidad (réplicas, sharding)
+
+### CI/CD (antes "DevOps")
+- ☐ Pipelines (GitHub Actions)
+- ☐ Estrategias de deploy (blue-green, canary, rolling)
+- ☐ Docker (nociones)
+- ☐ Variables y secretos en CI
+- ☐ Observabilidad (logs, métricas, tracing)
+- ☐ Feature flags
+
+### Cloud (categoría nueva)
+- ☐ Modelo de responsabilidad compartida
+- ☐ Cómputo: VMs vs contenedores vs serverless
+- ☐ AWS básico (EC2, S3, Lambda, RDS)
+- ☐ Redes básicas (VPC, load balancer, CDN)
+- ☐ Trade-offs de costo/escalabilidad
+- ☐ Vercel/Netlify vs AWS — cuándo usar qué
+
+### System Design / Arquitectura distribuida (categoría nueva, capstone)
+- ☐ CAP theorem, consistencia vs disponibilidad
+- ☐ Estrategias de caching (write-through, write-back, invalidación)
+- ☐ Load balancing, escalado horizontal vs vertical
+- ☐ Colas de mensajes / pub-sub (Kafka, SQS)
+- ☐ Idempotencia y rate limiting a nivel de diseño
+- ☐ Estimación "back of the envelope"
+- ☐ Ejercicios guiados: diseñar un acortador de URLs, un chat en tiempo real, un feed paginado
+
+### IA aplicada al desarrollo
+- ☐ Prompt engineering aplicado a desarrollo
+- ☐ Evaluación de output de IA / code review de IA
+- ☐ MCP servers — qué son y para qué sirven
+- ☐ Riesgos y límites del desarrollo 100% asistido por IA
+- ☐ Cómo comunicar en entrevista tu metodología de trabajo con IA
+
+## Vista de repaso
+
+`/entrevista` agrega todas las preguntas de `entrevista-registry.ts`, filtradas por nivel, agrupadas por categoría/módulo. A medida que se completan módulos, esta vista crece sola — no requiere mantenimiento manual más allá de sumar la entrada al registry (paso 3 del patrón de implementación).
