@@ -34,6 +34,13 @@ export const entrevistaScope: PreguntaEntrevista[] = [
       "No. Node envuelve cada archivo CommonJS en una función (el 'module wrapper') antes de ejecutarlo, con parámetros como module, exports, require, __dirname. Por eso un var en el 'nivel superior' de un archivo en realidad está dentro del scope de esa función wrapper, no en el scope global real de Node — a diferencia de un script clásico en el navegador, donde el nivel superior sí es el scope global compartido.",
     respuestaRepreguntaEn:
       "No. Node wraps every CommonJS file in a function (the 'module wrapper') before running it, with parameters like module, exports, require, __dirname. So a var at a file's 'top level' is actually inside that wrapper function's scope, not Node's real global scope — unlike a classic browser script, where the top level really is the shared global scope.",
+    codigoRepregunta: `// Así envuelve Node cada archivo CommonJS por debajo:
+(function (exports, require, module, __filename, __dirname) {
+  var x = 1;
+  // "x" vive en el scope de ESTA función, no en el global real
+})();
+
+typeof global.x; // "undefined"`,
   },
   {
     nivel: 2,
@@ -43,6 +50,14 @@ export const entrevistaScope: PreguntaEntrevista[] = [
       "`with` mete las propiedades de un objeto en el scope chain de forma dinámica, así que el motor no puede saber en tiempo de compilación si un nombre se refiere a una variable o a una propiedad del objeto — eso rompe las optimizaciones de resolución de variables y hace el código difícil de razonar (ambigüedad sobre qué se está leyendo o escribiendo). Está prohibido directamente en strict mode. La alternativa moderna para 'traer' propiedades de un objeto al scope local sin ambigüedad es destructuring: `const { a, b } = objeto`, que es explícito y no afecta cómo el motor resuelve el resto de las variables.",
     respuestaEn:
       "`with` dynamically injects an object's properties into the scope chain, so the engine can't know at compile time whether a name refers to a variable or a property of the object — that breaks variable resolution optimizations and makes the code hard to reason about (ambiguity over what's being read or written). It's outright banned in strict mode. The modern alternative for 'bringing' an object's properties into local scope without ambiguity is destructuring: `const { a, b } = object`, which is explicit and doesn't affect how the engine resolves the rest of the variables.",
+    codigo: `// Prohibido en strict mode, ambiguo sobre qué es qué:
+with (config) {
+  console.log(host, port); // ¿variables externas o config.host/config.port?
+}
+
+// Alternativa moderna, explícita:
+const { host, port } = config;
+console.log(host, port);`,
   },
   {
     nivel: 3,
@@ -52,6 +67,10 @@ export const entrevistaScope: PreguntaEntrevista[] = [
       "let y const también se hoistean al tope de su scope de bloque, igual que var, pero a diferencia de var no se inicializan con undefined: quedan en un estado 'muerto' (TDZ) desde el inicio del bloque hasta la línea donde se declaran. Acceder a la variable en ese rango lanza un ReferenceError, no devuelve undefined. Es distinto de una variable no declarada: `typeof variableNoDeclarada` da 'undefined' sin error, pero `typeof variableEnTDZ` lanza ReferenceError — la TDZ existe específicamente para evitar el patrón confuso de var donde leer una variable antes de su declaración silenciosamente daba undefined en vez de avisar del error de orden.",
     respuestaEn:
       "let and const are also hoisted to the top of their block scope, just like var, but unlike var they aren't initialized with undefined: they sit in a 'dead' state (TDZ) from the start of the block until the line where they're declared. Accessing the variable in that range throws a ReferenceError, not undefined. That's different from an undeclared variable: `typeof undeclaredVariable` gives 'undefined' with no error, but `typeof variableInTDZ` throws a ReferenceError — the TDZ exists specifically to avoid var's confusing pattern where reading a variable before its declaration silently gave undefined instead of flagging the ordering mistake.",
+    codigo: `console.log(typeof noDeclarada); // "undefined", sin error
+
+console.log(typeof enTDZ); // ReferenceError
+let enTDZ = 1;`,
     repregunta:
       "¿Una function declaration dentro de un bloque ({ }) en modo no estricto se comporta igual en todos los entornos?",
     respuestaRepreguntaEs:

@@ -23,9 +23,13 @@ export interface PreguntaEntrevista {
   pregunta: string;
   respuestaEs: string;
   respuestaEn: string;
+  /** Snippet de código opcional, solo cuando clarifica más que la prosa (ej: "¿qué imprime esto?"). No todas las preguntas lo necesitan. */
+  codigo?: string;
   tradeoffs?: string;
   repregunta?: string;
   respuestaRepreguntaEs?: string;
   respuestaRepreguntaEn?: string;
+  /** Snippet de código opcional para la repregunta, con el mismo criterio que `codigo`. */
+  codigoRepregunta?: string;
   nivel: Nivel;
 }

@@ -34,6 +34,16 @@ export const entrevistaMemory: PreguntaEntrevista[] = [
       "Las claves de un WeakMap deben ser objetos, y esas referencias son 'débiles': no impiden que el Garbage Collector recolecte la clave si nada más la referencia, y en ese caso la entrada entera desaparece automáticamente del WeakMap. Un Map normal mantiene referencias fuertes: mientras el Map exista, todas sus claves y valores quedan vivos, aunque nadie más los use — una fuente típica de leaks si se usa como cache sin invalidación manual. Lo que se pierde con WeakMap es la posibilidad de iterar sus entradas o saber su tamaño (no tiene .size ni es iterable), precisamente porque su contenido puede desaparecer en cualquier momento por el GC.",
     respuestaRepreguntaEn:
       "A WeakMap's keys must be objects, and those references are 'weak': they don't stop the Garbage Collector from reclaiming the key if nothing else references it, and in that case the whole entry automatically disappears from the WeakMap. A regular Map holds strong references: as long as the Map exists, all its keys and values stay alive, even if nobody else uses them — a typical leak source when used as a cache without manual invalidation. What you lose with WeakMap is the ability to iterate its entries or know its size (no .size, not iterable), precisely because its contents can vanish at any time due to GC.",
+    codigoRepregunta: `const cache = new WeakMap();
+
+function calcular(elementoDom) {
+  if (cache.has(elementoDom)) return cache.get(elementoDom);
+  const resultado = costoso(elementoDom);
+  cache.set(elementoDom, resultado);
+  return resultado;
+}
+// si elementoDom se remueve del DOM y nadie más lo referencia,
+// su entrada en cache desaparece sola — con un Map, quedaría para siempre`,
   },
   {
     nivel: 2,
@@ -52,12 +62,26 @@ export const entrevistaMemory: PreguntaEntrevista[] = [
       "No necesariamente. Los nodos del DOM mantienen referencias bidireccionales entre padre e hijo (parentNode, childNodes). Si tu código conserva una referencia a un único nodo hijo de un subárbol que fue removido del documento, esa referencia alcanza hacia arriba a través de parentNode hasta la raíz del subárbol completo, y ese subárbol entero queda 'detached' pero vivo en memoria — no solo el nodo que guardaste explícitamente. Es una causa de leaks mucho más grande de lo esperado a partir de una sola referencia aparentemente inocente.",
     respuestaEn:
       "Not necessarily. DOM nodes hold bidirectional references between parent and child (parentNode, childNodes). If your code keeps a reference to a single child node of a subtree that was removed from the document, that reference reaches upward through parentNode all the way to the subtree's root, and that entire subtree stays 'detached' but alive in memory — not just the node you explicitly kept. It's a leak cause much larger than expected from one seemingly innocent reference.",
+    codigo: `const arbol = document.getElementById('arbol-grande');
+const hijoGuardado = arbol.querySelector('.item-100');
+
+arbol.remove(); // se quita del documento visible
+
+// hijoGuardado.parentNode sigue apuntando hacia arriba, y así
+// sucesivamente hasta la raíz — todo "arbol" sigue vivo en memoria.`,
     repregunta:
       "¿Qué son WeakRef y FinalizationRegistry, y por qué no conviene depender de ellos para lógica de negocio?",
     respuestaRepreguntaEs:
       "WeakRef permite mantener una referencia a un objeto sin impedir que el GC lo recolecte, y FinalizationRegistry permite registrar un callback que corre después de que un objeto fue recolectado (por ejemplo, para liberar un recurso externo asociado). El problema es que la spec no garantiza CUÁNDO ni SI el callback de finalización va a correr — depende completamente de la heurística interna del motor, puede tardar arbitrariamente o directamente no ejecutarse antes de que el proceso termine. Por eso solo sirven para optimizaciones de 'mejor esfuerzo' (invalidar una entrada de cache, telemetría), nunca para lógica que la aplicación necesite que ocurra de forma determinística, como cerrar una conexión crítica.",
     respuestaRepreguntaEn:
       "WeakRef lets you keep a reference to an object without preventing the GC from collecting it, and FinalizationRegistry lets you register a callback that runs after an object has been collected (e.g. to release an associated external resource). The problem is the spec doesn't guarantee WHEN or IF the finalization callback will run — it depends entirely on the engine's internal heuristics, and it can take an arbitrary amount of time or simply never run before the process exits. That's why they're only good for 'best effort' optimizations (invalidating a cache entry, telemetry), never for logic the application needs to happen deterministically, like closing a critical connection.",
+    codigoRepregunta: `const registro = new FinalizationRegistry((clave) => {
+  console.log(\`\${clave} fue recolectado\`); // "mejor esfuerzo", sin timing garantizado
+});
+
+let objeto = { datos: 'grande' };
+registro.register(objeto, 'objeto-1');
+objeto = null; // candidato a GC, pero el callback puede tardar o no correr`,
   },
   {
     nivel: 3,

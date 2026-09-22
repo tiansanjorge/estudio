@@ -34,6 +34,14 @@ export const entrevistaPrototypes: PreguntaEntrevista[] = [
       "Un objeto literal {} hereda de Object.prototype, así que trae consigo métodos como toString, hasOwnProperty o constructor. Si ese objeto se usa como diccionario con claves que vienen de una fuente externa (por ejemplo, nombres de usuario, o keys de una API), una clave que coincida con el nombre de un método heredado (como 'toString' o 'constructor') puede generar bugs sutiles al acceder a ella esperando el valor del diccionario y obteniendo la función heredada en su lugar. Object.create(null) crea un objeto sin prototipo — sin ninguno de esos métodos heredados — eliminando esa clase entera de colisiones.",
     respuestaRepreguntaEn:
       "A literal object {} inherits from Object.prototype, so it comes with methods like toString, hasOwnProperty, or constructor. If that object is used as a dictionary with keys coming from an external source (e.g. usernames, or API keys), a key that matches an inherited method's name (like 'toString' or 'constructor') can cause subtle bugs when accessed expecting the dictionary's value and getting the inherited function instead. Object.create(null) creates an object with no prototype — none of those inherited methods — eliminating that whole class of collisions.",
+    codigoRepregunta: `const diccionario = {};
+diccionario['toString'] = 'nombre de usuario';
+diccionario.toString; // 'nombre de usuario' (pisó el método heredado)
+diccionario['constructor']; // sigue siendo la función Object, no un dato
+
+const seguro = Object.create(null);
+seguro['toString'] = 'nombre de usuario';
+seguro.toString; // 'nombre de usuario', sin ambigüedad posible`,
   },
   {
     nivel: 2,
@@ -43,6 +51,12 @@ export const entrevistaPrototypes: PreguntaEntrevista[] = [
       "Los motores modernos optimizan el acceso a propiedades asumiendo que la 'forma' de un objeto (qué propiedades tiene, en qué orden, y cuál es su prototipo) se mantiene estable después de creado — eso les permite usar inline caches que aceleran accesos repetidos al mismo tipo de objeto. Cambiar el prototipo dinámicamente después de la creación invalida esas suposiciones para ese objeto (y potencialmente para todos los que comparten esa forma), forzando al motor a des-optimizar el acceso a sus propiedades. Si necesitás que un objeto tenga cierto prototipo, es mucho mejor definirlo en el momento de creación (con Object.create o el constructor correspondiente) que cambiarlo después.",
     respuestaEn:
       "Modern engines optimize property access by assuming an object's 'shape' (which properties it has, in what order, and what its prototype is) stays stable after creation — that lets them use inline caches that speed up repeated accesses to the same object type. Changing the prototype dynamically after creation invalidates those assumptions for that object (and potentially for every object sharing that shape), forcing the engine to de-optimize property access on it. If you need an object to have a certain prototype, it's much better to set it at creation time (with Object.create or the appropriate constructor) than to change it afterward.",
+    codigo: `const obj = { x: 1 };
+Object.setPrototypeOf(obj, otroPrototipo); // des-optimiza obj
+
+// mejor: definir el prototipo desde la creación
+const obj2 = Object.create(otroPrototipo);
+obj2.x = 1;`,
   },
   {
     nivel: 3,
@@ -58,6 +72,15 @@ export const entrevistaPrototypes: PreguntaEntrevista[] = [
       "No. `super` usa una referencia interna del método llamada [[HomeObject]], fijada en el momento en que el método se define (apunta al prototype donde ese método fue declarado), no en `this`. Por eso, si extraés un método que usa `super` y lo llamás con un `this` distinto (por ejemplo, con `.call()` sobre otro objeto), `super.metodo()` sigue resolviendo desde el prototipo original donde se definió el método, no desde el prototipo de ese otro `this` — a diferencia de un `this.algo()` normal, que sí depende completamente de cómo se invoque la función.",
     respuestaRepreguntaEn:
       "No. `super` uses an internal method reference called [[HomeObject]], fixed at the moment the method is defined (it points to the prototype where that method was declared), not `this`. So if you extract a method that uses `super` and call it with a different `this` (e.g. via `.call()` on another object), `super.metodo()` still resolves from the original prototype where the method was defined, not from that other `this`'s prototype — unlike a regular `this.algo()`, which fully depends on how the function is invoked.",
+    codigoRepregunta: `class Padre {
+  saludar() { return 'Padre'; }
+}
+class Hijo extends Padre {
+  saludar() { return \`Hijo + \${super.saludar()}\`; }
+}
+
+const metodoSuelto = new Hijo().saludar;
+metodoSuelto.call({}); // sigue diciendo "Hijo + Padre", pese al this distinto`,
   },
   {
     nivel: 3,
@@ -67,5 +90,13 @@ export const entrevistaPrototypes: PreguntaEntrevista[] = [
       "No. Object.freeze solo afecta las propiedades PROPIAS del objeto congelado: impide agregar, eliminar o modificar esas propiedades directas, y evita reasignar su prototipo. Pero no toca el prototipo en sí — si una propiedad se resuelve por herencia (viene del prototype), ese prototipo sigue siendo completamente mutable a menos que también se lo congele explícitamente. Es un error común asumir que congelar una instancia protege todo lo que esa instancia 'expone', cuando en realidad solo protege lo que le pertenece directamente a ella.",
     respuestaEn:
       "No. Object.freeze only affects the frozen object's OWN properties: it prevents adding, removing, or modifying those direct properties, and prevents reassigning its prototype. But it doesn't touch the prototype itself — if a property resolves through inheritance (comes from the prototype), that prototype remains fully mutable unless it's also explicitly frozen. It's a common mistake to assume freezing an instance protects everything that instance 'exposes', when it actually only protects what belongs to it directly.",
+    codigo: `class Animal {}
+Animal.prototype.sonido = 'genérico';
+
+const gato = new Animal();
+Object.freeze(gato);
+
+Animal.prototype.sonido = 'maullido'; // funciona igual, el prototipo no está frozen
+gato.sonido; // 'maullido' — cambió, pese a que gato está "congelado"`,
   },
 ];

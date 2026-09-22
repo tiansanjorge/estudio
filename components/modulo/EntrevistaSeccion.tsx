@@ -57,6 +57,11 @@ export function EntrevistaSeccion({ preguntas }: EntrevistaSeccionProps) {
             <p className="text-sm leading-6 text-muted-foreground">
               {idioma === "es" ? item.respuestaEs : item.respuestaEn}
             </p>
+            {item.codigo && (
+              <pre className="overflow-x-auto rounded-lg border border-border bg-background p-3 font-mono text-xs text-foreground">
+                {item.codigo}
+              </pre>
+            )}
             {item.tradeoffs && (
               <p className="text-sm leading-6 text-muted-foreground">
                 <span className="font-medium text-foreground">
@@ -76,6 +81,11 @@ export function EntrevistaSeccion({ preguntas }: EntrevistaSeccionProps) {
                       ? item.respuestaRepreguntaEs
                       : item.respuestaRepreguntaEn}
                   </p>
+                )}
+                {item.codigoRepregunta && (
+                  <pre className="mt-1 overflow-x-auto rounded-lg border border-border bg-background p-3 font-mono text-xs text-foreground">
+                    {item.codigoRepregunta}
+                  </pre>
                 )}
               </div>
             )}

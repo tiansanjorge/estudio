@@ -34,6 +34,12 @@ export const entrevistaModulosEsmCjs: PreguntaEntrevista[] = [
       "Pasa cuando una misma librería se publica en ambos formatos (CJS y ESM) y, por cómo la resuelve el bundler o Node, termina cargándose DOS VECES en el mismo proceso — una copia vía require (CJS) y otra vía import (ESM) — como si fueran dos módulos distintos. Si esa librería mantiene estado a nivel de módulo (por ejemplo, un singleton, una caché interna, un registro global), cada copia tiene su propio estado independiente, rompiendo la garantía de que existe una sola instancia compartida en toda la aplicación. Se mitiga definiendo bien el campo \"exports\" condicional en package.json para asegurar que ambos formatos apunten al mismo estado interno cuando sea posible, o diseñando la librería para no depender de estado module-level compartido entre ambos builds.",
     respuestaRepreguntaEn:
       "It happens when the same library is published in both formats (CJS and ESM) and, depending on how the bundler or Node resolves it, ends up loaded TWICE in the same process — one copy via require (CJS) and another via import (ESM) — as if they were two separate modules. If that library keeps module-level state (e.g. a singleton, an internal cache, a global registry), each copy has its own independent state, breaking the guarantee that there's a single shared instance across the whole app. It's mitigated by properly defining the conditional \"exports\" field in package.json to make sure both formats point to the same internal state when possible, or by designing the library to not depend on module-level state shared between both builds.",
+    codigoRepregunta: `// paquete-x expone un singleton con estado interno
+const a = require('paquete-x'); // build CJS
+import b from 'paquete-x';      // build ESM, en otro archivo del mismo proceso
+
+a.setEstado('valor');
+b.getEstado(); // undefined — "a" y "b" son dos copias distintas del módulo`,
   },
   {
     nivel: 2,
@@ -43,6 +49,13 @@ export const entrevistaModulosEsmCjs: PreguntaEntrevista[] = [
       "Permite declarar explícitamente qué archivo debe cargarse según cómo te consuman: una condición \"import\" apunta al build ESM (para quien haga import), una condición \"require\" apunta al build CJS (para quien haga require), y puede haber condiciones adicionales (\"browser\", \"node\", \"types\") para servir builds distintos según el entorno. Sin este campo, Node y los bundlers infieren el entry point de forma menos predecible (por convención de \"main\"/\"module\"), lo que aumenta el riesgo de resolver el archivo equivocado o de terminar en un dual package hazard.",
     respuestaEn:
       "It lets you explicitly declare which file should load depending on how you're consumed: an \"import\" condition points to the ESM build (for whoever does import), a \"require\" condition points to the CJS build (for whoever does require), and there can be additional conditions (\"browser\", \"node\", \"types\") to serve different builds per environment. Without this field, Node and bundlers infer the entry point less predictably (via the \"main\"/\"module\" convention), which increases the risk of resolving the wrong file or ending up with a dual package hazard.",
+    codigo: `{
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.cjs",
+    "types": "./dist/index.d.ts"
+  }
+}`,
   },
   {
     nivel: 3,
@@ -58,6 +71,14 @@ export const entrevistaModulosEsmCjs: PreguntaEntrevista[] = [
       "En general no. Un módulo ESM puede tener top-level await, lo que lo vuelve inherentemente asincrónico de cargar, y por eso require() (que es síncrono por diseño) no puede cargarlo de forma confiable. La forma soportada de consumir un ESM desde CJS es el import() dinámico, que devuelve una Promise y hay que await-earla o encadenarla con .then(). Versiones recientes de Node agregaron soporte experimental para requerir ESM síncronamente en casos específicos donde el módulo no usa top-level await, pero no es la forma general ni portable de resolverlo.",
     respuestaRepreguntaEn:
       "Generally no. An ESM module can have top-level await, which makes it inherently asynchronous to load, and that's why require() (which is synchronous by design) can't reliably load it. The supported way to consume an ESM from CJS is dynamic import(), which returns a Promise that you need to await or chain with .then(). Recent Node versions added experimental support for synchronously requiring ESM in specific cases where the module doesn't use top-level await, but it's not the general or portable way to solve it.",
+    codigoRepregunta: `// archivo.cjs
+const modulo = require('./esm-modulo.mjs'); // falla, no soportado en general
+
+// forma soportada:
+async function cargar() {
+  const modulo = await import('./esm-modulo.mjs');
+  modulo.default();
+}`,
   },
   {
     nivel: 3,
@@ -67,5 +88,11 @@ export const entrevistaModulosEsmCjs: PreguntaEntrevista[] = [
       "\"sideEffects\": false le dice al bundler que ningún archivo del paquete tiene efectos secundarios al ser importado (no registra nada global, no modifica prototipos, no ejecuta lógica que otro código dependa sin usar un export explícito) — así que si nada importa nombres específicos de un módulo, el bundler puede eliminar el archivo entero del bundle final con seguridad, no solo los exports no usados dentro de él. Es especialmente relevante en librerías que incluyen archivos con efectos reales (por ejemplo, un CSS importado por su efecto de side-loading, o un polyfill que se ejecuta por importarlo), que hay que listar explícitamente como excepción en un array dentro de ese mismo campo para que el bundler no los elimine por error.",
     respuestaEn:
       "\"sideEffects\": false tells the bundler that no file in the package has side effects when imported (it doesn't register anything global, doesn't modify prototypes, doesn't run logic other code depends on without an explicit export) — so if nothing imports specific names from a module, the bundler can safely remove the entire file from the final bundle, not just the unused exports within it. It's especially relevant for libraries that include files with real effects (e.g. a CSS file imported for its side-loading effect, or a polyfill that runs just by being imported), which need to be explicitly listed as an exception in an array within that same field so the bundler doesn't accidentally remove them.",
+    codigo: `{
+  "sideEffects": [
+    "./dist/polyfills.js",
+    "*.css"
+  ]
+}`,
   },
 ];

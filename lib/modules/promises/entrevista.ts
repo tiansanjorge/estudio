@@ -34,6 +34,15 @@ export const entrevistaPromises: PreguntaEntrevista[] = [
       "Iniciando ambas llamadas antes de esperar cualquiera: `const [usuario, preferencias] = await Promise.all([getUsuario(), getPreferencias()])`. Si en cambio escribo `const usuario = await getUsuario(); const preferencias = await getPreferencias();`, cada await bloquea el progreso del async hasta resolverse, así que la segunda llamada ni siquiera arranca hasta que termina la primera — serializando dos operaciones que podrían correr en paralelo.",
     respuestaRepreguntaEn:
       "By kicking off both calls before awaiting either: `const [usuario, preferencias] = await Promise.all([getUsuario(), getPreferencias()])`. If instead I write `const usuario = await getUsuario(); const preferencias = await getPreferencias();`, each await blocks the async function's progress until it settles, so the second call doesn't even start until the first one finishes — serializing two operations that could run in parallel.",
+    codigoRepregunta: `// Serializado: la segunda llamada arranca recién cuando termina la primera
+const usuario = await getUsuario();
+const preferencias = await getPreferencias();
+
+// Paralelo: ambas arrancan antes de esperar cualquiera
+const [usuario, preferencias] = await Promise.all([
+  getUsuario(),
+  getPreferencias(),
+]);`,
   },
   {
     nivel: 2,
@@ -58,6 +67,15 @@ export const entrevistaPromises: PreguntaEntrevista[] = [
       "Un thenable es cualquier objeto con un método `.then()`, sea o no una Promise nativa (por ejemplo, el resultado de una librería vieja de promesas, o un objeto armado a mano). `Promise.resolve(valor)` detecta si el valor es un thenable y, en ese caso, no lo envuelve directamente: 'asimila' su estado llamando a su `.then()` y esperando a que se resuelva, para garantizar que el resultado final sea siempre una Promise nativa genuina. Con un valor plano, en cambio, simplemente crea una Promise ya cumplida con ese valor.",
     respuestaRepreguntaEn:
       "A thenable is any object with a `.then()` method, whether or not it's a native Promise (e.g. the result of an old promise library, or a hand-built object). `Promise.resolve(value)` checks if the value is a thenable and, if so, doesn't wrap it directly: it 'assimilates' its state by calling its `.then()` and waiting for it to settle, guaranteeing the final result is always a genuine native Promise. With a plain value, it simply creates an already-fulfilled Promise with that value.",
+    codigoRepregunta: `const thenable = {
+  then(resolve) {
+    setTimeout(() => resolve('valor asimilado'), 100);
+  },
+};
+
+Promise.resolve(thenable).then(console.log);
+// Espera a que el .then() del thenable resuelva, como si
+// fuera una Promise nativa — no lo trata como un valor plano.`,
   },
   {
     nivel: 3,
@@ -67,5 +85,15 @@ export const entrevistaPromises: PreguntaEntrevista[] = [
       "Con AbortController: se crea un controller, se pasa su `signal` a la operación (fetch lo soporta nativamente), y llamar a `controller.abort()` hace que la promesa subyacente rechace con un AbortError. La Promise en sí sigue sin ser cancelable — lo que se cancela es la operación underlying (la request de red), y esa cancelación se comunica de vuelta como un rechazo. Para código propio, el patrón es aceptar una signal y chequear `signal.aborted` (o escuchar su evento 'abort') en los puntos donde tenga sentido cortar el trabajo.",
     respuestaEn:
       "With AbortController: you create a controller, pass its `signal` to the operation (fetch supports it natively), and calling `controller.abort()` makes the underlying promise reject with an AbortError. The Promise itself still isn't cancelable — what gets cancelled is the underlying operation (the network request), and that cancellation is communicated back as a rejection. For your own code, the pattern is to accept a signal and check `signal.aborted` (or listen for its 'abort' event) at points where it makes sense to stop the work.",
+    codigo: `const controller = new AbortController();
+
+fetch('/api/datos', { signal: controller.signal })
+  .then((r) => r.json())
+  .catch((err) => {
+    if (err.name === 'AbortError') return; // cancelado a propósito
+    throw err;
+  });
+
+controller.abort(); // dispara el rechazo con AbortError`,
   },
 ];

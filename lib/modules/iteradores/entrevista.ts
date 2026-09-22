@@ -8,6 +8,16 @@ export const entrevistaIteradores: PreguntaEntrevista[] = [
       "Un objeto es iterable si implementa el método Symbol.iterator, que debe devolver un iterator: un objeto con un método .next() que devuelve {value, done}. for...of, el operador spread (...) y el destructuring de arrays usan este protocolo por debajo — no son casos especiales del lenguaje para arrays, funcionan con cualquier objeto que lo implemente (Array, String, Map, Set, o una clase propia).",
     respuestaEn:
       "An object is iterable if it implements the Symbol.iterator method, which must return an iterator: an object with a .next() method that returns {value, done}. for...of, the spread operator (...), and array destructuring all use this protocol under the hood — they're not special-cased language features for arrays, they work with any object that implements it (Array, String, Map, Set, or a custom class).",
+    codigo: `const rango = {
+  [Symbol.iterator]() {
+    let n = 1;
+    return {
+      next: () => (n <= 3 ? { value: n++, done: false } : { value: undefined, done: true }),
+    };
+  },
+};
+
+[...rango]; // [1, 2, 3] — funciona sin ser un array`,
   },
   {
     nivel: 1,
@@ -43,6 +53,20 @@ export const entrevistaIteradores: PreguntaEntrevista[] = [
       "Delega la iteración a otro iterable (otro generador, un array, cualquier cosa iterable): en vez de hacer un loop manual que re-emite cada valor uno por uno con yield, yield* itera automáticamente el iterable delegado y reenvía cada uno de sus valores como si fueran propios del generador que delega. Además reenvía correctamente llamadas a .next(valor), .throw() y .return() al generador delegado, algo que un loop manual reimplementaría mal o incompleto. Es la forma correcta de componer generadores (por ejemplo, aplanar generadores anidados) sin perder ese comportamiento.",
     respuestaEn:
       "It delegates iteration to another iterable (another generator, an array, anything iterable): instead of writing a manual loop that re-emits each value one by one with yield, yield* automatically iterates the delegated iterable and forwards each of its values as if they were the delegating generator's own. It also correctly forwards .next(value), .throw(), and .return() calls to the delegated generator, something a manual loop would implement incorrectly or incompletely. It's the correct way to compose generators (e.g. flattening nested generators) without losing that behavior.",
+    codigo: `function* letras() {
+  yield 'a';
+  yield 'b';
+}
+function* numeros() {
+  yield 1;
+  yield 2;
+}
+function* combinado() {
+  yield* letras();
+  yield* numeros();
+}
+
+[...combinado()]; // ['a', 'b', 1, 2]`,
   },
   {
     nivel: 3,
@@ -58,6 +82,18 @@ export const entrevistaIteradores: PreguntaEntrevista[] = [
       "Inyecta una excepción exactamente en el punto donde el generador está pausado (en la expresión yield actual), como si ese throw hubiera ocurrido ahí adentro. Si el cuerpo del generador tiene un try/catch alrededor de ese yield, lo captura normalmente y el generador puede seguir ejecutando su lógica de manejo de errores o cleanup. Sirve para propagar cancelación o errores 'hacia adentro' de un generador desde el código que lo consume — por ejemplo, para que un generador que representa una operación en curso pueda enterarse de que el consumidor decidió abortarla y reaccionar (liberar un recurso, revertir un estado) en vez de quedar simplemente pausado para siempre.",
     respuestaRepreguntaEn:
       "It injects an exception exactly at the point where the generator is paused (at the current yield expression), as if that throw had happened right there. If the generator's body has a try/catch around that yield, it catches it normally and the generator can continue running its error-handling or cleanup logic. It's used to propagate cancellation or errors 'inward' into a generator from the consuming code — for example, so a generator representing an in-progress operation can learn that the consumer decided to abort it and react (release a resource, roll back state) instead of just staying paused forever.",
+    codigoRepregunta: `function* operacion() {
+  try {
+    yield 'esperando';
+  } catch (err) {
+    console.log('cancelado:', err.message);
+  }
+}
+
+const gen = operacion();
+gen.next(); // { value: 'esperando', done: false }
+gen.throw(new Error('abortado por el usuario'));
+// imprime: cancelado: abortado por el usuario`,
   },
   {
     nivel: 3,
@@ -67,5 +103,19 @@ export const entrevistaIteradores: PreguntaEntrevista[] = [
       "Un iterator síncrono implementa Symbol.iterator y su .next() devuelve directamente {value, done}. Un async iterator implementa Symbol.asyncIterator, y su .next() devuelve una Promise que resuelve a {value, done} — porque producir el siguiente valor puede implicar una operación asincrónica (leer el siguiente chunk de un stream, la siguiente página de una API). for await...of consume ese protocolo automáticamente, esperando cada Promise antes de continuar. Un async generator (async function*) combina ambos: su cuerpo puede usar await junto con yield, y el motor arma automáticamente el objeto que implementa Symbol.asyncIterator por vos.",
     respuestaEn:
       "A synchronous iterator implements Symbol.iterator and its .next() directly returns {value, done}. An async iterator implements Symbol.asyncIterator, and its .next() returns a Promise that resolves to {value, done} — because producing the next value might involve an asynchronous operation (reading the next chunk of a stream, the next page of an API). for await...of consumes that protocol automatically, awaiting each Promise before continuing. An async generator (async function*) combines both: its body can use await alongside yield, and the engine automatically builds the object implementing Symbol.asyncIterator for you.",
+    codigo: `const asyncIterable = {
+  [Symbol.asyncIterator]() {
+    let n = 0;
+    return {
+      next: () => new Promise((resolve) =>
+        setTimeout(() => resolve({ value: n++, done: n > 3 }), 100)
+      ),
+    };
+  },
+};
+
+for await (const valor of asyncIterable) {
+  console.log(valor); // 0, 1, 2 — cada uno esperando su Promise
+}`,
   },
 ];

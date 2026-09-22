@@ -30,12 +30,29 @@ export const entrevistaEventLoop: PreguntaEntrevista[] = [
       "In the browser, the loop alternates between a task queue and render cycles (rAF, style, layout, paint), and always drains microtasks before rendering. Node has no rendering: its libuv loop has explicit phases (timers, pending callbacks, poll, check, close callbacks), draining the microtask queue between each phase. Node also has an extra queue, process.nextTick, with higher priority than Promise microtasks.",
     tradeoffs:
       "Conocer esta diferencia importa cuando escribís código isomórfico (Next.js) o cuando debugueás timing issues que se comportan distinto en SSR vs cliente.",
+    codigo: `console.log('1');
+
+process.nextTick(() => console.log('2 (nextTick)'));
+Promise.resolve().then(() => console.log('3 (microtask)'));
+
+console.log('4');
+
+// Orden real: 1, 4, 2, 3
+// nextTick se vacía ANTES que las microtasks de Promise, en cada vuelta.`,
     repregunta:
       "¿Qué pasa si encadenás muchos process.nextTick recursivos en Node?",
     respuestaRepreguntaEs:
       "La cola de nextTick se vacía por completo antes de que el loop avance a cualquier otra fase. Si cada nextTick encola otro sin fin, el loop nunca llega a timers, I/O ni al cierre del proceso: es 'nextTick starvation', el equivalente en Node a la microtask starvation del navegador.",
     respuestaRepreguntaEn:
       "The nextTick queue is fully drained before the loop can move to any other phase. If each nextTick keeps queueing another one forever, the loop never reaches timers, I/O, or process shutdown — that's 'nextTick starvation', Node's equivalent of the browser's microtask starvation.",
+    codigoRepregunta: `function recursivo() {
+  process.nextTick(recursivo);
+}
+
+recursivo();
+
+setTimeout(() => console.log('nunca corre'), 0);
+// El setTimeout jamás se ejecuta: la cola de nextTick nunca se vacía.`,
   },
   {
     nivel: 2,
@@ -45,6 +62,16 @@ export const entrevistaEventLoop: PreguntaEntrevista[] = [
       "Pasa cuando una microtask (típicamente una Promise) encola otra microtask indefinidamente: como el loop no avanza a la siguiente macrotask ni al render hasta vaciar por completo la cola de microtasks, el programa queda 'trabado' procesando microtasks sin dejar respirar a la UI ni a los timers. Se evita rompiendo la cadena con un setTimeout(fn, 0) o repartiendo el trabajo en macrotasks cuando se necesita procesar una cantidad no acotada de items de forma recursiva.",
     respuestaEn:
       "It happens when a microtask (typically a Promise) keeps queueing another microtask indefinitely: since the loop won't move to the next macrotask or render until the microtask queue is fully drained, the program gets stuck processing microtasks without letting the UI or timers run. You avoid it by breaking the chain with a setTimeout(fn, 0) or spreading the work across macrotasks when recursively processing an unbounded number of items.",
+    codigo: `// Bloquea: cada .then() encola otra microtask antes de que
+// el navegador pueda pintar un frame o correr un timer.
+function loopSinFin() {
+  Promise.resolve().then(loopSinFin);
+}
+
+// Fix: romper la cadena con una macrotask cada tanto.
+function loopConRespiro() {
+  setTimeout(loopConRespiro, 0);
+}`,
   },
   {
     nivel: 3,
@@ -60,6 +87,13 @@ export const entrevistaEventLoop: PreguntaEntrevista[] = [
       "No. Dentro de un callback de I/O (ya en fase poll), setImmediate siempre gana porque la fase check es la inmediata siguiente. Fuera de un callback de I/O (por ejemplo en el scope principal del módulo), el orden entre ambos no está garantizado: depende de cuánto tarde el proceso en entrar al loop y de la precisión del timer del sistema operativo.",
     respuestaRepreguntaEn:
       "No. Inside an I/O callback (already in the poll phase), setImmediate always wins because the check phase comes right after. Outside an I/O callback (e.g. in the module's top-level scope), the order between the two isn't guaranteed: it depends on how long the process takes to enter the loop and the OS timer's precision.",
+    codigoRepregunta: `const fs = require('fs');
+
+fs.readFile(__filename, () => {
+  setTimeout(() => console.log('timeout'), 0);
+  setImmediate(() => console.log('immediate'));
+  // Siempre imprime "immediate" antes que "timeout" acá adentro.
+});`,
   },
   {
     nivel: 3,

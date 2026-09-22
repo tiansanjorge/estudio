@@ -34,6 +34,21 @@ export const entrevistaAsync: PreguntaEntrevista[] = [
       "Depende de si necesito distinguir cuál operación falló para reaccionar distinto a cada una. Un único try/catch alrededor de toda la función es más simple y suficiente cuando cualquier fallo debe manejarse igual (por ejemplo, mostrar un error genérico). Si necesito un fallback específico por operación (reintentar solo la que falló, o usar un valor por defecto para una y propagar el error de otra), conviene un try/catch más granular alrededor de cada await, aunque sea más verboso.",
     respuestaRepreguntaEn:
       "It depends on whether I need to tell which operation failed to react differently to each. A single try/catch around the whole function is simpler and enough when any failure should be handled the same way (e.g. showing a generic error). If I need a specific fallback per operation (retry only the one that failed, or use a default value for one while propagating another's error), a more granular try/catch around each await is worth the extra verbosity.",
+    codigoRepregunta: `try {
+  const usuario = await getUsuario();
+  const pedidos = await getPedidos();
+} catch {
+  // no sabés cuál de las dos falló
+}
+
+// más granular
+let pedidos = [];
+try {
+  pedidos = await getPedidos();
+} catch {
+  pedidos = []; // fallback específico solo para esta operación
+}
+const usuario = await getUsuario(); // su error se propaga distinto`,
   },
   {
     nivel: 2,
@@ -43,6 +58,19 @@ export const entrevistaAsync: PreguntaEntrevista[] = [
       "Un async generator (`async function*`) combina generadores con async: en vez de devolver una sola Promise, produce un async iterable que puede emitir múltiples valores en el tiempo, cada uno esperado con `for await...of`. Los uso cuando necesito procesar datos que llegan de a poco (streams, paginación de una API, lectura de un archivo grande) sin cargar todo en memoria de una vez, dejando que el consumidor procese cada chunk a medida que llega.",
     respuestaEn:
       "An async generator (`async function*`) combines generators with async: instead of returning a single Promise, it produces an async iterable that can emit multiple values over time, each awaited with `for await...of`. I use them when I need to process data that arrives incrementally (streams, API pagination, reading a large file) without loading everything into memory at once, letting the consumer process each chunk as it arrives.",
+    codigo: `async function* paginas(url) {
+  let siguiente = url;
+  while (siguiente) {
+    const res = await fetch(siguiente);
+    const data = await res.json();
+    yield data.items;
+    siguiente = data.siguientePagina;
+  }
+}
+
+for await (const items of paginas('/api/items')) {
+  procesar(items); // corre por cada página, sin esperar todas primero
+}`,
   },
   {
     nivel: 3,
@@ -52,6 +80,15 @@ export const entrevistaAsync: PreguntaEntrevista[] = [
       "Es llamar a una función async (o cualquier cosa que devuelva una Promise) sin await, sin .then() ni .catch() — la promesa queda 'flotando', sin que nadie observe su resultado. Si esa operación rechaza, se convierte en un unhandled rejection que puede pasar completamente desapercibido en desarrollo y solo manifestarse en producción. Es un riesgo típico en código que dispara efectos secundarios (loguear, notificar) sin esperar su resultado. Reglas de lint como no-floating-promises (typescript-eslint) existen justamente para detectarlas en build time.",
     respuestaEn:
       "It's calling an async function (or anything that returns a Promise) without await, .then(), or .catch() — the promise is left 'floating', with nobody observing its outcome. If that operation rejects, it becomes an unhandled rejection that can go completely unnoticed in development and only surface in production. It's a typical risk in code that fires side effects (logging, notifying) without waiting for the result. Lint rules like no-floating-promises (typescript-eslint) exist specifically to catch these at build time.",
+    codigo: `function guardarLog(evento) {
+  enviarATelemetria(evento); // async, pero nadie espera ni maneja el error
+}
+
+// si enviarATelemetria() rechaza, es un unhandled rejection silencioso
+// fix: await, .catch(), o marcar la intención explícitamente
+function guardarLog(evento) {
+  enviarATelemetria(evento).catch((err) => console.error('telemetría falló', err));
+}`,
     repregunta:
       "¿Por qué a veces el stack trace de un error async no muestra de dónde vino la llamada original, antes del await?",
     respuestaRepreguntaEs:
