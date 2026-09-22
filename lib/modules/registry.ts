@@ -92,7 +92,17 @@ export const categorias: Categoria[] = [
       { slug: "tanstack-query", titulo: "TanStack Query", estado: "proximamente" },
     ],
   },
-  { slug: "typescript-avanzado", titulo: "TypeScript avanzado", modulos: [] },
+  {
+    slug: "typescript-avanzado",
+    titulo: "TypeScript avanzado",
+    modulos: [
+      { slug: "genericos", titulo: "Genéricos", estado: "disponible" },
+      { slug: "utility-types", titulo: "Utility types", estado: "proximamente" },
+      { slug: "discriminated-unions", titulo: "Discriminated unions & type narrowing", estado: "proximamente" },
+      { slug: "structural-vs-nominal", titulo: "Structural typing vs nominal", estado: "proximamente" },
+      { slug: "strict-mode", titulo: "Trade-offs de strict mode", estado: "proximamente" },
+    ],
+  },
   { slug: "testing", titulo: "Testing", modulos: [] },
   { slug: "arquitectura", titulo: "Arquitectura", modulos: [] },
   { slug: "seguridad", titulo: "Seguridad", modulos: [] },
