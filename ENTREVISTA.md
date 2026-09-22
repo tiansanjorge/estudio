@@ -43,7 +43,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Async (Nivel 1/2/3 + Entrevista)
 - ✅ Scope (Nivel 1/2/3 + Entrevista)
 - ✅ Hoisting (Nivel 1/2/3 + Entrevista)
-- ☐ Memory (Nivel 2/3 + Entrevista)
+- ✅ Memory (Nivel 1/2/3 + Entrevista)
 - ☐ Prototypes & Clases (nuevo módulo, 3 niveles)
 - ☐ Módulos: ESM vs CommonJS (nuevo módulo, 3 niveles)
 - ☐ Iteradores y Generadores (nuevo módulo, 3 niveles)

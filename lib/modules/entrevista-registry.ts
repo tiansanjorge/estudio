@@ -5,6 +5,7 @@ import { entrevistaPromises } from "./promises/entrevista";
 import { entrevistaAsync } from "./async/entrevista";
 import { entrevistaScope } from "./scope/entrevista";
 import { entrevistaHoisting } from "./hoisting/entrevista";
+import { entrevistaMemory } from "./memory/entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -60,5 +61,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "hoisting",
     moduloTitulo: "Hoisting",
     preguntas: entrevistaHoisting,
+  },
+  {
+    categoriaSlug: "javascript-profundo",
+    categoriaTitulo: "JavaScript profundo",
+    moduloSlug: "memory",
+    moduloTitulo: "Memory",
+    preguntas: entrevistaMemory,
   },
 ];
