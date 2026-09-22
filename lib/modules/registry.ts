@@ -97,7 +97,7 @@ export const categorias: Categoria[] = [
     titulo: "TypeScript avanzado",
     modulos: [
       { slug: "genericos", titulo: "Genéricos", estado: "disponible" },
-      { slug: "utility-types", titulo: "Utility types", estado: "proximamente" },
+      { slug: "utility-types", titulo: "Utility types", estado: "disponible" },
       { slug: "discriminated-unions", titulo: "Discriminated unions & type narrowing", estado: "proximamente" },
       { slug: "structural-vs-nominal", titulo: "Structural typing vs nominal", estado: "proximamente" },
       { slug: "strict-mode", titulo: "Trade-offs de strict mode", estado: "proximamente" },

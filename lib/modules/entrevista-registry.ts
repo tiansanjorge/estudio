@@ -10,6 +10,7 @@ import { entrevistaPrototypes } from "./prototypes/entrevista";
 import { entrevistaModulosEsmCjs } from "./modulos-esm-cjs/entrevista";
 import { entrevistaIteradores } from "./iteradores/entrevista";
 import { entrevistaGenericos } from "./generics/entrevista";
+import { entrevistaUtilityTypes } from "./utility-types/entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -100,5 +101,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "genericos",
     moduloTitulo: "Genéricos",
     preguntas: entrevistaGenericos,
+  },
+  {
+    categoriaSlug: "typescript-avanzado",
+    categoriaTitulo: "TypeScript avanzado",
+    moduloSlug: "utility-types",
+    moduloTitulo: "Utility types",
+    preguntas: entrevistaUtilityTypes,
   },
 ];

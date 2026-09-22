@@ -50,7 +50,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 
 ### TypeScript avanzado
 - ✅ Genéricos (Nivel 1/2/3 + Entrevista)
-- ☐ Utility types
+- ✅ Utility types (Nivel 1/2/3 + Entrevista)
 - ☐ Discriminated unions & type narrowing
 - ☐ Structural typing vs nominal
 - ☐ Trade-offs de `strict` mode
