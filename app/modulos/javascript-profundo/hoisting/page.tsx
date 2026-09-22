@@ -5,8 +5,17 @@ import { HoistingSimulador } from "@/components/modulo/HoistingSimulador";
 import { HoistingExplorador } from "@/components/modulo/HoistingExplorador";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosHoisting } from "@/lib/modules/hoisting/escenarios";
 import { casosHoisting } from "@/lib/modules/hoisting/casos";
+import { entrevistaHoisting } from "@/lib/modules/hoisting/entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaHoisting.filter((p) => p.nivel === 1),
+  2: entrevistaHoisting.filter((p) => p.nivel === 2),
+  3: entrevistaHoisting.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Hoisting — Dev Study Lab",
@@ -38,6 +47,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Una class declaration se puede usar antes de su línea, igual que una function declaration?",
+    opciones: [
+      "Sí, las clases se hoistean completas igual que las funciones",
+      "No: se hoistea pero queda en la Temporal Dead Zone, como let/const",
+      "No se hoistea en absoluto",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Aunque sintácticamente se parece a una function declaration, para hoisting una clase sigue las reglas de let/const: usarla antes de su línea lanza ReferenceError.",
+  },
+  {
+    pregunta:
+      "¿Por qué reglas de lint como no-use-before-define prohíben confiar en el hoisting de funciones?",
+    opciones: [
+      "Porque el hoisting de funciones no funciona en todos los navegadores",
+      "Es una regla de legibilidad: hace que el código se lea en el mismo orden en que se ejecuta, y evita bugs si la función se reemplaza por una const con arrow function",
+      "Porque las function declarations están deprecadas",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "No es un problema de corrección técnica sino de mantenibilidad: forzar declarar-antes-de-usar evita saltos hacia adelante en el archivo y protege contra un futuro refactor a arrow function, que sí tiene TDZ.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "function f(a = b, b) {} — ¿qué pasa al llamar a f()?",
+    opciones: [
+      "Funciona normalmente, b es undefined",
+      "Lanza ReferenceError, porque b todavía está en la TDZ del scope de parámetros cuando se evalúa el default de a",
+      "a queda como undefined silenciosamente",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Los parámetros se inicializan en orden de izquierda a derecha en su propio scope. Un default puede usar un parámetro anterior ya inicializado, pero no uno posterior, que todavía está en TDZ.",
+  },
+  {
+    pregunta:
+      "¿Cuándo se evalúa la cláusula extends de una clase?",
+    opciones: [
+      "Recién cuando se hace new de la clase",
+      "Inmediatamente cuando se ejecuta la declaración de la clase",
+      "Nunca se evalúa si la clase no se instancia",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Por eso class B extends A {} lanza ReferenceError en ese momento si A todavía está en su propia TDZ, no cuando se hace new B().",
+  },
+];
+
 export default function HoistingPage() {
   return (
     <ModuloLayout
@@ -45,6 +108,20 @@ export default function HoistingPage() {
       titulo="Hoisting"
       descripcion="Antes de correr la primera línea de un scope, JS ya escaneó ese scope entero y registró sus declaraciones en memoria. Eso es hoisting — y el comportamiento cambia según cómo declaraste la variable."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -140,6 +217,10 @@ export default function HoistingPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>¿Qué imprime esto, y por qué no da &ldquo;undefined&rdquo;?</p>
@@ -170,6 +251,163 @@ function saludar() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Una <strong className="text-foreground">class declaration</strong>{" "}
+            se hoistea, pero con las reglas de <code>let</code>/
+            <code>const</code>, no las de function: queda registrada en
+            memoria pero en la TDZ hasta que se ejecuta su línea. Usarla o
+            extenderla antes lanza <code>ReferenceError</code> — a
+            diferencia de una function declaration, que se puede llamar
+            libremente antes de su definición.
+          </p>
+          <p>
+            Los <strong className="text-foreground">imports</strong> de un
+            módulo ES también se hoistean al tope del archivo: el grafo de
+            módulos se resuelve y sus bindings se registran antes de
+            ejecutar el cuerpo de cualquiera. Los named imports son{" "}
+            <em>live bindings</em> (referencias en vivo, no copias del
+            valor), lo que hace que dependencias circulares entre módulos
+            funcionen en muchos casos, siempre que el valor importado se
+            use recién dentro de una función y no en el nivel superior del
+            módulo.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Asumir que una clase se comporta como una function
+              declaration para hoisting.
+            </strong>{" "}
+            Sintácticamente se parecen, pero la clase tiene TDZ igual que
+            let/const.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Usar un valor importado directamente en el nivel superior de
+              un módulo con dependencia circular.
+            </strong>{" "}
+            Aunque los named imports sean live bindings, si el módulo
+            exportador todavía no llegó a esa asignación, el valor no está
+            disponible en ese punto del nivel superior.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Diagnosticar un &quot;Cannot access &apos;X&apos; before
+            initialization&quot; en una clase revisando el orden de
+            declaración/importación, igual que con let/const.
+          </li>
+          <li>
+            Configurar no-use-before-define en el linter para forzar
+            declarar-antes-de-usar como norma de legibilidad, más allá de
+            lo que el hoisting técnicamente permita.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Los parámetros de una función viven en su propio scope,
+            intermedio entre el externo y el cuerpo de la función, y se
+            inicializan de izquierda a derecha. Un valor por defecto puede
+            usar un parámetro anterior ya inicializado (
+            <code>function f(a, b = a) {"{}"}</code> funciona), pero no uno
+            posterior: <code>function f(a = b, b) {"{}"}</code> lanza{" "}
+            <code>ReferenceError</code>, porque <code>b</code> todavía está
+            en la TDZ de ese scope de parámetros cuando se evalúa el
+            default de <code>a</code>.
+          </p>
+          <p>
+            La cláusula <code>extends</code> de una clase se evalúa
+            inmediatamente cuando se ejecuta la declaración de la clase, no
+            cuando se instancia. <code>class B extends A {"{}"}</code>{" "}
+            lanza ReferenceError en ese mismo momento si <code>A</code>{" "}
+            todavía está en su propia TDZ.
+          </p>
+          <p>
+            Una function declaration dentro de un bloque se hoistea distinto
+            según el modo: en strict mode queda block-scoped, como un let.
+            En modo no estricto, además se asigna como var en el scope
+            contenedor (comportamiento legacy &ldquo;Annex B&rdquo;),
+            visible incluso fuera del bloque una vez que este corre — el
+            mismo código puede comportarse distinto entre motores o modos.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Referenciar un parámetro posterior en el default de uno
+              anterior.
+            </strong>{" "}
+            El scope de parámetros respeta TDZ igual que let/const, en
+            orden de izquierda a derecha.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Confiar en el comportamiento Annex B de function declarations
+              en bloques.
+            </strong>{" "}
+            Varía entre strict y sloppy mode, y entre motores — mejor
+            evitarlo directamente con function expressions asignadas a
+            let/const.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Diagnosticar un ReferenceError en la declaración de una clase
+            (no en su instanciación) como un problema de orden de
+            declaración o dependencia circular entre módulos.
+          </li>
+          <li>
+            Evitar function declarations sueltas dentro de if/for en código
+            que deba comportarse igual en Node y en el navegador.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }
