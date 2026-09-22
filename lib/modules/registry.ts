@@ -13,6 +13,7 @@ export const categorias: Categoria[] = [
       { slug: "hoisting", titulo: "Hoisting", estado: "disponible" },
       { slug: "memory", titulo: "Memory", estado: "disponible" },
       { slug: "prototypes-clases", titulo: "Prototypes & Clases", estado: "disponible" },
+      { slug: "modulos-esm-cjs", titulo: "Módulos: ESM vs CommonJS", estado: "disponible" },
     ],
   },
   {

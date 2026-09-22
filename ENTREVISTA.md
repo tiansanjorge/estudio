@@ -45,7 +45,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Hoisting (Nivel 1/2/3 + Entrevista)
 - ✅ Memory (Nivel 1/2/3 + Entrevista)
 - ✅ Prototypes & Clases (Nivel 1/2/3 + Entrevista)
-- ☐ Módulos: ESM vs CommonJS (nuevo módulo, 3 niveles)
+- ✅ Módulos: ESM vs CommonJS (Nivel 1/2/3 + Entrevista)
 - ☐ Iteradores y Generadores (nuevo módulo, 3 niveles)
 
 ### TypeScript avanzado

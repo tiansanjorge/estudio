@@ -7,6 +7,7 @@ import { entrevistaScope } from "./scope/entrevista";
 import { entrevistaHoisting } from "./hoisting/entrevista";
 import { entrevistaMemory } from "./memory/entrevista";
 import { entrevistaPrototypes } from "./prototypes/entrevista";
+import { entrevistaModulosEsmCjs } from "./modulos-esm-cjs/entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -76,5 +77,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "prototypes-clases",
     moduloTitulo: "Prototypes & Clases",
     preguntas: entrevistaPrototypes,
+  },
+  {
+    categoriaSlug: "javascript-profundo",
+    categoriaTitulo: "JavaScript profundo",
+    moduloSlug: "modulos-esm-cjs",
+    moduloTitulo: "Módulos: ESM vs CommonJS",
+    preguntas: entrevistaModulosEsmCjs,
   },
 ];
