@@ -1,5 +1,6 @@
 import type { PreguntaEntrevista } from "./types";
 import { entrevistaEventLoop } from "./event-loop/entrevista";
+import { entrevistaClosures } from "./closures/entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -20,5 +21,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "event-loop",
     moduloTitulo: "Event Loop",
     preguntas: entrevistaEventLoop,
+  },
+  {
+    categoriaSlug: "javascript-profundo",
+    categoriaTitulo: "JavaScript profundo",
+    moduloSlug: "closures",
+    moduloTitulo: "Closures",
+    preguntas: entrevistaClosures,
   },
 ];
