@@ -40,7 +40,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Event Loop (Nivel 1/2/3 + Entrevista) — referencia del patrón
 - ✅ Closures (Nivel 1/2/3 + Entrevista)
 - ✅ Promises (Nivel 1/2/3 + Entrevista)
-- ☐ Async (Nivel 2/3 + Entrevista)
+- ✅ Async (Nivel 1/2/3 + Entrevista)
 - ☐ Scope (Nivel 2/3 + Entrevista)
 - ☐ Hoisting (Nivel 2/3 + Entrevista)
 - ☐ Memory (Nivel 2/3 + Entrevista)

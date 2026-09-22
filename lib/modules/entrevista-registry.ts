@@ -2,6 +2,7 @@ import type { PreguntaEntrevista } from "./types";
 import { entrevistaEventLoop } from "./event-loop/entrevista";
 import { entrevistaClosures } from "./closures/entrevista";
 import { entrevistaPromises } from "./promises/entrevista";
+import { entrevistaAsync } from "./async/entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -36,5 +37,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "promises",
     moduloTitulo: "Promises",
     preguntas: entrevistaPromises,
+  },
+  {
+    categoriaSlug: "javascript-profundo",
+    categoriaTitulo: "JavaScript profundo",
+    moduloSlug: "async",
+    moduloTitulo: "Async",
+    preguntas: entrevistaAsync,
   },
 ];

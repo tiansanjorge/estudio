@@ -5,7 +5,16 @@ import { AsyncSimulador } from "@/components/modulo/AsyncSimulador";
 import { SecuencialVsParaleloSimulador } from "@/components/modulo/SecuencialVsParaleloSimulador";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosAsync } from "@/lib/modules/async/escenarios";
+import { entrevistaAsync } from "@/lib/modules/async/entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaAsync.filter((p) => p.nivel === 1),
+  2: entrevistaAsync.filter((p) => p.nivel === 2),
+  3: entrevistaAsync.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Async — Dev Study Lab",
@@ -45,6 +54,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Cuándo empieza a ejecutarse el código dentro de una función async?",
+    opciones: [
+      "Recién en la siguiente vuelta del Event Loop",
+      "Inmediatamente y de forma síncrona, hasta llegar al primer await",
+      "Solo cuando alguien hace await sobre su resultado",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Igual que cualquier función normal, corre síncrono en el momento en que se la llama. Recién en el primer await se pausa y le devuelve el control al llamador.",
+  },
+  {
+    pregunta:
+      "¿Qué te da un async generator (async function*) que una función async normal no da?",
+    opciones: [
+      "Se ejecuta más rápido",
+      "Puede emitir múltiples valores en el tiempo, consumidos con for await...of, en vez de una sola Promise",
+      "No puede usar await adentro",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es útil para procesar datos que llegan de a poco (streams, paginación) sin cargar todo en memoria, dejando que el consumidor procese cada valor a medida que se emite.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Qué es una 'floating promise' y por qué es riesgosa?",
+    opciones: [
+      "Una promesa que nunca se resuelve",
+      "Llamar a algo que devuelve una Promise sin await ni .catch(), así que un rechazo se vuelve un unhandled rejection silencioso",
+      "Una promesa creada dentro de un loop",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Si esa operación rechaza, nadie la está observando: el error puede pasar desapercibido en desarrollo y aparecer recién en producción. Reglas de lint como no-floating-promises existen para detectarlas.",
+  },
+  {
+    pregunta:
+      "¿Qué riesgo tiene usar top-level await si hay una dependencia circular entre módulos?",
+    opciones: [
+      "Ninguno, top-level await es siempre seguro",
+      "Puede generar un deadlock: un módulo espera a otro que a su vez necesita algo del primero, que sigue pausado",
+      "Solo funciona en el navegador, nunca en Node",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Top-level await pausa la evaluación de todo el grafo de módulos que dependen de él. Con dependencia circular entre dos módulos que lo usan, se puede llegar a un deadlock que el runtime suele detectar y reportar como error.",
+  },
+];
+
 export default function AsyncPage() {
   return (
     <ModuloLayout
@@ -52,6 +115,20 @@ export default function AsyncPage() {
       titulo="Async"
       descripcion="async/await no es una forma distinta de manejar asincronismo: es la misma mecánica de Promises, con una sintaxis que se lee como código síncrono."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -150,6 +227,10 @@ export default function AsyncPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>Esta función tarda el triple de lo necesario. ¿Por qué, y cómo la arreglarías?</p>
@@ -184,6 +265,166 @@ export default function AsyncPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            El código dentro de una función async no espera a nada para
+            empezar: corre <strong className="text-foreground">
+            síncronamente</strong>, igual que cualquier función normal,
+            desde el momento en que se la llama. Recién al llegar al
+            primer <code>await</code> se pausa y le devuelve el control al
+            llamador. Esto importa para debugging: un error lanzado antes
+            del primer await se comporta como una excepción síncrona
+            común, mientras que uno después de un await solo se puede
+            capturar en la promesa que devuelve la función.
+          </p>
+          <p>
+            La granularidad del manejo de errores es una decisión de
+            diseño: un único <code>try/catch</code> alrededor de toda la
+            función es más simple, pero no distingue qué operación falló.
+            Un <code>try/catch</code> por cada <code>await</code> permite
+            reaccionar distinto a cada fallo (reintentar solo una,
+            usar un valor por defecto para otra), a costa de más código.
+          </p>
+          <p>
+            Los <strong className="text-foreground">async generators</strong>{" "}
+            (<code>async function*</code>) combinan generadores con async:
+            en vez de una sola Promise, producen un async iterable que
+            emite valores en el tiempo, consumido con{" "}
+            <code>for await...of</code>. Sirven para procesar streams o
+            paginación sin cargar todo en memoria de una vez.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Asumir que una función async siempre difiere su ejecución.
+            </strong>{" "}
+            El código antes del primer await corre inmediato y síncrono,
+            no en una futura vuelta del Event Loop.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Usar un solo try/catch cuando necesitás distinguir qué
+              operación falló.
+            </strong>{" "}
+            Un catch genérico alrededor de todo pierde la información de
+            cuál de varios awaits fue el que rechazó.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Consumir una API paginada con un async generator que hace un
+            fetch por página y emite los items a medida que llegan.
+          </li>
+          <li>
+            Procesar un archivo grande en streaming con{" "}
+            <code>for await...of</code> sobre un ReadableStream, sin
+            cargarlo entero en memoria.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Una <strong className="text-foreground">floating promise</strong>{" "}
+            es llamar a algo que devuelve una Promise sin{" "}
+            <code>await</code>, <code>.then()</code> ni{" "}
+            <code>.catch()</code>: nadie observa su resultado. Si esa
+            operación rechaza, se vuelve un unhandled rejection silencioso,
+            típico en código que dispara efectos secundarios (loguear,
+            notificar) sin esperar su resultado. Reglas de lint como{" "}
+            <code>no-floating-promises</code> existen para detectarlas en
+            build time.
+          </p>
+          <p>
+            Cada <code>await</code> reanuda en una microtask nueva, y por
+            defecto el motor no conserva el stack de lo que corría antes de
+            la suspensión: un error async puede llegar con un stack trace
+            incompleto, sin la cadena de llamadas original. Motores
+            modernos mitigan esto con &ldquo;zero-cost async stack
+            traces&rdquo;, pero no es garantía universal — loguear contexto
+            explícito (request id) sigue siendo más confiable.
+          </p>
+          <p>
+            <code>top-level await</code> pausa la evaluación de todo el
+            grafo de módulos que dependen de él. Con dependencia circular
+            entre dos módulos que lo usan, se puede llegar a un deadlock:
+            uno espera al otro, que a su vez necesita algo del primero
+            todavía no disponible.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Dejar una llamada async &quot;fire and forget&quot; sin manejar.
+            </strong>{" "}
+            Si rechaza, se convierte en un unhandled rejection que puede
+            pasar desapercibido hasta producción.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Confiar solo en el stack trace de un error async para
+              debuggear.
+            </strong>{" "}
+            Puede faltar la cadena de llamadas previa a un await; conviene
+            loguear contexto explícito además del error.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Configurar la regla <code>no-floating-promises</code> de
+            typescript-eslint para detectar promesas sin manejar antes de
+            que lleguen a producción.
+          </li>
+          <li>
+            Evitar top-level await lento en módulos compartidos por muchas
+            rutas, para no retrasar el arranque de toda la aplicación.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }
