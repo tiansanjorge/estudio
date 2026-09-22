@@ -12,6 +12,7 @@ export const categorias: Categoria[] = [
       { slug: "scope", titulo: "Scope", estado: "disponible" },
       { slug: "hoisting", titulo: "Hoisting", estado: "disponible" },
       { slug: "memory", titulo: "Memory", estado: "disponible" },
+      { slug: "prototypes-clases", titulo: "Prototypes & Clases", estado: "disponible" },
     ],
   },
   {
