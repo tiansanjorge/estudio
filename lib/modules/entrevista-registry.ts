@@ -8,6 +8,7 @@ import { entrevistaHoisting } from "./hoisting/entrevista";
 import { entrevistaMemory } from "./memory/entrevista";
 import { entrevistaPrototypes } from "./prototypes/entrevista";
 import { entrevistaModulosEsmCjs } from "./modulos-esm-cjs/entrevista";
+import { entrevistaIteradores } from "./iteradores/entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -84,5 +85,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "modulos-esm-cjs",
     moduloTitulo: "Módulos: ESM vs CommonJS",
     preguntas: entrevistaModulosEsmCjs,
+  },
+  {
+    categoriaSlug: "javascript-profundo",
+    categoriaTitulo: "JavaScript profundo",
+    moduloSlug: "iteradores-generadores",
+    moduloTitulo: "Iteradores y Generadores",
+    preguntas: entrevistaIteradores,
   },
 ];
