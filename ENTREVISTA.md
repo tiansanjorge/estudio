@@ -51,9 +51,9 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 ### TypeScript avanzado
 - ✅ Genéricos (Nivel 1/2/3 + Entrevista)
 - ✅ Utility types (Nivel 1/2/3 + Entrevista)
-- ☐ Discriminated unions & type narrowing
-- ☐ Structural typing vs nominal
-- ☐ Trade-offs de `strict` mode
+- ✅ Discriminated unions & type narrowing (Nivel 1/2/3 + Entrevista)
+- ✅ Structural typing vs nominal (Nivel 1/2/3 + Entrevista)
+- ✅ Trade-offs de `strict` mode (Nivel 1/2/3 + Entrevista)
 
 ### React Core
 - ☐ Componentes (Nivel 2/3 + Entrevista)

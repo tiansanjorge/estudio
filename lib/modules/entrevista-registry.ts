@@ -11,6 +11,9 @@ import { entrevistaModulosEsmCjs } from "./modulos-esm-cjs/entrevista";
 import { entrevistaIteradores } from "./iteradores/entrevista";
 import { entrevistaGenericos } from "./generics/entrevista";
 import { entrevistaUtilityTypes } from "./utility-types/entrevista";
+import { entrevistaDiscriminatedUnions } from "./discriminated-unions/entrevista";
+import { entrevistaStructuralVsNominal } from "./structural-vs-nominal/entrevista";
+import { entrevistaStrictMode } from "./strict-mode/entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -108,5 +111,26 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "utility-types",
     moduloTitulo: "Utility types",
     preguntas: entrevistaUtilityTypes,
+  },
+  {
+    categoriaSlug: "typescript-avanzado",
+    categoriaTitulo: "TypeScript avanzado",
+    moduloSlug: "discriminated-unions",
+    moduloTitulo: "Discriminated unions & type narrowing",
+    preguntas: entrevistaDiscriminatedUnions,
+  },
+  {
+    categoriaSlug: "typescript-avanzado",
+    categoriaTitulo: "TypeScript avanzado",
+    moduloSlug: "structural-vs-nominal",
+    moduloTitulo: "Structural typing vs nominal",
+    preguntas: entrevistaStructuralVsNominal,
+  },
+  {
+    categoriaSlug: "typescript-avanzado",
+    categoriaTitulo: "TypeScript avanzado",
+    moduloSlug: "strict-mode",
+    moduloTitulo: "Trade-offs de strict mode",
+    preguntas: entrevistaStrictMode,
   },
 ];
