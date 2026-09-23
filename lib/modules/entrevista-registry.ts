@@ -54,6 +54,7 @@ import { entrevistaFocusManagement } from "./accesibilidad/focus-management-entr
 import { entrevistaNavegacionTeclado } from "./accesibilidad/navegacion-teclado-entrevista";
 import { entrevistaFormulariosAccesibles } from "./accesibilidad/formularios-accesibles-entrevista";
 import { entrevistaTestingAccesibilidad } from "./accesibilidad/testing-accesibilidad-entrevista";
+import { entrevistaAppVsPagesRouter } from "./nextjs/app-vs-pages-router-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -452,5 +453,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "testing-accesibilidad",
     moduloTitulo: "Testing de accesibilidad (axe)",
     preguntas: entrevistaTestingAccesibilidad,
+  },
+  {
+    categoriaSlug: "nextjs",
+    categoriaTitulo: "Next.js",
+    moduloSlug: "app-vs-pages-router",
+    moduloTitulo: "App Router vs Pages Router",
+    preguntas: entrevistaAppVsPagesRouter,
   },
 ];

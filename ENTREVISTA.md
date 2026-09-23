@@ -108,7 +108,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Testing de accesibilidad (axe) (Nivel 1/2/3 + Entrevista)
 
 ### Next.js
-- ☐ App Router vs Pages Router
+- ✅ App Router vs Pages Router (Nivel 1/2/3 + Entrevista)
 - ☐ Server Components vs Client Components
 - ☐ Data fetching & caching
 - ☐ SSR / SSG / ISR
