@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { procesarCola, type ConfigCola } from "@/lib/modules/backend/colas-jobs";
 
-const ESCALA_S = 16;
+const ESCALA_MINIMA_S = 16;
 
 function Opciones({
   etiqueta,
@@ -42,6 +42,7 @@ export function ColaJobsSimulador() {
   const [config, setConfig] = useState<ConfigCola>({ concurrencia: 1, maxIntentos: 1, backoffExponencial: false });
   const { resultados, duracionTotal } = procesarCola(config);
   const fallidos = resultados.filter((r) => r.estado === "fallido");
+  const escala = Math.max(ESCALA_MINIMA_S, duracionTotal);
 
   return (
     <div className="flex flex-col gap-6">
@@ -87,7 +88,7 @@ export function ColaJobsSimulador() {
                   className={`absolute inset-y-0.5 flex items-center justify-center rounded font-mono text-[9px] text-background ${
                     i.ok ? "bg-success" : "bg-error"
                   }`}
-                  style={{ left: `${(i.inicio / ESCALA_S) * 100}%`, width: `${((i.fin - i.inicio) / ESCALA_S) * 100}%` }}
+                  style={{ left: `${(i.inicio / escala) * 100}%`, width: `${((i.fin - i.inicio) / escala) * 100}%` }}
                 >
                   w{i.worker}
                 </span>
