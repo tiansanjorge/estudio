@@ -76,6 +76,7 @@ import { entrevistaTestingApis } from "./testing/testing-apis-entrevista";
 import { entrevistaMonolitoMicroservicios } from "./arquitectura/monolito-microservicios-entrevista";
 import { entrevistaCleanHexagonal } from "./arquitectura/clean-hexagonal-entrevista";
 import { entrevistaDesignPatterns } from "./arquitectura/design-patterns-entrevista";
+import { entrevistaEstructuraCarpetas } from "./arquitectura/estructura-carpetas-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -628,5 +629,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "design-patterns",
     moduloTitulo: "Design patterns comunes",
     preguntas: entrevistaDesignPatterns,
+  },
+  {
+    categoriaSlug: "arquitectura",
+    categoriaTitulo: "Arquitectura",
+    moduloSlug: "estructura-carpetas",
+    moduloTitulo: "Feature-based vs layer-based",
+    preguntas: entrevistaEstructuraCarpetas,
   },
 ];
