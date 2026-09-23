@@ -45,6 +45,7 @@ import { entrevistaCuandoNoUsarEstadoGlobal } from "./estado/cuando-no-usar-esta
 import { entrevistaMemoization } from "./performance/memoization-entrevista";
 import { entrevistaLazyLoading } from "./performance/lazy-loading-entrevista";
 import { entrevistaCodeSplitting } from "./performance/code-splitting-entrevista";
+import { entrevistaSuspense } from "./performance/suspense-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -380,5 +381,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "code-splitting",
     moduloTitulo: "Code Splitting",
     preguntas: entrevistaCodeSplitting,
+  },
+  {
+    categoriaSlug: "performance",
+    categoriaTitulo: "Performance",
+    moduloSlug: "suspense",
+    moduloTitulo: "Suspense",
+    preguntas: entrevistaSuspense,
   },
 ];
