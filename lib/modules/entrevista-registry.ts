@@ -65,6 +65,7 @@ import { entrevistaMetodosStatus } from "./http/metodos-status-entrevista";
 import { entrevistaHeadersCors } from "./http/headers-cors-entrevista";
 import { entrevistaFetchRequests } from "./http/fetch-requests-entrevista";
 import { entrevistaCachingHttp } from "./http/caching-http-entrevista";
+import { entrevistaRestGraphqlWebsockets } from "./http/rest-graphql-websockets-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -540,5 +541,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "caching-http",
     moduloTitulo: "Caching HTTP",
     preguntas: entrevistaCachingHttp,
+  },
+  {
+    categoriaSlug: "http-networking",
+    categoriaTitulo: "HTTP y Networking",
+    moduloSlug: "rest-graphql-websockets",
+    moduloTitulo: "REST vs GraphQL vs WebSockets",
+    preguntas: entrevistaRestGraphqlWebsockets,
   },
 ];

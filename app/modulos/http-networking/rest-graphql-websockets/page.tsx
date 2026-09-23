@@ -6,6 +6,15 @@ import { TiempoRealSimulador } from "@/components/modulo/TiempoRealSimulador";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosComparacion } from "@/lib/modules/http/rest-vs-graphql";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
+import { entrevistaRestGraphqlWebsockets } from "@/lib/modules/http/rest-graphql-websockets-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaRestGraphqlWebsockets.filter((p) => p.nivel === 1),
+  2: entrevistaRestGraphqlWebsockets.filter((p) => p.nivel === 2),
+  3: entrevistaRestGraphqlWebsockets.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "REST vs GraphQL vs WebSockets — Dev Study Lab",
@@ -50,6 +59,44 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta: "Una query pide 50 posts con su autor y se ejecutan 51 consultas. ¿Qué lo resuelve?",
+    opciones: ["Más índices en la base", "DataLoader (batching por request)", "Pasar a REST"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Agrupa los ids pedidos en el mismo tick y hace una sola consulta con IN.",
+  },
+  {
+    pregunta: "El servidor solo tiene que mandar notificaciones al cliente. ¿Qué conviene?",
+    opciones: ["WebSockets", "Server-Sent Events", "Una query GraphQL cada 100 ms"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "SSE es unidireccional, va sobre HTTP y trae reconexión automática.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Qué defensa permite aceptar solo queries GraphQL conocidas y cachearlas por GET?",
+    opciones: ["Introspección", "Persisted queries", "Alias"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El cliente manda el hash de una query registrada; el servidor rechaza el resto.",
+  },
+  {
+    pregunta: "Usuario A en la instancia 1 y B en la 2. ¿Cómo llega un mensaje de A a B?",
+    opciones: [
+      "Solo, porque comparten el load balancer",
+      "Con un bus compartido (por ejemplo Redis pub/sub) entre instancias",
+      "No se puede",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Cada conexión vive en una instancia; el bus distribuye los eventos entre todas.",
+  },
+];
+
 export default function RestGraphqlWebsocketsPage() {
   return (
     <ModuloLayout
@@ -57,6 +104,20 @@ export default function RestGraphqlWebsocketsPage() {
       titulo="REST vs GraphQL vs WebSockets"
       descripcion="Tres formas de comunicar cliente y servidor, con trade-offs distintos: cuántas peticiones hacés, cuánto control tenés sobre la forma de la respuesta, y quién inicia la comunicación."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -149,6 +210,10 @@ export default function RestGraphqlWebsocketsPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -176,6 +241,151 @@ export default function RestGraphqlWebsocketsPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            En GraphQL cada campo tiene su resolver, y eso genera el{" "}
+            <strong className="text-foreground">problema N+1</strong>: pedir 50
+            posts con su autor hace 51 consultas. DataLoader agrupa los ids del
+            mismo tick en una sola consulta. GraphQL tampoco versiona por URL:
+            el schema evoluciona agregando campos y marcando los viejos con{" "}
+            <code>@deprecated</code>.
+          </p>
+          <p>
+            Para tiempo real hay más opciones que WebSockets:{" "}
+            <strong className="text-foreground">polling</strong> (simple y
+            robusto), <strong className="text-foreground">Server-Sent Events</strong>{" "}
+            (servidor a cliente sobre HTTP, con reconexión automática) y{" "}
+            <strong className="text-foreground">WebSockets</strong>{" "}
+            (bidireccional, pero con reconexión, heartbeats y escalado a
+            cargo tuyo).
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">Resolvers que consultan la base uno por uno.</strong>{" "}
+            El N+1 aparece recién con datos reales.
+          </li>
+          <li>
+            <strong className="text-foreground">WebSockets para algo unidireccional.</strong>{" "}
+            SSE resuelve lo mismo con menos infraestructura.
+          </li>
+          <li>
+            <strong className="text-foreground">DataLoader compartido entre requests.</strong>{" "}
+            Su cache puede filtrar datos de un usuario a otro.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Streaming de la respuesta de un LLM con SSE.</li>
+          <li>Un BFF que arma la respuesta exacta de cada pantalla sobre varios servicios REST.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Una API GraphQL pública necesita límites que REST no: profundidad,
+            costo por query, paginación obligatoria y rate limiting por costo.
+            Las <strong className="text-foreground">persisted queries</strong>{" "}
+            aceptan solo queries registradas y habilitan el caching por GET.
+          </p>
+          <p>
+            Escalar <strong className="text-foreground">WebSockets</strong>{" "}
+            exige un bus compartido entre instancias, un load balancer para
+            conexiones largas, reconexión con backoff tras cada deploy,
+            heartbeats, y autenticación por cookie (verificando{" "}
+            <code>Origin</code>) o token de corta duración, porque el navegador
+            no permite headers custom.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">Introspección abierta en una API privada.</strong>{" "}
+            Expone el schema completo.
+          </li>
+          <li>
+            <strong className="text-foreground">No verificar <code>Origin</code> en el handshake del WebSocket.</strong>{" "}
+            Permite cross-site WebSocket hijacking con la cookie del usuario.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Un chat con varias instancias sincronizadas por Redis pub/sub.</li>
+          <li>Una API GraphQL con límite de complejidad por plan de cliente.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Desafío">
+        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+          <p>
+            Esta query es válida contra tu API GraphQL pública. ¿Por qué es un
+            problema y qué defensas pondrías?
+          </p>
+          <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
+{`query {
+  usuarios(primeros: 1000) {
+    amigos(primeros: 1000) {
+      amigos(primeros: 1000) {
+        amigos(primeros: 1000) { nombre email }
+      }
+    }
+  }
+}`}
+          </pre>
+          <RevelarSolucion>
+            <p>
+              Es un solo request que pide hasta 1000⁴ nodos: puede tumbar la base
+              y el servidor (denegación de servicio con una query legítima), y
+              además expone emails en masa. Defensas: límite de profundidad (por
+              ejemplo 5), análisis de costo que multiplica por el tamaño de cada
+              lista y rechaza antes de ejecutar, un máximo por página (
+              <code>primeros</code> ≤ 50), rate limiting por costo, timeouts, y
+              autorización por campo para datos como el email. Si los clientes
+              son propios, persisted queries.
+            </p>
+          </RevelarSolucion>
+        </div>
+      </Seccion>
+    </>
   );
 }

@@ -121,7 +121,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Headers y CORS (Nivel 1/2/3 + Entrevista)
 - ✅ Fetch/XHR y manejo de requests (Nivel 1/2/3 + Entrevista)
 - ✅ Caching HTTP (Nivel 1/2/3 + Entrevista)
-- ☐ REST vs GraphQL vs WebSockets (Nivel 2/3 + Entrevista)
+- ✅ REST vs GraphQL vs WebSockets (Nivel 1/2/3 + Entrevista)
 - ☐ HTTP/1.1 vs HTTP/2 vs HTTP/3 (Nivel 2/3 + Entrevista)
 
 ### Testing
