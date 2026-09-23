@@ -63,6 +63,7 @@ import { entrevistaRouteHandlers } from "./nextjs/route-handlers-entrevista";
 import { entrevistaFundamentosRed } from "./http/fundamentos-red-entrevista";
 import { entrevistaMetodosStatus } from "./http/metodos-status-entrevista";
 import { entrevistaHeadersCors } from "./http/headers-cors-entrevista";
+import { entrevistaFetchRequests } from "./http/fetch-requests-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -524,5 +525,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "headers-y-cors",
     moduloTitulo: "Headers y CORS",
     preguntas: entrevistaHeadersCors,
+  },
+  {
+    categoriaSlug: "http-networking",
+    categoriaTitulo: "HTTP y Networking",
+    moduloSlug: "fetch-y-requests",
+    moduloTitulo: "Fetch/XHR y manejo de requests",
+    preguntas: entrevistaFetchRequests,
   },
 ];

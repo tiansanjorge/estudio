@@ -6,6 +6,15 @@ import { BusquedaConCancelacion } from "@/components/modulo/BusquedaConCancelaci
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { escenariosFetch } from "@/lib/modules/http/fetch-lifecycle";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
+import { entrevistaFetchRequests } from "@/lib/modules/http/fetch-requests-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaFetchRequests.filter((p) => p.nivel === 1),
+  2: entrevistaFetchRequests.filter((p) => p.nivel === 2),
+  3: entrevistaFetchRequests.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Fetch/XHR y manejo de requests — Dev Study Lab",
@@ -46,6 +55,44 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Cuál de estos status conviene reintentar automáticamente?",
+    opciones: ["400 Bad Request", "404 Not Found", "503 Service Unavailable"],
+    respuestaCorrecta: 2,
+    explicacion:
+      "Un 503 es transitorio; un 400 o 404 van a fallar igual en el reintento.",
+  },
+  {
+    pregunta: "¿Para qué se agrega jitter al backoff exponencial?",
+    opciones: [
+      "Para que los reintentos sean más rápidos",
+      "Para que miles de clientes no reintenten todos al mismo tiempo",
+      "Para evitar CORS",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Sin aleatoriedad, los reintentos sincronizados generan picos que vuelven a tirar el servicio.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Qué evento conviene usar para mandar analytics antes de que el usuario se vaya?",
+    opciones: ["unload", "visibilitychange (cuando pasa a hidden)", "click"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "unload no es confiable en mobile y rompe el back/forward cache.",
+  },
+  {
+    pregunta: "Un servicio lleva 2 minutos caído. ¿Qué patrón evita seguir golpeándolo?",
+    opciones: ["Más reintentos", "Circuit breaker", "Debounce"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Tras N fallas, rechaza de inmediato durante un tiempo y después prueba con un request.",
+  },
+];
+
 export default function FetchYRequestsPage() {
   return (
     <ModuloLayout
@@ -53,6 +100,20 @@ export default function FetchYRequestsPage() {
       titulo="Fetch/XHR y manejo de requests"
       descripcion="fetch() resuelve su Promise más veces de lo que la mayoría espera — y cancelar requests obsoletas es la diferencia entre una UI correcta y una con bugs intermitentes."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -148,6 +209,10 @@ export default function FetchYRequestsPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -199,6 +264,160 @@ export default function FetchYRequestsPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <code>fetch</code> no tiene timeout: se agrega con{" "}
+            <code>AbortSignal.timeout(ms)</code>, y se combina con una
+            cancelación manual con <code>AbortSignal.any()</code>.
+          </p>
+          <p>
+            Los <strong className="text-foreground">reintentos</strong> se
+            aplican solo a errores transitorios (red, timeout, 408, 429, 5xx
+            de gateway) y a requests idempotentes, con{" "}
+            <strong className="text-foreground">backoff exponencial y jitter</strong>{" "}
+            y respetando <code>Retry-After</code>.
+          </p>
+          <p>
+            Conviene centralizar todo en un{" "}
+            <strong className="text-foreground">cliente de API</strong>:
+            headers comunes, errores tipados, timeouts y reintentos en un solo
+            lugar. Y conocer a <code>XMLHttpRequest</code>: sigue siendo la
+            forma práctica de medir el progreso de subida de un archivo.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">Reintentar un POST sin idempotency key.</strong>{" "}
+            Puede crear el recurso dos veces.
+          </li>
+          <li>
+            <strong className="text-foreground">Reintentos sin espera ni límite.</strong>{" "}
+            Convierten una caída breve en una avalancha de requests.
+          </li>
+          <li>
+            <strong className="text-foreground">Leer el body dos veces.</strong>{" "}
+            <code>response.json()</code> consume el stream; para leerlo de
+            nuevo hay que usar <code>response.clone()</code> antes.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Un <code>apiClient</code> con timeout de 10 s y 3 reintentos para GETs.</li>
+          <li>Subida de archivos con barra de progreso usando XHR.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Al cerrar la página, un <code>fetch</code> normal se cancela.{" "}
+            <code>navigator.sendBeacon</code> y{" "}
+            <code>fetch(url, {"{ keepalive: true }"})</code> completan el request
+            en segundo plano (con límite de tamaño), y el momento confiable
+            para mandarlos es <code>visibilitychange</code> a{" "}
+            <code>hidden</code>.
+          </p>
+          <p>
+            El <strong className="text-foreground">circuit breaker</strong>{" "}
+            complementa a los reintentos: ante una caída prolongada deja de
+            llamar al servicio durante un tiempo y después prueba con un
+            request. El <strong className="text-foreground">streaming</strong>{" "}
+            de <code>response.body</code> permite procesar respuestas grandes
+            (o de un LLM) a medida que llegan.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">Mandar analytics en <code>unload</code>.</strong>{" "}
+            En mobile muchas veces no se dispara.
+          </li>
+          <li>
+            <strong className="text-foreground">Esperar el body completo de una respuesta enorme.</strong>{" "}
+            Con streaming se puede mostrar progreso o resultados parciales.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Mostrar la respuesta de un chat con IA token a token leyendo el stream.</li>
+          <li>Un circuit breaker en el BFF que llama a un servicio de pagos.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Desafío">
+        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+          <p>
+            Este cliente &quot;robusto&quot; empeoró la última caída del
+            backend: el tráfico se multiplicó por cinco. ¿Por qué?
+          </p>
+          <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
+{`async function pedirConReintentos(url, opciones) {
+  for (let i = 0; i < 5; i++) {
+    try {
+      const res = await fetch(url, opciones);
+      if (res.ok) return res.json();
+    } catch {}
+    await new Promise((r) => setTimeout(r, 1000));
+  }
+}`}
+          </pre>
+          <RevelarSolucion>
+            <p>
+              Reintenta cualquier error, incluidos 400 y 404, y cualquier
+              método, incluidos POST no idempotentes. Espera siempre 1 segundo
+              fijo: todos los clientes reintentan sincronizados, cada segundo,
+              cinco veces, así que un backend con problemas recibe el tráfico
+              multiplicado justo cuando menos puede. Tampoco tiene timeout (un
+              request colgado bloquea el loop) y, si todo falla, devuelve{" "}
+              <code>undefined</code> en silencio. La versión correcta reintenta
+              solo errores transitorios y requests idempotentes, con backoff
+              exponencial y jitter, respeta <code>Retry-After</code>, usa{" "}
+              <code>AbortSignal.timeout</code> y lanza un error al agotar los
+              intentos. Ante caídas largas, un circuit breaker corta los
+              intentos por completo.
+            </p>
+          </RevelarSolucion>
+        </div>
+      </Seccion>
+    </>
   );
 }
