@@ -127,7 +127,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 ### Testing
 - ✅ Pirámide de testing (Nivel 1/2/3 + Entrevista)
 - ✅ Unit vs integration vs e2e (Nivel 1/2/3 + Entrevista)
-- ☐ Mocking strategies (MSW)
+- ✅ Mocking strategies (MSW) (Nivel 1/2/3 + Entrevista)
 - ☐ TDD
 - ☐ Testing de componentes React (RTL)
 - ☐ Testing de APIs

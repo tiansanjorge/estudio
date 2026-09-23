@@ -69,6 +69,7 @@ import { entrevistaRestGraphqlWebsockets } from "./http/rest-graphql-websockets-
 import { entrevistaHttpVersiones } from "./http/http-versiones-entrevista";
 import { entrevistaPiramideTesting } from "./testing/piramide-testing-entrevista";
 import { entrevistaUnitIntegrationE2e } from "./testing/unit-integration-e2e-entrevista";
+import { entrevistaMockingMsw } from "./testing/mocking-msw-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -572,5 +573,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "unit-integration-e2e",
     moduloTitulo: "Unit vs integration vs e2e",
     preguntas: entrevistaUnitIntegrationE2e,
+  },
+  {
+    categoriaSlug: "testing",
+    categoriaTitulo: "Testing",
+    moduloSlug: "mocking-msw",
+    moduloTitulo: "Mocking strategies (MSW)",
+    preguntas: entrevistaMockingMsw,
   },
 ];
