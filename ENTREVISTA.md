@@ -125,7 +125,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ HTTP/1.1 vs HTTP/2 vs HTTP/3 (Nivel 1/2/3 + Entrevista)
 
 ### Testing
-- ☐ Pirámide de testing
+- ✅ Pirámide de testing (Nivel 1/2/3 + Entrevista)
 - ☐ Unit vs integration vs e2e
 - ☐ Mocking strategies (MSW)
 - ☐ TDD

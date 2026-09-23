@@ -67,6 +67,7 @@ import { entrevistaFetchRequests } from "./http/fetch-requests-entrevista";
 import { entrevistaCachingHttp } from "./http/caching-http-entrevista";
 import { entrevistaRestGraphqlWebsockets } from "./http/rest-graphql-websockets-entrevista";
 import { entrevistaHttpVersiones } from "./http/http-versiones-entrevista";
+import { entrevistaPiramideTesting } from "./testing/piramide-testing-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -556,5 +557,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "http1-http2-http3",
     moduloTitulo: "HTTP/1.1 vs HTTP/2 vs HTTP/3",
     preguntas: entrevistaHttpVersiones,
+  },
+  {
+    categoriaSlug: "testing",
+    categoriaTitulo: "Testing",
+    moduloSlug: "piramide-testing",
+    moduloTitulo: "Pirámide de testing",
+    preguntas: entrevistaPiramideTesting,
   },
 ];
