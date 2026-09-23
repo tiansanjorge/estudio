@@ -105,7 +105,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Focus management (Nivel 1/2/3 + Entrevista)
 - ✅ Navegación por teclado (Nivel 1/2/3 + Entrevista)
 - ✅ Formularios accesibles (Nivel 1/2/3 + Entrevista)
-- ☐ Testing de accesibilidad (axe)
+- ✅ Testing de accesibilidad (axe) (Nivel 1/2/3 + Entrevista)
 
 ### Next.js
 - ☐ App Router vs Pages Router

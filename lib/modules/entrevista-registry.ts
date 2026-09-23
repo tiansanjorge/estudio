@@ -53,6 +53,7 @@ import { entrevistaSemanticHtmlAria } from "./accesibilidad/semantic-html-aria-e
 import { entrevistaFocusManagement } from "./accesibilidad/focus-management-entrevista";
 import { entrevistaNavegacionTeclado } from "./accesibilidad/navegacion-teclado-entrevista";
 import { entrevistaFormulariosAccesibles } from "./accesibilidad/formularios-accesibles-entrevista";
+import { entrevistaTestingAccesibilidad } from "./accesibilidad/testing-accesibilidad-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -444,5 +445,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "formularios-accesibles",
     moduloTitulo: "Formularios accesibles",
     preguntas: entrevistaFormulariosAccesibles,
+  },
+  {
+    categoriaSlug: "accesibilidad",
+    categoriaTitulo: "Accesibilidad",
+    moduloSlug: "testing-accesibilidad",
+    moduloTitulo: "Testing de accesibilidad (axe)",
+    preguntas: entrevistaTestingAccesibilidad,
   },
 ];
