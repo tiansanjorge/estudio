@@ -35,6 +35,7 @@ import { entrevistaUseEffect } from "./hooks/use-effect-entrevista";
 import { entrevistaUseMemo } from "./hooks/use-memo-entrevista";
 import { entrevistaUseCallback } from "./hooks/use-callback-entrevista";
 import { entrevistaUseRef } from "./hooks/use-ref-entrevista";
+import { entrevistaUseReducer } from "./hooks/use-reducer-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -300,5 +301,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "use-ref",
     moduloTitulo: "useRef",
     preguntas: entrevistaUseRef,
+  },
+  {
+    categoriaSlug: "hooks",
+    categoriaTitulo: "Hooks",
+    moduloSlug: "use-reducer",
+    moduloTitulo: "useReducer",
+    preguntas: entrevistaUseReducer,
   },
 ];
