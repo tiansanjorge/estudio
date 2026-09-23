@@ -26,6 +26,10 @@ import { entrevistaPortals } from "./react-core/portals-entrevista";
 import { entrevistaRender } from "./react-rendering/render-entrevista";
 import { entrevistaCommit } from "./react-rendering/commit-entrevista";
 import { entrevistaReconciliation } from "./react-rendering/reconciliation-entrevista";
+import { entrevistaFiber } from "./react-rendering/fiber-entrevista";
+import { entrevistaVirtualDom } from "./react-rendering/virtual-dom-entrevista";
+import { entrevistaConcurrent } from "./react-rendering/concurrent-entrevista";
+import { entrevistaHydration } from "./react-rendering/hydration-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -228,5 +232,33 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "reconciliation",
     moduloTitulo: "Reconciliation",
     preguntas: entrevistaReconciliation,
+  },
+  {
+    categoriaSlug: "react-rendering",
+    categoriaTitulo: "React Rendering",
+    moduloSlug: "fiber",
+    moduloTitulo: "Fiber",
+    preguntas: entrevistaFiber,
+  },
+  {
+    categoriaSlug: "react-rendering",
+    categoriaTitulo: "React Rendering",
+    moduloSlug: "virtual-dom",
+    moduloTitulo: "Virtual DOM",
+    preguntas: entrevistaVirtualDom,
+  },
+  {
+    categoriaSlug: "react-rendering",
+    categoriaTitulo: "React Rendering",
+    moduloSlug: "concurrent-rendering",
+    moduloTitulo: "Concurrent Rendering",
+    preguntas: entrevistaConcurrent,
+  },
+  {
+    categoriaSlug: "react-rendering",
+    categoriaTitulo: "React Rendering",
+    moduloSlug: "hydration",
+    moduloTitulo: "Hydration",
+    preguntas: entrevistaHydration,
   },
 ];

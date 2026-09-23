@@ -70,10 +70,10 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Render (Nivel 1/2/3 + Entrevista)
 - ✅ Commit (Nivel 1/2/3 + Entrevista)
 - ✅ Reconciliation (Nivel 1/2/3 + Entrevista)
-- ☐ Fiber (Nivel 2/3 + Entrevista)
-- ☐ Virtual DOM (Nivel 2/3 + Entrevista)
-- ☐ Concurrent Rendering (Nivel 2/3 + Entrevista)
-- ☐ Hydration (Nivel 2/3 + Entrevista)
+- ✅ Fiber (Nivel 1/2/3 + Entrevista)
+- ✅ Virtual DOM (Nivel 1/2/3 + Entrevista)
+- ✅ Concurrent Rendering (Nivel 1/2/3 + Entrevista)
+- ✅ Hydration (Nivel 1/2/3 + Entrevista)
 
 ### Hooks (categoría nueva, sin contenido aún)
 - ☐ useState

@@ -5,7 +5,16 @@ import { FiberSimulador } from "@/components/modulo/FiberSimulador";
 import { TrabajoEnChunksDemo } from "@/components/modulo/TrabajoEnChunksDemo";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosFiber } from "@/lib/modules/react-rendering/fiber-escenarios";
+import { entrevistaFiber } from "@/lib/modules/react-rendering/fiber-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaFiber.filter((p) => p.nivel === 1),
+  2: entrevistaFiber.filter((p) => p.nivel === 2),
+  3: entrevistaFiber.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Fiber — Dev Study Lab",
@@ -49,6 +58,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Qué son los árboles 'current' y 'work-in-progress' en Fiber?",
+    opciones: [
+      "Son sinónimos, React solo mantiene un árbol",
+      "Current es lo que está en pantalla; work-in-progress es una copia donde React calcula la próxima actualización, que puede descartarse sin afectar lo visible",
+      "Current es el árbol del servidor, work-in-progress es el del cliente",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es la técnica de 'double buffering': si el trabajo en progreso se descarta a mitad de camino, el árbol current nunca se vio afectado. Recién al completarse se intercambian, en Commit.",
+  },
+  {
+    pregunta:
+      "¿Cómo decide React qué actualización procesar primero cuando hay varias pendientes?",
+    opciones: [
+      "Siempre en el orden en que se dispararon (FIFO)",
+      "Con un sistema de 'lanes': cada actualización tiene una prioridad según su origen (click urgente vs transición de baja prioridad)",
+      "Al azar, para evitar sesgos",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Una interacción directa del usuario tiene una lane de alta prioridad; una actualización en startTransition, una de baja prioridad. React siempre prioriza las lanes más altas.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Por qué React implementó su propio Scheduler en vez de usar requestIdleCallback del navegador?",
+    opciones: [
+      "requestIdleCallback no existe en ningún navegador",
+      "Su timing es inconsistente entre navegadores y no da el control fino que React necesita sobre cuándo ceder el control",
+      "Por una cuestión de licencias de software",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "React construyó su propio paquete Scheduler sobre APIs más predecibles (como MessageChannel), para tener control total sobre cómo se reparte el trabajo entre frames.",
+  },
+  {
+    pregunta:
+      "Dentro del procesamiento de un fiber, ¿qué diferencia hay entre 'begin work' y 'complete work'?",
+    opciones: [
+      "Son la misma fase con nombres distintos",
+      "Begin work es descendente (crea fibers hijos bajando por el árbol); complete work es ascendente (completa cada fiber al subir, una vez sin más hijos)",
+      "Begin work ocurre en el servidor, complete work en el cliente",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es el mismo patrón de recorrido en profundidad de una recursión normal, pero con punteros explícitos en vez de la pila de llamadas de JavaScript, para poder pausarlo entre pasos.",
+  },
+];
+
 export default function FiberPage() {
   return (
     <ModuloLayout
@@ -56,6 +119,20 @@ export default function FiberPage() {
       titulo="Fiber"
       descripcion="Fiber no cambia qué renderiza React. Cambia cómo lo hace: en vez de una operación recursiva de una sola pieza, el trabajo se parte en unidades chicas que se pueden pausar, priorizar y retomar."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -157,6 +234,10 @@ export default function FiberPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -196,6 +277,154 @@ export default function FiberPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            React mantiene DOS árboles de fibers: el{" "}
+            <strong className="text-foreground">current</strong> (lo que
+            está en pantalla) y uno{" "}
+            <strong className="text-foreground">work-in-progress</strong>{" "}
+            (una copia donde va calculando la próxima actualización).
+            Mientras trabaja en el WIP, el current sigue intacto — si ese
+            trabajo se descarta, el usuario nunca vio nada a medio
+            actualizar. Recién al completarse, React los intercambia en
+            Commit. Es la misma técnica de &quot;double buffering&quot;
+            usada en gráficos.
+          </p>
+          <p>
+            Para decidir qué procesar primero entre varias actualizaciones
+            pendientes, React usa un sistema de{" "}
+            <strong className="text-foreground">lanes</strong>: cada
+            actualización se etiqueta con una prioridad según su origen —
+            una interacción directa tiene prioridad muy alta, una
+            actualización en <code>startTransition</code> tiene prioridad
+            baja. El bucle de trabajo siempre prioriza las lanes más
+            altas, pudiendo pausar las de menor prioridad.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Asumir que las actualizaciones se procesan en el orden en
+              que se dispararon.
+            </strong>{" "}
+            React es priority-based, no FIFO: una transición programada
+            antes puede procesarse después de un click de mayor prioridad.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Pensar que mantener dos árboles es un desperdicio evitable.
+            </strong>{" "}
+            Es lo que garantiza que un trabajo descartado nunca afecte lo
+            que el usuario ve.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Entender por qué un click puede &quot;adelantarse&quot; a una
+            transición pesada programada antes, gracias al sistema de
+            lanes.
+          </li>
+          <li>
+            Razonar sobre por qué React puede abandonar sin costo un
+            trabajo en progreso: el árbol current nunca se vio afectado.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            React implementó su propio paquete{" "}
+            <strong className="text-foreground">Scheduler</strong> en vez
+            de usar <code>requestIdleCallback</code> del navegador: esa
+            API tiene timing inconsistente entre navegadores y no da el
+            control fino que React necesita sobre cuándo ceder el
+            control exactamente. El Scheduler propio corre sobre APIs más
+            predecibles (como <code>MessageChannel</code>).
+          </p>
+          <p>
+            Al procesar un fiber, hay dos fases: <strong className="text-foreground">
+            begin work</strong> (descendente: crea los fibers hijos
+            bajando por el árbol) y <strong className="text-foreground">
+            complete work</strong> (ascendente: completa cada fiber al
+            subir, una vez que no tiene más hijos por procesar). Es el
+            mismo recorrido en profundidad de una recursión normal, pero
+            con punteros explícitos para poder pausarlo entre pasos.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Confiar en requestIdleCallback para lógica propia esperando
+              el mismo comportamiento que React.
+            </strong>{" "}
+            React evita esa API justamente por su inconsistencia entre
+            navegadores.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Pensar que begin work y complete work son fases separadas en
+              el tiempo para todo el árbol.
+            </strong>{" "}
+            Se intercalan por fiber, siguiendo el recorrido en
+            profundidad, no como dos pasadas completas separadas.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Usar el React DevTools Profiler para observar cómo el
+            Scheduler reparte unidades de trabajo entre frames en una
+            actualización grande.
+          </li>
+          <li>
+            Explicar en una entrevista de nivel staff por qué React
+            necesitó construir infraestructura propia en vez de apoyarse
+            en APIs del navegador ya existentes.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }

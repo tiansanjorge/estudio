@@ -5,7 +5,16 @@ import { ConcurrentSimulador } from "@/components/modulo/ConcurrentSimulador";
 import { ConcurrentSearchDemo } from "@/components/modulo/ConcurrentSearchDemo";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { pasosConcurrente } from "@/lib/modules/react-rendering/concurrent-escenarios";
+import { entrevistaConcurrent } from "@/lib/modules/react-rendering/concurrent-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaConcurrent.filter((p) => p.nivel === 1),
+  2: entrevistaConcurrent.filter((p) => p.nivel === 2),
+  3: entrevistaConcurrent.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Concurrent Rendering — Dev Study Lab",
@@ -49,6 +58,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿En qué se diferencia startTransition de useDeferredValue?",
+    opciones: [
+      "Son exactamente lo mismo con nombres distintos",
+      "startTransition envuelve una actualización de estado que vos disparás; useDeferredValue envuelve un valor cuyo origen no controlás (por ejemplo, una prop)",
+      "useDeferredValue solo funciona en Server Components",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Ambos usan el mismo mecanismo de lanes de baja prioridad por debajo, pero se aplican en puntos distintos: uno en el origen del cambio, el otro en el consumo de un valor externo.",
+  },
+  {
+    pregunta:
+      "Si una actualización en startTransition hace que un componente suspenda, ¿React muestra el fallback de Suspense inmediatamente?",
+    opciones: [
+      "Sí, siempre muestra el fallback de inmediato",
+      "No: mantiene visible el contenido anterior mientras el nuevo se prepara en segundo plano, con isPending en true",
+      "Solo si el componente está envuelto en React.memo",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Esto evita el parpadeo de mostrar un fallback de carga en cada navegación o cambio de pestaña, prefiriendo mantener la pantalla anterior visible un poco más de tiempo.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Qué es 'tearing' en renderizado concurrente?",
+    opciones: [
+      "Un error de sintaxis en componentes concurrentes",
+      "Cuando distintas partes de la UI, en el mismo frame, muestran valores inconsistentes de un mismo store externo porque este mutó durante un render pausado",
+      "Un problema exclusivo de Server Components",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "React garantiza consistencia para su propio estado (useState), pero un store externo mutable puede cambiar en cualquier momento, incluso mientras un render está pausado esperando retomar.",
+  },
+  {
+    pregunta:
+      "¿Cómo evita useSyncExternalStore el tearing?",
+    opciones: [
+      "Bloqueando todas las mutaciones del store mientras React renderiza",
+      "Verificando que el snapshot del store no haya cambiado entre el inicio del render y el commit; si cambió, fuerza un re-render síncrono adicional",
+      "Copiando el store completo dentro del estado de React en cada render",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es la razón por la que librerías como Redux y Zustand migraron a usar este hook por debajo en vez de su propia lógica de suscripción ad-hoc.",
+  },
+];
+
 export default function ConcurrentRenderingPage() {
   return (
     <ModuloLayout
@@ -56,6 +119,20 @@ export default function ConcurrentRenderingPage() {
       titulo="Concurrent Rendering"
       descripcion="Fiber hace posible que React pause y priorice trabajo. Concurrent Rendering es la API que te deja aprovechar eso: decirle a React qué actualizaciones son urgentes y cuáles pueden esperar."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -154,6 +231,10 @@ export default function ConcurrentRenderingPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -208,6 +289,153 @@ export default function ConcurrentRenderingPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <code>startTransition</code> envuelve una{" "}
+            <strong className="text-foreground">actualización</strong>{" "}
+            que vos mismo disparás.{" "}
+            <code>useDeferredValue</code> envuelve un{" "}
+            <strong className="text-foreground">valor</strong> cuyo
+            origen no controlás directamente (una prop, un valor de
+            Context) — React mantiene una versión diferida de baja
+            prioridad, mientras la versión inmediata sigue disponible
+            para lo que necesite reaccionar al instante.
+          </p>
+          <p>
+            Si una transición hace que un componente suspenda, React NO
+            muestra el fallback de Suspense de inmediato: mantiene visible
+            el contenido anterior mientras el nuevo se prepara en segundo
+            plano, con <code>isPending</code> en true, y recién reemplaza
+            todo de una vez cuando está listo — evitando el parpadeo de
+            mostrar un fallback en cada navegación.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Usar startTransition cuando en realidad no controlás el
+              setState de origen.
+            </strong>{" "}
+            Si el valor viene de props o Context, useDeferredValue es la
+            herramienta correcta.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Esperar que dos transiciones sucesivas se procesen en
+              orden, una después de la otra.
+            </strong>{" "}
+            React puede abandonar la primera si la segunda ya la volvió
+            obsoleta.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            useDeferredValue para despriorizar el renderizado de una lista
+            que depende de un query recibido por props, sin control
+            directo sobre el setState que lo origina.
+          </li>
+          <li>
+            Combinar startTransition con Suspense para navegación entre
+            pestañas sin mostrar un spinner en cada cambio.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <strong className="text-foreground">Tearing</strong> es cuando
+            distintas partes de la misma UI, en el mismo frame, muestran
+            valores inconsistentes de un mismo estado compartido — típico
+            con stores externos mutables, que pueden cambiar en cualquier
+            momento, incluso mientras un render concurrente está pausado
+            a mitad de camino. React garantiza consistencia para su
+            propio estado (useState) porque controla completamente cuándo
+            se aplican los cambios; un store externo no tiene esa
+            garantía por sí solo.
+          </p>
+          <p>
+            <code>useSyncExternalStore</code> evita el tearing forzando
+            que la lectura del store pase por una función de snapshot que
+            React puede re-verificar: si el snapshot cambió entre el
+            inicio del render y el commit, fuerza un re-render síncrono
+            adicional para que todos los componentes vean la misma
+            versión consistente. Es la razón por la que librerías como
+            Redux y Zustand migraron a usar este hook por debajo.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Leer un store externo mutable directamente en el render sin
+              useSyncExternalStore.
+            </strong>{" "}
+            Abre la puerta a tearing bajo renderizado concurrente.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Pensar que tearing es un bug de React.
+            </strong>{" "}
+            Es una consecuencia inevitable de tener estado mutable fuera
+            del control de React combinado con renders interrumpibles —
+            de ahí la necesidad de una API específica para resolverlo.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Usar useSyncExternalStore al integrar una fuente de estado
+            externa a React (una librería de terceros, un valor global)
+            de forma segura bajo Concurrent Rendering.
+          </li>
+          <li>
+            Explicar en una entrevista de nivel staff por qué Redux/Zustand
+            migraron su lógica de suscripción a este hook en vez de
+            mantener la propia.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }

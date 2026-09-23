@@ -5,7 +5,16 @@ import { HydrationSimulador } from "@/components/modulo/HydrationSimulador";
 import { HydrationMismatchDemo } from "@/components/modulo/HydrationMismatchDemo";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosHydration } from "@/lib/modules/react-rendering/hydration-escenarios";
+import { entrevistaHydration } from "@/lib/modules/react-rendering/hydration-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaHydration.filter((p) => p.nivel === 1),
+  2: entrevistaHydration.filter((p) => p.nivel === 2),
+  3: entrevistaHydration.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Hydration — Dev Study Lab",
@@ -49,6 +58,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Qué habilita el streaming SSR con Suspense boundaries respecto a la hydration?",
+    opciones: [
+      "Nada, la hydration siempre es un único paso para todo el árbol",
+      "Selective hydration: cada sección se hidrata independientemente a medida que llega, y React puede priorizar la sección con la que el usuario intenta interactuar",
+      "Elimina por completo la necesidad de hidratar",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Las secciones envueltas en Suspense que tardan más se completan y transmiten después, sin bloquear al resto de la página, y se hidratan cuando llegan.",
+  },
+  {
+    pregunta:
+      "Si el usuario hace click en una sección que todavía no terminó de hidratarse, ¿el evento se pierde?",
+    opciones: [
+      "Sí, siempre se pierde y hay que volver a hacer click después",
+      "No, generalmente se registra y usa como señal para elevar la prioridad de hidratación de esa sección específica",
+      "Solo funciona si la sección tiene su propio error boundary",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Gracias a la delegación de eventos en la raíz, React puede 'replayear' el evento contra el árbol ya hidratado una vez que esa sección termina de conectarse.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Todos los hydration mismatches tienen el mismo costo de recuperación?",
+    opciones: [
+      "Sí, React siempre descarta y rehace el árbol completo",
+      "No: un mismatch de texto se puede parchear puntualmente; un mismatch estructural (tipo de elemento distinto) obliga a descartar y re-renderizar toda esa porción en el cliente",
+      "No, pero solo importa la diferencia en desarrollo, no en producción",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Un mismatch estructural es notoriamente más costoso y visible (puede causar un salto de layout perceptible), a diferencia de uno de texto que React puede corregir sin descartar el resto del árbol.",
+  },
+  {
+    pregunta:
+      "¿Cómo evitarías el flash de tema incorrecto sin depender de un script anti-flash ni de useEffect?",
+    opciones: [
+      "No es posible evitarlo de ninguna forma",
+      "Guardando la preferencia también en una cookie, que viaja en cada request y le permite al servidor renderizar el tema correcto desde el primer byte",
+      "Usando siempre localStorage y aumentando el timeout del useEffect",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "A diferencia de localStorage, una cookie viaja automáticamente al servidor en cada request, eliminando la discrepancia entre lo que el servidor manda y lo que el cliente muestra.",
+  },
+];
+
 export default function HydrationPage() {
   return (
     <ModuloLayout
@@ -56,6 +119,20 @@ export default function HydrationPage() {
       titulo="Hydration"
       descripcion="El servidor te ahorra el primer render armando el HTML de antemano. Hydration es el momento en que React reutiliza ese HTML en vez de tirarlo — y donde aparecen los bugs más confusos de SSR."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -150,6 +227,10 @@ export default function HydrationPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -195,6 +276,158 @@ export default function HydrationPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Con Suspense boundaries en el árbol del servidor, React puede
+            transmitir (stream) el HTML de a partes, sin esperar a que
+            todo el árbol termine de renderizarse antes de mandar algo al
+            navegador. Del lado de la hidratación, esto habilita{" "}
+            <strong className="text-foreground">
+              selective hydration
+            </strong>
+            : cada sección se hidrata independientemente a medida que
+            llega, y React puede priorizar la sección con la que el
+            usuario intenta interactuar por encima del orden fijo de
+            arriba hacia abajo.
+          </p>
+          <p>
+            Si el usuario hace click en una sección que todavía no
+            terminó de hidratarse, ese evento generalmente no se pierde:
+            gracias a la delegación de eventos en la raíz, React lo
+            registra, eleva la prioridad de hidratación de esa sección, y
+            lo &ldquo;replayea&rdquo; una vez que termina de conectarse.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Asumir que la hydration es siempre un único paso para toda
+              la página.
+            </strong>{" "}
+            Con streaming SSR y Suspense, es un proceso incremental y
+            priorizado.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              No definir límites de Suspense pensando en qué secciones
+              son más lentas.
+            </strong>{" "}
+            Sin esos límites, no hay nada que streamear ni priorizar por
+            separado.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Envolver en Suspense una sección que depende de una consulta
+            lenta a base de datos, para que no bloquee el streaming del
+            resto de la página.
+          </li>
+          <li>
+            Diseñar límites de Suspense alrededor de secciones
+            interactivas tempranas (un formulario, un botón principal)
+            para que se prioricen si el usuario interactúa antes de
+            tiempo.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            No todos los hydration mismatches tienen la misma severidad.
+            Un mismatch de{" "}
+            <strong className="text-foreground">texto</strong> (un número
+            o fecha que difiere) es el caso más benigno: React puede
+            parchear puntualmente ese nodo y seguir. Un mismatch de{" "}
+            <strong className="text-foreground">estructura</strong> (tipo
+            de elemento distinto, cantidad de hijos distinta) es más
+            grave: React tiene que descartar esa porción del árbol y
+            re-renderizarla enteramente en el cliente, perdiendo el
+            beneficio de SSR ahí.
+          </p>
+          <p>
+            En vez de un valor neutro + useEffect, se puede evitar el
+            mismatch de raíz guardando la preferencia en una{" "}
+            <strong className="text-foreground">cookie</strong> en vez de
+            solo en localStorage: una cookie viaja automáticamente en
+            cada request al servidor, que puede leerla al renderizar y
+            generar el HTML correcto desde el primer byte — eliminando
+            por completo la necesidad del script anti-flash o del parche
+            de useEffect.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Tratar todo hydration mismatch como igual de grave.
+            </strong>{" "}
+            Uno de texto es mucho más barato de recuperar que uno
+            estructural.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Depender solo de localStorage para algo que el servidor
+              podría conocer de antemano.
+            </strong>{" "}
+            Una cookie es la herramienta correcta cuando el servidor
+            necesita esa preferencia para renderizar bien desde el inicio.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Migrar la preferencia de tema de este mismo proyecto de
+            localStorage a una cookie, para que el servidor renderice el
+            tema correcto sin script anti-flash.
+          </li>
+          <li>
+            Priorizar el diagnóstico de mismatches estructurales sobre los
+            de texto al revisar warnings de hidratación en un proyecto
+            grande, por su mayor costo de recuperación.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }
