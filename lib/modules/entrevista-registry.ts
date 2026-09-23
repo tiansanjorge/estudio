@@ -79,6 +79,7 @@ import { entrevistaDesignPatterns } from "./arquitectura/design-patterns-entrevi
 import { entrevistaEstructuraCarpetas } from "./arquitectura/estructura-carpetas-entrevista";
 import { entrevistaContratosApi } from "./arquitectura/contratos-api-entrevista";
 import { entrevistaEventDriven } from "./arquitectura/event-driven-entrevista";
+import { entrevistaAuthnAuthz } from "./seguridad/authn-authz-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -652,5 +653,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "event-driven",
     moduloTitulo: "Event-driven architecture",
     preguntas: entrevistaEventDriven,
+  },
+  {
+    categoriaSlug: "seguridad",
+    categoriaTitulo: "Seguridad",
+    moduloSlug: "authn-authz",
+    moduloTitulo: "AuthN vs AuthZ",
+    preguntas: entrevistaAuthnAuthz,
   },
 ];

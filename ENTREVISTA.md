@@ -141,7 +141,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Event-driven architecture (Nivel 1/2/3 + Entrevista)
 
 ### Seguridad
-- ☐ AuthN vs AuthZ
+- ✅ AuthN vs AuthZ (Nivel 1/2/3 + Entrevista)
 - ☐ JWT & sesiones
 - ☐ OWASP Top 10 esencial
 - ☐ CORS / CSRF / XSS
