@@ -66,7 +66,7 @@ export const categorias: Categoria[] = [
       { slug: "lazy-loading", titulo: "Lazy Loading", estado: "disponible" },
       { slug: "code-splitting", titulo: "Code Splitting", estado: "disponible" },
       { slug: "suspense", titulo: "Suspense", estado: "disponible" },
-      { slug: "virtualization", titulo: "Virtualization", estado: "proximamente" },
+      { slug: "virtualization", titulo: "Virtualization", estado: "disponible" },
       { slug: "bundle-size", titulo: "Bundle Size", estado: "proximamente" },
       { slug: "core-web-vitals", titulo: "Core Web Vitals", estado: "proximamente" },
     ],

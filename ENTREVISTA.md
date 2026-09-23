@@ -96,7 +96,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Lazy Loading (Nivel 1/2/3 + Entrevista)
 - ✅ Code Splitting (Nivel 1/2/3 + Entrevista)
 - ✅ Suspense (Nivel 1/2/3 + Entrevista)
-- ☐ Virtualization
+- ✅ Virtualization (Nivel 1/2/3 + Entrevista)
 - ☐ Bundle Size
 - ☐ Core Web Vitals
 
