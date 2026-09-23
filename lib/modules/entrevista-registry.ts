@@ -48,6 +48,7 @@ import { entrevistaCodeSplitting } from "./performance/code-splitting-entrevista
 import { entrevistaSuspense } from "./performance/suspense-entrevista";
 import { entrevistaVirtualization } from "./performance/virtualization-entrevista";
 import { entrevistaBundleSize } from "./performance/bundle-size-entrevista";
+import { entrevistaCoreWebVitals } from "./performance/core-web-vitals-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -404,5 +405,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "bundle-size",
     moduloTitulo: "Bundle Size",
     preguntas: entrevistaBundleSize,
+  },
+  {
+    categoriaSlug: "performance",
+    categoriaTitulo: "Performance",
+    moduloSlug: "core-web-vitals",
+    moduloTitulo: "Core Web Vitals",
+    preguntas: entrevistaCoreWebVitals,
   },
 ];

@@ -98,7 +98,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Suspense (Nivel 1/2/3 + Entrevista)
 - ✅ Virtualization (Nivel 1/2/3 + Entrevista)
 - ✅ Bundle Size (Nivel 1/2/3 + Entrevista)
-- ☐ Core Web Vitals
+- ✅ Core Web Vitals (Nivel 1/2/3 + Entrevista)
 
 ### Accesibilidad
 - ☐ Semantic HTML & ARIA
