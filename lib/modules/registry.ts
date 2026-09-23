@@ -49,9 +49,9 @@ export const categorias: Categoria[] = [
     slug: "hooks",
     titulo: "Hooks",
     modulos: [
-      { slug: "use-state", titulo: "useState", estado: "proximamente" },
-      { slug: "use-effect", titulo: "useEffect", estado: "proximamente" },
-      { slug: "use-memo", titulo: "useMemo", estado: "proximamente" },
+      { slug: "use-state", titulo: "useState", estado: "disponible" },
+      { slug: "use-effect", titulo: "useEffect", estado: "disponible" },
+      { slug: "use-memo", titulo: "useMemo", estado: "disponible" },
       { slug: "use-callback", titulo: "useCallback", estado: "proximamente" },
       { slug: "use-ref", titulo: "useRef", estado: "proximamente" },
       { slug: "use-reducer", titulo: "useReducer", estado: "proximamente" },

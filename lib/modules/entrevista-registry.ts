@@ -30,6 +30,9 @@ import { entrevistaFiber } from "./react-rendering/fiber-entrevista";
 import { entrevistaVirtualDom } from "./react-rendering/virtual-dom-entrevista";
 import { entrevistaConcurrent } from "./react-rendering/concurrent-entrevista";
 import { entrevistaHydration } from "./react-rendering/hydration-entrevista";
+import { entrevistaUseState } from "./hooks/use-state-entrevista";
+import { entrevistaUseEffect } from "./hooks/use-effect-entrevista";
+import { entrevistaUseMemo } from "./hooks/use-memo-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -260,5 +263,26 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "hydration",
     moduloTitulo: "Hydration",
     preguntas: entrevistaHydration,
+  },
+  {
+    categoriaSlug: "hooks",
+    categoriaTitulo: "Hooks",
+    moduloSlug: "use-state",
+    moduloTitulo: "useState",
+    preguntas: entrevistaUseState,
+  },
+  {
+    categoriaSlug: "hooks",
+    categoriaTitulo: "Hooks",
+    moduloSlug: "use-effect",
+    moduloTitulo: "useEffect",
+    preguntas: entrevistaUseEffect,
+  },
+  {
+    categoriaSlug: "hooks",
+    categoriaTitulo: "Hooks",
+    moduloSlug: "use-memo",
+    moduloTitulo: "useMemo",
+    preguntas: entrevistaUseMemo,
   },
 ];

@@ -76,9 +76,9 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Hydration (Nivel 1/2/3 + Entrevista)
 
 ### Hooks (categoría nueva, sin contenido aún)
-- ☐ useState
-- ☐ useEffect
-- ☐ useMemo
+- ✅ useState (Nivel 1/2/3 + Entrevista)
+- ✅ useEffect (Nivel 1/2/3 + Entrevista)
+- ✅ useMemo (Nivel 1/2/3 + Entrevista)
 - ☐ useCallback
 - ☐ useRef
 - ☐ useReducer
