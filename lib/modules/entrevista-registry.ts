@@ -77,6 +77,7 @@ import { entrevistaMonolitoMicroservicios } from "./arquitectura/monolito-micros
 import { entrevistaCleanHexagonal } from "./arquitectura/clean-hexagonal-entrevista";
 import { entrevistaDesignPatterns } from "./arquitectura/design-patterns-entrevista";
 import { entrevistaEstructuraCarpetas } from "./arquitectura/estructura-carpetas-entrevista";
+import { entrevistaContratosApi } from "./arquitectura/contratos-api-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -636,5 +637,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "estructura-carpetas",
     moduloTitulo: "Feature-based vs layer-based",
     preguntas: entrevistaEstructuraCarpetas,
+  },
+  {
+    categoriaSlug: "arquitectura",
+    categoriaTitulo: "Arquitectura",
+    moduloSlug: "contratos-api",
+    moduloTitulo: "Contratos de API (OpenAPI)",
+    preguntas: entrevistaContratosApi,
   },
 ];

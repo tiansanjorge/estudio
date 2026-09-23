@@ -137,7 +137,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Clean / Hexagonal architecture (Nivel 1/2/3 + Entrevista)
 - ✅ Design patterns comunes (factory, strategy, observer) (Nivel 1/2/3 + Entrevista)
 - ✅ Feature-based vs layer-based folder structure (Nivel 1/2/3 + Entrevista)
-- ☐ Contratos de API (OpenAPI)
+- ✅ Contratos de API (OpenAPI) (Nivel 1/2/3 + Entrevista)
 - ☐ Event-driven architecture
 
 ### Seguridad

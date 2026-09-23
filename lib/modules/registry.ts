@@ -149,7 +149,7 @@ export const categorias: Categoria[] = [
       { slug: "clean-hexagonal", titulo: "Clean / Hexagonal architecture", estado: "disponible" },
       { slug: "design-patterns", titulo: "Design patterns comunes", estado: "disponible" },
       { slug: "estructura-carpetas", titulo: "Feature-based vs layer-based", estado: "disponible" },
-      { slug: "contratos-api", titulo: "Contratos de API (OpenAPI)", estado: "proximamente" },
+      { slug: "contratos-api", titulo: "Contratos de API (OpenAPI)", estado: "disponible" },
       { slug: "event-driven", titulo: "Event-driven architecture", estado: "proximamente" },
     ],
   },
