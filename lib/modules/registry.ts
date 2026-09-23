@@ -87,7 +87,7 @@ export const categorias: Categoria[] = [
     titulo: "Next.js",
     modulos: [
       { slug: "app-vs-pages-router", titulo: "App Router vs Pages Router", estado: "disponible" },
-      { slug: "server-vs-client-components", titulo: "Server Components vs Client Components", estado: "proximamente" },
+      { slug: "server-vs-client-components", titulo: "Server Components vs Client Components", estado: "disponible" },
       { slug: "data-fetching-caching", titulo: "Data fetching & caching", estado: "proximamente" },
       { slug: "ssr-ssg-isr", titulo: "SSR / SSG / ISR", estado: "proximamente" },
       { slug: "middleware-edge", titulo: "Middleware & Edge runtime", estado: "proximamente" },
