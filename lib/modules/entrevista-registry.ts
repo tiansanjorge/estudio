@@ -95,6 +95,7 @@ import { entrevistaWebsocketsTiempoReal } from "./backend/websockets-tiempo-real
 import { entrevistaColasJobs } from "./backend/colas-jobs-entrevista";
 import { entrevistaArquitecturaCapas } from "./backend/arquitectura-capas-entrevista";
 import { entrevistaSqlVsNosql } from "./bases-de-datos/sql-vs-nosql-entrevista";
+import { entrevistaModeladoNormalizacion } from "./bases-de-datos/modelado-normalizacion-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -780,5 +781,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "sql-vs-nosql",
     moduloTitulo: "SQL vs NoSQL",
     preguntas: entrevistaSqlVsNosql,
+  },
+  {
+    categoriaSlug: "bases-de-datos",
+    categoriaTitulo: "Bases de datos",
+    moduloSlug: "modelado-normalizacion",
+    moduloTitulo: "Modelado relacional & normalización",
+    preguntas: entrevistaModeladoNormalizacion,
   },
 ];

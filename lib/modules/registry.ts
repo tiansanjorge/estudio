@@ -185,7 +185,7 @@ export const categorias: Categoria[] = [
     titulo: "Bases de datos",
     modulos: [
       { slug: "sql-vs-nosql", titulo: "SQL vs NoSQL", estado: "disponible" },
-      { slug: "modelado-normalizacion", titulo: "Modelado relacional & normalización", estado: "proximamente" },
+      { slug: "modelado-normalizacion", titulo: "Modelado relacional & normalización", estado: "disponible" },
       { slug: "indices-performance", titulo: "Índices y query performance", estado: "proximamente" },
       { slug: "transacciones-acid", titulo: "Transacciones & ACID", estado: "proximamente" },
       { slug: "prisma-orm", titulo: "Prisma / ORM — trade-offs", estado: "proximamente" },
