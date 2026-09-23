@@ -56,6 +56,7 @@ import { entrevistaFormulariosAccesibles } from "./accesibilidad/formularios-acc
 import { entrevistaTestingAccesibilidad } from "./accesibilidad/testing-accesibilidad-entrevista";
 import { entrevistaAppVsPagesRouter } from "./nextjs/app-vs-pages-router-entrevista";
 import { entrevistaServerVsClientComponents } from "./nextjs/server-vs-client-components-entrevista";
+import { entrevistaDataFetchingCaching } from "./nextjs/data-fetching-caching-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -468,5 +469,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "server-vs-client-components",
     moduloTitulo: "Server Components vs Client Components",
     preguntas: entrevistaServerVsClientComponents,
+  },
+  {
+    categoriaSlug: "nextjs",
+    categoriaTitulo: "Next.js",
+    moduloSlug: "data-fetching-caching",
+    moduloTitulo: "Data fetching & caching",
+    preguntas: entrevistaDataFetchingCaching,
   },
 ];

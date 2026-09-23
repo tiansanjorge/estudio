@@ -110,7 +110,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 ### Next.js
 - ✅ App Router vs Pages Router (Nivel 1/2/3 + Entrevista)
 - ✅ Server Components vs Client Components (Nivel 1/2/3 + Entrevista)
-- ☐ Data fetching & caching
+- ✅ Data fetching & caching (Nivel 1/2/3 + Entrevista)
 - ☐ SSR / SSG / ISR
 - ☐ Middleware & Edge runtime
 - ☐ Route handlers (API routes)
