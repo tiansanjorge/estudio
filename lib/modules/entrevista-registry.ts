@@ -74,6 +74,7 @@ import { entrevistaTdd } from "./testing/tdd-entrevista";
 import { entrevistaTestingComponentesRtl } from "./testing/testing-componentes-rtl-entrevista";
 import { entrevistaTestingApis } from "./testing/testing-apis-entrevista";
 import { entrevistaMonolitoMicroservicios } from "./arquitectura/monolito-microservicios-entrevista";
+import { entrevistaCleanHexagonal } from "./arquitectura/clean-hexagonal-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -612,5 +613,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "monolito-microservicios",
     moduloTitulo: "Monolito vs microservicios vs microfrontends",
     preguntas: entrevistaMonolitoMicroservicios,
+  },
+  {
+    categoriaSlug: "arquitectura",
+    categoriaTitulo: "Arquitectura",
+    moduloSlug: "clean-hexagonal",
+    moduloTitulo: "Clean / Hexagonal architecture",
+    preguntas: entrevistaCleanHexagonal,
   },
 ];
