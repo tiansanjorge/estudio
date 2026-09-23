@@ -80,7 +80,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ useEffect (Nivel 1/2/3 + Entrevista)
 - ✅ useMemo (Nivel 1/2/3 + Entrevista)
 - ✅ useCallback (Nivel 1/2/3 + Entrevista)
-- ☐ useRef
+- ✅ useRef (Nivel 1/2/3 + Entrevista)
 - ☐ useReducer
 - ☐ Custom Hooks
 

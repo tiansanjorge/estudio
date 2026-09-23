@@ -53,7 +53,7 @@ export const categorias: Categoria[] = [
       { slug: "use-effect", titulo: "useEffect", estado: "disponible" },
       { slug: "use-memo", titulo: "useMemo", estado: "disponible" },
       { slug: "use-callback", titulo: "useCallback", estado: "disponible" },
-      { slug: "use-ref", titulo: "useRef", estado: "proximamente" },
+      { slug: "use-ref", titulo: "useRef", estado: "disponible" },
       { slug: "use-reducer", titulo: "useReducer", estado: "proximamente" },
       { slug: "custom-hooks", titulo: "Custom Hooks", estado: "proximamente" },
     ],
