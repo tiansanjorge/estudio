@@ -158,7 +158,7 @@ export const categorias: Categoria[] = [
     titulo: "Seguridad",
     modulos: [
       { slug: "authn-authz", titulo: "AuthN vs AuthZ", estado: "disponible" },
-      { slug: "jwt-sesiones", titulo: "JWT & sesiones", estado: "proximamente" },
+      { slug: "jwt-sesiones", titulo: "JWT & sesiones", estado: "disponible" },
       { slug: "owasp-top-10", titulo: "OWASP Top 10 esencial", estado: "proximamente" },
       { slug: "cors-csrf-xss", titulo: "CORS / CSRF / XSS", estado: "proximamente" },
       { slug: "rbac-abac", titulo: "RBAC / ABAC", estado: "proximamente" },

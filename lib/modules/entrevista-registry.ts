@@ -80,6 +80,7 @@ import { entrevistaEstructuraCarpetas } from "./arquitectura/estructura-carpetas
 import { entrevistaContratosApi } from "./arquitectura/contratos-api-entrevista";
 import { entrevistaEventDriven } from "./arquitectura/event-driven-entrevista";
 import { entrevistaAuthnAuthz } from "./seguridad/authn-authz-entrevista";
+import { entrevistaJwtSesiones } from "./seguridad/jwt-sesiones-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -660,5 +661,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "authn-authz",
     moduloTitulo: "AuthN vs AuthZ",
     preguntas: entrevistaAuthnAuthz,
+  },
+  {
+    categoriaSlug: "seguridad",
+    categoriaTitulo: "Seguridad",
+    moduloSlug: "jwt-sesiones",
+    moduloTitulo: "JWT & sesiones",
+    preguntas: entrevistaJwtSesiones,
   },
 ];

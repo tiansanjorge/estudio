@@ -142,7 +142,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 
 ### Seguridad
 - ✅ AuthN vs AuthZ (Nivel 1/2/3 + Entrevista)
-- ☐ JWT & sesiones
+- ✅ JWT & sesiones (Nivel 1/2/3 + Entrevista)
 - ☐ OWASP Top 10 esencial
 - ☐ CORS / CSRF / XSS
 - ☐ RBAC / ABAC
