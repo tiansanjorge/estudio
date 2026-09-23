@@ -47,6 +47,7 @@ import { entrevistaLazyLoading } from "./performance/lazy-loading-entrevista";
 import { entrevistaCodeSplitting } from "./performance/code-splitting-entrevista";
 import { entrevistaSuspense } from "./performance/suspense-entrevista";
 import { entrevistaVirtualization } from "./performance/virtualization-entrevista";
+import { entrevistaBundleSize } from "./performance/bundle-size-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -396,5 +397,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "virtualization",
     moduloTitulo: "Virtualization",
     preguntas: entrevistaVirtualization,
+  },
+  {
+    categoriaSlug: "performance",
+    categoriaTitulo: "Performance",
+    moduloSlug: "bundle-size",
+    moduloTitulo: "Bundle Size",
+    preguntas: entrevistaBundleSize,
   },
 ];

@@ -97,7 +97,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Code Splitting (Nivel 1/2/3 + Entrevista)
 - ✅ Suspense (Nivel 1/2/3 + Entrevista)
 - ✅ Virtualization (Nivel 1/2/3 + Entrevista)
-- ☐ Bundle Size
+- ✅ Bundle Size (Nivel 1/2/3 + Entrevista)
 - ☐ Core Web Vitals
 
 ### Accesibilidad
