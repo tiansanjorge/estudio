@@ -49,6 +49,7 @@ import { entrevistaSuspense } from "./performance/suspense-entrevista";
 import { entrevistaVirtualization } from "./performance/virtualization-entrevista";
 import { entrevistaBundleSize } from "./performance/bundle-size-entrevista";
 import { entrevistaCoreWebVitals } from "./performance/core-web-vitals-entrevista";
+import { entrevistaSemanticHtmlAria } from "./accesibilidad/semantic-html-aria-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -412,5 +413,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "core-web-vitals",
     moduloTitulo: "Core Web Vitals",
     preguntas: entrevistaCoreWebVitals,
+  },
+  {
+    categoriaSlug: "accesibilidad",
+    categoriaTitulo: "Accesibilidad",
+    moduloSlug: "semantic-html-aria",
+    moduloTitulo: "Semantic HTML & ARIA",
+    preguntas: entrevistaSemanticHtmlAria,
   },
 ];

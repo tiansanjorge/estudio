@@ -71,7 +71,17 @@ export const categorias: Categoria[] = [
       { slug: "core-web-vitals", titulo: "Core Web Vitals", estado: "disponible" },
     ],
   },
-  { slug: "accesibilidad", titulo: "Accesibilidad", modulos: [] },
+  {
+    slug: "accesibilidad",
+    titulo: "Accesibilidad",
+    modulos: [
+      { slug: "semantic-html-aria", titulo: "Semantic HTML & ARIA", estado: "disponible" },
+      { slug: "focus-management", titulo: "Focus management", estado: "proximamente" },
+      { slug: "navegacion-teclado", titulo: "Navegación por teclado", estado: "proximamente" },
+      { slug: "formularios-accesibles", titulo: "Formularios accesibles", estado: "proximamente" },
+      { slug: "testing-accesibilidad", titulo: "Testing de accesibilidad (axe)", estado: "proximamente" },
+    ],
+  },
   { slug: "nextjs", titulo: "Next.js", modulos: [] },
   {
     slug: "http-networking",

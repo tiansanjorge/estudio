@@ -101,7 +101,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Core Web Vitals (Nivel 1/2/3 + Entrevista)
 
 ### Accesibilidad
-- ☐ Semantic HTML & ARIA
+- ✅ Semantic HTML & ARIA (Nivel 1/2/3 + Entrevista)
 - ☐ Focus management
 - ☐ Navegación por teclado
 - ☐ Formularios accesibles
