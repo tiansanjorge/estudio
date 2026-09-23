@@ -138,7 +138,7 @@ export const categorias: Categoria[] = [
       { slug: "mocking-msw", titulo: "Mocking strategies (MSW)", estado: "disponible" },
       { slug: "tdd", titulo: "TDD", estado: "disponible" },
       { slug: "testing-componentes-rtl", titulo: "Testing de componentes React (RTL)", estado: "disponible" },
-      { slug: "testing-apis", titulo: "Testing de APIs", estado: "proximamente" },
+      { slug: "testing-apis", titulo: "Testing de APIs", estado: "disponible" },
     ],
   },
   { slug: "arquitectura", titulo: "Arquitectura", modulos: [] },

@@ -72,6 +72,7 @@ import { entrevistaUnitIntegrationE2e } from "./testing/unit-integration-e2e-ent
 import { entrevistaMockingMsw } from "./testing/mocking-msw-entrevista";
 import { entrevistaTdd } from "./testing/tdd-entrevista";
 import { entrevistaTestingComponentesRtl } from "./testing/testing-componentes-rtl-entrevista";
+import { entrevistaTestingApis } from "./testing/testing-apis-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -596,5 +597,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "testing-componentes-rtl",
     moduloTitulo: "Testing de componentes React (RTL)",
     preguntas: entrevistaTestingComponentesRtl,
+  },
+  {
+    categoriaSlug: "testing",
+    categoriaTitulo: "Testing",
+    moduloSlug: "testing-apis",
+    moduloTitulo: "Testing de APIs",
+    preguntas: entrevistaTestingApis,
   },
 ];

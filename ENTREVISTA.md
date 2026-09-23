@@ -130,7 +130,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Mocking strategies (MSW) (Nivel 1/2/3 + Entrevista)
 - ✅ TDD (Nivel 1/2/3 + Entrevista)
 - ✅ Testing de componentes React (RTL) (Nivel 1/2/3 + Entrevista)
-- ☐ Testing de APIs
+- ✅ Testing de APIs (Nivel 1/2/3 + Entrevista)
 
 ### Arquitectura
 - ☐ Monolito vs microservicios vs microfrontends
