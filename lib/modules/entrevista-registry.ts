@@ -73,6 +73,7 @@ import { entrevistaMockingMsw } from "./testing/mocking-msw-entrevista";
 import { entrevistaTdd } from "./testing/tdd-entrevista";
 import { entrevistaTestingComponentesRtl } from "./testing/testing-componentes-rtl-entrevista";
 import { entrevistaTestingApis } from "./testing/testing-apis-entrevista";
+import { entrevistaMonolitoMicroservicios } from "./arquitectura/monolito-microservicios-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -604,5 +605,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "testing-apis",
     moduloTitulo: "Testing de APIs",
     preguntas: entrevistaTestingApis,
+  },
+  {
+    categoriaSlug: "arquitectura",
+    categoriaTitulo: "Arquitectura",
+    moduloSlug: "monolito-microservicios",
+    moduloTitulo: "Monolito vs microservicios vs microfrontends",
+    preguntas: entrevistaMonolitoMicroservicios,
   },
 ];

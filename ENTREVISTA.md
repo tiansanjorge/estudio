@@ -133,7 +133,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Testing de APIs (Nivel 1/2/3 + Entrevista)
 
 ### Arquitectura
-- ☐ Monolito vs microservicios vs microfrontends
+- ✅ Monolito vs microservicios vs microfrontends (Nivel 1/2/3 + Entrevista)
 - ☐ Clean / Hexagonal architecture
 - ☐ Design patterns comunes (factory, strategy, observer)
 - ☐ Feature-based vs layer-based folder structure
