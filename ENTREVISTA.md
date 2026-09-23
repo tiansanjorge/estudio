@@ -149,7 +149,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Secrets management (Nivel 1/2/3 + Entrevista)
 
 ### Backend
-- ☐ Node.js runtime (event loop ya cubierto en JS profundo; acá enfoque en proceso/threads)
+- ✅ Node.js runtime (Nivel 1/2/3 + Entrevista; foco en proceso/threads)
 - ☐ Diseño de APIs REST
 - ☐ Fastify / Express / NestJS — trade-offs
 - ☐ Validación de datos (Zod)

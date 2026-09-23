@@ -165,7 +165,21 @@ export const categorias: Categoria[] = [
       { slug: "secrets-management", titulo: "Secrets management", estado: "disponible" },
     ],
   },
-  { slug: "backend", titulo: "Backend", modulos: [] },
+  {
+    slug: "backend",
+    titulo: "Backend",
+    modulos: [
+      { slug: "nodejs-runtime", titulo: "Node.js runtime", estado: "disponible" },
+      { slug: "diseno-apis-rest", titulo: "Diseño de APIs REST", estado: "proximamente" },
+      { slug: "frameworks-node", titulo: "Fastify / Express / NestJS", estado: "proximamente" },
+      { slug: "validacion-zod", titulo: "Validación de datos (Zod)", estado: "proximamente" },
+      { slug: "errores-logging", titulo: "Manejo de errores y logging", estado: "proximamente" },
+      { slug: "rate-limiting", titulo: "Rate limiting", estado: "proximamente" },
+      { slug: "websockets-tiempo-real", titulo: "WebSockets / tiempo real", estado: "proximamente" },
+      { slug: "colas-jobs", titulo: "Colas y jobs asíncronos", estado: "proximamente" },
+      { slug: "arquitectura-capas", titulo: "Arquitectura en capas", estado: "proximamente" },
+    ],
+  },
   { slug: "devops", titulo: "DevOps", modulos: [] },
   { slug: "ia-aplicada", titulo: "IA aplicada al desarrollo", modulos: [] },
 ];

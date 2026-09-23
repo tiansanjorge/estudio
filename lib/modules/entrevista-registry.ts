@@ -85,6 +85,7 @@ import { entrevistaOwaspTop10 } from "./seguridad/owasp-top-10-entrevista";
 import { entrevistaCorsCsrfXss } from "./seguridad/cors-csrf-xss-entrevista";
 import { entrevistaRbacAbac } from "./seguridad/rbac-abac-entrevista";
 import { entrevistaSecretsManagement } from "./seguridad/secrets-management-entrevista";
+import { entrevistaNodejsRuntime } from "./backend/nodejs-runtime-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -700,5 +701,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "secrets-management",
     moduloTitulo: "Secrets management",
     preguntas: entrevistaSecretsManagement,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "nodejs-runtime",
+    moduloTitulo: "Node.js runtime",
+    preguntas: entrevistaNodejsRuntime,
   },
 ];
