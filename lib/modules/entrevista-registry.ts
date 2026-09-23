@@ -82,6 +82,7 @@ import { entrevistaEventDriven } from "./arquitectura/event-driven-entrevista";
 import { entrevistaAuthnAuthz } from "./seguridad/authn-authz-entrevista";
 import { entrevistaJwtSesiones } from "./seguridad/jwt-sesiones-entrevista";
 import { entrevistaOwaspTop10 } from "./seguridad/owasp-top-10-entrevista";
+import { entrevistaCorsCsrfXss } from "./seguridad/cors-csrf-xss-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -676,5 +677,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "owasp-top-10",
     moduloTitulo: "OWASP Top 10 esencial",
     preguntas: entrevistaOwaspTop10,
+  },
+  {
+    categoriaSlug: "seguridad",
+    categoriaTitulo: "Seguridad",
+    moduloSlug: "cors-csrf-xss",
+    moduloTitulo: "CORS / CSRF / XSS",
+    preguntas: entrevistaCorsCsrfXss,
   },
 ];
