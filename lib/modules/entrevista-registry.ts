@@ -60,6 +60,7 @@ import { entrevistaDataFetchingCaching } from "./nextjs/data-fetching-caching-en
 import { entrevistaSsrSsgIsr } from "./nextjs/ssr-ssg-isr-entrevista";
 import { entrevistaMiddlewareEdge } from "./nextjs/middleware-edge-entrevista";
 import { entrevistaRouteHandlers } from "./nextjs/route-handlers-entrevista";
+import { entrevistaFundamentosRed } from "./http/fundamentos-red-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -500,5 +501,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "route-handlers",
     moduloTitulo: "Route handlers (API routes)",
     preguntas: entrevistaRouteHandlers,
+  },
+  {
+    categoriaSlug: "http-networking",
+    categoriaTitulo: "HTTP y Networking",
+    moduloSlug: "fundamentos-de-red",
+    moduloTitulo: "Fundamentos de red",
+    preguntas: entrevistaFundamentosRed,
   },
 ];

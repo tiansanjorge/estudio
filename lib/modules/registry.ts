@@ -98,6 +98,7 @@ export const categorias: Categoria[] = [
     slug: "http-networking",
     titulo: "HTTP y Networking",
     modulos: [
+      { slug: "fundamentos-de-red", titulo: "Fundamentos de red", estado: "disponible" },
       { slug: "metodos-y-status-codes", titulo: "Métodos y status codes", estado: "disponible" },
       { slug: "headers-y-cors", titulo: "Headers y CORS", estado: "disponible" },
       { slug: "fetch-y-requests", titulo: "Fetch/XHR y manejo de requests", estado: "disponible" },
