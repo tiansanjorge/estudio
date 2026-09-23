@@ -156,7 +156,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Manejo de errores y logging (Nivel 1/2/3 + Entrevista)
 - ✅ Rate limiting (Nivel 1/2/3 + Entrevista)
 - ✅ WebSockets / tiempo real (Nivel 1/2/3 + Entrevista)
-- ☐ Colas y jobs asíncronos (BullMQ)
+- ✅ Colas y jobs asíncronos (BullMQ) (Nivel 1/2/3 + Entrevista)
 - ☐ Arquitectura en capas (controller/service/repository)
 
 ### Bases de datos (categoría nueva)

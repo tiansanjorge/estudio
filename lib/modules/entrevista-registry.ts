@@ -92,6 +92,7 @@ import { entrevistaValidacionZod } from "./backend/validacion-zod-entrevista";
 import { entrevistaErroresLogging } from "./backend/errores-logging-entrevista";
 import { entrevistaRateLimiting } from "./backend/rate-limiting-entrevista";
 import { entrevistaWebsocketsTiempoReal } from "./backend/websockets-tiempo-real-entrevista";
+import { entrevistaColasJobs } from "./backend/colas-jobs-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -756,5 +757,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "websockets-tiempo-real",
     moduloTitulo: "WebSockets / tiempo real",
     preguntas: entrevistaWebsocketsTiempoReal,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "colas-jobs",
+    moduloTitulo: "Colas y jobs asíncronos (BullMQ)",
+    preguntas: entrevistaColasJobs,
   },
 ];
