@@ -92,7 +92,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Cuándo NO usar una librería de estado global (Nivel 1/2/3 + Entrevista)
 
 ### Performance (frontend)
-- ☐ Memoization
+- ✅ Memoization (Nivel 1/2/3 + Entrevista)
 - ☐ Lazy Loading
 - ☐ Code Splitting
 - ☐ Suspense

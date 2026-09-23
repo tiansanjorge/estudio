@@ -42,6 +42,7 @@ import { entrevistaZustand } from "./estado/zustand-entrevista";
 import { entrevistaReduxToolkit } from "./estado/redux-toolkit-entrevista";
 import { entrevistaTanstackQuery } from "./estado/tanstack-query-entrevista";
 import { entrevistaCuandoNoUsarEstadoGlobal } from "./estado/cuando-no-usar-estado-global-entrevista";
+import { entrevistaMemoization } from "./performance/memoization-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -356,5 +357,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "cuando-no-usar-estado-global",
     moduloTitulo: "Cuándo NO usar estado global",
     preguntas: entrevistaCuandoNoUsarEstadoGlobal,
+  },
+  {
+    categoriaSlug: "performance",
+    categoriaTitulo: "Performance",
+    moduloSlug: "memoization",
+    moduloTitulo: "Memoization",
+    preguntas: entrevistaMemoization,
   },
 ];
