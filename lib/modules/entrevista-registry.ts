@@ -44,6 +44,7 @@ import { entrevistaTanstackQuery } from "./estado/tanstack-query-entrevista";
 import { entrevistaCuandoNoUsarEstadoGlobal } from "./estado/cuando-no-usar-estado-global-entrevista";
 import { entrevistaMemoization } from "./performance/memoization-entrevista";
 import { entrevistaLazyLoading } from "./performance/lazy-loading-entrevista";
+import { entrevistaCodeSplitting } from "./performance/code-splitting-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -372,5 +373,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "lazy-loading",
     moduloTitulo: "Lazy Loading",
     preguntas: entrevistaLazyLoading,
+  },
+  {
+    categoriaSlug: "performance",
+    categoriaTitulo: "Performance",
+    moduloSlug: "code-splitting",
+    moduloTitulo: "Code Splitting",
+    preguntas: entrevistaCodeSplitting,
   },
 ];
