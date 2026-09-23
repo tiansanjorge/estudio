@@ -87,6 +87,7 @@ import { entrevistaRbacAbac } from "./seguridad/rbac-abac-entrevista";
 import { entrevistaSecretsManagement } from "./seguridad/secrets-management-entrevista";
 import { entrevistaNodejsRuntime } from "./backend/nodejs-runtime-entrevista";
 import { entrevistaDisenoApisRest } from "./backend/diseno-apis-rest-entrevista";
+import { entrevistaFrameworksNode } from "./backend/frameworks-node-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -716,5 +717,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "diseno-apis-rest",
     moduloTitulo: "Diseño de APIs REST",
     preguntas: entrevistaDisenoApisRest,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "frameworks-node",
+    moduloTitulo: "Fastify / Express / NestJS",
+    preguntas: entrevistaFrameworksNode,
   },
 ];
