@@ -78,6 +78,7 @@ import { entrevistaCleanHexagonal } from "./arquitectura/clean-hexagonal-entrevi
 import { entrevistaDesignPatterns } from "./arquitectura/design-patterns-entrevista";
 import { entrevistaEstructuraCarpetas } from "./arquitectura/estructura-carpetas-entrevista";
 import { entrevistaContratosApi } from "./arquitectura/contratos-api-entrevista";
+import { entrevistaEventDriven } from "./arquitectura/event-driven-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -644,5 +645,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "contratos-api",
     moduloTitulo: "Contratos de API (OpenAPI)",
     preguntas: entrevistaContratosApi,
+  },
+  {
+    categoriaSlug: "arquitectura",
+    categoriaTitulo: "Arquitectura",
+    moduloSlug: "event-driven",
+    moduloTitulo: "Event-driven architecture",
+    preguntas: entrevistaEventDriven,
   },
 ];

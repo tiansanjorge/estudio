@@ -150,7 +150,7 @@ export const categorias: Categoria[] = [
       { slug: "design-patterns", titulo: "Design patterns comunes", estado: "disponible" },
       { slug: "estructura-carpetas", titulo: "Feature-based vs layer-based", estado: "disponible" },
       { slug: "contratos-api", titulo: "Contratos de API (OpenAPI)", estado: "disponible" },
-      { slug: "event-driven", titulo: "Event-driven architecture", estado: "proximamente" },
+      { slug: "event-driven", titulo: "Event-driven architecture", estado: "disponible" },
     ],
   },
   { slug: "seguridad", titulo: "Seguridad", modulos: [] },
