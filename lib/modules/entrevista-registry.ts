@@ -57,6 +57,7 @@ import { entrevistaTestingAccesibilidad } from "./accesibilidad/testing-accesibi
 import { entrevistaAppVsPagesRouter } from "./nextjs/app-vs-pages-router-entrevista";
 import { entrevistaServerVsClientComponents } from "./nextjs/server-vs-client-components-entrevista";
 import { entrevistaDataFetchingCaching } from "./nextjs/data-fetching-caching-entrevista";
+import { entrevistaSsrSsgIsr } from "./nextjs/ssr-ssg-isr-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -476,5 +477,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "data-fetching-caching",
     moduloTitulo: "Data fetching & caching",
     preguntas: entrevistaDataFetchingCaching,
+  },
+  {
+    categoriaSlug: "nextjs",
+    categoriaTitulo: "Next.js",
+    moduloSlug: "ssr-ssg-isr",
+    moduloTitulo: "SSR / SSG / ISR",
+    preguntas: entrevistaSsrSsgIsr,
   },
 ];

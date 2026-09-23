@@ -89,7 +89,7 @@ export const categorias: Categoria[] = [
       { slug: "app-vs-pages-router", titulo: "App Router vs Pages Router", estado: "disponible" },
       { slug: "server-vs-client-components", titulo: "Server Components vs Client Components", estado: "disponible" },
       { slug: "data-fetching-caching", titulo: "Data fetching & caching", estado: "disponible" },
-      { slug: "ssr-ssg-isr", titulo: "SSR / SSG / ISR", estado: "proximamente" },
+      { slug: "ssr-ssg-isr", titulo: "SSR / SSG / ISR", estado: "disponible" },
       { slug: "middleware-edge", titulo: "Middleware & Edge runtime", estado: "proximamente" },
       { slug: "route-handlers", titulo: "Route handlers (API routes)", estado: "proximamente" },
     ],
