@@ -61,6 +61,7 @@ import { entrevistaSsrSsgIsr } from "./nextjs/ssr-ssg-isr-entrevista";
 import { entrevistaMiddlewareEdge } from "./nextjs/middleware-edge-entrevista";
 import { entrevistaRouteHandlers } from "./nextjs/route-handlers-entrevista";
 import { entrevistaFundamentosRed } from "./http/fundamentos-red-entrevista";
+import { entrevistaMetodosStatus } from "./http/metodos-status-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -508,5 +509,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "fundamentos-de-red",
     moduloTitulo: "Fundamentos de red",
     preguntas: entrevistaFundamentosRed,
+  },
+  {
+    categoriaSlug: "http-networking",
+    categoriaTitulo: "HTTP y Networking",
+    moduloSlug: "metodos-y-status-codes",
+    moduloTitulo: "Métodos y status codes",
+    preguntas: entrevistaMetodosStatus,
   },
 ];
