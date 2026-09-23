@@ -85,7 +85,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Custom Hooks (Nivel 1/2/3 + Entrevista)
 
 ### Estado
-- ☐ Context (gestión de estado, distinto del módulo de React Core)
+- ✅ Context (Nivel 1/2/3 + Entrevista, gestión de estado, distinto del módulo de React Core)
 - ☐ Zustand
 - ☐ Redux Toolkit
 - ☐ TanStack Query
