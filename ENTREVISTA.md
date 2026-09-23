@@ -93,7 +93,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 
 ### Performance (frontend)
 - ✅ Memoization (Nivel 1/2/3 + Entrevista)
-- ☐ Lazy Loading
+- ✅ Lazy Loading (Nivel 1/2/3 + Entrevista)
 - ☐ Code Splitting
 - ☐ Suspense
 - ☐ Virtualization

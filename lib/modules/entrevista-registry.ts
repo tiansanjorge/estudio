@@ -43,6 +43,7 @@ import { entrevistaReduxToolkit } from "./estado/redux-toolkit-entrevista";
 import { entrevistaTanstackQuery } from "./estado/tanstack-query-entrevista";
 import { entrevistaCuandoNoUsarEstadoGlobal } from "./estado/cuando-no-usar-estado-global-entrevista";
 import { entrevistaMemoization } from "./performance/memoization-entrevista";
+import { entrevistaLazyLoading } from "./performance/lazy-loading-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -364,5 +365,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "memoization",
     moduloTitulo: "Memoization",
     preguntas: entrevistaMemoization,
+  },
+  {
+    categoriaSlug: "performance",
+    categoriaTitulo: "Performance",
+    moduloSlug: "lazy-loading",
+    moduloTitulo: "Lazy Loading",
+    preguntas: entrevistaLazyLoading,
   },
 ];

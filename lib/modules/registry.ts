@@ -63,7 +63,7 @@ export const categorias: Categoria[] = [
     titulo: "Performance",
     modulos: [
       { slug: "memoization", titulo: "Memoization", estado: "disponible" },
-      { slug: "lazy-loading", titulo: "Lazy Loading", estado: "proximamente" },
+      { slug: "lazy-loading", titulo: "Lazy Loading", estado: "disponible" },
       { slug: "code-splitting", titulo: "Code Splitting", estado: "proximamente" },
       { slug: "suspense", titulo: "Suspense", estado: "proximamente" },
       { slug: "virtualization", titulo: "Virtualization", estado: "proximamente" },
