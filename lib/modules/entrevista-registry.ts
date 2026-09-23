@@ -50,6 +50,7 @@ import { entrevistaVirtualization } from "./performance/virtualization-entrevist
 import { entrevistaBundleSize } from "./performance/bundle-size-entrevista";
 import { entrevistaCoreWebVitals } from "./performance/core-web-vitals-entrevista";
 import { entrevistaSemanticHtmlAria } from "./accesibilidad/semantic-html-aria-entrevista";
+import { entrevistaFocusManagement } from "./accesibilidad/focus-management-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -420,5 +421,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "semantic-html-aria",
     moduloTitulo: "Semantic HTML & ARIA",
     preguntas: entrevistaSemanticHtmlAria,
+  },
+  {
+    categoriaSlug: "accesibilidad",
+    categoriaTitulo: "Accesibilidad",
+    moduloSlug: "focus-management",
+    moduloTitulo: "Focus management",
+    preguntas: entrevistaFocusManagement,
   },
 ];
