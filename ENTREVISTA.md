@@ -153,7 +153,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Diseño de APIs REST (Nivel 1/2/3 + Entrevista)
 - ✅ Fastify / Express / NestJS — trade-offs (Nivel 1/2/3 + Entrevista)
 - ✅ Validación de datos (Zod) (Nivel 1/2/3 + Entrevista)
-- ☐ Manejo de errores y logging
+- ✅ Manejo de errores y logging (Nivel 1/2/3 + Entrevista)
 - ☐ Rate limiting
 - ☐ WebSockets / tiempo real
 - ☐ Colas y jobs asíncronos (BullMQ)

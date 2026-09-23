@@ -173,7 +173,7 @@ export const categorias: Categoria[] = [
       { slug: "diseno-apis-rest", titulo: "Diseño de APIs REST", estado: "disponible" },
       { slug: "frameworks-node", titulo: "Fastify / Express / NestJS", estado: "disponible" },
       { slug: "validacion-zod", titulo: "Validación de datos (Zod)", estado: "disponible" },
-      { slug: "errores-logging", titulo: "Manejo de errores y logging", estado: "proximamente" },
+      { slug: "errores-logging", titulo: "Manejo de errores y logging", estado: "disponible" },
       { slug: "rate-limiting", titulo: "Rate limiting", estado: "proximamente" },
       { slug: "websockets-tiempo-real", titulo: "WebSockets / tiempo real", estado: "proximamente" },
       { slug: "colas-jobs", titulo: "Colas y jobs asíncronos", estado: "proximamente" },

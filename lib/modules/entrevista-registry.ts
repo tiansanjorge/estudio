@@ -89,6 +89,7 @@ import { entrevistaNodejsRuntime } from "./backend/nodejs-runtime-entrevista";
 import { entrevistaDisenoApisRest } from "./backend/diseno-apis-rest-entrevista";
 import { entrevistaFrameworksNode } from "./backend/frameworks-node-entrevista";
 import { entrevistaValidacionZod } from "./backend/validacion-zod-entrevista";
+import { entrevistaErroresLogging } from "./backend/errores-logging-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -732,5 +733,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "validacion-zod",
     moduloTitulo: "Validación de datos (Zod)",
     preguntas: entrevistaValidacionZod,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "errores-logging",
+    moduloTitulo: "Manejo de errores y logging",
+    preguntas: entrevistaErroresLogging,
   },
 ];
