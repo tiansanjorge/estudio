@@ -17,6 +17,9 @@ import { entrevistaStrictMode } from "./strict-mode/entrevista";
 import { entrevistaComponentes } from "./react-core/componentes-entrevista";
 import { entrevistaProps } from "./react-core/props-entrevista";
 import { entrevistaState } from "./react-core/state-entrevista";
+import { entrevistaComposicion } from "./react-core/composicion-entrevista";
+import { entrevistaKeys } from "./react-core/keys-entrevista";
+import { entrevistaContext } from "./react-core/context-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -156,5 +159,26 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "state",
     moduloTitulo: "State",
     preguntas: entrevistaState,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "composition",
+    moduloTitulo: "Composition",
+    preguntas: entrevistaComposicion,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "keys",
+    moduloTitulo: "Keys",
+    preguntas: entrevistaKeys,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "context",
+    moduloTitulo: "Context",
+    preguntas: entrevistaContext,
   },
 ];

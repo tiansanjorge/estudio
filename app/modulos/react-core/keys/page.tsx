@@ -5,7 +5,16 @@ import { KeysSimulador } from "@/components/modulo/KeysSimulador";
 import { ListaConKeys } from "@/components/modulo/ListaConKeys";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosKeys } from "@/lib/modules/react-core/keys-escenarios";
+import { entrevistaKeys } from "@/lib/modules/react-core/keys-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaKeys.filter((p) => p.nivel === 1),
+  2: entrevistaKeys.filter((p) => p.nivel === 2),
+  3: entrevistaKeys.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Keys — Dev Study Lab",
@@ -49,6 +58,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Qué pasa si le cambiás la key a un componente puntual (no a un elemento de lista)?",
+    opciones: [
+      "No tiene ningún efecto, key solo aplica a listas",
+      "React desmonta la instancia vieja y monta una nueva, reseteando todo su estado interno — una técnica deliberada, no un bug",
+      "React lanza un error de compilación",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es el patrón típico para resetear un formulario reutilizado entre distintos registros: key={registro.id} fuerza un reset completo al cambiar de registro, sin necesidad de un useEffect manual.",
+  },
+  {
+    pregunta:
+      "¿Cómo le asignás una key a un item de lista que necesita renderizar dos nodos raíz (dt y dd) sin un div extra?",
+    opciones: [
+      "No es posible, hay que usar un div envolvente",
+      "Con la forma larga de Fragment (<React.Fragment key={id}>), porque la forma abreviada <>...</> no acepta props",
+      "Poniendo la key en el primero de los dos nodos únicamente",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El Fragment abreviado no acepta props. Cuando un item de lista necesita más de un elemento raíz y también una key, hace falta la forma larga de Fragment.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Por qué React puede reconciliar listas en tiempo lineal en vez de usar el algoritmo general de diffing de árboles (mucho más costoso)?",
+    opciones: [
+      "Porque React no reconcilia listas, las remonta siempre por completo",
+      "Porque usa heurísticas: tipos distintos producen árboles distintos, y las keys permiten emparejar elementos entre renders sin comparar todo el árbol",
+      "Porque las listas en React tienen un límite de elementos",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El diffing general de árboles es O(n³). Las keys le permiten a React recorrer ambas listas una sola vez y saber exactamente qué mover, agregar o eliminar, en tiempo lineal.",
+  },
+  {
+    pregunta:
+      "Combinás usuarios y productos en una lista, ambos con id que puede coincidir numéricamente. ¿Qué riesgo hay si usás el id crudo como key?",
+    opciones: [
+      "Ninguno, las keys son únicas a nivel global de la app",
+      "Colisión real entre hermanos: React no puede distinguir un usuario id=1 de un producto id=1, generando comportamiento indefinido",
+      "React lanza un error de compilación al detectar la colisión",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Las keys solo necesitan ser únicas entre hermanos de esa lista puntual. El fix es namespacar la key con el tipo de entidad, por ejemplo `usuario-${id}` y `producto-${id}`.",
+  },
+];
+
 export default function KeysPage() {
   return (
     <ModuloLayout
@@ -56,6 +119,20 @@ export default function KeysPage() {
       titulo="Keys"
       descripcion="Cuando React compara una lista entre renders, necesita saber qué elemento de antes es 'el mismo' que uno de ahora. Eso es exactamente para lo que sirve key."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -144,6 +221,10 @@ export default function KeysPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -187,6 +268,146 @@ export default function KeysPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Cambiar la <code>key</code> de un componente puntual (no de un
+            elemento de lista) fuerza a React a desmontar la instancia
+            vieja y montar una nueva, con todo su estado reinicializado —
+            una técnica deliberada. Es el patrón típico para un
+            formulario de edición reutilizado entre distintos registros:{" "}
+            <code>key={"{registro.id}"}</code> resetea todo el estado
+            interno al cambiar de registro, sin useEffect manual.
+          </p>
+          <p>
+            Cuando un item de lista necesita renderizar más de un nodo
+            raíz (por ejemplo <code>&lt;dt&gt;</code> y{" "}
+            <code>&lt;dd&gt;</code>) sin envolverlos en un div extra, hace
+            falta la forma larga de Fragment (
+            <code>{"<React.Fragment key={id}>"}</code>), porque la
+            abreviada <code>{"<>...</>"}</code> no acepta props.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Cambiar una key sin querer y sorprenderse por la pérdida de
+              estado.
+            </strong>{" "}
+            Un cambio de key siempre implica desmontaje/montaje completo,
+            sea intencional o accidental.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Olvidar la key en un Fragment de un item con múltiples nodos
+              raíz.
+            </strong>{" "}
+            React sigue necesitando emparejar ese item con los del render
+            anterior, aunque el contenido sean dos elementos.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Resetear un formulario de edición reutilizado con key={"{"}id
+            del registro{"}"}, evitando lógica manual de limpieza de
+            estado.
+          </li>
+          <li>
+            Usar Fragment con key en una lista de definiciones que
+            renderiza pares dt/dd sin div extra.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            El problema general de encontrar la diferencia mínima entre
+            dos árboles es computacionalmente costoso (O(n³)). React lo
+            evita con dos heurísticas: tipos de elemento distintos
+            producen árboles distintos (reemplaza directo, sin comparar
+            contenido interno), y las keys le permiten emparejar
+            elementos de listas entre renders sin comparar todo el árbol
+            — recorriendo ambas listas una sola vez, en tiempo lineal.
+          </p>
+          <p>
+            Las keys solo necesitan ser únicas entre{" "}
+            <strong className="text-foreground">hermanos</strong>. Si se
+            combinan arrays de fuentes distintas con ids que pueden
+            coincidir numéricamente, usar el id crudo como key genera una
+            colisión real — el fix es namespacar la key con el tipo de
+            entidad.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Combinar listas de fuentes distintas sin namespacar la key.
+            </strong>{" "}
+            Ids que coinciden numéricamente entre entidades distintas
+            colisionan como hermanos en la lista combinada.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Asumir que las keys deben ser únicas en toda la app.
+            </strong>{" "}
+            Solo necesitan serlo entre hermanos de esa lista puntual.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Namespacar keys con el tipo de entidad al renderizar un feed
+            combinado de distintas fuentes de datos (posts, anuncios,
+            sugerencias).
+          </li>
+          <li>
+            Auditar listas grandes donde los ids vienen de sistemas
+            distintos (una API interna y una externa) como fuente
+            probable de colisiones de key.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }

@@ -5,7 +5,16 @@ import { PropsArbolSimulador } from "@/components/modulo/PropsArbolSimulador";
 import { ContextEnVivo } from "@/components/modulo/ContextEnVivo";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosContext } from "@/lib/modules/react-core/context-escenarios";
+import { entrevistaContext } from "@/lib/modules/react-core/context-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaContext.filter((p) => p.nivel === 1),
+  2: entrevistaContext.filter((p) => p.nivel === 2),
+  3: entrevistaContext.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Context — Dev Study Lab",
@@ -50,6 +59,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Por qué conviene dividir un Context grande en varios más chicos según frecuencia de cambio?",
+    opciones: [
+      "Por una cuestión de organización de archivos únicamente",
+      "Porque cualquier cambio en el value re-renderiza a TODOS los consumidores del Context, sin importar qué parte usen — dividirlo limita el radio de impacto",
+      "Porque React solo permite un Context por árbol",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Si un dato que cambia seguido (notificaciones) comparte Context con uno que cambia poco (usuario), cualquier cambio en el primero re-renderiza también a los consumidores del segundo.",
+  },
+  {
+    pregunta:
+      "¿Qué limitación tiene Context frente a Zustand/Redux en cuanto a re-renders selectivos?",
+    opciones: [
+      "Ninguna, son equivalentes en este aspecto",
+      "Context no soporta suscripción parcial: cualquier cambio en el value re-renderiza a todos los consumidores, sin selectors por porción de estado",
+      "Context es más rápido en todos los casos",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Librerías con selectors permiten que cada componente se suscriba solo a la porción de estado que le importa. Context no tiene ese mecanismo incorporado.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "Un componente envuelto en React.memo que usa useContext — ¿evita re-renderizar cuando cambia ese Context?",
+    opciones: [
+      "Sí, memo bloquea cualquier causa de re-render",
+      "No: la suscripción de useContext es independiente de las props, memo no puede interceptar ni comparar el valor del Context",
+      "Solo si el Context también está envuelto en memo",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "memo compara props, no el valor de un Context consumido internamente. La única forma de reducir el impacto es dividir el Context o aislar el useContext en un hijo más chico.",
+  },
+  {
+    pregunta:
+      "¿Cuándo se usa el valor por defecto pasado a createContext(valorDefault)?",
+    opciones: [
+      "Como valor inicial dentro de cualquier Provider, hasta que se actualice",
+      "Solo cuando no existe ningún Provider de ese Context por encima del componente que llama a useContext",
+      "Nunca se usa si el Provider ya está definido en algún lugar de la app",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "En cuanto hay un Provider por encima, su value (aunque sea undefined) es lo que reciben los consumidores, sin ninguna influencia del default declarado en createContext.",
+  },
+];
+
 export default function ContextPage() {
   return (
     <ModuloLayout
@@ -57,6 +120,20 @@ export default function ContextPage() {
       titulo="Context"
       descripcion="Context resuelve el prop drilling que veníamos arrastrando desde Props: un valor disponible para cualquier descendiente, sin que los componentes del medio tengan que saber que existe."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -157,6 +234,10 @@ export default function ContextPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -206,6 +287,158 @@ export default function ContextPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Cuando el <code>value</code> de un Provider cambia, TODOS sus
+            consumidores re-renderizan, sin importar qué parte del valor
+            usen. Si un Context grande mezcla datos que cambian poco
+            (usuario) con datos que cambian seguido (notificaciones), un
+            cambio en cualquiera de los dos re-renderiza a todos los
+            consumidores — dividir en Contexts más chicos, separados por
+            frecuencia de cambio, limita ese radio de impacto.
+          </p>
+          <p>
+            Context nativo no soporta{" "}
+            <strong className="text-foreground">
+              suscripción parcial
+            </strong>{" "}
+            al valor: cualquier cambio re-renderiza a todos, aunque un
+            consumidor puntual solo lea una propiedad que no cambió.
+            Librerías como Zustand o Redux con selectors sí permiten que
+            cada componente se suscriba solo a la porción de estado que
+            le importa.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Un solo Context gigante para toda la app.
+            </strong>{" "}
+            Cualquier cambio, sin importar cuán pequeño, re-renderiza a
+            todos los consumidores de toda la aplicación.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Anidar muchos Providers directamente en el árbol principal.
+            </strong>{" "}
+            Genera &quot;provider hell&quot; — conviene centralizarlos en
+            un componente compositor.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Separar UsuarioContext (cambia poco) de
+            NotificacionesContext (cambia seguido) en vez de un solo
+            AppContext.
+          </li>
+          <li>
+            Un componente AppProviders que centraliza el anidamiento de
+            varios Providers, manteniendo el árbol principal limpio.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <code>React.memo</code> no puede evitar que un componente
+            re-renderice cuando cambia un Context que consume: la
+            suscripción de <code>useContext</code> es independiente de
+            las props, y memo no tiene forma de interceptar ni comparar
+            el valor del Context. La única forma de reducir ese impacto
+            es dividir el Context o aislar el <code>useContext</code> en
+            un componente hijo más chico.
+          </p>
+          <p>
+            Librerías como Zustand evitan el problema de &quot;todo
+            consumidor re-renderiza&quot; usando{" "}
+            <code>useSyncExternalStore</code> con un selector por
+            componente: cada uno se suscribe solo a la porción de estado
+            que le importa, y el store solo lo notifica si ESA porción
+            cambió — un mecanismo de suscripción granular que Context no
+            ofrece nativamente.
+          </p>
+          <p>
+            El valor por defecto de <code>createContext(default)</code>{" "}
+            solo se usa cuando NO existe ningún Provider por encima del
+            componente que llama a <code>useContext</code>. En cuanto hay
+            un Provider, su value (aunque sea <code>undefined</code>) es
+            lo que reciben todos los consumidores, sin ninguna influencia
+            del default.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Envolver en memo un componente que usa useContext esperando
+              que eso lo proteja de re-renders del Context.
+            </strong>{" "}
+            memo no tiene efecto sobre cambios de Context, solo sobre
+            props.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Asumir que el default de createContext aplica dentro de un
+              Provider.
+            </strong>{" "}
+            El value real del Provider siempre gana, sin importar el
+            default declarado.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Aislar un useContext en un componente hijo chico para que el
+            memo del padre no se vea afectado por cambios de ese Context.
+          </li>
+          <li>
+            Usar el default de createContext como valor seguro para tests
+            unitarios de componentes que se renderizan sin su Provider
+            real.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }
