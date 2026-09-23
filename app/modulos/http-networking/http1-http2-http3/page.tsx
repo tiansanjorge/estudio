@@ -6,6 +6,15 @@ import { CascadaSimulador } from "@/components/modulo/CascadaSimulador";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { protocolosHttp } from "@/lib/modules/http/protocolos";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
+import { entrevistaHttpVersiones } from "@/lib/modules/http/http-versiones-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaHttpVersiones.filter((p) => p.nivel === 1),
+  2: entrevistaHttpVersiones.filter((p) => p.nivel === 2),
+  3: entrevistaHttpVersiones.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "HTTP/1.1 vs HTTP/2 vs HTTP/3 — Dev Study Lab",
@@ -46,6 +55,52 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Qué reemplazó a HTTP/2 Server Push?",
+    opciones: [
+      "Nada, sigue siendo la recomendación",
+      "preload y la respuesta 103 Early Hints, donde el navegador decide qué pedir",
+      "WebSockets",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El servidor no conoce el cache del navegador; con Early Hints el navegador no pide lo que ya tiene.",
+  },
+  {
+    pregunta: "¿Cómo descubre el navegador que un servidor habla HTTP/3?",
+    opciones: [
+      "Lo intenta siempre primero",
+      "Por el header Alt-Svc (o un registro DNS HTTPS) y después intenta QUIC, con fallback",
+      "Por la extensión del archivo",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "HTTP/2 se negocia con ALPN dentro de TLS; HTTP/3, al ir sobre UDP, se anuncia aparte.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta: "Pasás del WiFi al 4G en medio de una descarga. ¿Qué protocolo la mantiene viva?",
+    opciones: ["HTTP/1.1 sobre TCP", "HTTP/2 sobre TCP", "HTTP/3 sobre QUIC"],
+    respuestaCorrecta: 2,
+    explicacion:
+      "QUIC identifica la conexión por connection ID, no por la IP.",
+  },
+  {
+    pregunta: "¿Qué ambigüedad explota el request smuggling?",
+    opciones: [
+      "El método HTTP",
+      "Content-Length vs Transfer-Encoding: dónde termina el body",
+      "El orden de los headers",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Proxy y backend interpretan distinto el largo del request sobre una conexión compartida.",
+  },
+];
+
 export default function Http1Http2Http3Page() {
   return (
     <ModuloLayout
@@ -53,6 +108,20 @@ export default function Http1Http2Http3Page() {
       titulo="HTTP/1.1 vs HTTP/2 vs HTTP/3"
       descripcion="La misma semántica de siempre (métodos, headers, status codes) sobre transportes cada vez menos propensos a bloquearse entre sí."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -148,6 +217,10 @@ export default function Http1Http2Http3Page() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -175,6 +248,145 @@ export default function Http1Http2Http3Page() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Con HTTP/2 dejan de tener sentido las optimizaciones que esquivaban
+            el límite de conexiones:{" "}
+            <strong className="text-foreground">domain sharding</strong>,
+            sprites y bundles gigantes. Una sola conexión multiplexada rinde
+            más, y archivos más chicos se cachean mejor.
+          </p>
+          <p>
+            <strong className="text-foreground">Server Push</strong> fracasó
+            porque el servidor no conoce el cache del navegador. Lo reemplazan{" "}
+            <code>preload</code> y <code>103 Early Hints</code>, donde decide el
+            navegador.
+          </p>
+          <p>
+            HTTP/2 se negocia con <strong className="text-foreground">ALPN</strong>{" "}
+            dentro del handshake de TLS. HTTP/3 se anuncia con{" "}
+            <code>Alt-Svc</code> y siempre tiene fallback a HTTP/2 si UDP está
+            bloqueado.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">Mantener domain sharding con HTTP/2.</strong>{" "}
+            Suma handshakes y rompe el multiplexado.
+          </li>
+          <li>
+            <strong className="text-foreground">Preload de todo.</strong>{" "}
+            Si todo es prioritario, nada lo es; compite con los recursos
+            realmente críticos.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Habilitar 103 Early Hints en el CDN para el CSS crítico.</li>
+          <li>Revisar la columna Protocol de DevTools para ver qué versión se negoció.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            QUIC identifica la conexión con un{" "}
+            <strong className="text-foreground">connection ID</strong>, no con
+            IP y puerto: al cambiar de red la conexión sigue, sin handshakes
+            nuevos. También trae 0-RTT al reconectar y corre en espacio de
+            usuario, lo que permite evolucionar el protocolo sin actualizar el
+            sistema operativo, a cambio de más uso de CPU.
+          </p>
+          <p>
+            HTTP/1.1 tiene una ambigüedad clásica entre{" "}
+            <code>Content-Length</code> y <code>Transfer-Encoding</code> que
+            habilita el <strong className="text-foreground">request smuggling</strong>{" "}
+            entre proxy y backend. HTTP/2, con frames de largo explícito, la
+            elimina, aunque tuvo sus propios ataques (como el Rapid Reset de
+            2023, que abusaba de abrir y cancelar streams en masa).
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">HTTP/2 en el borde y HTTP/1.1 hacia el backend sin normalizar.</strong>{" "}
+            El downgrade puede reintroducir el smuggling.
+          </li>
+          <li>
+            <strong className="text-foreground">Esperar que HTTP/3 lo arregle todo.</strong>{" "}
+            En redes sin pérdida de paquetes la diferencia con HTTP/2 es chica.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Justificar HTTP/3 para una app mobile con usuarios en redes inestables.</li>
+          <li>Auditar la cadena CDN → load balancer → backend en busca de downgrades.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Desafío">
+        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+          <p>
+            Migraste el sitio a HTTP/2, pero la carga no mejoró. En la pestaña
+            Network ves assets repartidos en <code>static1.tuapp.com</code>,{" "}
+            <code>static2.tuapp.com</code> y <code>static3.tuapp.com</code>, un{" "}
+            <code>bundle.js</code> de 2 MB y un sprite de 400 íconos. ¿Qué
+            cambiarías?
+          </p>
+          <RevelarSolucion>
+            <p>
+              Son optimizaciones de la era HTTP/1.1 que ahora juegan en contra.
+              El sharding en tres dominios obliga a tres DNS, TCP y TLS y reparte
+              los recursos en tres conexiones en vez de multiplexarlos en una:
+              conviene servir todo desde un solo origen (o dejar que el CDN
+              coalesca conexiones). El bundle de 2 MB se invalida entero con
+              cada cambio: partirlo por ruta y por vendor mejora el cache y el
+              tiempo hasta interactivo. El sprite obliga a descargar 400 íconos
+              para usar 10: mejor SVGs individuales o un sprite SVG por sección.
+              Y para lo crítico, <code>preload</code> o 103 Early Hints.
+            </p>
+          </RevelarSolucion>
+        </div>
+      </Seccion>
+    </>
   );
 }
