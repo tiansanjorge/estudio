@@ -86,6 +86,7 @@ import { entrevistaCorsCsrfXss } from "./seguridad/cors-csrf-xss-entrevista";
 import { entrevistaRbacAbac } from "./seguridad/rbac-abac-entrevista";
 import { entrevistaSecretsManagement } from "./seguridad/secrets-management-entrevista";
 import { entrevistaNodejsRuntime } from "./backend/nodejs-runtime-entrevista";
+import { entrevistaDisenoApisRest } from "./backend/diseno-apis-rest-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -708,5 +709,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "nodejs-runtime",
     moduloTitulo: "Node.js runtime",
     preguntas: entrevistaNodejsRuntime,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "diseno-apis-rest",
+    moduloTitulo: "Diseño de APIs REST",
+    preguntas: entrevistaDisenoApisRest,
   },
 ];

@@ -170,7 +170,7 @@ export const categorias: Categoria[] = [
     titulo: "Backend",
     modulos: [
       { slug: "nodejs-runtime", titulo: "Node.js runtime", estado: "disponible" },
-      { slug: "diseno-apis-rest", titulo: "Diseño de APIs REST", estado: "proximamente" },
+      { slug: "diseno-apis-rest", titulo: "Diseño de APIs REST", estado: "disponible" },
       { slug: "frameworks-node", titulo: "Fastify / Express / NestJS", estado: "proximamente" },
       { slug: "validacion-zod", titulo: "Validación de datos (Zod)", estado: "proximamente" },
       { slug: "errores-logging", titulo: "Manejo de errores y logging", estado: "proximamente" },
