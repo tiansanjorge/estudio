@@ -6,6 +6,15 @@ import { CacheSimulador } from "@/components/modulo/CacheSimulador";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { directivasCache } from "@/lib/modules/http/cache-directivas";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
+import { entrevistaCachingHttp } from "@/lib/modules/http/caching-http-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaCachingHttp.filter((p) => p.nivel === 1),
+  2: entrevistaCachingHttp.filter((p) => p.nivel === 2),
+  3: entrevistaCachingHttp.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Caching HTTP — Dev Study Lab",
@@ -45,6 +54,48 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Por qué un archivo app.3f9a1c.js puede cachearse un año?",
+    opciones: [
+      "Porque los JS nunca cambian",
+      "Porque el hash cambia con cada versión: la misma URL siempre tiene el mismo contenido",
+      "Porque el navegador lo revalida igual",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es cache busting: un deploy nuevo genera nombres nuevos, que el HTML (sin cachear) referencia.",
+  },
+  {
+    pregunta: "¿Qué directiva impide que un CDN compartido guarde una respuesta por usuario?",
+    opciones: ["public", "private", "immutable"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "private permite guardarla solo en el navegador de ese usuario.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Qué explota un ataque de cache poisoning típico?",
+    opciones: [
+      "Un max-age demasiado corto",
+      "Headers que cambian la respuesta pero no forman parte de la clave del cache",
+      "El uso de ETag",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El CDN guarda la respuesta manipulada bajo la URL normal y se la sirve a todos.",
+  },
+  {
+    pregunta: "Una entrada muy pedida vence y el backend se cae por la avalancha. ¿Qué ayuda?",
+    opciones: ["Vary: *", "stale-while-revalidate y request coalescing", "no-store"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Se sigue sirviendo la copia vieja y un solo request regenera la entrada.",
+  },
+];
+
 export default function CachingHttpPage() {
   return (
     <ModuloLayout
@@ -52,6 +103,20 @@ export default function CachingHttpPage() {
       titulo="Caching HTTP"
       descripcion="Cachear bien es la diferencia entre pegarle al servidor en cada click o resolver instantáneo con una copia local válida."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -142,6 +207,10 @@ export default function CachingHttpPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -167,6 +236,148 @@ export default function CachingHttpPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            La política depende del tipo de recurso. Assets con hash en el
+            nombre: <code>public, max-age=31536000, immutable</code> (cache
+            busting). HTML: <code>no-cache</code>, para que cada deploy se vea.
+            Datos por usuario: <code>private</code>, y <code>no-store</code> si
+            son sensibles. <code>s-maxage</code> permite que el CDN cachee más
+            tiempo que el navegador.
+          </p>
+          <p>
+            <code>Vary</code> declara qué headers del request forman parte de
+            la clave del cache: <code>Accept-Encoding</code> o{" "}
+            <code>Accept-Language</code> cuando cambian la respuesta. Variar de
+            más (<code>Cookie</code>, <code>User-Agent</code>) hace que el cache
+            deje de servir.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">Cachear el HTML con max-age largo.</strong>{" "}
+            Los usuarios siguen viendo la versión anterior después del deploy.
+          </li>
+          <li>
+            <strong className="text-foreground">Respuestas personalizadas sin <code>private</code>.</strong>{" "}
+            Un CDN puede servirle a un usuario los datos de otro.
+          </li>
+          <li>
+            <strong className="text-foreground"><code>Vary: Cookie</code> en contenido público.</strong>{" "}
+            Cada usuario genera su propia entrada y el CDN no cachea nada.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Definir la tabla de Cache-Control por tipo de ruta de una app.</li>
+          <li>Un catálogo con <code>s-maxage</code> y <code>stale-while-revalidate</code> en el CDN.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <strong className="text-foreground">Cache poisoning</strong>: si la
+            app usa un header que no forma parte de la clave del cache para
+            generar la respuesta, un atacante puede lograr que el CDN guarde
+            una versión manipulada y la sirva a todos.
+          </p>
+          <p>
+            <strong className="text-foreground">Cache stampede</strong>: al
+            vencer una entrada muy pedida, todos los requests van al origen a
+            la vez. Se mitiga con <code>stale-while-revalidate</code>, request
+            coalescing, jitter en los TTL y <code>stale-if-error</code>.
+          </p>
+          <p>
+            Sin <code>Cache-Control</code>, los navegadores aplican una
+            frescura heurística (una fracción del tiempo desde{" "}
+            <code>Last-Modified</code>): mejor declarar siempre la política
+            explícitamente.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">Cachear respuestas de error en el CDN.</strong>{" "}
+            Un 500 transitorio queda servido a todos durante el TTL.
+          </li>
+          <li>
+            <strong className="text-foreground">TTLs idénticos para miles de entradas.</strong>{" "}
+            Vencen juntas y generan picos en el origen.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Revisar qué headers usa el backend para armar URLs antes de poner un CDN adelante.</li>
+          <li>Invalidar por tags (surrogate keys) en el CDN en vez de purgar todo.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Desafío">
+        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+          <p>
+            Después de un deploy, algunos usuarios ven la página rota: el HTML
+            nuevo carga un JS viejo, o al revés. Esta es la configuración.
+            ¿Qué está mal?
+          </p>
+          <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
+{`/index.html     Cache-Control: public, max-age=86400
+/static/app.js  Cache-Control: public, max-age=86400`}
+          </pre>
+          <RevelarSolucion>
+            <p>
+              El JS no tiene hash en el nombre y los dos se cachean un día de
+              forma independiente: un usuario puede tener el HTML nuevo y el JS
+              viejo en cache (o al revés), y quedan desincronizados hasta que
+              ambos vencen. La corrección es cache busting: generar el JS con
+              hash de contenido (<code>app.3f9a1c.js</code>) y servirlo con{" "}
+              <code>max-age=31536000, immutable</code>, y servir el HTML con{" "}
+              <code>no-cache</code> para que siempre se revalide y apunte a los
+              nombres correctos. Así cada versión del HTML trae exactamente sus
+              assets.
+            </p>
+          </RevelarSolucion>
+        </div>
+      </Seccion>
+    </>
   );
 }
