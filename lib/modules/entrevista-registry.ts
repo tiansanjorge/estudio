@@ -81,6 +81,7 @@ import { entrevistaContratosApi } from "./arquitectura/contratos-api-entrevista"
 import { entrevistaEventDriven } from "./arquitectura/event-driven-entrevista";
 import { entrevistaAuthnAuthz } from "./seguridad/authn-authz-entrevista";
 import { entrevistaJwtSesiones } from "./seguridad/jwt-sesiones-entrevista";
+import { entrevistaOwaspTop10 } from "./seguridad/owasp-top-10-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -668,5 +669,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "jwt-sesiones",
     moduloTitulo: "JWT & sesiones",
     preguntas: entrevistaJwtSesiones,
+  },
+  {
+    categoriaSlug: "seguridad",
+    categoriaTitulo: "Seguridad",
+    moduloSlug: "owasp-top-10",
+    moduloTitulo: "OWASP Top 10 esencial",
+    preguntas: entrevistaOwaspTop10,
   },
 ];
