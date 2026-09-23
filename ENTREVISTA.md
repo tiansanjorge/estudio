@@ -129,7 +129,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Unit vs integration vs e2e (Nivel 1/2/3 + Entrevista)
 - ✅ Mocking strategies (MSW) (Nivel 1/2/3 + Entrevista)
 - ✅ TDD (Nivel 1/2/3 + Entrevista)
-- ☐ Testing de componentes React (RTL)
+- ✅ Testing de componentes React (RTL) (Nivel 1/2/3 + Entrevista)
 - ☐ Testing de APIs
 
 ### Arquitectura

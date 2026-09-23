@@ -71,6 +71,7 @@ import { entrevistaPiramideTesting } from "./testing/piramide-testing-entrevista
 import { entrevistaUnitIntegrationE2e } from "./testing/unit-integration-e2e-entrevista";
 import { entrevistaMockingMsw } from "./testing/mocking-msw-entrevista";
 import { entrevistaTdd } from "./testing/tdd-entrevista";
+import { entrevistaTestingComponentesRtl } from "./testing/testing-componentes-rtl-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -588,5 +589,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "tdd",
     moduloTitulo: "TDD",
     preguntas: entrevistaTdd,
+  },
+  {
+    categoriaSlug: "testing",
+    categoriaTitulo: "Testing",
+    moduloSlug: "testing-componentes-rtl",
+    moduloTitulo: "Testing de componentes React (RTL)",
+    preguntas: entrevistaTestingComponentesRtl,
   },
 ];
