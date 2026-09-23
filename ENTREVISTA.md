@@ -160,7 +160,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Arquitectura en capas (controller/service/repository) (Nivel 1/2/3 + Entrevista)
 
 ### Bases de datos (categoría nueva)
-- ☐ SQL vs NoSQL
+- ✅ SQL vs NoSQL (Nivel 1/2/3 + Entrevista)
 - ☐ Modelado relacional & normalización
 - ☐ Índices y query performance
 - ☐ Transacciones & ACID
