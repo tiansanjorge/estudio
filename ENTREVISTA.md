@@ -82,7 +82,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ useCallback (Nivel 1/2/3 + Entrevista)
 - ✅ useRef (Nivel 1/2/3 + Entrevista)
 - ✅ useReducer (Nivel 1/2/3 + Entrevista)
-- ☐ Custom Hooks
+- ✅ Custom Hooks (Nivel 1/2/3 + Entrevista)
 
 ### Estado
 - ☐ Context (gestión de estado, distinto del módulo de React Core)
