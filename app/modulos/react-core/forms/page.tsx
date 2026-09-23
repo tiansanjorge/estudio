@@ -5,7 +5,16 @@ import { FormsSimulador } from "@/components/modulo/FormsSimulador";
 import { InputControladoDemo } from "@/components/modulo/InputControladoDemo";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosForms } from "@/lib/modules/react-core/forms-escenarios";
+import { entrevistaForms } from "@/lib/modules/react-core/forms-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaForms.filter((p) => p.nivel === 1),
+  2: entrevistaForms.filter((p) => p.nivel === 2),
+  3: entrevistaForms.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Forms — Dev Study Lab",
@@ -49,6 +58,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Por qué React Hook Form re-renderiza menos que un formulario armado con useState por campo?",
+    opciones: [
+      "Porque usa una versión optimizada de React internamente",
+      "Porque registra los inputs como no controlados vía refs, en vez de un useState por campo que re-renderiza el formulario entero en cada tecla",
+      "Porque valida los campos con menos frecuencia",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Con useState por campo, escribir en un input dispara un render del formulario entero. React Hook Form evita eso usando refs internamente vía register().",
+  },
+  {
+    pregunta:
+      "¿Qué ventaja tiene compartir un schema de validación (Zod) entre cliente y servidor?",
+    opciones: [
+      "Ninguna, siempre hay que duplicar la validación",
+      "Se define la regla una sola vez, evitando que la validación del formulario y la del backend se desincronicen con el tiempo",
+      "Solo sirve para tipar, no valida en runtime",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El servidor nunca debe confiar en que el cliente ya validó. Un schema compartido evita mantener dos implementaciones de la misma regla que eventualmente divergen.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Qué ventaja tiene required/type='email' en HTML sobre validar todo con JavaScript?",
+    opciones: [
+      "Ninguna, JavaScript siempre es más confiable",
+      "Funciona incluso si JavaScript falla en cargar, y el navegador maneja foco y accesibilidad de esos mensajes de forma consistente",
+      "Es más rápido de escribir, nada más",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Para reglas básicas y universales conviene apoyarse en la validación nativa. Reglas de negocio específicas siguen necesitando JavaScript, pero no hace falta reemplazar todo.",
+  },
+  {
+    pregunta:
+      "¿Qué ventaja de 'progressive enhancement' da el modelo de form actions de React 19 sobre un onSubmit tradicional?",
+    opciones: [
+      "Ninguna, funcionan exactamente igual",
+      "El formulario funciona incluso si JavaScript no cargó todavía, porque se engancha al mecanismo nativo action del navegador",
+      "Solo funciona en Server Components, nunca en el cliente",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Con <form action={fn}>, React se apoya en el submit nativo del navegador en vez de depender por completo de interceptar el evento con JavaScript.",
+  },
+];
+
 export default function FormsPage() {
   return (
     <ModuloLayout
@@ -56,6 +119,20 @@ export default function FormsPage() {
       titulo="Forms"
       descripcion="En un input controlado, React no observa lo que escribís: decide qué mostrar. Esa diferencia explica tanto su poder como su bug más común."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -152,6 +229,10 @@ export default function FormsPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -179,12 +260,155 @@ export default function FormsPage() {
               controlado a mitad de camino, y React avisa con el warning.
             </p>
             <p className="mt-2">El fix es asegurar un string vacío como fallback, para que el input sea controlado desde el primer render:</p>
-            <pre className="mt-2 overflow-x-auto rounded-lg border border-border bg-surface p-3 font-mono text-xs text-muted-foreground">
+            <pre className="mt-2 overflow-x-auto rounded-lg border border-surface p-3 font-mono text-xs text-muted-foreground">
 {`const [nombre, setNombre] = useState(datosIniciales.nombre ?? '');`}
             </pre>
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Librerías como{" "}
+            <strong className="text-foreground">React Hook Form</strong>{" "}
+            usan inputs no controlados por defecto (registrados con refs
+            vía <code>register()</code>), en vez de un{" "}
+            <code>useState</code> por campo. Esto evita que el componente
+            completo re-renderice en cada tecla de cualquier campo —
+            relevante en formularios grandes con validaciones complejas.
+          </p>
+          <p>
+            Compartir un schema de validación (como Zod) entre cliente y
+            servidor evita definir la misma regla dos veces: el cliente
+            lo usa para mostrar errores en tiempo real, el servidor lo
+            usa para validar de verdad (nunca confiando en que los datos
+            que llegan ya fueron validados del lado del cliente).
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Validar en cada tecla sin dar margen a terminar de escribir.
+            </strong>{" "}
+            Muestra errores prematuros mientras el usuario todavía está
+            completando el campo — mejor validar en onBlur o con un
+            pequeño debounce.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Duplicar reglas de validación entre frontend y backend sin
+              un schema compartido.
+            </strong>{" "}
+            Eventualmente se desincronizan cuando alguien actualiza una
+            sin la otra.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            React Hook Form para formularios grandes (10+ campos) donde
+            minimizar re-renders por tecla importa de verdad.
+          </li>
+          <li>
+            Un schema de Zod compartido entre el formulario del cliente y
+            el endpoint que recibe esos mismos datos.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Atributos HTML como <code>required</code>,{" "}
+            <code>type=&quot;email&quot;</code>, <code>pattern</code>{" "}
+            disparan la validación nativa del navegador sin necesitar
+            JavaScript. Conviene apoyarse en ella para reglas básicas y
+            universales, porque funciona incluso si JavaScript falla en
+            cargar, y el navegador maneja foco y accesibilidad de forma
+            consistente.
+          </p>
+          <p>
+            El modelo de <strong className="text-foreground">
+            form actions</strong> de React 19 (
+            <code>{"<form action={fn}>"}</code>) permite pasar una función
+            (posiblemente una Server Action) como el action nativo del
+            formulario, en vez de interceptar todo con{" "}
+            <code>onSubmit</code>. La ventaja es progressive enhancement:
+            el formulario funciona incluso si JavaScript no cargó todavía,
+            porque se engancha al mecanismo nativo del navegador en vez
+            de reemplazarlo por completo.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Reemplazar toda la validación nativa con JavaScript
+              innecesariamente.
+            </strong>{" "}
+            Pierde el beneficio de accesibilidad y resiliencia que da la
+            validación del navegador para las reglas básicas.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Depender 100% de onSubmit sin considerar progressive
+              enhancement en apps críticas.
+            </strong>{" "}
+            Si JavaScript falla en cargar, un formulario con onSubmit
+            tradicional deja de funcionar por completo.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Usar required/type nativo para las validaciones básicas de un
+            formulario público de alto tráfico, donde la resiliencia
+            importa.
+          </li>
+          <li>
+            Migrar un formulario crítico a form actions con
+            useActionState para obtener progressive enhancement gratis.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }

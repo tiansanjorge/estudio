@@ -20,6 +20,9 @@ import { entrevistaState } from "./react-core/state-entrevista";
 import { entrevistaComposicion } from "./react-core/composicion-entrevista";
 import { entrevistaKeys } from "./react-core/keys-entrevista";
 import { entrevistaContext } from "./react-core/context-entrevista";
+import { entrevistaForms } from "./react-core/forms-entrevista";
+import { entrevistaErrorBoundaries } from "./react-core/error-boundaries-entrevista";
+import { entrevistaPortals } from "./react-core/portals-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -180,5 +183,26 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "context",
     moduloTitulo: "Context",
     preguntas: entrevistaContext,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "forms",
+    moduloTitulo: "Forms",
+    preguntas: entrevistaForms,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "error-boundaries",
+    moduloTitulo: "Error Boundaries",
+    preguntas: entrevistaErrorBoundaries,
+  },
+  {
+    categoriaSlug: "react-core",
+    categoriaTitulo: "React Core",
+    moduloSlug: "portals",
+    moduloTitulo: "Portals",
+    preguntas: entrevistaPortals,
   },
 ];

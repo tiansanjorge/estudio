@@ -62,9 +62,9 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Composition (Nivel 1/2/3 + Entrevista)
 - ✅ Keys (Nivel 1/2/3 + Entrevista)
 - ✅ Context (Nivel 1/2/3 + Entrevista)
-- ☐ Forms (Nivel 2/3 + Entrevista)
-- ☐ Error Boundaries (nuevo módulo)
-- ☐ Portals (nuevo módulo)
+- ✅ Forms (Nivel 1/2/3 + Entrevista)
+- ✅ Error Boundaries (Nivel 1/2/3 + Entrevista)
+- ✅ Portals (Nivel 1/2/3 + Entrevista)
 
 ### React Rendering
 - ☐ Render (Nivel 2/3 + Entrevista)

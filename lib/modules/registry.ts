@@ -28,6 +28,8 @@ export const categorias: Categoria[] = [
       { slug: "keys", titulo: "Keys", estado: "disponible" },
       { slug: "context", titulo: "Context", estado: "disponible" },
       { slug: "forms", titulo: "Forms", estado: "disponible" },
+      { slug: "error-boundaries", titulo: "Error Boundaries", estado: "disponible" },
+      { slug: "portals", titulo: "Portals", estado: "disponible" },
     ],
   },
   {
