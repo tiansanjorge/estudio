@@ -68,6 +68,7 @@ import { entrevistaCachingHttp } from "./http/caching-http-entrevista";
 import { entrevistaRestGraphqlWebsockets } from "./http/rest-graphql-websockets-entrevista";
 import { entrevistaHttpVersiones } from "./http/http-versiones-entrevista";
 import { entrevistaPiramideTesting } from "./testing/piramide-testing-entrevista";
+import { entrevistaUnitIntegrationE2e } from "./testing/unit-integration-e2e-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -564,5 +565,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "piramide-testing",
     moduloTitulo: "Pirámide de testing",
     preguntas: entrevistaPiramideTesting,
+  },
+  {
+    categoriaSlug: "testing",
+    categoriaTitulo: "Testing",
+    moduloSlug: "unit-integration-e2e",
+    moduloTitulo: "Unit vs integration vs e2e",
+    preguntas: entrevistaUnitIntegrationE2e,
   },
 ];
