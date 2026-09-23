@@ -161,7 +161,7 @@ export const categorias: Categoria[] = [
       { slug: "jwt-sesiones", titulo: "JWT & sesiones", estado: "disponible" },
       { slug: "owasp-top-10", titulo: "OWASP Top 10 esencial", estado: "disponible" },
       { slug: "cors-csrf-xss", titulo: "CORS / CSRF / XSS", estado: "disponible" },
-      { slug: "rbac-abac", titulo: "RBAC / ABAC", estado: "proximamente" },
+      { slug: "rbac-abac", titulo: "RBAC / ABAC", estado: "disponible" },
       { slug: "secrets-management", titulo: "Secrets management", estado: "proximamente" },
     ],
   },

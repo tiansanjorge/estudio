@@ -83,6 +83,7 @@ import { entrevistaAuthnAuthz } from "./seguridad/authn-authz-entrevista";
 import { entrevistaJwtSesiones } from "./seguridad/jwt-sesiones-entrevista";
 import { entrevistaOwaspTop10 } from "./seguridad/owasp-top-10-entrevista";
 import { entrevistaCorsCsrfXss } from "./seguridad/cors-csrf-xss-entrevista";
+import { entrevistaRbacAbac } from "./seguridad/rbac-abac-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -684,5 +685,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "cors-csrf-xss",
     moduloTitulo: "CORS / CSRF / XSS",
     preguntas: entrevistaCorsCsrfXss,
+  },
+  {
+    categoriaSlug: "seguridad",
+    categoriaTitulo: "Seguridad",
+    moduloSlug: "rbac-abac",
+    moduloTitulo: "RBAC / ABAC",
+    preguntas: entrevistaRbacAbac,
   },
 ];

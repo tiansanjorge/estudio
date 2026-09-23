@@ -145,7 +145,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ JWT & sesiones (Nivel 1/2/3 + Entrevista)
 - ✅ OWASP Top 10 esencial (Nivel 1/2/3 + Entrevista)
 - ✅ CORS / CSRF / XSS (Nivel 1/2/3 + Entrevista)
-- ☐ RBAC / ABAC
+- ✅ RBAC / ABAC (Nivel 1/2/3 + Entrevista)
 - ☐ Secrets management
 
 ### Backend
