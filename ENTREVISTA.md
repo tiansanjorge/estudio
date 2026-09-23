@@ -157,7 +157,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Rate limiting (Nivel 1/2/3 + Entrevista)
 - ✅ WebSockets / tiempo real (Nivel 1/2/3 + Entrevista)
 - ✅ Colas y jobs asíncronos (BullMQ) (Nivel 1/2/3 + Entrevista)
-- ☐ Arquitectura en capas (controller/service/repository)
+- ✅ Arquitectura en capas (controller/service/repository) (Nivel 1/2/3 + Entrevista)
 
 ### Bases de datos (categoría nueva)
 - ☐ SQL vs NoSQL

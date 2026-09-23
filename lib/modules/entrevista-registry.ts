@@ -93,6 +93,7 @@ import { entrevistaErroresLogging } from "./backend/errores-logging-entrevista";
 import { entrevistaRateLimiting } from "./backend/rate-limiting-entrevista";
 import { entrevistaWebsocketsTiempoReal } from "./backend/websockets-tiempo-real-entrevista";
 import { entrevistaColasJobs } from "./backend/colas-jobs-entrevista";
+import { entrevistaArquitecturaCapas } from "./backend/arquitectura-capas-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -764,5 +765,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "colas-jobs",
     moduloTitulo: "Colas y jobs asíncronos (BullMQ)",
     preguntas: entrevistaColasJobs,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "arquitectura-capas",
+    moduloTitulo: "Arquitectura en capas",
+    preguntas: entrevistaArquitecturaCapas,
   },
 ];

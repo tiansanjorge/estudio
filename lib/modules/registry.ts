@@ -177,7 +177,7 @@ export const categorias: Categoria[] = [
       { slug: "rate-limiting", titulo: "Rate limiting", estado: "disponible" },
       { slug: "websockets-tiempo-real", titulo: "WebSockets / tiempo real", estado: "disponible" },
       { slug: "colas-jobs", titulo: "Colas y jobs asíncronos", estado: "disponible" },
-      { slug: "arquitectura-capas", titulo: "Arquitectura en capas", estado: "proximamente" },
+      { slug: "arquitectura-capas", titulo: "Arquitectura en capas", estado: "disponible" },
     ],
   },
   { slug: "devops", titulo: "DevOps", modulos: [] },
