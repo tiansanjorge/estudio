@@ -146,7 +146,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ OWASP Top 10 esencial (Nivel 1/2/3 + Entrevista)
 - ✅ CORS / CSRF / XSS (Nivel 1/2/3 + Entrevista)
 - ✅ RBAC / ABAC (Nivel 1/2/3 + Entrevista)
-- ☐ Secrets management
+- ✅ Secrets management (Nivel 1/2/3 + Entrevista)
 
 ### Backend
 - ☐ Node.js runtime (event loop ya cubierto en JS profundo; acá enfoque en proceso/threads)

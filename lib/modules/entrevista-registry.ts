@@ -84,6 +84,7 @@ import { entrevistaJwtSesiones } from "./seguridad/jwt-sesiones-entrevista";
 import { entrevistaOwaspTop10 } from "./seguridad/owasp-top-10-entrevista";
 import { entrevistaCorsCsrfXss } from "./seguridad/cors-csrf-xss-entrevista";
 import { entrevistaRbacAbac } from "./seguridad/rbac-abac-entrevista";
+import { entrevistaSecretsManagement } from "./seguridad/secrets-management-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -692,5 +693,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "rbac-abac",
     moduloTitulo: "RBAC / ABAC",
     preguntas: entrevistaRbacAbac,
+  },
+  {
+    categoriaSlug: "seguridad",
+    categoriaTitulo: "Seguridad",
+    moduloSlug: "secrets-management",
+    moduloTitulo: "Secrets management",
+    preguntas: entrevistaSecretsManagement,
   },
 ];
