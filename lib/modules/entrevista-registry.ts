@@ -39,6 +39,7 @@ import { entrevistaUseReducer } from "./hooks/use-reducer-entrevista";
 import { entrevistaCustomHooks } from "./hooks/custom-hooks-entrevista";
 import { entrevistaEstadoContext } from "./estado/context-entrevista";
 import { entrevistaZustand } from "./estado/zustand-entrevista";
+import { entrevistaReduxToolkit } from "./estado/redux-toolkit-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -332,5 +333,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "zustand",
     moduloTitulo: "Zustand",
     preguntas: entrevistaZustand,
+  },
+  {
+    categoriaSlug: "estado",
+    categoriaTitulo: "Estado",
+    moduloSlug: "redux-toolkit",
+    moduloTitulo: "Redux Toolkit",
+    preguntas: entrevistaReduxToolkit,
   },
 ];
