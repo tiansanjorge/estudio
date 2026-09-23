@@ -147,7 +147,7 @@ export const categorias: Categoria[] = [
     modulos: [
       { slug: "monolito-microservicios", titulo: "Monolito vs microservicios vs microfrontends", estado: "disponible" },
       { slug: "clean-hexagonal", titulo: "Clean / Hexagonal architecture", estado: "disponible" },
-      { slug: "design-patterns", titulo: "Design patterns comunes", estado: "proximamente" },
+      { slug: "design-patterns", titulo: "Design patterns comunes", estado: "disponible" },
       { slug: "estructura-carpetas", titulo: "Feature-based vs layer-based", estado: "proximamente" },
       { slug: "contratos-api", titulo: "Contratos de API (OpenAPI)", estado: "proximamente" },
       { slug: "event-driven", titulo: "Event-driven architecture", estado: "proximamente" },

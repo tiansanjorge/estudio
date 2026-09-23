@@ -75,6 +75,7 @@ import { entrevistaTestingComponentesRtl } from "./testing/testing-componentes-r
 import { entrevistaTestingApis } from "./testing/testing-apis-entrevista";
 import { entrevistaMonolitoMicroservicios } from "./arquitectura/monolito-microservicios-entrevista";
 import { entrevistaCleanHexagonal } from "./arquitectura/clean-hexagonal-entrevista";
+import { entrevistaDesignPatterns } from "./arquitectura/design-patterns-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -620,5 +621,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "clean-hexagonal",
     moduloTitulo: "Clean / Hexagonal architecture",
     preguntas: entrevistaCleanHexagonal,
+  },
+  {
+    categoriaSlug: "arquitectura",
+    categoriaTitulo: "Arquitectura",
+    moduloSlug: "design-patterns",
+    moduloTitulo: "Design patterns comunes",
+    preguntas: entrevistaDesignPatterns,
   },
 ];

@@ -135,7 +135,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 ### Arquitectura
 - ✅ Monolito vs microservicios vs microfrontends (Nivel 1/2/3 + Entrevista)
 - ✅ Clean / Hexagonal architecture (Nivel 1/2/3 + Entrevista)
-- ☐ Design patterns comunes (factory, strategy, observer)
+- ✅ Design patterns comunes (factory, strategy, observer) (Nivel 1/2/3 + Entrevista)
 - ☐ Feature-based vs layer-based folder structure
 - ☐ Contratos de API (OpenAPI)
 - ☐ Event-driven architecture
