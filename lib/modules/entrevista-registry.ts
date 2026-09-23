@@ -59,6 +59,7 @@ import { entrevistaServerVsClientComponents } from "./nextjs/server-vs-client-co
 import { entrevistaDataFetchingCaching } from "./nextjs/data-fetching-caching-entrevista";
 import { entrevistaSsrSsgIsr } from "./nextjs/ssr-ssg-isr-entrevista";
 import { entrevistaMiddlewareEdge } from "./nextjs/middleware-edge-entrevista";
+import { entrevistaRouteHandlers } from "./nextjs/route-handlers-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -492,5 +493,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "middleware-edge",
     moduloTitulo: "Proxy (ex Middleware) & Edge runtime",
     preguntas: entrevistaMiddlewareEdge,
+  },
+  {
+    categoriaSlug: "nextjs",
+    categoriaTitulo: "Next.js",
+    moduloSlug: "route-handlers",
+    moduloTitulo: "Route handlers (API routes)",
+    preguntas: entrevistaRouteHandlers,
   },
 ];

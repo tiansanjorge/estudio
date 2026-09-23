@@ -91,7 +91,7 @@ export const categorias: Categoria[] = [
       { slug: "data-fetching-caching", titulo: "Data fetching & caching", estado: "disponible" },
       { slug: "ssr-ssg-isr", titulo: "SSR / SSG / ISR", estado: "disponible" },
       { slug: "middleware-edge", titulo: "Proxy (ex Middleware) & Edge runtime", estado: "disponible" },
-      { slug: "route-handlers", titulo: "Route handlers (API routes)", estado: "proximamente" },
+      { slug: "route-handlers", titulo: "Route handlers (API routes)", estado: "disponible" },
     ],
   },
   {
