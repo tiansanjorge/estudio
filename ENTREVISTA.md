@@ -86,7 +86,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 
 ### Estado
 - ✅ Context (Nivel 1/2/3 + Entrevista, gestión de estado, distinto del módulo de React Core)
-- ☐ Zustand
+- ✅ Zustand (Nivel 1/2/3 + Entrevista)
 - ☐ Redux Toolkit
 - ☐ TanStack Query
 - ☐ Cuándo NO usar una librería de estado global (trade-off explícito)

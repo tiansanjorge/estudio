@@ -38,6 +38,7 @@ import { entrevistaUseRef } from "./hooks/use-ref-entrevista";
 import { entrevistaUseReducer } from "./hooks/use-reducer-entrevista";
 import { entrevistaCustomHooks } from "./hooks/custom-hooks-entrevista";
 import { entrevistaEstadoContext } from "./estado/context-entrevista";
+import { entrevistaZustand } from "./estado/zustand-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -324,5 +325,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "context",
     moduloTitulo: "Context (como estado global)",
     preguntas: entrevistaEstadoContext,
+  },
+  {
+    categoriaSlug: "estado",
+    categoriaTitulo: "Estado",
+    moduloSlug: "zustand",
+    moduloTitulo: "Zustand",
+    preguntas: entrevistaZustand,
   },
 ];
