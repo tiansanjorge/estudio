@@ -118,7 +118,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 ### HTTP y Networking
 - ✅ Fundamentos de red (Nivel 1/2/3 + Entrevista)
 - ✅ Métodos y status codes (Nivel 1/2/3 + Entrevista)
-- ☐ Headers y CORS (Nivel 2/3 + Entrevista)
+- ✅ Headers y CORS (Nivel 1/2/3 + Entrevista)
 - ☐ Fetch/XHR y manejo de requests (Nivel 2/3 + Entrevista)
 - ☐ Caching HTTP (Nivel 2/3 + Entrevista)
 - ☐ REST vs GraphQL vs WebSockets (Nivel 2/3 + Entrevista)

@@ -62,6 +62,7 @@ import { entrevistaMiddlewareEdge } from "./nextjs/middleware-edge-entrevista";
 import { entrevistaRouteHandlers } from "./nextjs/route-handlers-entrevista";
 import { entrevistaFundamentosRed } from "./http/fundamentos-red-entrevista";
 import { entrevistaMetodosStatus } from "./http/metodos-status-entrevista";
+import { entrevistaHeadersCors } from "./http/headers-cors-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -516,5 +517,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "metodos-y-status-codes",
     moduloTitulo: "Métodos y status codes",
     preguntas: entrevistaMetodosStatus,
+  },
+  {
+    categoriaSlug: "http-networking",
+    categoriaTitulo: "HTTP y Networking",
+    moduloSlug: "headers-y-cors",
+    moduloTitulo: "Headers y CORS",
+    preguntas: entrevistaHeadersCors,
   },
 ];

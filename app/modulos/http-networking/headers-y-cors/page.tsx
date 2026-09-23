@@ -6,6 +6,15 @@ import { CorsSimulador } from "@/components/modulo/CorsSimulador";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
 import { headersHttp } from "@/lib/modules/http/headers";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
+import { entrevistaHeadersCors } from "@/lib/modules/http/headers-cors-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaHeadersCors.filter((p) => p.nivel === 1),
+  2: entrevistaHeadersCors.filter((p) => p.nivel === 2),
+  3: entrevistaHeadersCors.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Headers y CORS — Dev Study Lab",
@@ -46,6 +55,48 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta: "Con credentials: 'include', ¿qué valor de Access-Control-Allow-Origin es inválido?",
+    opciones: ["https://app.ejemplo.com", "*", "El origen exacto reflejado desde una lista blanca"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Con credenciales, el comodín no está permitido: hay que devolver el origen exacto.",
+  },
+  {
+    pregunta: "¿CORS impide que un POST de formulario cross-origin llegue al servidor?",
+    opciones: [
+      "Sí, siempre",
+      "No: el request simple se envía y se procesa; CORS solo bloquea que el JS lea la respuesta",
+      "Solo si el servidor usa HTTPS",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Por eso CORS no protege contra CSRF: para eso están SameSite, tokens o chequear Origin.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta: "Un servidor valida el origen con origin.includes('ejemplo.com'). ¿Qué problema tiene?",
+    opciones: [
+      "Ninguno",
+      "Acepta dominios de un atacante como ejemplo.com.atacante.com",
+      "Es muy lento",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "La comparación tiene que ser por igualdad contra una lista blanca exacta.",
+  },
+  {
+    pregunta: "¿Qué directiva de CSP evita que tu sitio se embeba en un iframe ajeno?",
+    opciones: ["script-src", "frame-ancestors", "connect-src"],
+    respuestaCorrecta: 1,
+    explicacion:
+      "frame-ancestors protege contra clickjacking y reemplaza a X-Frame-Options.",
+  },
+];
+
 export default function HeadersYCorsPage() {
   return (
     <ModuloLayout
@@ -53,6 +104,20 @@ export default function HeadersYCorsPage() {
       titulo="Headers y CORS"
       descripcion="Los headers llevan metadata de cada petición y respuesta. CORS es la política que decide qué código JavaScript puede leer una respuesta cross-origin."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -143,6 +208,10 @@ export default function HeadersYCorsPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -172,6 +241,157 @@ export default function HeadersYCorsPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Con <strong className="text-foreground">credenciales</strong>{" "}
+            (cookies o auth del navegador), el cliente usa{" "}
+            <code>credentials: &apos;include&apos;</code> y el servidor tiene
+            que responder <code>Access-Control-Allow-Credentials: true</code>{" "}
+            con el origen exacto, nunca <code>*</code>, más{" "}
+            <code>Vary: Origin</code> para que ningún cache mezcle respuestas
+            entre orígenes. La cookie necesita <code>SameSite=None; Secure</code>{" "}
+            si el sitio es distinto.
+          </p>
+          <p>
+            <code>Access-Control-Max-Age</code> cachea el preflight y ahorra un
+            round trip por request; <code>Access-Control-Expose-Headers</code>{" "}
+            permite que el JS lea headers de la respuesta que no son básicos.
+          </p>
+          <p>
+            CORS protege al <strong className="text-foreground">usuario</strong>,
+            no a la API: el request igual llega al servidor. Contra CSRF hacen
+            falta cookies <code>SameSite</code>, tokens o verificar{" "}
+            <code>Origin</code>.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">Reflejar el origen sin <code>Vary: Origin</code>.</strong>{" "}
+            Un CDN puede servirle a un origen la respuesta de otro.
+          </li>
+          <li>
+            <strong className="text-foreground">Confundir same-site con same-origin.</strong>{" "}
+            app.ejemplo.com y api.ejemplo.com son cross-origin pero same-site.
+          </li>
+          <li>
+            <strong className="text-foreground">Tratar CORS como control de acceso.</strong>{" "}
+            Desde curl o un servidor no existe.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Configurar CORS de una API para un frontend en otro dominio con sesión por cookie.</li>
+          <li>Leer un header <code>X-Total-Count</code> de paginación desde el cliente.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            La configuración de CORS más peligrosa es{" "}
+            <strong className="text-foreground">
+              reflejar cualquier origen con credenciales
+            </strong>
+            : equivale a desactivar la same-origin policy para esa API.
+            También lo son las validaciones con <code>includes</code> o regex
+            mal anclados y aceptar el origen <code>null</code>.
+          </p>
+          <p>
+            Los <strong className="text-foreground">headers de seguridad</strong>{" "}
+            completan la defensa: <code>Strict-Transport-Security</code>,{" "}
+            <code>Content-Security-Policy</code> (con nonces y{" "}
+            <code>frame-ancestors</code>), <code>X-Content-Type-Options:
+            nosniff</code>, <code>Referrer-Policy</code> y{" "}
+            <code>Permissions-Policy</code>. Una CSP nueva arranca en modo{" "}
+            <code>Report-Only</code>.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">CSP con <code>unsafe-inline</code> en scripts.</strong>{" "}
+            Anula buena parte de la protección contra XSS.
+          </li>
+          <li>
+            <strong className="text-foreground">HSTS con <code>preload</code> sin estar listo.</strong>{" "}
+            Si algún subdominio no tiene HTTPS, queda inaccesible por meses.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>Auditar la configuración de CORS de una API en un pentest.</li>
+          <li>Desplegar una CSP con nonce por request desde el servidor.</li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Desafío">
+        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+          <p>
+            Esta configuración &quot;arregló&quot; un error de CORS en
+            producción. ¿Qué riesgo introdujo y cómo la corregís?
+          </p>
+          <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
+{`app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", req.headers.origin ?? "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  next();
+});`}
+          </pre>
+          <RevelarSolucion>
+            <p>
+              Refleja cualquier origen con credenciales: cualquier sitio que
+              visite un usuario logueado puede leer sus datos de la API con un
+              fetch. Además no manda <code>Vary: Origin</code>, así que un CDN
+              puede cachear la respuesta de un origen y servírsela a otro. La
+              corrección: una lista blanca exacta de orígenes, comparada por
+              igualdad; reflejar el origen solo si está en la lista; agregar{" "}
+              <code>Vary: Origin</code>; listar explícitamente los headers y
+              métodos permitidos; y responder los preflight con{" "}
+              <code>Access-Control-Max-Age</code>.
+            </p>
+          </RevelarSolucion>
+        </div>
+      </Seccion>
+    </>
   );
 }
