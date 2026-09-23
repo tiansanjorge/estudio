@@ -90,6 +90,7 @@ import { entrevistaDisenoApisRest } from "./backend/diseno-apis-rest-entrevista"
 import { entrevistaFrameworksNode } from "./backend/frameworks-node-entrevista";
 import { entrevistaValidacionZod } from "./backend/validacion-zod-entrevista";
 import { entrevistaErroresLogging } from "./backend/errores-logging-entrevista";
+import { entrevistaRateLimiting } from "./backend/rate-limiting-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -740,5 +741,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "errores-logging",
     moduloTitulo: "Manejo de errores y logging",
     preguntas: entrevistaErroresLogging,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "rate-limiting",
+    moduloTitulo: "Rate limiting",
+    preguntas: entrevistaRateLimiting,
   },
 ];
