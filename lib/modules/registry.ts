@@ -91,7 +91,7 @@ export const categorias: Categoria[] = [
       { slug: "context", titulo: "Context", estado: "disponible" },
       { slug: "zustand", titulo: "Zustand", estado: "disponible" },
       { slug: "redux-toolkit", titulo: "Redux Toolkit", estado: "disponible" },
-      { slug: "tanstack-query", titulo: "TanStack Query", estado: "proximamente" },
+      { slug: "tanstack-query", titulo: "TanStack Query", estado: "disponible" },
       { slug: "cuando-no-usar-estado-global", titulo: "Cuándo NO usar estado global", estado: "proximamente" },
     ],
   },

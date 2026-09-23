@@ -40,6 +40,7 @@ import { entrevistaCustomHooks } from "./hooks/custom-hooks-entrevista";
 import { entrevistaEstadoContext } from "./estado/context-entrevista";
 import { entrevistaZustand } from "./estado/zustand-entrevista";
 import { entrevistaReduxToolkit } from "./estado/redux-toolkit-entrevista";
+import { entrevistaTanstackQuery } from "./estado/tanstack-query-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -340,5 +341,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "redux-toolkit",
     moduloTitulo: "Redux Toolkit",
     preguntas: entrevistaReduxToolkit,
+  },
+  {
+    categoriaSlug: "estado",
+    categoriaTitulo: "Estado",
+    moduloSlug: "tanstack-query",
+    moduloTitulo: "TanStack Query",
+    preguntas: entrevistaTanstackQuery,
   },
 ];
