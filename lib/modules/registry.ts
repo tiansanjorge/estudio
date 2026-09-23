@@ -77,7 +77,7 @@ export const categorias: Categoria[] = [
     modulos: [
       { slug: "semantic-html-aria", titulo: "Semantic HTML & ARIA", estado: "disponible" },
       { slug: "focus-management", titulo: "Focus management", estado: "disponible" },
-      { slug: "navegacion-teclado", titulo: "Navegación por teclado", estado: "proximamente" },
+      { slug: "navegacion-teclado", titulo: "Navegación por teclado", estado: "disponible" },
       { slug: "formularios-accesibles", titulo: "Formularios accesibles", estado: "proximamente" },
       { slug: "testing-accesibilidad", titulo: "Testing de accesibilidad (axe)", estado: "proximamente" },
     ],

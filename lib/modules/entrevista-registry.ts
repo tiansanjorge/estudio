@@ -51,6 +51,7 @@ import { entrevistaBundleSize } from "./performance/bundle-size-entrevista";
 import { entrevistaCoreWebVitals } from "./performance/core-web-vitals-entrevista";
 import { entrevistaSemanticHtmlAria } from "./accesibilidad/semantic-html-aria-entrevista";
 import { entrevistaFocusManagement } from "./accesibilidad/focus-management-entrevista";
+import { entrevistaNavegacionTeclado } from "./accesibilidad/navegacion-teclado-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -428,5 +429,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "focus-management",
     moduloTitulo: "Focus management",
     preguntas: entrevistaFocusManagement,
+  },
+  {
+    categoriaSlug: "accesibilidad",
+    categoriaTitulo: "Accesibilidad",
+    moduloSlug: "navegacion-teclado",
+    moduloTitulo: "Navegación por teclado",
+    preguntas: entrevistaNavegacionTeclado,
   },
 ];
