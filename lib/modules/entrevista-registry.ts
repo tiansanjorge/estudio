@@ -52,6 +52,7 @@ import { entrevistaCoreWebVitals } from "./performance/core-web-vitals-entrevist
 import { entrevistaSemanticHtmlAria } from "./accesibilidad/semantic-html-aria-entrevista";
 import { entrevistaFocusManagement } from "./accesibilidad/focus-management-entrevista";
 import { entrevistaNavegacionTeclado } from "./accesibilidad/navegacion-teclado-entrevista";
+import { entrevistaFormulariosAccesibles } from "./accesibilidad/formularios-accesibles-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -436,5 +437,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "navegacion-teclado",
     moduloTitulo: "Navegación por teclado",
     preguntas: entrevistaNavegacionTeclado,
+  },
+  {
+    categoriaSlug: "accesibilidad",
+    categoriaTitulo: "Accesibilidad",
+    moduloSlug: "formularios-accesibles",
+    moduloTitulo: "Formularios accesibles",
+    preguntas: entrevistaFormulariosAccesibles,
   },
 ];

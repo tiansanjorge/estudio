@@ -104,7 +104,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Semantic HTML & ARIA (Nivel 1/2/3 + Entrevista)
 - ✅ Focus management (Nivel 1/2/3 + Entrevista)
 - ✅ Navegación por teclado (Nivel 1/2/3 + Entrevista)
-- ☐ Formularios accesibles
+- ✅ Formularios accesibles (Nivel 1/2/3 + Entrevista)
 - ☐ Testing de accesibilidad (axe)
 
 ### Next.js

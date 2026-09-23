@@ -78,7 +78,7 @@ export const categorias: Categoria[] = [
       { slug: "semantic-html-aria", titulo: "Semantic HTML & ARIA", estado: "disponible" },
       { slug: "focus-management", titulo: "Focus management", estado: "disponible" },
       { slug: "navegacion-teclado", titulo: "Navegación por teclado", estado: "disponible" },
-      { slug: "formularios-accesibles", titulo: "Formularios accesibles", estado: "proximamente" },
+      { slug: "formularios-accesibles", titulo: "Formularios accesibles", estado: "disponible" },
       { slug: "testing-accesibilidad", titulo: "Testing de accesibilidad (axe)", estado: "proximamente" },
     ],
   },
