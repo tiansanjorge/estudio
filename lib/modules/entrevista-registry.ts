@@ -70,6 +70,7 @@ import { entrevistaHttpVersiones } from "./http/http-versiones-entrevista";
 import { entrevistaPiramideTesting } from "./testing/piramide-testing-entrevista";
 import { entrevistaUnitIntegrationE2e } from "./testing/unit-integration-e2e-entrevista";
 import { entrevistaMockingMsw } from "./testing/mocking-msw-entrevista";
+import { entrevistaTdd } from "./testing/tdd-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -580,5 +581,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "mocking-msw",
     moduloTitulo: "Mocking strategies (MSW)",
     preguntas: entrevistaMockingMsw,
+  },
+  {
+    categoriaSlug: "testing",
+    categoriaTitulo: "Testing",
+    moduloSlug: "tdd",
+    moduloTitulo: "TDD",
+    preguntas: entrevistaTdd,
   },
 ];
