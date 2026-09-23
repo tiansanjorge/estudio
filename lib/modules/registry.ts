@@ -175,7 +175,7 @@ export const categorias: Categoria[] = [
       { slug: "validacion-zod", titulo: "Validación de datos (Zod)", estado: "disponible" },
       { slug: "errores-logging", titulo: "Manejo de errores y logging", estado: "disponible" },
       { slug: "rate-limiting", titulo: "Rate limiting", estado: "disponible" },
-      { slug: "websockets-tiempo-real", titulo: "WebSockets / tiempo real", estado: "proximamente" },
+      { slug: "websockets-tiempo-real", titulo: "WebSockets / tiempo real", estado: "disponible" },
       { slug: "colas-jobs", titulo: "Colas y jobs asíncronos", estado: "proximamente" },
       { slug: "arquitectura-capas", titulo: "Arquitectura en capas", estado: "proximamente" },
     ],

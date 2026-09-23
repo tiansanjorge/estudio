@@ -91,6 +91,7 @@ import { entrevistaFrameworksNode } from "./backend/frameworks-node-entrevista";
 import { entrevistaValidacionZod } from "./backend/validacion-zod-entrevista";
 import { entrevistaErroresLogging } from "./backend/errores-logging-entrevista";
 import { entrevistaRateLimiting } from "./backend/rate-limiting-entrevista";
+import { entrevistaWebsocketsTiempoReal } from "./backend/websockets-tiempo-real-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -748,5 +749,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "rate-limiting",
     moduloTitulo: "Rate limiting",
     preguntas: entrevistaRateLimiting,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "websockets-tiempo-real",
+    moduloTitulo: "WebSockets / tiempo real",
+    preguntas: entrevistaWebsocketsTiempoReal,
   },
 ];

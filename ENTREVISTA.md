@@ -155,7 +155,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Validación de datos (Zod) (Nivel 1/2/3 + Entrevista)
 - ✅ Manejo de errores y logging (Nivel 1/2/3 + Entrevista)
 - ✅ Rate limiting (Nivel 1/2/3 + Entrevista)
-- ☐ WebSockets / tiempo real
+- ✅ WebSockets / tiempo real (Nivel 1/2/3 + Entrevista)
 - ☐ Colas y jobs asíncronos (BullMQ)
 - ☐ Arquitectura en capas (controller/service/repository)
 
