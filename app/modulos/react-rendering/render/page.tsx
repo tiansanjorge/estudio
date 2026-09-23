@@ -5,7 +5,16 @@ import { FasesPipeline } from "@/components/modulo/FasesPipeline";
 import { RenderHuellaDemo } from "@/components/modulo/RenderHuellaDemo";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { pasosFases } from "@/lib/modules/react-rendering/fases";
+import { entrevistaRender } from "@/lib/modules/react-rendering/render-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaRender.filter((p) => p.nivel === 1),
+  2: entrevistaRender.filter((p) => p.nivel === 2),
+  3: entrevistaRender.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Render — Dev Study Lab",
@@ -49,6 +58,59 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta: "¿Cuáles son los únicos disparadores reales de un render?",
+    opciones: [
+      "Cualquier línea de código ejecutada dentro del componente",
+      "Montaje inicial, actualización de estado propio, re-render del padre, o cambio de un Context consumido",
+      "Solo cuando cambian las props del componente",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Mutar una ref o llamar a una función normal dentro del componente no dispara un render por sí solo, salvo que termine llamando a alguno de esos cuatro triggers.",
+  },
+  {
+    pregunta:
+      "¿Qué arquitectura interna de React permite que un render se pause o se descarte a mitad de camino?",
+    opciones: [
+      "El call stack normal de JavaScript",
+      "React Fiber: una estructura de árbol enlazado propia que le permite a React ceder el control y retomar el trabajo donde quedó",
+      "Web Workers, que corren el render en un hilo aparte",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El call stack de JS no se puede pausar desde afuera. Fiber le da a React su propia estructura de datos para procesar el árbol de a pedazos, base técnica del renderizado concurrente.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Por qué React Strict Mode llama a los componentes dos veces en desarrollo?",
+    opciones: [
+      "Es un bug conocido que todavía no se corrigió",
+      "Es deliberado: expone tempranamente componentes impuros, que producirían resultados o efectos duplicados en producción bajo renderizado concurrente",
+      "Solo ocurre en componentes de clase, nunca en función",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Si el cuerpo del componente no es puro, llamarlo dos veces muestra el bug de inmediato en desarrollo. La solución es mover ese código a un lugar que garantice ejecutarse una sola vez, como useEffect.",
+  },
+  {
+    pregunta:
+      "¿Es válido llamar a setState directamente en el cuerpo de un componente, durante el render?",
+    opciones: [
+      "Nunca, siempre hay que usar useEffect para actualizar estado",
+      "Sí, en el patrón documentado de estado derivado: React descarta el render actual y vuelve a ejecutar la función con el estado nuevo, sin pintar la versión intermedia",
+      "Solo en componentes de clase con setState tradicional",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es un patrón de nicho para resetear estado interno al detectar un cambio en una prop, comparándola contra un valor guardado en una ref, sin necesitar un useEffect adicional.",
+  },
+];
+
 export default function RenderPage() {
   return (
     <ModuloLayout
@@ -56,6 +118,20 @@ export default function RenderPage() {
       titulo="Render"
       descripcion="Cuando React 'renderiza' un componente, no está tocando el DOM. Está llamando a tu función para preguntarle qué debería mostrarse."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -149,6 +225,10 @@ export default function RenderPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>¿Por qué es un problema hacer esto directamente en el cuerpo del componente?</p>
@@ -189,6 +269,155 @@ function Componente({ valor }) {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            Solo cuatro cosas disparan un render: el{" "}
+            <strong className="text-foreground">montaje inicial</strong>,
+            una <strong className="text-foreground">
+            actualización de estado propio</strong>, un{" "}
+            <strong className="text-foreground">
+              re-render del componente padre
+            </strong>{" "}
+            (que por default re-renderiza también a los hijos, sin
+            importar props), o un{" "}
+            <strong className="text-foreground">
+              cambio en un Context
+            </strong>{" "}
+            consumido. Mutar una ref o llamar a una función normal dentro
+            del componente no dispara un render por sí solo.
+          </p>
+          <p>
+            Lo que hace posible que un render se pause o se descarte a
+            mitad de camino es{" "}
+            <strong className="text-foreground">React Fiber</strong>: en
+            vez de usar el call stack normal de JavaScript (que no se
+            puede pausar desde afuera), React arma su propia estructura de
+            árbol enlazado, procesando el trabajo de a unidades que puede
+            interrumpir, ceder al navegador, y retomar exactamente donde
+            quedó — la base técnica del renderizado concurrente.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Buscar una causa &quot;mágica&quot; para un render inesperado.
+            </strong>{" "}
+            Casi siempre es alguno de los cuatro triggers — revisar si un
+            padre está renderizando por otra razón.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Confundir mutar una ref con actualizar estado.
+            </strong>{" "}
+            Mutar ref.current no dispara ningún render, a diferencia de
+            un setState.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Usar una ref (en vez de estado) para guardar un valor que no
+            necesita disparar re-render, como un contador interno de
+            reintentos.
+          </li>
+          <li>
+            Diagnosticar renders innecesarios identificando cuál de los
+            cuatro triggers los está causando, con el Profiler de React
+            DevTools.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            React Strict Mode llama a los componentes dos veces en
+            desarrollo deliberadamente: si el cuerpo no es puro, eso
+            produce resultados o efectos duplicados, exponiendo el
+            problema temprano en vez de que aparezca de forma intermitente
+            en producción bajo renderizado concurrente real.
+          </p>
+          <p>
+            Es válido llamar a <code>setState</code> directamente en el
+            cuerpo de un componente en un caso de nicho: el patrón de{" "}
+            <strong className="text-foreground">estado derivado</strong>,
+            comparando una prop contra un valor guardado y actualizando
+            estado condicionalmente ahí mismo, antes de terminar de
+            renderizar. React descarta ese render y vuelve a ejecutar la
+            función con el estado nuevo, sin pintar la versión intermedia.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Depender de que un componente se ejecute exactamente una vez
+              en desarrollo.
+            </strong>{" "}
+            Strict Mode expone ese supuesto como un bug real, no un
+            problema del modo en sí.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Usar el patrón de setState en render como reemplazo general
+              de useEffect.
+            </strong>{" "}
+            Es un patrón de nicho para estado derivado puntual, no una
+            forma general de manejar efectos.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Resetear el estado interno de un componente cuando cambia un
+            id recibido por props, sin useEffect, usando el patrón de
+            estado derivado durante el render.
+          </li>
+          <li>
+            Confiar en Strict Mode durante el desarrollo para detectar
+            componentes impuros antes de que lleguen a producción.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }

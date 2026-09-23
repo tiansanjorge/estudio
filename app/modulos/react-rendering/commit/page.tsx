@@ -5,7 +5,16 @@ import { CommitPipeline } from "@/components/modulo/CommitPipeline";
 import { OrdenEfectosDemo } from "@/components/modulo/OrdenEfectosDemo";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { pasosCommit } from "@/lib/modules/react-rendering/commit-escenarios";
+import { entrevistaCommit } from "@/lib/modules/react-rendering/commit-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaCommit.filter((p) => p.nivel === 1),
+  2: entrevistaCommit.filter((p) => p.nivel === 2),
+  3: entrevistaCommit.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Commit — Dev Study Lab",
@@ -49,6 +58,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿Qué puede hacer getSnapshotBeforeUpdate que useLayoutEffect no puede?",
+    opciones: [
+      "Nada, son intercambiables",
+      "Capturar información del DOM justo ANTES de que React lo mute, algo que useLayoutEffect (que corre después de la mutación) no puede ver",
+      "Correr antes que el render",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es útil para restaurar posición de scroll al agregar elementos arriba de una lista (por ejemplo, un chat), comparando el estado del DOM antes y después del cambio.",
+  },
+  {
+    pregunta:
+      "Un Padre y su Hijo tienen ambos useLayoutEffect. ¿En qué orden corren?",
+    opciones: [
+      "Padre primero, después Hijo",
+      "Hijo primero, después Padre — de abajo hacia arriba",
+      "Simultáneamente, sin orden garantizado",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Para cuando el layout effect del padre corre, el hijo ya terminó de aplicar el suyo, permitiendo que el padre mida un DOM ya en su estado final para esa actualización.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "Si Commit es sincrónico y sin interrupciones, ¿por qué los useEffect de una actualización grande pueden tardar en correr?",
+    opciones: [
+      "Porque el commit en sí se puede pausar en actualizaciones grandes",
+      "Porque useEffect se programa para correr después del paint, y React puede diferir cuándo exactamente según la prioridad del trabajo pendiente",
+      "Es un bug conocido de React sin solución",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es intencional: prioriza que el usuario vea la pantalla actualizada cuanto antes, por sobre que los efectos (generalmente invisibles) corran de inmediato.",
+  },
+  {
+    pregunta:
+      "¿Un componente que se re-renderiza siempre genera una mutación real durante Commit?",
+    opciones: [
+      "Sí, siempre, toda función que corre de nuevo dispara una mutación",
+      "No: si Reconciliation determina que el resultado es idéntico al anterior, no hay ninguna mutación real que aplicar para ese nodo",
+      "Solo si el componente usa useLayoutEffect",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "El componente completa su fase de Render (la función corrió), pero su participación en Commit puede ser nula si no hay diffs que aplicar al DOM.",
+  },
+];
+
 export default function CommitPage() {
   return (
     <ModuloLayout
@@ -56,6 +119,20 @@ export default function CommitPage() {
       titulo="Commit"
       descripcion="Render solo describe qué debería mostrarse. Commit es el momento en que React realmente toca el DOM — y ahí es donde entran en juego los refs y los layout effects."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -156,6 +233,10 @@ export default function CommitPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -193,6 +274,151 @@ export default function CommitPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <code>getSnapshotBeforeUpdate</code> (componentes de clase)
+            captura información del DOM justo ANTES de que React lo mute
+            — por ejemplo, la posición de scroll antes de agregar
+            mensajes arriba de un chat. Ese valor se pasa a{" "}
+            <code>componentDidUpdate</code>, ya después del commit,
+            permitiendo comparar el antes y el después. Es algo que{" "}
+            <code>useLayoutEffect</code> (que corre después de la
+            mutación) no puede ver por sí solo.
+          </p>
+          <p>
+            En un árbol con varios <code>useLayoutEffect</code>, corren
+            de abajo hacia arriba: los de los hijos antes que los del
+            padre, para que este último pueda medir un DOM ya en su
+            estado final de esa actualización. Lo mismo aplica a{" "}
+            <code>useEffect</code>.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Intentar comparar antes/después de una mutación solo con
+              useLayoutEffect.
+            </strong>{" "}
+            Corre después de la mutación; para el &quot;antes&quot; hace
+            falta getSnapshotBeforeUpdate o guardar el valor manualmente
+            antes.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Asumir que el orden de los layout effects entre componentes
+              no importa.
+            </strong>{" "}
+            Un padre que mide el DOM en su layout effect depende de que
+            los hijos ya hayan corrido el suyo.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Restaurar la posición de scroll de una lista de chat al
+            agregar mensajes nuevos arriba, usando getSnapshotBeforeUpdate
+            o su equivalente con refs en componentes de función.
+          </li>
+          <li>
+            useInsertionEffect en una librería de CSS-in-JS propia, para
+            inyectar estilos antes de que cualquier layout effect intente
+            medir el DOM.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            El commit en sí (la mutación del DOM) es sincrónico y no se
+            puede pausar. Pero los <code>useEffect</code> se programan
+            para correr DESPUÉS del paint, y React puede diferir cuándo
+            exactamente los ejecuta según la prioridad del trabajo
+            pendiente — en actualizaciones grandes, puede pasar más
+            tiempo del esperado antes de que todos terminen de correr,
+            aunque el commit ya haya finalizado hace rato. Es intencional:
+            prioriza que el usuario vea la pantalla actualizada cuanto
+            antes.
+          </p>
+          <p>
+            Un componente puede completar su fase de Render (la función
+            corrió de nuevo) sin generar ninguna mutación real en Commit,
+            si Reconciliation determina que el resultado es idéntico al
+            anterior — distinto de un bail-out por memo, que directamente
+            evita re-ejecutar la función.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Asumir que un useEffect corre inmediatamente después del
+              commit que lo originó.
+            </strong>{" "}
+            React puede diferir su ejecución según la prioridad del
+            trabajo pendiente.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Confundir &quot;la función corrió de nuevo&quot; con
+              &quot;el DOM cambió&quot;.
+            </strong>{" "}
+            Un render puede no generar ninguna mutación real si el
+            resultado es idéntico al anterior.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            No asumir timing exacto de useEffect en código crítico de
+            performance — medir con el Profiler en vez de suponer.
+          </li>
+          <li>
+            Diagnosticar por qué un componente &quot;renderiza&quot; en el
+            Profiler sin que el DOM visualmente cambie: Reconciliation
+            concluyó que no había diffs que commitear.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }

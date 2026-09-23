@@ -67,9 +67,9 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Portals (Nivel 1/2/3 + Entrevista)
 
 ### React Rendering
-- ☐ Render (Nivel 2/3 + Entrevista)
-- ☐ Commit (Nivel 2/3 + Entrevista)
-- ☐ Reconciliation (Nivel 2/3 + Entrevista)
+- ✅ Render (Nivel 1/2/3 + Entrevista)
+- ✅ Commit (Nivel 1/2/3 + Entrevista)
+- ✅ Reconciliation (Nivel 1/2/3 + Entrevista)
 - ☐ Fiber (Nivel 2/3 + Entrevista)
 - ☐ Virtual DOM (Nivel 2/3 + Entrevista)
 - ☐ Concurrent Rendering (Nivel 2/3 + Entrevista)

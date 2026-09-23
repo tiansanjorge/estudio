@@ -23,6 +23,9 @@ import { entrevistaContext } from "./react-core/context-entrevista";
 import { entrevistaForms } from "./react-core/forms-entrevista";
 import { entrevistaErrorBoundaries } from "./react-core/error-boundaries-entrevista";
 import { entrevistaPortals } from "./react-core/portals-entrevista";
+import { entrevistaRender } from "./react-rendering/render-entrevista";
+import { entrevistaCommit } from "./react-rendering/commit-entrevista";
+import { entrevistaReconciliation } from "./react-rendering/reconciliation-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -204,5 +207,26 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "portals",
     moduloTitulo: "Portals",
     preguntas: entrevistaPortals,
+  },
+  {
+    categoriaSlug: "react-rendering",
+    categoriaTitulo: "React Rendering",
+    moduloSlug: "render",
+    moduloTitulo: "Render",
+    preguntas: entrevistaRender,
+  },
+  {
+    categoriaSlug: "react-rendering",
+    categoriaTitulo: "React Rendering",
+    moduloSlug: "commit",
+    moduloTitulo: "Commit",
+    preguntas: entrevistaCommit,
+  },
+  {
+    categoriaSlug: "react-rendering",
+    categoriaTitulo: "React Rendering",
+    moduloSlug: "reconciliation",
+    moduloTitulo: "Reconciliation",
+    preguntas: entrevistaReconciliation,
   },
 ];

@@ -5,7 +5,16 @@ import { ReconciliationSimulador } from "@/components/modulo/ReconciliationSimul
 import { ReconciliationEnVivo } from "@/components/modulo/ReconciliationEnVivo";
 import { Quiz, type PreguntaQuiz } from "@/components/modulo/Quiz";
 import { RevelarSolucion } from "@/components/modulo/RevelarSolucion";
+import { NivelTabs } from "@/components/modulo/NivelTabs";
+import { EntrevistaSeccion } from "@/components/modulo/EntrevistaSeccion";
 import { escenariosReconciliation } from "@/lib/modules/react-rendering/reconciliation-escenarios";
+import { entrevistaReconciliation } from "@/lib/modules/react-rendering/reconciliation-entrevista";
+
+const preguntasPorNivel = {
+  1: entrevistaReconciliation.filter((p) => p.nivel === 1),
+  2: entrevistaReconciliation.filter((p) => p.nivel === 2),
+  3: entrevistaReconciliation.filter((p) => p.nivel === 3),
+};
 
 export const metadata: Metadata = {
   title: "Reconciliation — Dev Study Lab",
@@ -51,6 +60,60 @@ const preguntas: PreguntaQuiz[] = [
   },
 ];
 
+const preguntasNivel2: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿React reconcilia listas keyed con un único pase por key, o hay algo más sofisticado?",
+    opciones: [
+      "Solo un mapeo simple por key, siempre",
+      "Primero escanea desde ambos extremos buscando prefijo/sufijo sin cambios; solo usa un mapa de keys para la sección del medio que realmente se reordenó",
+      "Recorre el árbol completo comparando cada nodo contra todos los demás",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Es una heurística en capas: resuelve gratis los casos de agregar/quitar al final o al principio, reservando el mapeo por key (más costoso) solo para reordenamientos genuinos.",
+  },
+  {
+    pregunta:
+      "Un componente renderiza a veces un elemento suelto y a veces un array en la misma posición. ¿Qué riesgo tiene esto?",
+    opciones: [
+      "Ninguno, React lo maneja de forma transparente",
+      "React puede tratarlo como un cambio de tipo, generando destrucciones y remontajes innecesarios",
+      "Solo funciona si ambos casos usan la misma key",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "La práctica recomendada es ser consistente: envolver siempre en un array, aunque tenga un solo elemento, para que React reconcilie esa posición siempre como 'una lista'.",
+  },
+];
+
+const preguntasNivel3: PreguntaQuiz[] = [
+  {
+    pregunta:
+      "¿React.Children.map trata a children siempre como un array plano y predecible?",
+    opciones: [
+      "Sí, children siempre es un array normal de JavaScript",
+      "No: children es una estructura opaca (elemento único, array, Fragment, texto, null) y estas utilidades existen justamente para manejar esa variabilidad",
+      "Solo es un array si el componente usa TypeScript",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Aun así tienen limitaciones (React.Children.only lanza excepción con más de un hijo). Componentes que necesitan manipular children de forma compleja suelen preferir un array explícito como prop.",
+  },
+  {
+    pregunta:
+      "En una lista de 100 items donde solo uno cambió sus props, ¿cómo se complementan reconciliation y React.memo?",
+    opciones: [
+      "Son la misma cosa, memo reemplaza a reconciliation",
+      "Reconciliation resuelve que los 100 siguen siendo 'los mismos' por su key; memo evita que los 99 sin cambios de props vuelvan a ejecutar su función",
+      "Reconciliation decide qué re-renderiza; memo decide qué se destruye",
+    ],
+    respuestaCorrecta: 1,
+    explicacion:
+      "Reconciliation determina identidad (misma key, mismo tipo). Memo, una vez resuelta esa identidad, decide si vale la pena re-ejecutar la función comparando props actuales contra las anteriores.",
+  },
+];
+
 export default function ReconciliationPage() {
   return (
     <ModuloLayout
@@ -58,6 +121,20 @@ export default function ReconciliationPage() {
       titulo="Reconciliation"
       descripcion="Reconciliation es el algoritmo que compara el árbol nuevo con el anterior para decidir qué reutilizar y qué destruir — la razón de fondo detrás de las reglas de Keys que ya vimos."
     >
+      <NivelTabs
+        niveles={{
+          1: <NivelUno />,
+          2: <NivelDos />,
+          3: <NivelTres />,
+        }}
+      />
+    </ModuloLayout>
+  );
+}
+
+function NivelUno() {
+  return (
+    <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
         <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
           <p>
@@ -158,6 +235,10 @@ export default function ReconciliationPage() {
         <Quiz preguntas={preguntas} />
       </Seccion>
 
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[1]} />
+      </Seccion>
+
       <Seccion eyebrow="Práctica" titulo="Desafío">
         <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
           <p>
@@ -195,6 +276,149 @@ export default function ReconciliationPage() {
           </RevelarSolucion>
         </div>
       </Seccion>
-    </ModuloLayout>
+    </>
+  );
+}
+
+function NivelDos() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            React no reconcilia listas keyed con un mapa por key de forma
+            uniforme: primero escanea desde ambos extremos de la lista
+            vieja y la nueva, buscando un prefijo y un sufijo que
+            coincidan sin cambios — esto resuelve gratis los casos de
+            agregar o quitar al final o al principio. Solo para la
+            sección del medio que realmente se reordenó, arma un mapa de
+            keys a elementos para hacer el diff más fino.
+          </p>
+          <p>
+            Si un componente renderiza a veces un elemento suelto y a
+            veces un array en la misma posición, React puede tratarlo
+            como un cambio de tipo, generando destrucciones innecesarias.
+            La práctica recomendada es ser consistente: envolver siempre
+            en un array, aunque tenga un solo elemento.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Asumir que cualquier reordenamiento de lista tiene el mismo
+              costo.
+            </strong>{" "}
+            Agregar/quitar al final es prácticamente gratis; reordenar el
+            medio de la lista cae al camino más costoso del algoritmo.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Alternar entre un elemento suelto y un array en la misma
+              posición del árbol.
+            </strong>{" "}
+            Genera destrucciones y remontajes evitables.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Diseñar operaciones de UI que agreguen/quiten preferentemente
+            al final de una lista, aprovechando el camino rápido del
+            algoritmo cuando el orden de UX lo permite.
+          </li>
+          <li>
+            Envolver siempre en array un valor que eventualmente podría
+            tener más de un elemento, para mantener consistencia de tipo
+            en esa posición del árbol.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel2} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[2]} />
+      </Seccion>
+    </>
+  );
+}
+
+function NivelTres() {
+  return (
+    <>
+      <Seccion eyebrow="Concepto" titulo="Explicación">
+        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+          <p>
+            <code>children</code> es una estructura opaca: puede ser un
+            único elemento, un array, un Fragment con más elementos
+            adentro, texto, o <code>null</code>. Utilidades como{" "}
+            <code>React.Children.map</code> existen para manejar esa
+            variabilidad, pero tienen límites propios —{" "}
+            <code>React.Children.only</code> lanza una excepción si
+            recibe más de un hijo.
+          </p>
+          <p>
+            Reconciliation (identidad por tipo+posición/key) y{" "}
+            <code>React.memo</code> (bail-out de re-render) son
+            mecanismos independientes que se complementan: reconciliation
+            decide qué instancia reutilizar en cada posición; memo, una
+            vez resuelta esa identidad, decide si vale la pena volver a
+            ejecutar la función del componente comparando props actuales
+            contra las anteriores.
+          </p>
+        </div>
+      </Seccion>
+
+      <Seccion eyebrow="Cuidado" titulo="Errores comunes">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            <strong className="text-foreground">
+              Manipular children complejo asumiendo que es un array plano
+              normal.
+            </strong>{" "}
+            Fragments anidados o children mixtos pueden dar resultados no
+            intuitivos con las utilidades de React.Children.
+          </li>
+          <li>
+            <strong className="text-foreground">
+              Confundir la identidad que da reconciliation con la
+              decisión de re-renderizar que da memo.
+            </strong>{" "}
+            Son capas separadas: una decide &quot;es el mismo&quot;, la
+            otra decide &quot;vale la pena recalcular&quot;.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Aplicación" titulo="Casos de uso">
+        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+          <li>
+            Preferir un array explícito como prop en vez de children
+            cuando un componente necesita reordenar o filtrar por tipo de
+            forma compleja.
+          </li>
+          <li>
+            Envolver items de una lista grande en React.memo para que
+            reconciliation resuelva identidad por key, y memo evite
+            recalcular los que no cambiaron props.
+          </li>
+        </ul>
+      </Seccion>
+
+      <Seccion eyebrow="Práctica" titulo="Quiz">
+        <Quiz preguntas={preguntasNivel3} />
+      </Seccion>
+
+      <Seccion eyebrow="Entrevista" titulo="Preguntas y respuestas">
+        <EntrevistaSeccion preguntas={preguntasPorNivel[3]} />
+      </Seccion>
+    </>
   );
 }
