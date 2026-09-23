@@ -88,6 +88,7 @@ import { entrevistaSecretsManagement } from "./seguridad/secrets-management-entr
 import { entrevistaNodejsRuntime } from "./backend/nodejs-runtime-entrevista";
 import { entrevistaDisenoApisRest } from "./backend/diseno-apis-rest-entrevista";
 import { entrevistaFrameworksNode } from "./backend/frameworks-node-entrevista";
+import { entrevistaValidacionZod } from "./backend/validacion-zod-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -724,5 +725,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "frameworks-node",
     moduloTitulo: "Fastify / Express / NestJS",
     preguntas: entrevistaFrameworksNode,
+  },
+  {
+    categoriaSlug: "backend",
+    categoriaTitulo: "Backend",
+    moduloSlug: "validacion-zod",
+    moduloTitulo: "Validación de datos (Zod)",
+    preguntas: entrevistaValidacionZod,
   },
 ];

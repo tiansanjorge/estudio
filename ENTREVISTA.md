@@ -152,7 +152,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Node.js runtime (Nivel 1/2/3 + Entrevista; foco en proceso/threads)
 - ✅ Diseño de APIs REST (Nivel 1/2/3 + Entrevista)
 - ✅ Fastify / Express / NestJS — trade-offs (Nivel 1/2/3 + Entrevista)
-- ☐ Validación de datos (Zod)
+- ✅ Validación de datos (Zod) (Nivel 1/2/3 + Entrevista)
 - ☐ Manejo de errores y logging
 - ☐ Rate limiting
 - ☐ WebSockets / tiempo real
