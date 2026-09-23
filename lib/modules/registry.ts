@@ -90,7 +90,7 @@ export const categorias: Categoria[] = [
       { slug: "server-vs-client-components", titulo: "Server Components vs Client Components", estado: "disponible" },
       { slug: "data-fetching-caching", titulo: "Data fetching & caching", estado: "disponible" },
       { slug: "ssr-ssg-isr", titulo: "SSR / SSG / ISR", estado: "disponible" },
-      { slug: "middleware-edge", titulo: "Middleware & Edge runtime", estado: "proximamente" },
+      { slug: "middleware-edge", titulo: "Proxy (ex Middleware) & Edge runtime", estado: "disponible" },
       { slug: "route-handlers", titulo: "Route handlers (API routes)", estado: "proximamente" },
     ],
   },

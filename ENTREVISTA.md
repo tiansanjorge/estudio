@@ -112,7 +112,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Server Components vs Client Components (Nivel 1/2/3 + Entrevista)
 - ✅ Data fetching & caching (Nivel 1/2/3 + Entrevista)
 - ✅ SSR / SSG / ISR (Nivel 1/2/3 + Entrevista)
-- ☐ Middleware & Edge runtime
+- ✅ Middleware & Edge runtime (Nivel 1/2/3 + Entrevista; titulado "Proxy (ex Middleware)" porque Next 16 lo renombró y deprecó el Edge runtime en rutas)
 - ☐ Route handlers (API routes)
 
 ### HTTP y Networking
