@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
 
 interface Tarea {
   id: number;
@@ -29,6 +30,19 @@ function FilaTarea({ texto }: { texto: string }) {
       </span>
     </label>
   );
+}
+
+function generarCodigo(usarIndice: boolean): string {
+  return `
+{tareas.map((tarea, index) => (
+  <FilaTarea key={${usarIndice ? "index" : "tarea.id"}} texto={tarea.texto} />
+))}
+
+function FilaTarea({ texto }) {
+  // estado LOCAL: React lo asocia a la key, no al texto
+  const [marcada, setMarcada] = useState(false);
+  // ...
+}`;
 }
 
 const botonBase =
@@ -72,6 +86,8 @@ export function ListaConKeys() {
       >
         key = {usarIndice ? "índice del array" : "id estable de la tarea"}
       </button>
+
+      <BloqueCodigo codigo={generarCodigo(usarIndice)} resaltadas={[2, 7]} />
 
       <div className="flex flex-col gap-2">
         {tareas.map((tarea, index) => (

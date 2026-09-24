@@ -1,6 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO = `
+// SIN pausas: una sola tarea larga de 1500ms
+function sinPausas() {
+  trabajar(1500); // el hilo no atiende tu teclado hasta terminar
+}
+
+// EN CHUNKS: 10 tareas cortas de 150ms
+function enChunks(restantes) {
+  if (restantes === 0) return;
+  trabajar(150);
+  // cede el control: entre chunk y chunk el navegador procesa input y pinta
+  setTimeout(() => enChunks(restantes - 1), 0);
+}`;
 
 function bloquearPor(ms: number) {
   const fin = performance.now() + ms;
@@ -86,6 +101,8 @@ export function TrabajoEnChunksDemo() {
           Mismo trabajo, EN CHUNKS (no bloquea)
         </button>
       </div>
+
+      <BloqueCodigo codigo={CODIGO} resaltadas={[3, 11]} />
 
       {corriendo && (
         <span className="w-fit rounded-lg border border-info/30 bg-info-soft px-3 py-1 text-xs font-medium text-info">

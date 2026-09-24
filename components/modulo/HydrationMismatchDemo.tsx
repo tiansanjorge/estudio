@@ -1,6 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO_MISMATCH = `
+function Reloj() {
+  // corre en el servidor Y en el cliente,
+  // en momentos distintos → dos horas distintas
+  const hora = new Date().toLocaleTimeString();
+  return <span>{hora}</span>;
+}`;
+
+const CODIGO_ARREGLADO = `
+function Reloj() {
+  // mismo valor inicial en servidor y cliente
+  const [hora, setHora] = useState(null);
+  useEffect(() => {
+    // solo corre en el cliente, después de hidratar
+    setHora(new Date().toLocaleTimeString());
+  }, []);
+  return <span>{hora ?? "--:--"}</span>;
+}`;
 
 function RelojConMismatch() {
   const hora = new Date().toLocaleTimeString("es-AR");
@@ -46,6 +66,11 @@ export function HydrationMismatchDemo() {
         <code>null</code> (mismo valor en servidor y cliente) y recién
         calcula la hora real en un useEffect, después de hidratar.
       </p>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <BloqueCodigo titulo="Con mismatch" codigo={CODIGO_MISMATCH} resaltadas={[4]} />
+        <BloqueCodigo titulo="Arreglado" codigo={CODIGO_ARREGLADO} resaltadas={[3, 6]} />
+      </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <RelojConMismatch />

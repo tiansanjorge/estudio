@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import type { EscenarioArbol } from "@/lib/modules/react-core/prop-drilling";
+import { arbolAJsx } from "@/lib/modules/react-core/arbol";
+import { BloqueCodigo } from "./BloqueCodigo";
 import { ArbolComponentes } from "./ArbolComponentes";
 
 interface PropsArbolSimuladorProps {
@@ -43,6 +45,7 @@ export function PropsArbolSimulador({ escenarios }: PropsArbolSimuladorProps) {
       </div>
 
       <ArbolComponentes nodo={paso.arbol} />
+      <BloqueCodigo titulo="JSX equivalente" {...arbolAJsx(paso.arbol)} />
 
       <p className="min-h-12 text-sm leading-6 text-muted-foreground">{paso.descripcion}</p>
 

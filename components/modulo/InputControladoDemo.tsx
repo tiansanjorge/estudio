@@ -1,6 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo(sincronizar: boolean): string {
+  return `
+const [texto, setTexto] = useState("");
+
+<input
+  value={texto}   // React fuerza este valor en cada render
+  onChange={(e) => ${sincronizar ? "setTexto(e.target.value)" : "{ /* no actualiza el estado */ }"}}
+/>`;
+}
 
 export function InputControladoDemo() {
   const [texto, setTexto] = useState("");
@@ -19,6 +30,8 @@ export function InputControladoDemo() {
       >
         onChange {sincronizar ? "SÍ llama a setTexto" : "NO llama a setTexto"}
       </button>
+
+      <BloqueCodigo codigo={generarCodigo(sincronizar)} resaltadas={[4, 5]} />
 
       <input
         value={texto}

@@ -7,6 +7,63 @@ import {
   type SistemaModulos,
   type MomentoDeUso,
 } from "@/lib/modules/modulos-esm-cjs/resolver";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+interface Archivos {
+  a: string;
+  b: string;
+  /** Línea de b.js donde se lee el valor de A. */
+  lecturaEnB: number;
+  /** Línea de a.js que dispara la lectura (si la hay). */
+  llamadaEnA?: number;
+}
+
+const CODIGO: Record<SistemaModulos, Record<MomentoDeUso, Archivos>> = {
+  cjs: {
+    duranteCiclo: {
+      a: `
+const b = require("./b");  // A se pausa acá y carga B
+exports.valor = 42;        // todavía no se ejecutó`,
+      b: `
+const a = require("./a");  // A a medio cargar: exports = {}
+console.log(a.valor);      // undefined`,
+      lecturaEnB: 2,
+    },
+    enFuncionDiferida: {
+      a: `
+const b = require("./b");
+exports.valor = 42;
+console.log(b.usar());     // 42`,
+      b: `
+const a = require("./a");  // mismo objeto exports de A
+exports.usar = () => a.valor; // se lee al llamar`,
+      lecturaEnB: 2,
+      llamadaEnA: 3,
+    },
+  },
+  esm: {
+    duranteCiclo: {
+      a: `
+import "./b.js";           // B se evalúa ANTES que el resto de A
+export const valor = 42;`,
+      b: `
+import { valor } from "./a.js";
+console.log(valor);        // ReferenceError: valor está en TDZ`,
+      lecturaEnB: 2,
+    },
+    enFuncionDiferida: {
+      a: `
+import { usar } from "./b.js";
+export const valor = 42;
+console.log(usar());       // 42`,
+      b: `
+import { valor } from "./a.js"; // live binding, no copia
+export const usar = () => valor; // se lee al llamar`,
+      lecturaEnB: 2,
+      llamadaEnA: 3,
+    },
+  },
+};
 
 export function ImportCircularResolver() {
   const [config, setConfig] = useState<ConfiguracionCircular>({
@@ -15,6 +72,7 @@ export function ImportCircularResolver() {
   });
 
   const resultado = resolverImportCircular(config);
+  const archivos = CODIGO[config.sistema][config.momento];
 
   return (
     <div className="flex flex-col gap-6">
@@ -71,6 +129,19 @@ export function ImportCircularResolver() {
             </button>
           ))}
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <BloqueCodigo
+          titulo="a.js (punto de entrada)"
+          codigo={archivos.a}
+          resaltadas={archivos.llamadaEnA ? [archivos.llamadaEnA] : []}
+        />
+        <BloqueCodigo
+          titulo="b.js"
+          codigo={archivos.b}
+          resaltadas={[archivos.lecturaEnB]}
+        />
       </div>
 
       <div className="flex flex-col gap-2 rounded-xl border border-border bg-background p-4">

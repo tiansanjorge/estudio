@@ -2,6 +2,26 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { productosDemo } from "@/lib/modules/react-rendering/productos-lista";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo(conTransition: boolean): string {
+  const actualizarFiltro = conTransition
+    ? [
+        "  startTransition(() => {",
+        "    setFiltro(valor); // no urgente: React puede interrumpirlo",
+        "  });",
+      ]
+    : ["  setFiltro(valor); // misma prioridad: el input espera a la lista"];
+  return [
+    "function manejarCambio(valor) {",
+    "  setQuery(valor); // urgente: el input muestra la tecla ya",
+    ...actualizarFiltro,
+    "}",
+    "",
+    "// la lista filtra 8000 productos con filtro, no con query",
+    "const filtrados = productos.filter((p) => p.includes(filtro));",
+  ].join("\n");
+}
 
 const LIMITE_RENDER = 2000;
 
@@ -46,6 +66,11 @@ export function ConcurrentSearchDemo() {
       >
         {conTransition ? "CON startTransition" : "SIN startTransition"}
       </button>
+
+      <BloqueCodigo
+        codigo={generarCodigo(conTransition)}
+        resaltadas={conTransition ? [3, 4, 5] : [3]}
+      />
 
       <input
         value={query}

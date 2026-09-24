@@ -2,6 +2,30 @@
 
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const JSX_PIEZA: Record<Pieza, string> = {
+  lista: "<Lista />",
+  formulario: "<Formulario />",
+  vacio: "null",
+};
+
+function generarCodigo(izquierda: Pieza, derecha: Pieza): string {
+  return `
+function SplitPane({ izquierda, derecha }) {
+  return (
+    <div className="split">
+      <div>{izquierda}</div>
+      <div>{derecha}</div>
+    </div>
+  );
+}
+
+<SplitPane
+  izquierda={${JSX_PIEZA[izquierda]}}
+  derecha={${JSX_PIEZA[derecha]}}
+/>`;
+}
 
 type Pieza = "lista" | "formulario" | "vacio";
 
@@ -57,6 +81,8 @@ export function PanelComposable() {
         <Selector etiqueta="Slot izquierdo" valor={piezaIzquierda} onCambio={setPiezaIzquierda} />
         <Selector etiqueta="Slot derecho" valor={piezaDerecha} onCambio={setPiezaDerecha} />
       </div>
+
+      <BloqueCodigo codigo={generarCodigo(piezaIzquierda, piezaDerecha)} resaltadas={[11, 12]} />
 
       <SplitPane izquierda={renderPieza(piezaIzquierda)} derecha={renderPieza(piezaDerecha)} />
     </div>

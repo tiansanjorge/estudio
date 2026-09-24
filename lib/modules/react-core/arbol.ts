@@ -71,3 +71,38 @@ export const pasosArbolComponentes: PasoArbol[] = [
     },
   },
 ];
+
+/**
+ * JSX equivalente a un árbol de componentes, para mostrar al lado de la
+ * visualización. Resalta las líneas que reciben props o leen el Context.
+ */
+export function arbolAJsx(raiz: NodoComponente): { codigo: string; resaltadas: number[] } {
+  const lineas: string[] = [];
+  const resaltadas: number[] = [];
+
+  function visitar(nodo: NodoComponente, nivel: number) {
+    const sangria = "  ".repeat(nivel);
+    const { children, ...resto } = nodo.props ?? {};
+    const atributos = Object.entries(resto)
+      .map(([nombre, valor]) => ` ${nombre}={${valor}}`)
+      .join("");
+    const nota = nodo.rol === "usaContext" ? "  // lee useContext" : "";
+    if (Object.keys(resto).length > 0 || nodo.rol === "usaContext") {
+      resaltadas.push(lineas.length + 1);
+    }
+
+    const hijos = nodo.hijos ?? [];
+    if (hijos.length === 0 && !children) {
+      lineas.push(`${sangria}<${nodo.nombre}${atributos} />${nota}`);
+      return;
+    }
+
+    lineas.push(`${sangria}<${nodo.nombre}${atributos}>${nota}`);
+    if (children) lineas.push(`${sangria}  ${children}`);
+    hijos.forEach((hijo) => visitar(hijo, nivel + 1));
+    lineas.push(`${sangria}</${nodo.nombre}>`);
+  }
+
+  visitar(raiz, 0);
+  return { codigo: lineas.join("\n"), resaltadas };
+}

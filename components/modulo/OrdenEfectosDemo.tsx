@@ -1,6 +1,25 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO = `
+function Componente() {
+  const [contador, setContador] = useState(0);
+
+  // 2. después de mutar el DOM, ANTES de que el navegador pinte
+  useLayoutEffect(() => {
+    log("useLayoutEffect corrió");
+  }, [contador]);
+
+  // 3. después de que la pantalla ya se pintó
+  useEffect(() => {
+    log("useEffect corrió");
+  }, [contador]);
+
+  // 1. render: calcula el JSX (todavía no toca el DOM)
+  return <button onClick={() => setContador(contador + 1)}>...</button>;
+}`;
 
 export function OrdenEfectosDemo() {
   const [contador, setContador] = useState(0);
@@ -32,6 +51,8 @@ export function OrdenEfectosDemo() {
       >
         Disparar un nuevo render (contador: {contador})
       </button>
+
+      <BloqueCodigo codigo={CODIGO} resaltadas={contador > 0 ? [5, 6, 10, 11] : []} />
 
       <div className="rounded-xl border border-border bg-background p-4 font-mono text-xs">
         <span className="text-xs uppercase tracking-wide text-muted-foreground">

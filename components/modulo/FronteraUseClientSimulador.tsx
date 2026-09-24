@@ -8,6 +8,25 @@ import {
   type NodoComponente,
   type ResultadoNodo,
 } from "@/lib/modules/nextjs/server-vs-client-components";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+/** Header.tsx y Buscador.tsx según las marcas actuales, comentados con el resultado. */
+function generarCodigo(marcas: ReadonlySet<string>, resultados: Map<string, ResultadoNodo>): string {
+  const directiva = (id: string) =>
+    marcas.has(id) ? '"use client";' : "// (sin directiva)";
+  const logoEnCliente = resultados.get("logo")?.entorno === "cliente";
+  const buscadorFalla = Boolean(resultados.get("buscador")?.error);
+  return [
+    "// Header.tsx",
+    directiva("header"),
+    `import { Logo } from "./Logo"; // ${logoEnCliente ? "va al cliente por herencia" : "se queda en el servidor"}`,
+    'import { Buscador } from "./Buscador";',
+    "",
+    "// Buscador.tsx",
+    directiva("buscador"),
+    `const [q, setQ] = useState(""); // ${buscadorFalla ? "ERROR: hook en un Server Component" : "OK: corre en el cliente"}`,
+  ].join("\n");
+}
 
 interface PropsNodo {
   nodo: NodoComponente;
@@ -108,6 +127,12 @@ export function FronteraUseClientSimulador() {
           reiniciar
         </button>
       </div>
+
+      <BloqueCodigo
+        titulo="Dos de los archivos del árbol"
+        codigo={generarCodigo(marcas, resultados)}
+        resaltadas={[2, 3, 7, 8]}
+      />
 
       <ul className="flex flex-col gap-2">
         <Nodo nodo={ARBOL} resultados={resultados} marcas={marcas} alternar={alternar} />

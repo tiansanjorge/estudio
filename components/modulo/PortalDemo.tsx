@@ -2,6 +2,26 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo(usarPortal: boolean): string {
+  const menu = usarPortal
+    ? "{abierto && createPortal(<Menu />, document.body)}"
+    : "{abierto && <Menu />}";
+  const nota = usarPortal
+    ? [
+        "// DOM: <Menu> vive en <body>, fuera del div recortado",
+        "// React: sigue siendo hijo del div → el click burbujea hasta onClick",
+      ]
+    : ["// DOM y React: <Menu> es hijo del div → overflow: hidden lo recorta"];
+  return [
+    '<div onClick={registrar} style={{ overflow: "hidden" }}>',
+    "  <button onClick={abrirMenu}>Abrir menú</button>",
+    `  ${menu}`,
+    "</div>",
+    ...nota,
+  ].join("\n");
+}
 
 export function PortalDemo() {
   const [montado, setMontado] = useState(false);
@@ -69,6 +89,8 @@ export function PortalDemo() {
           El contenedor de abajo tiene overflow: hidden.
         </span>
       </div>
+
+      <BloqueCodigo codigo={generarCodigo(usarPortal)} resaltadas={[1, 3]} />
 
       <div
         onClick={() => registrar("Click detectado en el contenedor externo (por bubbling de React)")}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
 
 const DURACION_MS = 800;
 const TAREAS = [1, 2, 3];
@@ -11,6 +12,35 @@ function tareaSimulada(id: number): Promise<string> {
   });
 }
 
+type Modo = "secuencial" | "paralelo";
+
+const CODIGO: Record<Modo, { titulo: string; codigo: string; clave: number[] }> = {
+  secuencial: {
+    titulo: "Secuencial — await uno por uno",
+    codigo: `
+async function cargarTodo() {
+  const resultados = [];
+  for (const id of [1, 2, 3]) {
+    // cada await frena el loop hasta que termina la tarea anterior
+    resultados.push(await tarea(id));
+  }
+  return resultados;
+}`,
+    clave: [4, 5],
+  },
+  paralelo: {
+    titulo: "Paralelo — Promise.all",
+    codigo: `
+async function cargarTodo() {
+  // las 3 tareas arrancan YA: map crea las promesas sin esperar
+  const promesas = [1, 2, 3].map((id) => tarea(id));
+  // un solo await, que espera a que terminen todas
+  return await Promise.all(promesas);
+}`,
+    clave: [3, 5],
+  },
+};
+
 const botonBase =
   "rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent-soft hover:text-accent disabled:pointer-events-none disabled:opacity-40";
 
@@ -18,8 +48,10 @@ export function SecuencialVsParaleloSimulador() {
   const [ejecutando, setEjecutando] = useState(false);
   const [log, setLog] = useState<string[]>([]);
   const [tiempoTotal, setTiempoTotal] = useState<number | null>(null);
+  const [modo, setModo] = useState<Modo | null>(null);
 
   async function ejecutarSecuencial() {
+    setModo("secuencial");
     setEjecutando(true);
     setLog([]);
     setTiempoTotal(null);
@@ -36,6 +68,7 @@ export function SecuencialVsParaleloSimulador() {
   }
 
   async function ejecutarParalelo() {
+    setModo("paralelo");
     setEjecutando(true);
     setLog([]);
     setTiempoTotal(null);
@@ -59,13 +92,24 @@ export function SecuencialVsParaleloSimulador() {
         3 tareas de {DURACION_MS}ms cada una, independientes entre sí.
       </p>
 
-      <div className="flex flex-wrap gap-3">
-        <button type="button" onClick={ejecutarSecuencial} disabled={ejecutando} className={botonBase}>
-          Ejecutar secuencial (await uno por uno)
-        </button>
-        <button type="button" onClick={ejecutarParalelo} disabled={ejecutando} className={botonBase}>
-          Ejecutar en paralelo (Promise.all)
-        </button>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {(["secuencial", "paralelo"] as Modo[]).map((m) => (
+          <div key={m} className="flex flex-col gap-3">
+            <BloqueCodigo
+              titulo={CODIGO[m].titulo}
+              codigo={CODIGO[m].codigo}
+              resaltadas={modo === m ? CODIGO[m].clave : []}
+            />
+            <button
+              type="button"
+              onClick={m === "secuencial" ? ejecutarSecuencial : ejecutarParalelo}
+              disabled={ejecutando}
+              className={botonBase}
+            >
+              {m === "secuencial" ? "Ejecutar secuencial" : "Ejecutar en paralelo"}
+            </button>
+          </div>
+        ))}
       </div>
 
       {tiempoTotal !== null && (

@@ -1,6 +1,35 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO = `
+let controller = null;
+
+async function buscar(query) {
+  controller?.abort(); // cancela la request anterior, si sigue viva
+  controller = new AbortController();
+  try {
+    const res = await fetch(\`/api/buscar?q=\${query}\`, {
+      signal: controller.signal,
+    });
+    mostrar(await res.json());
+  } catch (error) {
+    if (error.name === "AbortError") return; // cancelada a propósito
+    throw error;
+  }
+}`;
+
+/** Qué parte del código corresponde al último evento del log. */
+function lineasPara(eventos: string[]): number[] {
+  const [ultimo = "", anterior = ""] = eventos;
+  if (ultimo.includes("completada")) return [10];
+  if (ultimo.includes("iniciada")) {
+    return anterior.includes("cancelada") ? [4, 5, 7, 8, 12] : [5, 7, 8];
+  }
+  if (ultimo.includes("cancelada")) return [4, 12];
+  return [];
+}
 
 type EstadoBusqueda = "idle" | "buscando" | "listo";
 
@@ -69,8 +98,11 @@ export function BusquedaConCancelacion() {
     <div className="flex flex-col gap-6">
       <p className="text-sm text-muted-foreground">
         Esto simula un fetch con un timer de 900ms (no pega a una red real).
-        Escribí rápido para ver cómo se cancela cada búsqueda anterior.
+        Escribí rápido para ver cómo se cancela cada búsqueda anterior; el
+        código muestra cómo se hace con un fetch real.
       </p>
+
+      <BloqueCodigo codigo={CODIGO} resaltadas={lineasPara(eventos)} />
 
       <div className="flex flex-col gap-2">
         <label

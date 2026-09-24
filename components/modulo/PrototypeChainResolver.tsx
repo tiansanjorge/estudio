@@ -6,12 +6,37 @@ import {
   type ConfiguracionPrototipo,
   type NivelPrototipo,
 } from "@/lib/modules/prototypes/resolver";
+import { BloqueCodigo } from "./BloqueCodigo";
 
 const niveles: { clave: keyof ConfiguracionPrototipo; etiqueta: string }[] = [
   { clave: "enInstancia", etiqueta: "la instancia (propiedad propia)" },
   { clave: "enPrototipoDirecto", etiqueta: "Hijo.prototype" },
   { clave: "enPrototipoBase", etiqueta: "Padre.prototype" },
 ];
+
+const LINEA_DEFINICION: Record<NivelPrototipo, number> = {
+  "Prototipo base (Padre.prototype)": 2,
+  "Prototipo directo (Hijo.prototype)": 5,
+  Instancia: 9,
+};
+const LINEA_LLAMADA = 11;
+
+function generarCodigo(config: ConfiguracionPrototipo): string {
+  const sinDefinir = "// (sin metodo)";
+  return [
+    "class Padre {",
+    config.enPrototipoBase ? '  metodo() { return "Padre.prototype"; }' : `  ${sinDefinir}`,
+    "}",
+    "class Hijo extends Padre {",
+    config.enPrototipoDirecto ? '  metodo() { return "Hijo.prototype"; }' : `  ${sinDefinir}`,
+    "}",
+    "",
+    "const instancia = new Hijo();",
+    config.enInstancia ? 'instancia.metodo = () => "propia"; // propiedad propia' : sinDefinir,
+    "",
+    "instancia.metodo();",
+  ].join("\n");
+}
 
 export function PrototypeChainResolver() {
   const [config, setConfig] = useState<ConfiguracionPrototipo>({
@@ -54,6 +79,15 @@ export function PrototypeChainResolver() {
           </button>
         ))}
       </div>
+
+      <BloqueCodigo
+        codigo={generarCodigo(config)}
+        resaltadas={
+          resultado.encontradoEn
+            ? [LINEA_LLAMADA, LINEA_DEFINICION[resultado.encontradoEn]]
+            : [LINEA_LLAMADA]
+        }
+      />
 
       <div className="flex flex-col gap-2 rounded-xl border border-border bg-background p-4">
         <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">

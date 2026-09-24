@@ -2,8 +2,32 @@
 
 import { useState } from "react";
 import { calcularAlcanzables, type ConfiguracionReferencias, type NodoObjeto } from "@/lib/modules/memory/reachability";
+import { BloqueCodigo } from "./BloqueCodigo";
 
 const nodos: NodoObjeto[] = ["A", "B", "C"];
+
+const REFERENCIAS: { clave: keyof ConfiguracionReferencias; codigo: string; linea: number }[] = [
+  { clave: "aHaciaB", codigo: "a.ref = b;", linea: 5 },
+  { clave: "bHaciaC", codigo: "b.ref = c;", linea: 6 },
+  { clave: "cHaciaA", codigo: "c.ref = a;            // ciclo", linea: 7 },
+  { clave: "rootHaciaA", codigo: "globalThis.cache = a; // root → A", linea: 8 },
+];
+
+function generarCodigo(config: ConfiguracionReferencias): string {
+  return [
+    "function crear() {",
+    '  const a = { nombre: "A" };',
+    '  const b = { nombre: "B" };',
+    '  const c = { nombre: "C" };',
+    ...REFERENCIAS.map(({ clave, codigo }) =>
+      config[clave] ? `  ${codigo}` : `  // ${codigo.split(";")[0]};  (sin esta referencia)`,
+    ),
+    "}",
+    "crear();",
+    "// Al terminar crear(), a, b y c locales desaparecen:",
+    "// solo sobrevive lo que se alcanza desde el root.",
+  ].join("\n");
+}
 
 export function MemoryReachability() {
   const [config, setConfig] = useState<ConfiguracionReferencias>({
@@ -42,6 +66,11 @@ export function MemoryReachability() {
           onClick={() => toggle("cHaciaA")}
         />
       </div>
+
+      <BloqueCodigo
+        codigo={generarCodigo(config)}
+        resaltadas={REFERENCIAS.filter(({ clave }) => config[clave]).map(({ linea }) => linea)}
+      />
 
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {nodos.map((nodo) => {

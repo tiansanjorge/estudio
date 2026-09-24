@@ -8,6 +8,7 @@ import {
   type Tarea,
   type TipoCombinador,
 } from "@/lib/modules/promises/combinadores";
+import { BloqueCodigo } from "./BloqueCodigo";
 
 const duraciones = [300, 800, 1500];
 
@@ -27,6 +28,26 @@ function claseEstado(estado: EstadoTarea): string {
     case "rechazada":
       return "border-error/30 bg-error-soft text-error";
   }
+}
+
+/** Código equivalente a la configuración actual del playground. */
+function generarCodigo(tareas: Tarea[], combinador: TipoCombinador): string {
+  const declaraciones = tareas.map((t) =>
+    t.resultado === "exito"
+      ? `const t${t.id} = esperar(${t.duracionMs}).then(() => "Tarea ${t.id} OK");`
+      : `const t${t.id} = esperar(${t.duracionMs}).then(() => { throw new Error("Tarea ${t.id} falló"); });`,
+  );
+  const lista = tareas.map((t) => `t${t.id}`).join(", ");
+  return [
+    ...declaraciones,
+    "",
+    "try {",
+    `  const resultado = await Promise.${combinador}([${lista}]);`,
+    '  console.log("cumplida:", resultado);',
+    "} catch (error) {",
+    '  console.log("rechazada:", error.message);',
+    "}",
+  ].join("\n");
 }
 
 const botonBase =
@@ -83,6 +104,16 @@ export function CombinadoresSimulador() {
       setEjecutando(false);
     }
   }
+
+  // Líneas del snippet: declaraciones, línea en blanco, try, await, then / catch.
+  const lineaAwait = tareas.length + 3;
+  const resaltadas = ejecutando
+    ? [lineaAwait]
+    : resultadoFinal
+      ? resultadoFinal.ok
+        ? [lineaAwait, lineaAwait + 1]
+        : [lineaAwait, lineaAwait + 2, lineaAwait + 3]
+      : [];
 
   return (
     <div className="flex flex-col gap-6">
@@ -162,6 +193,12 @@ export function CombinadoresSimulador() {
           );
         })}
       </div>
+
+      <BloqueCodigo
+        titulo="Código equivalente"
+        codigo={generarCodigo(tareas, combinador)}
+        resaltadas={resaltadas}
+      />
 
       <button type="button" onClick={ejecutar} disabled={ejecutando} className={botonBase}>
         {ejecutando ? "Ejecutando..." : "Ejecutar"}

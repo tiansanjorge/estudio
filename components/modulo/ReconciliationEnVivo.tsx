@@ -1,6 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO = {
+  mismoTipo: `
+// Mismo tipo en la misma posición: React reutiliza la instancia
+// y solo actualiza la prop → el estado (clics) sobrevive
+<ContadorA etiqueta={\`Modo \${modo}\`} />`,
+  distintoTipo: `
+// Cambia el TIPO en esa posición: React desmonta ContadorA
+// y monta ContadorB desde cero → el estado se pierde
+{modo === "A" ? <ContadorA /> : <ContadorB />}`,
+};
 
 function FilaContador({
   etiqueta,
@@ -72,6 +84,11 @@ export function ReconciliationEnVivo() {
       ) : (
         <ContadorB etiqueta="Modo B (ContadorB)" />
       )}
+
+      <BloqueCodigo
+        codigo={mismoTipo ? CODIGO.mismoTipo : CODIGO.distintoTipo}
+        resaltadas={[3]}
+      />
 
       <button type="button" onClick={cambiarModo} className={botonBase}>
         Cambiar a modo {modo === "A" ? "B" : "A"}

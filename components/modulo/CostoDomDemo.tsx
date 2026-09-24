@@ -1,6 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO = `
+// A) nodos DOM reales: el navegador crea objetos nativos pesados
+for (let i = 0; i < cantidad; i++) {
+  const nodo = document.createElement("div");
+  nodo.textContent = \`Item \${i}\`;
+  contenedor.appendChild(nodo);
+}
+
+// B) objetos JS planos: lo que devuelve JSX (la materia prima del Virtual DOM)
+for (let i = 0; i < cantidad; i++) {
+  elementos.push({ type: "div", props: { children: \`Item \${i}\` } });
+}`;
 
 function medirCrearNodosDom(cantidad: number): number {
   const inicio = performance.now();
@@ -61,6 +75,8 @@ export function CostoDomDemo() {
           ))}
         </div>
       </div>
+
+      <BloqueCodigo codigo={CODIGO} resaltadas={[3, 10]} />
 
       <button type="button" onClick={medir} className={`w-fit ${botonBase}`}>
         Medir tiempo real en este navegador

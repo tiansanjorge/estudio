@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import type { PasoArbol } from "@/lib/modules/react-core/arbol";
+import { arbolAJsx } from "@/lib/modules/react-core/arbol";
+import { BloqueCodigo } from "./BloqueCodigo";
 import { ArbolComponentes } from "./ArbolComponentes";
 
 interface ComponentesSimuladorProps {
@@ -18,6 +20,7 @@ export function ComponentesSimulador({ pasos }: ComponentesSimuladorProps) {
   return (
     <div className="flex flex-col gap-6">
       <ArbolComponentes nodo={paso.arbol} />
+      <BloqueCodigo titulo="JSX equivalente" {...arbolAJsx(paso.arbol)} />
 
       <p className="min-h-12 text-sm leading-6 text-muted-foreground">{paso.descripcion}</p>
 

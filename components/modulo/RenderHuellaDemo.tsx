@@ -1,6 +1,24 @@
 "use client";
 
 import { memo, useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO = `
+function Padre() {
+  const [contador, setContador] = useState(0);
+  return (
+    <>
+      <button onClick={() => setContador(contador + 1)}>...</button>
+      <HijoNormal etiqueta="fijo" /> {/* se vuelve a ejecutar */}
+      <HijoMemo etiqueta="fijo" />   {/* React lo saltea */}
+    </>
+  );
+}
+
+function HijoNormal({ etiqueta }) { /* ... */ }
+
+// memo compara las props (Object.is) antes de llamar a la función
+const HijoMemo = memo(function HijoMemo({ etiqueta }) { /* ... */ });`;
 
 function huella() {
   return Math.random().toFixed(4);
@@ -48,6 +66,8 @@ export function RenderHuellaDemo() {
       >
         Re-renderizar Padre (contador: {contador})
       </button>
+
+      <BloqueCodigo codigo={CODIGO} resaltadas={contador > 0 ? [6, 7, 15] : []} />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <HijoNormal etiqueta="fijo" />

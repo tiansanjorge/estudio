@@ -2,12 +2,35 @@
 
 import { useState } from "react";
 import { resolverVariable, type ConfiguracionScope, type NivelScope } from "@/lib/modules/scope/resolver";
+import { BloqueCodigo } from "./BloqueCodigo";
 
 const niveles: { clave: keyof ConfiguracionScope; etiqueta: string }[] = [
   { clave: "declaradoEnInterna", etiqueta: "Interna" },
   { clave: "declaradoEnExterna", etiqueta: "Externa" },
   { clave: "declaradoEnGlobal", etiqueta: "Global" },
 ];
+
+/** Líneas de cada declaración en el snippet generado. */
+const LINEA_DECLARACION: Record<NivelScope, number> = { Global: 1, Externa: 4, Interna: 6 };
+const LINEA_CONSOLE = 7;
+
+function generarCodigo(config: ConfiguracionScope): string {
+  const declarar = (activo: boolean, sangria: string, texto: string) =>
+    activo ? `${sangria}let valor = "${texto}";` : `${sangria}// (sin declaración de valor)`;
+  return [
+    declarar(config.declaradoEnGlobal, "", "global"),
+    "",
+    "function externa() {",
+    declarar(config.declaradoEnExterna, "  ", "externa"),
+    "  function interna() {",
+    declarar(config.declaradoEnInterna, "    ", "interna"),
+    "    console.log(valor);",
+    "  }",
+    "  interna();",
+    "}",
+    "externa();",
+  ].join("\n");
+}
 
 export function ScopeResolver() {
   const [config, setConfig] = useState<ConfiguracionScope>({
@@ -49,6 +72,15 @@ export function ScopeResolver() {
           </button>
         ))}
       </div>
+
+      <BloqueCodigo
+        codigo={generarCodigo(config)}
+        resaltadas={
+          resultado.encontradoEn
+            ? [LINEA_CONSOLE, LINEA_DECLARACION[resultado.encontradoEn]]
+            : [LINEA_CONSOLE]
+        }
+      />
 
       <div className="flex flex-col gap-2 rounded-xl border border-border bg-background p-4">
         <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">

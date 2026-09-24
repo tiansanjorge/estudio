@@ -1,6 +1,34 @@
 "use client";
 
 import { Component, useState, type ReactNode } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO = `
+class LimiteError extends React.Component {
+  state = { tieneError: false };
+
+  static getDerivedStateFromError() {
+    return { tieneError: true }; // se llama si un hijo lanza al renderizar
+  }
+
+  render() {
+    if (this.state.tieneError) return <Fallback />;
+    return this.props.children;
+  }
+}
+
+function Widget({ debeFallar }) {
+  if (debeFallar) throw new Error("Fallo durante el render");
+  return <p>Widget OK</p>;
+}
+
+<LimiteError>
+  <Widget debeFallar={debeFallar} />
+</LimiteError>`;
+
+/** Camino que recorre React en cada caso. */
+const LINEAS_OK = [10, 16, 19, 20];
+const LINEAS_ERROR = [4, 5, 9, 15, 20];
 
 interface LimiteErrorProps {
   children: ReactNode;
@@ -79,6 +107,11 @@ export function ErrorBoundaryDemo() {
           Reiniciar demo completa
         </button>
       </div>
+
+      <BloqueCodigo
+        codigo={CODIGO}
+        resaltadas={debeFallar ? LINEAS_ERROR : LINEAS_OK}
+      />
 
       <LimiteError key={key}>
         <WidgetQueFalla debeFallar={debeFallar} />

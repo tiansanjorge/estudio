@@ -3,6 +3,33 @@
 import { useState } from "react";
 import type { NodoComponente } from "@/lib/modules/react-core/arbol";
 import { ArbolComponentes } from "./ArbolComponentes";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo(header: boolean, footer: boolean, cantidad: number): string {
+  const productos = Array.from({ length: cantidad }, (_, i) => `"Producto ${i + 1}"`).join(", ");
+  return [
+    `const productos = [${productos}];`,
+    "",
+    "function App() {",
+    "  return (",
+    "    <>",
+    ...(header ? ["      <Header />"] : []),
+    "      <Main>",
+    "        <ProductList productos={productos} />",
+    "      </Main>",
+    ...(footer ? ["      <Footer />"] : []),
+    "    </>",
+    "  );",
+    "}",
+    "",
+    "// UN solo componente, reutilizado una vez por producto",
+    "function ProductList({ productos }) {",
+    "  return productos.map((nombre) => (",
+    "    <ProductCard key={nombre} nombre={nombre} />",
+    "  ));",
+    "}",
+  ].join("\n");
+}
 
 const opcionesCantidad = [1, 3, 5];
 
@@ -31,6 +58,12 @@ export function ConstructorDeUI() {
       ...(mostrarFooter ? [{ nombre: "Footer" }] : []),
     ],
   };
+
+  const codigo = generarCodigo(mostrarHeader, mostrarFooter, cantidadProductos);
+  // Los datos y el único ProductCard que se reutiliza.
+  const resaltadas = codigo
+    .split("\n")
+    .flatMap((linea, i) => (/const productos|<ProductCard/.test(linea) ? [i + 1] : []));
 
   return (
     <div className="flex flex-col gap-6">
@@ -74,6 +107,8 @@ export function ConstructorDeUI() {
       </div>
 
       <ArbolComponentes nodo={arbol} />
+
+      <BloqueCodigo codigo={codigo} resaltadas={resaltadas} />
 
       <p className="text-sm leading-6 text-muted-foreground">
         Fijate que <code>ProductCard</code> es EL MISMO componente repetido{" "}

@@ -2,6 +2,35 @@
 
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO = `
+const TemaContext = createContext("claro");
+
+function App() {
+  const [tema, setTema] = useState("claro");
+  return (
+    <TemaContext.Provider value={tema}>
+      <CapaIntermedia>
+        <CapaIntermedia>
+          <CapaIntermedia>
+            <BotonAccion />
+          </CapaIntermedia>
+        </CapaIntermedia>
+      </CapaIntermedia>
+    </TemaContext.Provider>
+  );
+}
+
+// No recibe ni reenvía "tema": solo pinta a sus hijos
+function CapaIntermedia({ children }) {
+  return <div className="capa">{children}</div>;
+}
+
+function BotonAccion() {
+  const tema = useContext(TemaContext); // lo lee directo
+  return <button className={tema}>...</button>;
+}`;
 
 type Tema = "claro" | "oscuro";
 
@@ -48,11 +77,12 @@ export function ContextEnVivo() {
         </button>
 
         <p className="text-sm text-muted-foreground">
-          CapaIntermedia está anidada 3 veces. Ninguna de esas instancias
-          recibe &apos;tema&apos; como prop en ningún lado del código —
-          fijate en el código fuente si querés. BotonAccion lo lee
-          directo del Context, sin importar qué tan profundo esté.
+          CapaIntermedia está anidada 3 veces y ninguna recibe
+          &apos;tema&apos; como prop. BotonAccion lo lee directo del
+          Context, sin importar qué tan profundo esté.
         </p>
+
+        <BloqueCodigo codigo={CODIGO} resaltadas={[6, 19, 24]} />
 
         <CapaIntermedia>
           <CapaIntermedia>
