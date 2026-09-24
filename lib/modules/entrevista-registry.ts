@@ -105,6 +105,7 @@ import { entrevistaRedisCaching } from "./bases-de-datos/redis-caching-entrevist
 import { entrevistaEscalabilidadDb } from "./bases-de-datos/escalabilidad-db-entrevista";
 import { entrevistaPipelinesGithubActions } from "./ci-cd/pipelines-github-actions-entrevista";
 import { entrevistaEstrategiasDeploy } from "./ci-cd/estrategias-deploy-entrevista";
+import { entrevistaDocker } from "./ci-cd/docker-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -860,5 +861,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "estrategias-deploy",
     moduloTitulo: "Estrategias de deploy",
     preguntas: entrevistaEstrategiasDeploy,
+  },
+  {
+    categoriaSlug: "ci-cd",
+    categoriaTitulo: "CI/CD",
+    moduloSlug: "docker",
+    moduloTitulo: "Docker (nociones)",
+    preguntas: entrevistaDocker,
   },
 ];
