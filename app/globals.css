@@ -61,3 +61,17 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+/* Tailwind v4 dejó los botones con cursor: default. Lo restauramos para todo
+   lo interactivo; en @layer base para que utilidades como disabled:cursor-*
+   sigan ganando. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  select:not(:disabled),
+  label:has(> input:not(:disabled)),
+  input:is([type="checkbox"], [type="radio"], [type="range"]):not(:disabled) {
+    cursor: pointer;
+  }
+}

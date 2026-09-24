@@ -49,7 +49,7 @@ export function Quiz({ preguntas }: QuizProps) {
                 let estilo =
                   "border-border text-foreground hover:bg-accent-soft hover:text-accent";
                 if (respuesta !== null && esCorrecta) {
-                  estilo = "border-accent bg-accent-soft text-accent";
+                  estilo = "border-success/30 bg-success-soft text-success";
                 } else if (respuesta !== null && esElegida) {
                   estilo = "border-error/30 bg-error-soft text-error";
                 }
