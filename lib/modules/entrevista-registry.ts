@@ -106,6 +106,7 @@ import { entrevistaEscalabilidadDb } from "./bases-de-datos/escalabilidad-db-ent
 import { entrevistaPipelinesGithubActions } from "./ci-cd/pipelines-github-actions-entrevista";
 import { entrevistaEstrategiasDeploy } from "./ci-cd/estrategias-deploy-entrevista";
 import { entrevistaDocker } from "./ci-cd/docker-entrevista";
+import { entrevistaVariablesSecretosCi } from "./ci-cd/variables-secretos-ci-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -868,5 +869,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "docker",
     moduloTitulo: "Docker (nociones)",
     preguntas: entrevistaDocker,
+  },
+  {
+    categoriaSlug: "ci-cd",
+    categoriaTitulo: "CI/CD",
+    moduloSlug: "variables-secretos-ci",
+    moduloTitulo: "Variables y secretos en CI",
+    preguntas: entrevistaVariablesSecretosCi,
   },
 ];

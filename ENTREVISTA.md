@@ -174,7 +174,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Pipelines (GitHub Actions) (Nivel 1/2/3 + Entrevista)
 - ✅ Estrategias de deploy (blue-green, canary, rolling) (Nivel 1/2/3 + Entrevista)
 - ✅ Docker (nociones) (Nivel 1/2/3 + Entrevista)
-- ☐ Variables y secretos en CI
+- ✅ Variables y secretos en CI (Nivel 1/2/3 + Entrevista)
 - ☐ Observabilidad (logs, métricas, tracing)
 - ☐ Feature flags
 

@@ -202,7 +202,7 @@ export const categorias: Categoria[] = [
       { slug: "pipelines-github-actions", titulo: "Pipelines (GitHub Actions)", estado: "disponible" },
       { slug: "estrategias-deploy", titulo: "Estrategias de deploy", estado: "disponible" },
       { slug: "docker", titulo: "Docker (nociones)", estado: "disponible" },
-      { slug: "variables-secretos-ci", titulo: "Variables y secretos en CI", estado: "proximamente" },
+      { slug: "variables-secretos-ci", titulo: "Variables y secretos en CI", estado: "disponible" },
       { slug: "observabilidad", titulo: "Observabilidad", estado: "proximamente" },
       { slug: "feature-flags", titulo: "Feature flags", estado: "proximamente" },
     ],
