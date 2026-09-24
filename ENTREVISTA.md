@@ -163,7 +163,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ SQL vs NoSQL (Nivel 1/2/3 + Entrevista)
 - ✅ Modelado relacional & normalización (Nivel 1/2/3 + Entrevista)
 - ✅ Índices y query performance (Nivel 1/2/3 + Entrevista)
-- ☐ Transacciones & ACID
+- ✅ Transacciones & ACID (Nivel 1/2/3 + Entrevista)
 - ☐ Prisma / ORM — trade-offs
 - ☐ Migraciones
 - ☐ Postgres específico (constraints, JSONB)

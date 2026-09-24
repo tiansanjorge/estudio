@@ -97,6 +97,7 @@ import { entrevistaArquitecturaCapas } from "./backend/arquitectura-capas-entrev
 import { entrevistaSqlVsNosql } from "./bases-de-datos/sql-vs-nosql-entrevista";
 import { entrevistaModeladoNormalizacion } from "./bases-de-datos/modelado-normalizacion-entrevista";
 import { entrevistaIndicesPerformance } from "./bases-de-datos/indices-performance-entrevista";
+import { entrevistaTransaccionesAcid } from "./bases-de-datos/transacciones-acid-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -796,5 +797,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "indices-performance",
     moduloTitulo: "Índices y query performance",
     preguntas: entrevistaIndicesPerformance,
+  },
+  {
+    categoriaSlug: "bases-de-datos",
+    categoriaTitulo: "Bases de datos",
+    moduloSlug: "transacciones-acid",
+    moduloTitulo: "Transacciones & ACID",
+    preguntas: entrevistaTransaccionesAcid,
   },
 ];
