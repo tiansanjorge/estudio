@@ -16,16 +16,16 @@ export function resolverImportCircular({ sistema, momento }: ConfiguracionCircul
   if (sistema === "cjs") {
     if (momento === "duranteCiclo") {
       return {
-        valorVisto: "{} (objeto vacío / incompleto)",
+        valorVisto: "undefined (el exports de A todavía es {})",
         explicacion:
-          "require() en CJS devuelve una COPIA del estado de module.exports en el momento exacto de la llamada. Si el módulo exportador todavía no llegó a la línea que asigna el valor, lo que se recibe es el exports parcial de ese instante — no se actualiza después.",
+          "require() en CJS devuelve el objeto module.exports de A tal como está en ese instante: A quedó pausado en su propio require(), así que todavía no llegó a la línea que asigna el valor. Leerlo en el nivel superior da undefined. Ojo: si A después reemplaza module.exports por otro objeto (module.exports = {...}), B se queda para siempre con el objeto viejo.",
         esError: false,
       };
     }
     return {
       valorVisto: "el valor final asignado",
       explicacion:
-        "Si el uso ocurre dentro de una función que se llama DESPUÉS de que el ciclo de carga terminó, para ese momento module.exports ya tiene la asignación completa — la función lee el valor correcto porque ya pasó el punto de asignación.",
+        "B guardó una referencia al MISMO objeto exports de A (no una copia). Si la lectura ocurre dentro de una función que se llama después de que el ciclo terminó, A ya asignó exports.valor sobre ese objeto, y la función lee el valor correcto.",
       esError: false,
     };
   }

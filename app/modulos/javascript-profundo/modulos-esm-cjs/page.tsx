@@ -85,12 +85,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
       "En una dependencia circular, ¿qué ve un módulo B que usa un valor de A dentro de una función que corre DESPUÉS del ciclo de carga?",
     opciones: [
       "Con CJS, siempre ve el valor final actualizado; con ESM, siempre falla",
-      "Con CJS puede quedarse con una copia incompleta del require original; con ESM, el live binding ya refleja el valor final",
+      "Con CJS depende de cómo guardó el valor: si lo desestructuró en el require, queda con un valor viejo; con ESM, el live binding ya refleja el valor final",
       "Ambos sistemas se comportan exactamente igual en este caso",
     ],
     respuestaCorrecta: 1,
     explicacion:
-      "require() devuelve una copia fija del momento de la llamada. Los named exports de ESM son referencias en vivo que se actualizan cuando el módulo exportador completa su asignación.",
+      "require() devuelve el MISMO objeto module.exports, incompleto en ese momento. Si B guarda el objeto y lee la propiedad después, ve el valor final; si la desestructuró en el require (o A reasignó module.exports), se queda con lo viejo. Los named exports de ESM son referencias en vivo: siempre reflejan la asignación final.",
   },
   {
     pregunta:
@@ -340,10 +340,13 @@ function NivelTres() {
         <div className="flex flex-col gap-4 prosa">
           <p>
             En una dependencia circular, <code>require()</code> devuelve
-            una copia de <code>module.exports</code> en el momento exacto
-            de la llamada: si el módulo todavía no llegó a la asignación
-            necesitada, esa copia queda incompleta y no se actualiza
-            después. Los named exports de ESM son bindings en vivo: si el
+            el objeto <code>module.exports</code> del otro módulo tal como
+            está en ese instante: incompleto, porque ese módulo quedó
+            pausado antes de asignar. No es una copia: si se guarda el
+            objeto y se lee la propiedad más tarde, se ve el valor final.
+            Lo que queda viejo es un valor desestructurado en el{" "}
+            <code>require</code>, o el objeto original si el otro módulo
+            reasigna <code>module.exports</code>. Los named exports de ESM son bindings en vivo: si el
             valor se usa dentro de una función que corre después de que el
             ciclo terminó, el binding ya refleja el valor final. El caso
             que sigue fallando en ambos sistemas es usar el valor
