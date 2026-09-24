@@ -126,6 +126,7 @@ import { entrevistaPromptEngineering } from "./ia-aplicada/prompt-engineering-en
 import { entrevistaEvaluacionOutputIa } from "./ia-aplicada/evaluacion-output-ia-entrevista";
 import { entrevistaMcpServers } from "./ia-aplicada/mcp-servers-entrevista";
 import { entrevistaRiesgosLimitesIa } from "./ia-aplicada/riesgos-limites-ia-entrevista";
+import { entrevistaMetodologiaIa } from "./ia-aplicada/metodologia-ia-entrevista-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -1028,5 +1029,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "riesgos-limites-ia",
     moduloTitulo: "Riesgos y límites del desarrollo asistido por IA",
     preguntas: entrevistaRiesgosLimitesIa,
+  },
+  {
+    categoriaSlug: "ia-aplicada",
+    categoriaTitulo: "IA aplicada al desarrollo",
+    moduloSlug: "metodologia-ia-entrevista",
+    moduloTitulo: "Cómo comunicar tu metodología de trabajo con IA",
+    preguntas: entrevistaMetodologiaIa,
   },
 ];

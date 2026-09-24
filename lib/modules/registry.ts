@@ -240,7 +240,7 @@ export const categorias: Categoria[] = [
       { slug: "evaluacion-output-ia", titulo: "Evaluación de output de IA / code review de IA", estado: "disponible" },
       { slug: "mcp-servers", titulo: "MCP servers — qué son y para qué sirven", estado: "disponible" },
       { slug: "riesgos-limites-ia", titulo: "Riesgos y límites del desarrollo asistido por IA", estado: "disponible" },
-      { slug: "metodologia-ia-entrevista", titulo: "Cómo comunicar tu metodología de trabajo con IA", estado: "proximamente" },
+      { slug: "metodologia-ia-entrevista", titulo: "Cómo comunicar tu metodología de trabajo con IA", estado: "disponible" },
     ],
   },
 ];
