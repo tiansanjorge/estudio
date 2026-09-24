@@ -109,6 +109,7 @@ import { entrevistaDocker } from "./ci-cd/docker-entrevista";
 import { entrevistaVariablesSecretosCi } from "./ci-cd/variables-secretos-ci-entrevista";
 import { entrevistaObservabilidad } from "./ci-cd/observabilidad-entrevista";
 import { entrevistaFeatureFlags } from "./ci-cd/feature-flags-entrevista";
+import { entrevistaResponsabilidadCompartida } from "./cloud/responsabilidad-compartida-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -892,5 +893,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "feature-flags",
     moduloTitulo: "Feature flags",
     preguntas: entrevistaFeatureFlags,
+  },
+  {
+    categoriaSlug: "cloud",
+    categoriaTitulo: "Cloud",
+    moduloSlug: "responsabilidad-compartida",
+    moduloTitulo: "Modelo de responsabilidad compartida",
+    preguntas: entrevistaResponsabilidadCompartida,
   },
 ];

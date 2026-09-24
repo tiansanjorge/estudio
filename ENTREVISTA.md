@@ -179,7 +179,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Feature flags (Nivel 1/2/3 + Entrevista)
 
 ### Cloud (categoría nueva)
-- ☐ Modelo de responsabilidad compartida
+- ✅ Modelo de responsabilidad compartida (Nivel 1/2/3 + Entrevista)
 - ☐ Cómputo: VMs vs contenedores vs serverless
 - ☐ AWS básico (EC2, S3, Lambda, RDS)
 - ☐ Redes básicas (VPC, load balancer, CDN)
