@@ -102,6 +102,7 @@ import { entrevistaPrismaOrm } from "./bases-de-datos/prisma-orm-entrevista";
 import { entrevistaMigraciones } from "./bases-de-datos/migraciones-entrevista";
 import { entrevistaPostgresEspecifico } from "./bases-de-datos/postgres-especifico-entrevista";
 import { entrevistaRedisCaching } from "./bases-de-datos/redis-caching-entrevista";
+import { entrevistaEscalabilidadDb } from "./bases-de-datos/escalabilidad-db-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -836,5 +837,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "redis-caching",
     moduloTitulo: "Redis / caching",
     preguntas: entrevistaRedisCaching,
+  },
+  {
+    categoriaSlug: "bases-de-datos",
+    categoriaTitulo: "Bases de datos",
+    moduloSlug: "escalabilidad-db",
+    moduloTitulo: "Réplicas y sharding",
+    preguntas: entrevistaEscalabilidadDb,
   },
 ];

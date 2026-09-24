@@ -168,7 +168,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Migraciones (Nivel 1/2/3 + Entrevista)
 - ✅ Postgres específico (constraints, JSONB) (Nivel 1/2/3 + Entrevista)
 - ✅ Redis / caching (Nivel 1/2/3 + Entrevista)
-- ☐ Nociones de escalabilidad (réplicas, sharding)
+- ✅ Nociones de escalabilidad (réplicas, sharding) (Nivel 1/2/3 + Entrevista)
 
 ### CI/CD (antes "DevOps")
 - ☐ Pipelines (GitHub Actions)
