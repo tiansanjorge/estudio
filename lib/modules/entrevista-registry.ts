@@ -113,6 +113,7 @@ import { entrevistaResponsabilidadCompartida } from "./cloud/responsabilidad-com
 import { entrevistaComputo } from "./cloud/computo-entrevista";
 import { entrevistaAwsBasico } from "./cloud/aws-basico-entrevista";
 import { entrevistaRedesBasicas } from "./cloud/redes-basicas-entrevista";
+import { entrevistaCostoEscalabilidad } from "./cloud/costo-escalabilidad-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -924,5 +925,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "redes-basicas",
     moduloTitulo: "Redes básicas (VPC, load balancer, CDN)",
     preguntas: entrevistaRedesBasicas,
+  },
+  {
+    categoriaSlug: "cloud",
+    categoriaTitulo: "Cloud",
+    moduloSlug: "costo-escalabilidad",
+    moduloTitulo: "Trade-offs de costo/escalabilidad",
+    preguntas: entrevistaCostoEscalabilidad,
   },
 ];

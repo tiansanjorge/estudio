@@ -215,7 +215,7 @@ export const categorias: Categoria[] = [
       { slug: "computo", titulo: "Cómputo: VMs vs contenedores vs serverless", estado: "disponible" },
       { slug: "aws-basico", titulo: "AWS básico (EC2, S3, Lambda, RDS)", estado: "disponible" },
       { slug: "redes-basicas", titulo: "Redes básicas (VPC, load balancer, CDN)", estado: "disponible" },
-      { slug: "costo-escalabilidad", titulo: "Trade-offs de costo/escalabilidad", estado: "proximamente" },
+      { slug: "costo-escalabilidad", titulo: "Trade-offs de costo/escalabilidad", estado: "disponible" },
       { slug: "vercel-vs-aws", titulo: "Vercel/Netlify vs AWS", estado: "proximamente" },
     ],
   },
