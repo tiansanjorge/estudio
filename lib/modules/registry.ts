@@ -252,3 +252,42 @@ export function obtenerCategoria(slug: string): Categoria | undefined {
 export function rutaModulo(categoriaSlug: string, moduloSlug: string): string {
   return `/modulos/${categoriaSlug}/${moduloSlug}`;
 }
+
+export interface ModuloVecino {
+  titulo: string;
+  categoriaTitulo: string;
+  href: string;
+}
+
+/**
+ * Anterior y siguiente módulo disponible en el orden del catálogo,
+ * cruzando de una categoría a la siguiente.
+ */
+export function modulosVecinos(
+  categoriaSlug: string,
+  moduloSlug: string,
+): { anterior: ModuloVecino | null; siguiente: ModuloVecino | null } {
+  const secuencia = categorias.flatMap((categoria) =>
+    categoria.modulos
+      .filter((modulo) => modulo.estado === "disponible")
+      .map((modulo) => ({
+        slug: modulo.slug,
+        categoriaSlug: categoria.slug,
+        vecino: {
+          titulo: modulo.titulo,
+          categoriaTitulo: categoria.titulo,
+          href: rutaModulo(categoria.slug, modulo.slug),
+        },
+      })),
+  );
+
+  const indice = secuencia.findIndex(
+    (m) => m.categoriaSlug === categoriaSlug && m.slug === moduloSlug,
+  );
+  if (indice === -1) return { anterior: null, siguiente: null };
+
+  return {
+    anterior: secuencia[indice - 1]?.vecino ?? null,
+    siguiente: secuencia[indice + 1]?.vecino ?? null,
+  };
+}
