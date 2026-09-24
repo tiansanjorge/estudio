@@ -24,14 +24,14 @@ export default function Home() {
               {categoria.titulo}
             </h2>
             {categoria.modulos.length === 0 ? (
-              <span className="text-sm text-muted-foreground">
+              <span className="text-base text-muted-foreground">
                 Próximamente
               </span>
             ) : (
               <ul className="flex flex-wrap gap-2">
                 {categoria.modulos.map((modulo) => {
                   const clases =
-                    "rounded-xl border px-3 py-1 text-sm transition-colors " +
+                    "rounded-xl border px-3 py-1 text-base transition-colors " +
                     (modulo.estado === "disponible"
                       ? "border-accent/30 bg-accent-soft text-accent hover:border-accent/60"
                       : "border-border text-muted-foreground");

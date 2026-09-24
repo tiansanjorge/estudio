@@ -117,7 +117,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">axe-core</strong> es el motor
             de reglas de accesibilidad más usado: está detrás de Lighthouse,
@@ -144,7 +144,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Tomar el puntaje de Lighthouse como certificación.
@@ -162,7 +162,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Pasar la extensión axe DevTools por cada página nueva antes del
             review.
@@ -189,7 +189,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En el pipeline, axe entra en tres lugares: tests de componentes
             (<code>jest-axe</code> / <code>vitest-axe</code>), tests e2e (
@@ -207,7 +207,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Usar <code>getByTestId</code> para todo.
@@ -225,7 +225,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Un test de Playwright que recorre las rutas principales y corre axe
             en cada una.
@@ -252,7 +252,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En <strong className="text-foreground">jsdom</strong> no hay
             layout: el contraste, el contenido oculto visualmente y los
@@ -275,7 +275,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Creer que jest-axe verifica el contraste.
@@ -292,7 +292,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Registrar los <code>incomplete</code> de axe en un reporte que se
             revisa a mano antes de cada release.
@@ -313,7 +313,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este test pasa, pero el dropdown tiene problemas graves de
             accesibilidad cuando está abierto. ¿Por qué el test no los ve y

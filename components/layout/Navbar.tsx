@@ -7,14 +7,14 @@ export function Navbar() {
       <nav className="mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-4 sm:px-8">
         <Link
           href="/"
-          className="text-sm font-semibold tracking-tight text-foreground"
+          className="text-base font-semibold tracking-tight text-foreground"
         >
           Dev Study Lab
         </Link>
         <div className="flex items-center gap-4">
           <Link
             href="/entrevista"
-            className="text-sm font-medium text-muted-foreground hover:text-foreground"
+            className="text-base font-medium text-muted-foreground hover:text-foreground"
           >
             Entrevista
           </Link>

@@ -120,7 +120,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Ya viste Suspense pausando el render mientras el CÓDIGO de un
             componente se descarga (React.lazy). &quot;Suspense para data
@@ -150,7 +150,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Mezclar Suspense para datos con un isLoading manual del mismo
@@ -170,7 +170,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Un componente de perfil de usuario que lee sus datos con{" "}
             <code>use()</code>, sin ningún condicional de carga interno.
@@ -198,7 +198,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Con <strong className="text-foreground">fetch-on-render</strong>{" "}
             (el patrón clásico de <code>useEffect</code>), un componente
@@ -245,7 +245,7 @@ function Pagina() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Dejar que cada nivel del árbol dispare su propio fetch al
@@ -265,7 +265,7 @@ function Pagina() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Server Components hermanos, cada uno con su propio{" "}
             <code>await</code>, resolviendo datos en paralelo en el servidor
@@ -287,7 +287,7 @@ function Pagina() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             ¿Por qué esta página tiene un waterfall de red, aunque use
             Suspense?
@@ -335,7 +335,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <code>use(promesa)</code> chequea el estado interno de la
             Promise: si ya resolvió, devuelve su valor de forma síncrona. Si
@@ -372,7 +372,7 @@ function use(promesa) {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Llamar a use() con una Promise creada inline en cada render.
@@ -391,7 +391,7 @@ function use(promesa) {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Diagnosticar un loop de renders donde el fallback de Suspense
             nunca desaparece: sospechar primero de una Promise recreada en

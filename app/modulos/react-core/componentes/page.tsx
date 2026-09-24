@@ -133,7 +133,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un componente de React es, en esencia, una función de
             JavaScript que retorna JSX — una descripción de qué UI
@@ -166,7 +166,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           Activá o desactivá secciones y cambiá cuántos ProductCard se
           renderizan — el árbol se recalcula en vivo con el mismo código
           de componente reutilizado.
@@ -175,7 +175,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Definir un componente dentro de otro componente.
@@ -203,7 +203,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Extraer un componente reutilizable en cuanto ves el mismo JSX
             repetido con datos distintos.
@@ -228,7 +228,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Cada vez que escribís una letra en este input, pierde el foco
             después de cada tecla. ¿Por qué, y cómo lo arreglarías?
@@ -284,7 +284,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un input <strong className="text-foreground">controlado</strong>{" "}
             (el valor vive en <code>useState</code> y se actualiza en cada{" "}
@@ -312,7 +312,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Descomponer en demasiados subcomponentes muy chicos, demasiado pronto.
@@ -332,7 +332,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Compound components para una API de Tabs o Select más
             declarativa, sin exponer props de coordinación al consumidor.
@@ -359,7 +359,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Si dos ramas de un if renderizan componentes DISTINTOS en la
             misma posición del árbol, React no actualiza el existente: lo{" "}
@@ -382,7 +382,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Esperar que React preserve el estado al cambiar de tipo de
@@ -403,7 +403,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Usar una key explícita para forzar el reseteo de un componente
             (por ejemplo, un formulario al cambiar de entidad editada) en

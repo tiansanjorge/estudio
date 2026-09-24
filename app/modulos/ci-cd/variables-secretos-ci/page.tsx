@@ -103,7 +103,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Variables</strong> para
             configuración no sensible, <strong className="text-foreground">secretos</strong>{" "}
@@ -123,7 +123,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un <code>.env</code> commiteado.</strong>{" "}
             Aunque se borre después, queda en el historial de git.
@@ -136,7 +136,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Environments staging y production con su propio DATABASE_URL.</li>
           <li>Un <code>.env.example</code> commiteado que documenta qué variables hacen falta.</li>
         </ul>
@@ -157,7 +157,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Build vs runtime</strong>: lo que
             se graba en el artefacto al construir (como <code>NEXT_PUBLIC_</code>)
@@ -172,7 +172,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un secreto con prefijo <code>NEXT_PUBLIC_</code>.</strong>{" "}
             Termina en el bundle que descarga cualquiera.
@@ -185,7 +185,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Pasar la URL de la API al cliente desde el servidor, para promover un solo build.</li>
           <li>Enmascarar con <code>::add-mask::</code> un token obtenido durante el job.</li>
         </ul>
@@ -206,7 +206,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">OIDC</strong>: el workflow
             cambia un JWT de GitHub por credenciales temporales; la seguridad
@@ -221,7 +221,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Comodines en <code>sub</code>.</strong>{" "}
             Cualquier branch o PR asume el rol de producción.
@@ -234,7 +234,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Deploy a AWS sin claves guardadas, con un rol atado a environment:production.</li>
           <li>Una API en ECS que lee su contraseña de base desde Secrets Manager al arrancar.</li>
         </ul>
@@ -249,7 +249,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Hoy el repo tiene como secretos <code>AWS_ACCESS_KEY_ID</code>,{" "}
             <code>AWS_SECRET_ACCESS_KEY</code> (de un usuario IAM con permisos de

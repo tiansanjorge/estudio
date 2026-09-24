@@ -87,7 +87,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un cálculo rápido, con supuestos explícitos y números redondos, para
             conocer el <strong className="text-foreground">orden de magnitud</strong>:
@@ -105,7 +105,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Estimar sin decir los supuestos.</strong>{" "}
             Nadie puede discutir ni corregir un número que sale de la nada.
@@ -118,7 +118,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Los primeros cinco minutos de una entrevista de system design.</li>
           <li>Decidir si una funcionalidad nueva necesita infraestructura aparte.</li>
         </ul>
@@ -139,7 +139,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Del número a la decisión</strong>:
             QPS pico para instancias y caché, relación lecturas/escrituras para
@@ -154,7 +154,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Estimar y no usar el resultado.</strong>{" "}
             Los números tienen que aparecer después en las decisiones del diseño.
@@ -167,7 +167,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Justificar un CDN con el ancho de banda estimado de las imágenes.</li>
           <li>Descartar el sharding porque las escrituras entran cómodas en un primario.</li>
         </ul>
@@ -188,7 +188,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Errores típicos</strong>: diseñar
             para el promedio, olvidar réplicas e índices, confundir bits con
@@ -203,7 +203,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Pool de conexiones por instancia sin mirar el total.</strong>{" "}
             20 instancias × 50 conexiones superan lo que admite la base.
@@ -216,7 +216,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Dimensionar el pool de conexiones a partir de QPS y latencia.</li>
           <li>Calcular cuántos workers necesita una cola para no acumular atraso.</li>
         </ul>
@@ -231,7 +231,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Estimá un servicio de notificaciones push: 200 millones de usuarios
             con la app instalada, cada uno recibe en promedio 10 notificaciones

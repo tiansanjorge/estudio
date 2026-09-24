@@ -129,7 +129,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Los <strong className="text-foreground">genéricos</strong> son
             parámetros de tipo: permiten escribir una función, clase o
@@ -158,7 +158,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Usar any cuando en realidad se necesita preservar el tipo.
@@ -185,7 +185,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Envolver una respuesta de API con un tipo genérico:{" "}
             <code>ApiResponse&lt;T&gt;</code>, reutilizable para cualquier
@@ -212,7 +212,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             ¿Por qué esta función no compila, y cómo la arreglarías sin
             usar any?
@@ -245,7 +245,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Combinar un genérico con <code>keyof</code> permite acceso
             type-safe a propiedades dinámicas:{" "}
@@ -266,7 +266,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Sobre-genericizar donde un union type simple bastaría.
@@ -285,7 +285,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Una función getProp genérica para acceder a propiedades
             dinámicas de un objeto de configuración sin perder el tipo.
@@ -313,7 +313,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un <strong className="text-foreground">conditional type</strong>{" "}
             (<code>T extends U ? X : Y</code>) elige entre dos tipos según
@@ -344,7 +344,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               No anticipar la distribución de un conditional type sobre un
@@ -364,7 +364,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Implementar utility types propios con conditional types e
             infer, como una versión simplificada de ReturnType o

@@ -107,7 +107,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Vercel y Netlify</strong> son
             plataformas: del repo a producción con previews, CDN, funciones y
@@ -126,7 +126,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Montar AWS completo para un MVP.</strong>{" "}
             Semanas de infraestructura antes de validar el producto.
@@ -139,7 +139,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un SaaS temprano en Vercel con Postgres gestionado en Neon.</li>
           <li>Un backend con colas y workers en AWS, y el frontend en una plataforma.</li>
         </ul>
@@ -160,7 +160,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Costo total</strong>: la
             plataforma cuesta más por unidad y casi nada en operación; AWS al
@@ -175,7 +175,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Sin límite de gasto.</strong>{" "}
             Un bot o una imagen sin cachear se convierten en una factura inesperada.
@@ -188,7 +188,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Mover a un servicio de jobs las tareas que superan la duración máxima.</li>
           <li>Un servicio de tiempo real externo para notificaciones en vivo.</li>
         </ul>
@@ -209,7 +209,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Híbrido</strong>: misma región
             para funciones y backend, solo la API expuesta, cookies y CORS entre
@@ -224,7 +224,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Exponer la base a internet para que la plataforma llegue.</strong>{" "}
             Se expone la API, no la base.
@@ -237,7 +237,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Next.js en contenedores con <code>output: &quot;standalone&quot;</code> y caché en Redis.</li>
           <li>Una traza que va del frontend en la plataforma a la API en AWS.</li>
         </ul>
@@ -252,7 +252,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un marketplace en Next.js sobre Vercel creció: la factura mensual se
             multiplicó, aparecieron procesos de conciliación de pagos que tardan

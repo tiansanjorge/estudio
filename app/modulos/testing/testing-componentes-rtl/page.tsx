@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             React Testing Library renderiza al DOM y no expone estado ni props:
             los tests <strong className="text-foreground">encuentran elementos
@@ -137,7 +137,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>data-testid</code> para todo.</strong>{" "}
             El test pasa aunque el componente sea inaccesible.
@@ -150,7 +150,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Testear un formulario de login: campos, validación y mensaje de error.</li>
           <li>Usar el Testing Playground para encontrar la mejor query.</li>
         </ul>
@@ -171,7 +171,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">userEvent</strong> simula la
             interacción completa (foco, teclas, input, disabled);{" "}
@@ -190,7 +190,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">QueryClient compartido entre tests.</strong>{" "}
             El cache de uno hace pasar o fallar al siguiente.
@@ -203,7 +203,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un <code>test-utils.tsx</code> con <code>renderConProviders</code>.</li>
           <li>Testear navegación con un router en memoria y una ruta inicial.</li>
         </ul>
@@ -224,7 +224,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El warning de <strong className="text-foreground">act</strong>{" "}
             indica una actualización de estado que el test no esperó. Se
@@ -242,7 +242,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Subir el timeout de waitFor.</strong>{" "}
             Suele esconder reintentos o timers reales mal configurados.
@@ -255,7 +255,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Configurar la regla de ESLint <code>testing-library</code> para atrapar estos errores.</li>
           <li>Revisar tests flaky buscando waitFor con acciones adentro.</li>
         </ul>
@@ -270,7 +270,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>Reescribí este test siguiendo las prácticas de RTL.</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`it("agrega un comentario", async () => {

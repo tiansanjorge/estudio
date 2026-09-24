@@ -111,7 +111,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un método HTTP le dice al servidor{" "}
             <strong className="text-foreground">qué querés hacer</strong> con
@@ -142,14 +142,14 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           Filtrá por categoría y elegí un código para ver cuándo se usa.
         </p>
         <StatusCodeExplorador codigos={statusCodes} />
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Devolver 200 para todo, incluso errores.
@@ -183,7 +183,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Elegir el método correcto al diseñar un endpoint REST nuevo, para
             que se comporte como espera cualquier cliente HTTP.
@@ -208,7 +208,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Estás diseñando el endpoint <code>PUT /carritos/42/items/7</code>{" "}
             para actualizar la cantidad de un ítem del carrito. El item con
@@ -241,7 +241,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un POST no es idempotente, pero se puede volver{" "}
             <strong className="text-foreground">seguro de reintentar</strong>{" "}
@@ -267,7 +267,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Reintentar POST sin idempotency key.</strong>{" "}
             Un timeout no significa que la operación falló.
@@ -287,7 +287,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Checkout con idempotency key para que el botón &quot;Pagar&quot; se pueda reintentar.</li>
           <li>Exportación de reportes que responde 202 y se consulta por polling.</li>
         </ul>
@@ -308,7 +308,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Los <strong className="text-foreground">redirects</strong> varían
             en permanencia y en si conservan el método: <code>301</code>/
@@ -334,7 +334,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un 301 puesto por error.</strong>{" "}
             Navegadores y buscadores lo cachean y cuesta revertirlo.
@@ -349,7 +349,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Migrar URLs de un sitio con 308 para no perder posicionamiento.</li>
           <li>Definir una política de 404 vs 403 para toda una API multi-tenant.</li>
         </ul>
@@ -364,7 +364,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Revisá este diseño de endpoints y corregí método y status donde haga
             falta.

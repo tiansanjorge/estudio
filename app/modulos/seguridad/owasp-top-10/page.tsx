@@ -101,7 +101,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El <strong className="text-foreground">OWASP Top 10</strong> lista
             los riesgos más críticos de las aplicaciones web a partir de datos
@@ -123,7 +123,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Tratar el Top 10 como un checklist completo.</strong>{" "}
             Es un piso de concientización, no una auditoría.
@@ -136,7 +136,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una checklist de seguridad para los code reviews.</li>
           <li>Priorizar hallazgos de un pentest por categoría.</li>
         </ul>
@@ -157,7 +157,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Contraseñas</strong>: Argon2id,
             scrypt o bcrypt, con sal por usuario y costo ajustado; nunca hashes
@@ -174,7 +174,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Ignorar las alertas de Dependabot durante meses.</strong>{" "}
             Los saltos de versión se vuelven grandes y riesgosos.
@@ -187,7 +187,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Migrar hashes MD5 a Argon2id re-hasheando en el próximo login.</li>
           <li>Dependabot con auto-merge para parches con tests en verde.</li>
         </ul>
@@ -208,7 +208,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">SSRF</strong>: el servidor hace
             requests a donde decide el atacante, alcanzando servicios internos y
@@ -224,7 +224,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Validar la URL sin resolver el DNS.</strong>{" "}
             Un dominio público puede apuntar a una IP interna.
@@ -237,7 +237,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un servicio aislado para las vistas previas de links.</li>
           <li>Una sesión de threat modeling antes de lanzar un sistema de cupones.</li>
         </ul>
@@ -252,7 +252,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Revisá este endpoint de checkout. ¿Cuántas categorías del Top 10
             encontrás?

@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <code>proxy.ts</code>, en la raíz del proyecto, exporta una función
             que corre <strong className="text-foreground">antes</strong> de que
@@ -140,7 +140,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Usar el Proxy para redirects fijos.
@@ -159,7 +159,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Redirigir a /login si no hay cookie de sesión.</li>
           <li>Detectar el idioma y redirigir a /es o /en.</li>
           <li>Servir cada subdominio de un SaaS multi-tenant con un rewrite.</li>
@@ -181,7 +181,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El <strong className="text-foreground">matcher</strong> define
             dónde corre el Proxy. Sin él corre en todo, incluidos JS, CSS e
@@ -199,7 +199,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Proxy sin matcher.</strong>{" "}
             Ejecuta lógica en cada asset estático.
@@ -215,7 +215,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Proxy que redirige sin sesión + <code>verifySession()</code> en la
             capa de datos.
@@ -239,7 +239,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El <strong className="text-foreground">Edge runtime</strong> era un
             entorno reducido (APIs web estándar, sin <code>fs</code> ni módulos
@@ -260,7 +260,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Elegir Edge &quot;por performance&quot; con la base en una sola
@@ -279,7 +279,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Migrar un <code>middleware.ts</code> en Edge a{" "}
             <code>proxy.ts</code> con el codemod <code>middleware-to-proxy</code>.
@@ -300,7 +300,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este Proxy protege el panel de admin. Un pentest encontró que
             igual se puede borrar un usuario sin ser admin. ¿Cómo, y qué

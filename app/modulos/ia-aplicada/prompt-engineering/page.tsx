@@ -103,7 +103,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un buen pedido es un buen ticket: <strong className="text-foreground">contexto,
             objetivo concreto, restricciones, un ejemplo del repo, formato y
@@ -122,7 +122,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;Hacé X&quot; sin más.</strong>{" "}
             El tiempo que no se invirtió en el pedido se gasta revisando código equivocado.
@@ -135,7 +135,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un AGENTS.md con el stack, los comandos y las convenciones del proyecto.</li>
           <li>Pedir un endpoint nuevo señalando uno existente como modelo.</li>
         </ul>
@@ -156,7 +156,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Tareas grandes</strong>: plan
             antes del código, pasos verificables, permiso para preguntar,
@@ -171,7 +171,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;No funciona, arreglalo&quot;.</strong>{" "}
             Sin decir qué falla ni por qué, el siguiente intento es otra adivinanza.
@@ -184,7 +184,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Implementar una funcionalidad en tres pasos con tests entre cada uno.</li>
           <li>Pegar el stack trace completo y pedir hipótesis antes que cambios.</li>
         </ul>
@@ -205,7 +205,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Contexto</strong>: capacidad,
             atención y deriva en conversaciones largas. Incluir lo relevante,
@@ -220,7 +220,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Volcar todo el repositorio en el contexto.</strong>{" "}
             Lo importante queda diluido entre lo irrelevante.
@@ -233,7 +233,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un comando de equipo para crear migraciones con sus tests.</li>
           <li>Revisar en un PR el cambio a las instrucciones del asistente.</li>
         </ul>
@@ -248,7 +248,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Reescribí este pedido para que dé un resultado útil a la primera:
           </p>

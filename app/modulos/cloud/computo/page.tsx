@@ -95,7 +95,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">VMs</strong>: control total,
             escalan en minutos. <strong className="text-foreground">Contenedores</strong>:
@@ -115,7 +115,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Kubernetes para el primer producto.</strong>{" "}
             El equipo termina operando la plataforma en vez de construir el producto.
@@ -128,7 +128,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una API con tráfico irregular en Cloud Run o Lambda.</li>
           <li>Un servidor de WebSockets en contenedores con Fargate.</li>
         </ul>
@@ -149,7 +149,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Cold starts</strong>: bundles
             chicos, inicialización diferida, clientes reutilizados fuera del
@@ -164,7 +164,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Crear el cliente de la base dentro del handler.</strong>{" "}
             Una conexión nueva en cada invocación.
@@ -177,7 +177,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>RDS Proxy delante de Postgres para funciones Lambda.</li>
           <li>Un mínimo de 1 instancia en Cloud Run para el endpoint de login.</li>
         </ul>
@@ -198,7 +198,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Kubernetes</strong>:
             estandarización y portabilidad a un costo operativo alto; se
@@ -213,7 +213,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Escalar por CPU una API que espera IO.</strong>{" "}
             Las requests se acumulan mientras la CPU sigue baja.
@@ -226,7 +226,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Escalar por agenda antes del pico de una campaña conocida.</li>
           <li>Una cola entre las funciones y un proveedor externo con rate limit.</li>
         </ul>
@@ -241,7 +241,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una plataforma de cursos online tiene: la web y la API (tráfico bajo
             de noche, picos al abrir inscripciones), un chat en vivo durante las

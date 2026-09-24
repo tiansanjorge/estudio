@@ -97,7 +97,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Autenticación</strong> (AuthN):
             ¿quién sos? Se verifica la identidad.{" "}
@@ -119,7 +119,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Verificar que hay sesión, pero no de quién es el recurso.</strong>{" "}
             Es el origen del IDOR.
@@ -132,7 +132,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Filtrar por <code>usuarioId</code> de la sesión en cada consulta de recursos propios.</li>
           <li>Tests que verifican que un usuario no accede a datos de otro.</li>
         </ul>
@@ -153,7 +153,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">OAuth 2.0</strong> delega
             autorización (acceder a recursos de un usuario en otro servicio);{" "}
@@ -171,7 +171,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Usar OAuth &quot;puro&quot; para login.</strong>{" "}
             Un access token no identifica al usuario; para eso está OIDC.
@@ -184,7 +184,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Login con Google o GitHub vía OIDC con Auth.js o un proveedor.</li>
           <li>Una función <code>puedeEditar(usuario, documento)</code> reutilizada en todas las acciones.</li>
         </ul>
@@ -205,7 +205,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">MFA</strong>: SMS (débil), TOTP
             (mejor, pero phisheable), push con number matching, y{" "}
@@ -223,7 +223,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">MFA sin rate limiting.</strong>{" "}
             Un código de 6 dígitos se puede probar por fuerza bruta.
@@ -236,7 +236,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Pedir de nuevo el segundo factor antes de cambiar el email de la cuenta.</li>
           <li>Ofrecer passkeys como opción principal de login.</li>
         </ul>
@@ -251,7 +251,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>Encontrá los problemas de autorización en esta Server Action.</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`"use server";

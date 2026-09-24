@@ -134,7 +134,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Sin renderizado concurrente, todas las actualizaciones de
             estado dentro de un mismo evento se tratan como una sola
@@ -170,7 +170,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           useTransition real, no simulado. Probá tipear rápido en modo
           &ldquo;SIN startTransition&rdquo; y después en modo
           &ldquo;CON&rdquo; — el input es el mismo, la lista es la misma,
@@ -180,7 +180,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Envolver TODA actualización en startTransition, por las dudas.
@@ -208,7 +208,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Buscadores con filtrado costoso sobre listas grandes, como en
             el Playground de este módulo.
@@ -236,7 +236,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este buscador tiene el input laggy porque re-renderiza una
             lista pesada en el mismo update. ¿Cómo lo arreglarías con lo
@@ -297,7 +297,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <code>startTransition</code> envuelve una{" "}
             <strong className="text-foreground">actualización</strong>{" "}
@@ -321,7 +321,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Usar startTransition cuando en realidad no controlás el
@@ -342,7 +342,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             useDeferredValue para despriorizar el renderizado de una lista
             que depende de un query recibido por props, sin control
@@ -370,7 +370,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Tearing</strong> es cuando
             distintas partes de la misma UI, en el mismo frame, muestran
@@ -395,7 +395,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Leer un store externo mutable directamente en el render sin
@@ -415,7 +415,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Usar useSyncExternalStore al integrar una fuente de estado
             externa a React (una librería de terceros, un valor global)

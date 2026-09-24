@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un <strong className="text-foreground">test double</strong>{" "}
             reemplaza una dependencia real: <em>stub</em> (respuestas fijas),{" "}
@@ -136,7 +136,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Mockear el hook para testear el componente.</strong>{" "}
             El manejo real de loading y error queda sin probar.
@@ -150,7 +150,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un archivo <code>mocks/handlers.ts</code> compartido entre tests y Storybook.</li>
           <li>Desarrollar el frontend contra MSW mientras el backend todavía no existe.</li>
         </ul>
@@ -171,7 +171,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Los casos límite se prueban con{" "}
             <strong className="text-foreground">overrides por test</strong>:{" "}
@@ -188,7 +188,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Olvidar <code>resetHandlers</code>.</strong>{" "}
             Un override de error contamina a los tests siguientes.
@@ -201,7 +201,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un test por cada estado de una pantalla: carga, vacío, error, datos.</li>
           <li>Reemplazar mocks de módulos internos por handlers de MSW.</li>
         </ul>
@@ -222,7 +222,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Todo mock es una suposición que puede quedar vieja. Se mantiene
             honesta tipando los handlers con el contrato generado, validando
@@ -240,7 +240,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Handlers escritos a mano sin tipos.</strong>{" "}
             Se desincronizan en silencio.
@@ -253,7 +253,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Handlers generados desde el OpenAPI del backend.</li>
           <li>Probar un buscador con debounce sin esperar tiempo real.</li>
         </ul>
@@ -268,7 +268,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este test pasa, pero producción mostró &quot;Total: $NaN&quot;
             después de un deploy del backend. ¿Por qué el test no lo atrapó y

@@ -105,7 +105,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">RBAC</strong>: permisos por
             rol. Simple de entender y auditar, pero no expresa reglas que
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Explosión de roles.</strong>{" "}
             &quot;editor-ventas-borradores&quot; es una regla ABAC disfrazada.
@@ -140,7 +140,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un guard <code>@RequierePermiso(&quot;pedido:reembolsar&quot;)</code> en NestJS.</li>
           <li>Reglas de edición según estado y autor en un CMS.</li>
         </ul>
@@ -161,7 +161,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En <strong className="text-foreground">multi-tenant</strong>, el
             tenant es el atributo que nunca se negocia: filtro por organización
@@ -177,7 +177,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Confiar en que cada consulta recuerde el filtro por tenant.</strong>{" "}
             Una sola que lo olvide es una fuga entre clientes.
@@ -190,7 +190,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un cliente de Prisma extendido que agrega <code>organizacionId</code> a cada consulta.</li>
           <li>Tests de aislamiento entre tenants en la suite de API.</li>
         </ul>
@@ -211,7 +211,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">ReBAC</strong> modela permisos
             como relaciones en un grafo, con herencia por carpetas, equipos y
@@ -228,7 +228,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Adoptar un motor de políticas para cinco reglas.</strong>{" "}
             Complejidad operativa sin retorno.
@@ -241,7 +241,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Compartir documentos con personas y equipos usando OpenFGA.</li>
           <li>Políticas en Rego revisadas por el equipo de seguridad.</li>
         </ul>
@@ -256,7 +256,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un sistema de clínica tiene los roles <code>medico</code>,{" "}
             <code>recepcion</code> y <code>admin</code>. Aparece un requisito:

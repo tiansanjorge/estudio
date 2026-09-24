@@ -134,7 +134,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una Promise tiene tres estados:{" "}
             <strong className="text-foreground">pendiente</strong>,{" "}
@@ -173,7 +173,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           Configurá 3 tareas (éxito/error y duración) y compará cómo se
           comporta cada combinador con Promises reales, no una simulación
           escrita a mano.
@@ -182,7 +182,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Olvidarse el return dentro de un .then().
@@ -218,7 +218,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Promise.all para cargar en paralelo varios recursos que la
             pantalla necesita todos sí o sí antes de renderizar.
@@ -244,7 +244,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Necesitás pedirle datos a 3 servicios distintos. Si cualquiera
             de los 3 falla, igual querés mostrar los que sí funcionaron
@@ -276,7 +276,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             async/await es azúcar sintáctico sobre Promises — no hay
             diferencia de comportamiento con <code>.then()</code>, solo de
@@ -308,7 +308,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Serializar operaciones independientes por usar await en
@@ -328,7 +328,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Promisify de APIs basadas en callbacks (Node legacy) para poder
             usarlas con async/await.
@@ -360,7 +360,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El callback de <code>.then()</code> nunca corre sincrónicamente,
             ni siquiera si la promesa ya estaba cumplida en el momento de
@@ -389,7 +389,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Asumir que un valor ya disponible se resuelve sincrónicamente.
@@ -408,7 +408,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Cancelar un fetch con AbortController cuando el usuario navega
             fuera de una pantalla antes de que termine la request.

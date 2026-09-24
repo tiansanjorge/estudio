@@ -115,7 +115,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <code>fetch()</code> devuelve una Promise que se resuelve en
             cuanto llegan los <strong className="text-foreground">headers</strong>{" "}
@@ -156,7 +156,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Confiar en que el catch atrapa errores HTTP.
@@ -189,7 +189,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Buscadores con autocompletado: cancelar la búsqueda anterior en
             cada tecla nueva.
@@ -214,7 +214,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este hook busca cada vez que cambia <code>query</code>, pero no
             cancela nada:
@@ -272,7 +272,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <code>fetch</code> no tiene timeout: se agrega con{" "}
             <code>AbortSignal.timeout(ms)</code>, y se combina con una
@@ -296,7 +296,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Reintentar un POST sin idempotency key.</strong>{" "}
             Puede crear el recurso dos veces.
@@ -314,7 +314,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un <code>apiClient</code> con timeout de 10 s y 3 reintentos para GETs.</li>
           <li>Subida de archivos con barra de progreso usando XHR.</li>
         </ul>
@@ -335,7 +335,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Al cerrar la página, un <code>fetch</code> normal se cancela.{" "}
             <code>navigator.sendBeacon</code> y{" "}
@@ -356,7 +356,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Mandar analytics en <code>unload</code>.</strong>{" "}
             En mobile muchas veces no se dispara.
@@ -369,7 +369,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Mostrar la respuesta de un chat con IA token a token leyendo el stream.</li>
           <li>Un circuit breaker en el BFF que llama a un servicio de pagos.</li>
         </ul>
@@ -384,7 +384,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este cliente &quot;robusto&quot; empeoró la última caída del
             backend: el tráfico se multiplicó por cinco. ¿Por qué?

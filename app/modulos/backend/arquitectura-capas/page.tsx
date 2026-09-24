@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Controller</strong>: HTTP
             (leer, validar forma, responder). <strong className="text-foreground">Service</strong>:
@@ -134,7 +134,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Services que reciben <code>req</code> o devuelven status.</strong>{" "}
             Quedan atados a HTTP y no se reutilizan.
@@ -147,7 +147,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Reutilizar el mismo servicio desde un endpoint y un job nocturno.</li>
           <li>Testear las reglas de precios con un repositorio en memoria.</li>
         </ul>
@@ -168,7 +168,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Las <strong className="text-foreground">transacciones</strong> las
             delimita el service (operación de negocio atómica), pasando el
@@ -185,7 +185,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Una transacción por repositorio.</strong>{" "}
             Dos pasos de la misma operación quedan sin atomicidad.
@@ -198,7 +198,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li><code>@Transactional</code> con CLS en un servicio de NestJS.</li>
           <li>Un repository que siempre agrega el filtro de organización.</li>
         </ul>
@@ -219,7 +219,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El <strong className="text-foreground">modelo anémico</strong> deja
             las invariantes dispersas en servicios; un modelo rico las pone en
@@ -236,7 +236,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">La misma regla copiada en tres servicios.</strong>{" "}
             Tarde o temprano una de las copias queda distinta.
@@ -249,7 +249,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li><code>pedido.aplicarCupon()</code> como único camino para cambiar el descuento.</li>
           <li>Migrar un proyecto en capas a puertos y adaptadores de forma gradual.</li>
         </ul>
@@ -264,7 +264,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este servicio &quot;en capas&quot; tiene problemas de diseño.
             ¿Cuáles?

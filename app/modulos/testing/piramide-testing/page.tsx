@@ -101,7 +101,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La <strong className="text-foreground">pirámide de testing</strong>{" "}
             propone muchos tests unitarios en la base, menos de integración en
@@ -124,7 +124,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Testear todo por la UI.</strong>{" "}
             Validar 30 reglas de un formulario con e2e en vez de unitarios.
@@ -142,7 +142,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Definir la estrategia de testing de un proyecto nuevo.</li>
           <li>Diagnosticar por qué el CI tarda tanto y falla sin bugs.</li>
         </ul>
@@ -163,7 +163,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El <strong className="text-foreground">testing trophy</strong> pone
             el grueso en integración: tests que renderizan varias piezas
@@ -181,7 +181,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Tests atados a la implementación.</strong>{" "}
             Se rompen con cada refactor sin haber encontrado un bug.
@@ -194,7 +194,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un dashboard de tests flaky con su responsable y fecha.</li>
           <li>Reemplazar 50 unitarios de un formulario por 5 tests de integración.</li>
         </ul>
@@ -215,7 +215,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La <strong className="text-foreground">cobertura</strong> mide qué se
             ejecutó, no qué se verificó; como meta obligatoria se vuelve
@@ -233,7 +233,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;90% de cobertura o no se mergea&quot;.</strong>{" "}
             Genera tests sin asserts para cumplir el número.
@@ -246,7 +246,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Correr Stryker sobre el módulo de cálculo de precios.</li>
           <li>Contratos con Pact entre el frontend y la API de pedidos.</li>
         </ul>
@@ -261,7 +261,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Heredás un proyecto con 180 tests e2e (45 minutos de CI, 1 de cada 3
             corridas falla sin bug) y 12 unitarios. El equipo ya re-ejecuta el

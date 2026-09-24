@@ -56,6 +56,12 @@
   --error-soft: #7f1d1d;
 }
 
+/* Texto de lectura (explicaciones, listas, respuestas). Un solo lugar para
+   ajustar tamaño/interlineado de todo el contenido largo. */
+@utility prosa {
+  @apply text-base leading-7 text-muted-foreground;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

@@ -107,7 +107,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una <strong className="text-foreground">imagen</strong> es un paquete
             inmutable con la app y todo lo que necesita; un{" "}
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>COPY . .</code> antes de instalar.</strong>{" "}
             Cada cambio en el código reinstala todas las dependencias.
@@ -140,7 +140,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Levantar Postgres y Redis locales con docker compose.</li>
           <li>Empaquetar una API para desplegarla en Cloud Run o ECS.</li>
         </ul>
@@ -161,7 +161,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Imágenes chicas y seguras</strong>:
             multi-stage, base <code>-slim</code>, <code>USER node</code>, nada de
@@ -176,7 +176,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Secretos en <code>ENV</code> o <code>ARG</code>.</strong>{" "}
             Cualquiera con la imagen los puede leer.
@@ -189,7 +189,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Pasar de una imagen de 1,4 GB a 260 MB con multi-stage.</li>
           <li>Tests de integración en CI contra un Postgres levantado con compose.</li>
         </ul>
@@ -210,7 +210,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">En producción</strong>: manejar
             SIGTERM como PID 1, ajustar el heap al límite de memoria, nada de
@@ -226,7 +226,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Desplegar <code>latest</code>.</strong>{" "}
             No se sabe qué versión corre y el rollback es ambiguo.
@@ -239,7 +239,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Diagnosticar reinicios por OOMKilled en un contenedor con 512 MB.</li>
           <li>Promover la misma imagen, por digest, de staging a producción.</li>
         </ul>
@@ -254,7 +254,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este Dockerfile tarda 3 minutos en cada build, la imagen pesa 1,5 GB,
             los deploys cortan requests y un escaneo encontró un token en la

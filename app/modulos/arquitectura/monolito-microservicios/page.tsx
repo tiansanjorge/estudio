@@ -109,7 +109,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un <strong className="text-foreground">monolito</strong> es una
             aplicación con un deploy y una base: simple de desarrollar, testear
@@ -132,7 +132,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Microservicios desde el día uno.</strong>{" "}
             Los límites se fijan antes de entender el dominio.
@@ -145,7 +145,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Justificar la arquitectura de un proyecto nuevo con trade-offs concretos.</li>
           <li>Responder en una entrevista de system design por qué no arrancás con microservicios.</li>
         </ul>
@@ -166,7 +166,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El <strong className="text-foreground">monolito modular</strong>{" "}
             tiene módulos por dominio con interfaces públicas y límites
@@ -184,7 +184,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Partir por capas técnicas.</strong>{" "}
             Un &quot;servicio de base de datos&quot; y un &quot;servicio de lógica&quot; se
@@ -198,7 +198,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Reglas de dependency-cruiser que impiden importar internos de otro módulo.</li>
           <li>Diagnosticar un sistema donde cada feature requiere cinco PRs.</li>
         </ul>
@@ -219,7 +219,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Para migrar, el <strong className="text-foreground">Strangler Fig</strong>:
             una capa de ruteo delante del monolito, extracción de a una
@@ -235,7 +235,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">La gran reescritura.</strong>{" "}
             El sistema viejo sigue cambiando y la versión nueva nunca lo alcanza.
@@ -248,7 +248,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Extraer el módulo de notificaciones como primer servicio.</li>
           <li>Reorganizar equipos por dominio antes de partir el sistema.</li>
         </ul>
@@ -263,7 +263,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un equipo de 6 personas migró su monolito a 14 microservicios hace un
             año. Ahora cada feature toca 4 servicios, los deploys se coordinan

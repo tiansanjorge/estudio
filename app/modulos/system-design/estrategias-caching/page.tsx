@@ -91,7 +91,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Escritura</strong>:
             cache-aside, write-through (siempre actualizado, escrituras más
@@ -111,7 +111,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Write-around sin invalidar.</strong>{" "}
             Si la clave ya estaba en caché, sigue sirviendo el valor viejo.
@@ -124,7 +124,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Write-through para la configuración de cada cliente, que se lee en cada request.</li>
           <li>Invalidación por tag de todas las páginas que muestran un producto.</li>
         </ul>
@@ -145,7 +145,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Write-back</strong> para
             contadores y picos, con caché persistente, volcados frecuentes e
@@ -160,7 +160,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un timestamp en la clave.</strong>{" "}
             Cada request genera una clave nueva y el hit ratio es cero.
@@ -173,7 +173,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Contador de vistas acumulado en Redis y volcado cada 10 segundos.</li>
           <li>Un dashboard de hit ratio y evictions por tipo de clave.</li>
         </ul>
@@ -194,7 +194,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Capas</strong>: ventanas de
             inconsistencia que se suman, invalidación por pub/sub para cachés en
@@ -208,7 +208,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Invalidar solo Redis.</strong>{" "}
             Las copias en memoria de cada instancia siguen sirviendo el valor viejo.
@@ -221,7 +221,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un canal de pub/sub que avisa a todas las instancias qué claves invalidar.</li>
           <li>Debezium leyendo el WAL de Postgres para invalidar el caché de productos.</li>
         </ul>
@@ -236,7 +236,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un e-commerce cachea la ficha de producto en tres capas: CDN (10
             min), memoria de cada una de las 20 instancias (2 min) y Redis (30

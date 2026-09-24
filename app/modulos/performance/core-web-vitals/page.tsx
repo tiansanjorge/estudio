@@ -117,7 +117,7 @@ function formatearUmbral(valor: number, unidad: string) {
 function TablaUmbrales() {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-left text-sm">
+      <table className="w-full text-left text-base">
         <thead className="text-xs text-muted-foreground">
           <tr className="border-b border-border">
             <th className="py-2 pr-4 font-normal">Métrica</th>
@@ -155,7 +155,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Las Core Web Vitals son tres métricas que miden la experiencia
             desde el lado del usuario: si la página muestra rápido lo
@@ -185,7 +185,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Optimizar solo para el puntaje de Lighthouse.
@@ -209,7 +209,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Instalar la librería <code>web-vitals</code> y mandar las métricas
             a analytics para tener datos de campo propios, segmentados por
@@ -237,7 +237,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">LCP</strong> se descompone en
             tiempo hasta el primer byte, demora hasta que se pide el recurso,
@@ -265,7 +265,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Lazy loading en la imagen principal.
@@ -289,7 +289,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Un buscador con filtros sobre miles de filas donde el input se
             traba: <code>useDeferredValue</code> para la lista filtrada.
@@ -316,7 +316,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Cada layout shift vale{" "}
             <strong className="text-foreground">
@@ -348,7 +348,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Animar posición con <code>top</code>/<code>left</code> o{" "}
@@ -368,7 +368,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Usar el build de attribution de <code>web-vitals</code> para saber
             qué elemento movió el layout o qué fase dominó una interacción
@@ -390,7 +390,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este toast de notificación genera CLS cada vez que aparece,
             aunque está arriba de todo. ¿Por qué, y cómo lo arreglás sin

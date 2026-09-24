@@ -105,7 +105,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Los tipos de TypeScript no existen en runtime: el body, los query
             params o una respuesta externa son <code>unknown</code> de verdad.
@@ -126,7 +126,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>req.body as Pedido</code>.</strong>{" "}
             Un cast no valida nada.
@@ -139,7 +139,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un middleware <code>validar(schema)</code> para las rutas de Express.</li>
           <li>Validar las variables de entorno al arrancar.</li>
         </ul>
@@ -160,7 +160,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En el cliente se valida para la UX; en el servidor, para la
             seguridad. Un <strong className="text-foreground">schema
@@ -177,7 +177,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Validar solo en el cliente.</strong>{" "}
             Cualquiera manda un request sin pasar por el formulario.
@@ -190,7 +190,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un paquete <code>@app/schemas</code> compartido en el monorepo.</li>
           <li><code>z.coerce.number()</code> para los query params de paginación.</li>
         </ul>
@@ -211,7 +211,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Reglas entre campos con <code>refine</code>/<code>superRefine</code>{" "}
             y <code>path</code>; variantes con{" "}
@@ -228,7 +228,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Confiar en el chequeo de unicidad del schema.</strong>{" "}
             Entre validar e insertar, otro request puede ganar la carrera.
@@ -241,7 +241,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Pagos con <code>discriminatedUnion(&quot;medio&quot;, ...)</code>.</li>
           <li>Validar el webhook de un proveedor antes de procesarlo.</li>
         </ul>
@@ -256,7 +256,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>Este endpoint de actualización de perfil tiene varios problemas. ¿Cuáles?</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`app.put("/perfil", async (req, res) => {

@@ -107,7 +107,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El orden: optimizar consultas, pooler, caché, escalar verticalmente,{" "}
             <strong className="text-foreground">réplicas de lectura</strong>,
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Shardear antes de optimizar.</strong>{" "}
             Una máquina grande con buenos índices aguanta mucho más de lo que parece.
@@ -140,7 +140,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Mandar los reportes pesados a una réplica.</li>
           <li>Escalar verticalmente antes de una campaña de ventas.</li>
         </ul>
@@ -161,7 +161,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Read-your-writes</strong>: leer
             del primario lo que el usuario acaba de escribir, rutear por tipo de
@@ -177,7 +177,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Tomar decisiones con datos de una réplica.</strong>{" "}
             Validar stock o saldo contra un dato atrasado.
@@ -190,7 +190,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Leer del primario durante 5 segundos después de cada escritura del usuario.</li>
           <li>Particionar logs por mes y borrar los de hace más de un año.</li>
         </ul>
@@ -211,7 +211,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Shard key</strong>: buena
             distribución, escrituras repartidas y consultas frecuentes que se
@@ -226,7 +226,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Secuencias como ids en un sistema shardeado.</strong>{" "}
             Cada shard genera los mismos ids; hacen falta ids globales.
@@ -239,7 +239,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un SaaS multi-tenant shardeado por tenant con Citus.</li>
           <li>Replicación sincrónica a una réplica en la misma región para RPO cero.</li>
         </ul>
@@ -254,7 +254,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un SaaS de facturación tiene 3.000 empresas en un Postgres de 2 TB.
             Las escrituras crecen un 15% por mes y el primario ya está en la

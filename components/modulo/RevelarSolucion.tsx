@@ -19,12 +19,12 @@ export function RevelarSolucion({
       <button
         type="button"
         onClick={() => setVisible((v) => !v)}
-        className="w-fit rounded-xl border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent-soft hover:text-accent"
+        className="w-fit rounded-xl border border-border px-4 py-2 text-base font-medium text-foreground transition-colors hover:bg-accent-soft hover:text-accent"
       >
         {visible ? "Ocultar solución" : etiqueta}
       </button>
       {visible && (
-        <div className="rounded-xl border border-border bg-background p-4 text-sm text-muted-foreground">
+        <div className="rounded-xl border border-border bg-background p-4 prosa">
           {children}
         </div>
       )}

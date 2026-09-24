@@ -99,7 +99,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Idempotencia</strong>: los
             reintentos son inevitables, así que las operaciones que crean, cobran
@@ -119,7 +119,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Guardar las respuestas en la memoria de la instancia.</strong>{" "}
             El reintento cae en otra instancia y no las encuentra.
@@ -132,7 +132,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Idempotency keys en la creación de pagos y pedidos.</li>
           <li>Un límite saliente compartido para respetar el rate limit de un proveedor.</li>
         </ul>
@@ -153,7 +153,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Idempotency keys</strong>:
             clave por cliente, huella del request, estado, respuesta guardada,
@@ -168,7 +168,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Guardar un error reintentable como respuesta final.</strong>{" "}
             El reintento recibe el mismo error aunque el problema ya se resolvió.
@@ -181,7 +181,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Headers de cuota restante para que los clientes se autorregulen.</li>
           <li>Una cola de exportaciones con prioridad justa entre tenants.</li>
         </ul>
@@ -202,7 +202,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Varios pasos</strong>: claves
             propagadas a los proveedores, tablas de deduplicación, claves
@@ -217,7 +217,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Idempotencia solo en la entrada.</strong>{" "}
             La API deduplica, pero la llamada interna al proveedor cobra dos veces.
@@ -230,7 +230,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un UNIQUE sobre (pedido_id, tipo) para no enviar dos veces la misma notificación.</li>
           <li>Un workflow en Temporal que retoma desde el último paso confirmado.</li>
         </ul>
@@ -245,7 +245,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una API de envío de SMS para empresas: cada cliente manda campañas
             por API, el sistema cobra por mensaje y los entrega a través de un

@@ -95,7 +95,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">EC2</strong> (máquinas
             virtuales), <strong className="text-foreground">S3</strong>{" "}
@@ -116,7 +116,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Access keys en variables de entorno de una EC2.</strong>{" "}
             La instancia ya tiene un rol; la clave solo agrega algo que se puede filtrar.
@@ -129,7 +129,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una Lambda que genera una miniatura cuando se sube una imagen a S3.</li>
           <li>Una API con su rol IAM que solo puede leer y escribir su propio bucket.</li>
         </ul>
@@ -150,7 +150,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">S3</strong>: privado por
             defecto, URLs firmadas para archivos de usuarios, CDN para lo
@@ -165,7 +165,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Subir archivos a través de la API.</strong>{" "}
             Ocupa memoria y ancho de banda del servidor; la URL firmada lo evita.
@@ -178,7 +178,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Mover a Glacier los comprobantes con más de un año de antigüedad.</li>
           <li>RDS Postgres Multi-AZ para la base principal de producción.</li>
         </ul>
@@ -199,7 +199,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Evaluación de políticas</strong>:
             Deny explícito, después SCPs y permission boundaries, después Allow
@@ -215,7 +215,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Tráfico a S3 por el NAT Gateway.</strong>{" "}
             Se paga por gigabyte procesado cuando existe un endpoint gratuito.
@@ -228,7 +228,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una bucket policy que solo acepta tráfico por el VPC endpoint.</li>
           <li>Alertas de presupuesto por proyecto usando etiquetas.</li>
         </ul>
@@ -243,7 +243,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Diseñá en AWS el backend de una app de reintegros de gastos: los
             empleados suben fotos de tickets desde el celular, un proceso extrae

@@ -105,7 +105,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En vez de llamar a cada servicio, el productor{" "}
             <strong className="text-foreground">publica un evento</strong> (un
@@ -129,7 +129,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Eventos que en realidad son comandos.</strong>{" "}
             &quot;EnviarMailConfirmacion&quot; mantiene el acoplamiento.
@@ -143,7 +143,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Notificaciones, facturación y analytics después de una compra.</li>
           <li>Procesamiento de imágenes o videos subidos.</li>
         </ul>
@@ -164,7 +164,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La entrega es <strong className="text-foreground">at-least-once</strong>:
             un mensaje puede llegar dos veces, así que los consumidores tienen
@@ -183,7 +183,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Asumir exactly-once.</strong>{" "}
             El primer duplicado genera dos facturas.
@@ -196,7 +196,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una tabla <code>eventos_procesados</code> con constraint único.</li>
           <li>&quot;Estamos procesando tu pago&quot; con aviso cuando termina.</li>
         </ul>
@@ -217,7 +217,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Doble escritura</strong>:
             guardar y publicar son dos sistemas sin transacción común. El{" "}
@@ -234,7 +234,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Publicar el evento después del commit, sin outbox.</strong>{" "}
             Una caída en el medio pierde el evento.
@@ -247,7 +247,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Outbox con un worker que publica en SQS.</li>
           <li>Una saga de reserva de viaje (vuelo, hotel, auto) con compensaciones.</li>
         </ul>
@@ -262,7 +262,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Soporte reporta clientes con dos cobros y pedidos que nunca se
             facturaron. ¿Qué dos problemas tiene este código?

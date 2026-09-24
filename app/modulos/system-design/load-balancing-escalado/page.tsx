@@ -99,7 +99,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Vertical</strong>: una máquina
             más grande, simple pero con techo y punto único de falla.{" "}
@@ -119,7 +119,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un cron en cada instancia.</strong>{" "}
             Con 5 instancias, el email diario se envía 5 veces.
@@ -132,7 +132,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una API sin estado que escala de 2 a 20 instancias según el tráfico.</li>
           <li>Agrandar la instancia de la base antes de pensar en réplicas.</li>
         </ul>
@@ -153,7 +153,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Algoritmos</strong>:
             round-robin (misma cantidad, no misma carga), least connections
@@ -168,7 +168,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Round-robin con requests heterogéneas.</strong>{" "}
             Un servidor puede recibir todas las pesadas, como en el playground.
@@ -181,7 +181,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Least connections para una API con reportes que tardan segundos.</li>
           <li>Sesiones en Redis para poder quitar sticky sessions del balanceador.</li>
         </ul>
@@ -202,7 +202,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Consistent hashing</strong>:
             al cambiar la cantidad de servidores se mueve solo una fracción de
@@ -218,7 +218,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Reintentos inmediatos y sin límite.</strong>{" "}
             Multiplican la carga justo cuando el sistema está saturado.
@@ -231,7 +231,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un caché distribuido con consistent hashing y nodos virtuales.</li>
           <li>Rechazar recomendaciones con 503 durante un pico para proteger el checkout.</li>
         </ul>
@@ -246,7 +246,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Durante un evento, el tráfico se multiplicó por 5. El autoscaling
             subió de 4 a 20 instancias, pero la latencia empeoró y terminó en una

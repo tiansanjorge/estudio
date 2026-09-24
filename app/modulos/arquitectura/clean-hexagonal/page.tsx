@@ -109,7 +109,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En el centro, el <strong className="text-foreground">dominio</strong>{" "}
             y los <strong className="text-foreground">casos de uso</strong>.
@@ -132,7 +132,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Lógica de negocio en el controller.</strong>{" "}
             Queda atada a HTTP y no se puede reutilizar desde un job o una cola.
@@ -145,7 +145,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Migrar de Stripe a Mercado Pago cambiando un adaptador.</li>
           <li>Testear casos de uso con un repositorio en memoria.</li>
         </ul>
@@ -166,7 +166,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Vale la pena con <strong className="text-foreground">lógica de
             negocio real</strong>, sistemas longevos, varios canales de entrada
@@ -182,7 +182,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Interfaces para todo, con una sola implementación.</strong>{" "}
             Indirección sin beneficio.
@@ -195,7 +195,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un <code>main.ts</code> que arma el grafo de dependencias a mano.</li>
           <li>Aislar solo los proveedores externos en un CRUD que no necesita más.</li>
         </ul>
@@ -216,7 +216,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En <strong className="text-foreground">React</strong>: reglas de
             negocio en funciones puras, acceso a datos detrás de un cliente
@@ -233,7 +233,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>fetch</code> en cada componente.</strong>{" "}
             Cambiar un endpoint obliga a buscar por todo el código.
@@ -246,7 +246,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un módulo <code>analytics.ts</code> que envuelve al SDK del proveedor.</li>
           <li>Mappers entre el modelo de Prisma y la entidad de dominio en un core complejo.</li>
         </ul>
@@ -261,7 +261,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Esta función se usa desde un endpoint y, desde el mes que viene,
             también desde un job nocturno. ¿Qué problemas tiene y cómo la

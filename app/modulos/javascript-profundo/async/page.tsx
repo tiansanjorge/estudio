@@ -130,7 +130,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una función marcada con <code>async</code> siempre devuelve una{" "}
             <strong className="text-foreground">Promise</strong>, aunque
@@ -162,7 +162,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           El error de performance más común con async/await: awaits
           secuenciales para operaciones que son independientes entre sí.
           Medido con tiempo real, no simulado.
@@ -171,7 +171,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Encadenar awaits para operaciones independientes.
@@ -206,7 +206,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Reemplazar cadenas largas de .then() por código lineal más
             fácil de leer y depurar.
@@ -232,7 +232,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>Esta función tarda el triple de lo necesario. ¿Por qué, y cómo la arreglarías?</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`async function cargarDashboard() {
@@ -273,7 +273,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El código dentro de una función async no espera a nada para
             empezar: corre <strong className="text-foreground">
@@ -305,7 +305,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Asumir que una función async siempre difiere su ejecución.
@@ -325,7 +325,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Consumir una API paginada con un async generator que hace un
             fetch por página y emite los items a medida que llegan.
@@ -353,7 +353,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una <strong className="text-foreground">floating promise</strong>{" "}
             es llamar a algo que devuelve una Promise sin{" "}
@@ -385,7 +385,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Dejar una llamada async &quot;fire and forget&quot; sin manejar.
@@ -405,7 +405,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Configurar la regla <code>no-floating-promises</code> de
             typescript-eslint para detectar promesas sin manejar antes de

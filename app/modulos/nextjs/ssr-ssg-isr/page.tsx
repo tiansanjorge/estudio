@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Las estrategias se diferencian por{" "}
             <strong className="text-foreground">cuándo</strong> se genera el
@@ -139,7 +139,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Leer cookies en un layout &quot;por las dudas&quot;.
@@ -160,7 +160,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>SSG: landing, documentación, página &quot;Sobre nosotros&quot;.</li>
           <li>ISR: blog con CMS, catálogo de productos, noticias.</li>
           <li>SSR: dashboard, carrito, resultados de búsqueda por usuario.</li>
@@ -182,7 +182,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">ISR por tiempo</strong> (
             <code>export const revalidate</code>) usa stale-while-revalidate:
@@ -203,7 +203,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               <code>revalidate = 1</code> para &quot;casi tiempo real&quot;.
@@ -226,7 +226,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Webhook del CMS que llama a una Route Handler con{" "}
             <code>revalidateTag</code> al publicar.
@@ -253,7 +253,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Con varias instancias, el cache de ISR por defecto es{" "}
             <strong className="text-foreground">por instancia</strong>: una
@@ -272,7 +272,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Escalar horizontalmente sin cache compartido.
@@ -289,7 +289,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Self-hosting en Kubernetes con un cache handler sobre Redis.</li>
           <li>
             Una ficha de producto con shell estático y precio personalizado por
@@ -307,7 +307,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Todas las páginas del blog deberían ser estáticas con ISR, pero el
             build muestra todas como dinámicas y el servidor está saturado.

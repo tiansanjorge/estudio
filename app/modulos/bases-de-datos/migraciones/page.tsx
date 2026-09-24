@@ -104,7 +104,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una <strong className="text-foreground">migración</strong> es un
             cambio de schema versionado en el repositorio. La base registra cuáles
@@ -123,7 +123,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">No leer el SQL generado.</strong>{" "}
             Un rename puede aparecer como DROP + ADD y perder la columna con sus datos.
@@ -136,7 +136,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un job de CI que corre <code>migrate deploy</code> antes de desplegar.</li>
           <li>Probar una migración en una branch de Neon con datos reales.</li>
         </ul>
@@ -157,7 +157,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Expand / contract</strong>: cada
             estado del schema tiene que funcionar con las dos versiones de la app
@@ -172,7 +172,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Migración y código incompatible en el mismo deploy.</strong>{" "}
             Borrar una columna que la versión vieja todavía lee.
@@ -185,7 +185,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Renombrar una columna de una tabla en uso en varios deploys.</li>
           <li>Separar un campo de dirección en calle, número y ciudad.</li>
         </ul>
@@ -206,7 +206,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Locks</strong>: la mayoría de los
             ALTER TABLE toman ACCESS EXCLUSIVE. El riesgo está en los que
@@ -222,7 +222,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cambiar int a bigint en caliente.</strong>{" "}
             Reescribe la tabla entera bajo lock exclusivo.
@@ -235,7 +235,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Agregar una foreign key con <code>NOT VALID</code> + <code>VALIDATE</code>.</li>
           <li>Un job de backfill que se puede pausar y retomar.</li>
         </ul>
@@ -250,7 +250,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La tabla <code>eventos</code> tiene 200 millones de filas y su{" "}
             <code>id</code> es <code>integer</code>: se va a quedar sin ids en

@@ -95,7 +95,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">MCP</strong> estandariza la
             conexión entre aplicaciones de IA y herramientas: el{" "}
@@ -116,7 +116,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Conectar servidores sin mirar qué pueden hacer.</strong>{" "}
             Cada tool es una acción que el modelo puede decidir ejecutar.
@@ -129,7 +129,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un asistente de código que consulta la base de desarrollo en solo lectura.</li>
           <li>Un servidor con la documentación interna para todos los asistentes del equipo.</li>
         </ul>
@@ -150,7 +150,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Transportes</strong>: stdio
             para servidores locales (credenciales del entorno) y Streamable HTTP
@@ -165,7 +165,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un servidor MCP para una integración de una sola app.</strong>{" "}
             Una pieza más para operar sin ningún beneficio de reutilización.
@@ -178,7 +178,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un servidor stdio de Postgres con un usuario de solo lectura.</li>
           <li>Un servidor HTTP interno con OAuth para el sistema de tickets.</li>
         </ul>
@@ -199,7 +199,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Seguridad</strong>: servidores
             locales como código ejecutable, prompt injection en los resultados,
@@ -215,7 +215,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Instalar siempre la última versión de un servidor.</strong>{" "}
             Un cambio malicioso llega directo a tu máquina.
@@ -228,7 +228,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Aprobación obligatoria para toda tool que crea, modifica o borra.</li>
           <li>Un registro de auditoría de cada llamada a un servidor interno.</li>
         </ul>
@@ -243,7 +243,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El equipo de soporte quiere que su asistente de IA pueda consultar
             pedidos, ver el historial de un cliente y emitir reembolsos, usando

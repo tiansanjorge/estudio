@@ -91,7 +91,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Cola</strong>: cada mensaje a un
             consumidor. <strong className="text-foreground">Pub/sub</strong>: a
@@ -111,7 +111,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Kafka para encolar unos cientos de jobs por día.</strong>{" "}
             Todo su costo operativo para algo que SQS resuelve sin administrar nada.
@@ -124,7 +124,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>SNS con una cola SQS por servicio interesado en un pedido.</li>
           <li>Kafka para eventos de clics que consumen analítica, recomendaciones y fraude.</li>
         </ul>
@@ -145,7 +145,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Garantías</strong>:
             at-most-once pierde, at-least-once duplica; el efecto exactly-once
@@ -160,7 +160,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Confiar en el exactly-once del broker para escribir en la base.</strong>{" "}
             Fuera del broker, la garantía vuelve a ser at-least-once.
@@ -173,7 +173,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>SQS FIFO con el id de la cuenta como message group para movimientos.</li>
           <li>Descartar eventos viejos por número de versión en vez de exigir orden.</li>
         </ul>
@@ -194,7 +194,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Kafka</strong>: las particiones
             son el techo de paralelismo del grupo; los rebalanceos frenan el
@@ -209,7 +209,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Pocas particiones al crear el topic.</strong>{" "}
             Agregarlas después rompe el orden por clave durante la transición.
@@ -222,7 +222,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Autoscaling de consumidores según el lag, hasta la cantidad de particiones.</li>
           <li>Extender el visibility timeout de un job que procesa un video largo.</li>
         </ul>
@@ -237,7 +237,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una billetera virtual publica movimientos (depósitos, transferencias,
             retiros) que consumen tres sistemas: el que actualiza saldos, el de

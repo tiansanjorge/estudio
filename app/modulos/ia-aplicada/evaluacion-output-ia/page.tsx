@@ -103,7 +103,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El código generado se revisa como cualquier PR, con foco en sus
             fallas típicas: <strong className="text-foreground">APIs inventadas,
@@ -122,7 +122,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Aprobar porque compila.</strong>{" "}
             Los errores del playground compilan y pasan una prueba rápida.
@@ -135,7 +135,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Revisar un endpoint generado buscando de dónde sale cada dato del request.</li>
           <li>Rechazar un diff que mezcla el cambio pedido con refactors no pedidos.</li>
         </ul>
@@ -156,7 +156,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Verificación</strong>: tests
             como especificación, leídos con desconfianza, herramientas
@@ -171,7 +171,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Tests que verifican el mock.</strong>{" "}
             Pasan siempre y no dicen nada del comportamiento real.
@@ -184,7 +184,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Escribir los tests de un cálculo de impuestos antes de pedir la implementación.</li>
           <li>Un revisor automático en el CI que comenta patrones riesgosos.</li>
         </ul>
@@ -205,7 +205,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">LLMs en producto</strong>:
             conjuntos de evaluación, comprobaciones exactas, rúbricas y LLM como
@@ -221,7 +221,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cambiar el modelo o el prompt sin evals.</strong>{" "}
             Las regresiones aparecen en producción, contadas por los usuarios.
@@ -234,7 +234,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un eval de 200 casos que corre en el CI ante cada cambio de prompt.</li>
           <li>Un límite de tamaño de PR y revisión obligatoria de dependencias nuevas.</li>
         </ul>
@@ -249,7 +249,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un equipo adoptó asistentes de IA hace tres meses. Los PRs se
             triplicaron en tamaño, el tiempo de revisión se duplicó, subieron

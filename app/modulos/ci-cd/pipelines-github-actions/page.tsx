@@ -107,7 +107,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">CI</strong>: integrar seguido y
             verificar cada push automáticamente (lint, typecheck, tests, build).{" "}
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Deploys manuales desde una laptop.</strong>{" "}
             Nadie sabe qué versión está en producción ni cómo llegó.
@@ -140,7 +140,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Correr lint, typecheck y tests en cada PR antes de permitir el merge.</li>
           <li>Desplegar automáticamente a producción al mergear a main.</li>
         </ul>
@@ -161,7 +161,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Velocidad</strong>: medir, cachear,
             paralelizar con shards, correr solo lo afectado, cancelar ejecuciones
@@ -176,7 +176,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">e2e completos en cada push de un borrador.</strong>{" "}
             Minutos facturados y feedback lento para cambios que todavía no están listos.
@@ -189,7 +189,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Partir 2.000 tests en 4 shards con una matrix.</li>
           <li>Un environment &quot;production&quot; con aprobación manual.</li>
         </ul>
@@ -210,7 +210,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Seguridad</strong>: actions
             fijadas a SHA, <code>permissions</code> mínimos, nada de interpolar
@@ -227,7 +227,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Reintentar tests flaky hasta que pasen.</strong>{" "}
             El equipo aprende a ignorar el rojo y un fallo real se escapa.
@@ -240,7 +240,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Deploy a AWS con credenciales temporales por OIDC.</li>
           <li>Un monorepo que solo testea los paquetes afectados con Turborepo.</li>
         </ul>
@@ -255,7 +255,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este workflow comenta en cada PR (incluidos los de forks) con el
             resultado de los tests. Encontrá los problemas de seguridad.

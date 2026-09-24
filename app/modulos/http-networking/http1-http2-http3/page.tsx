@@ -123,7 +123,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">HTTP/1.1</strong> procesa una
             petición a la vez por conexión TCP. Para cargar varios recursos
@@ -158,7 +158,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           Elegí cuántos recursos hay que cargar y compará cuánto tarda
           HTTP/1.1 (conexiones limitadas) contra HTTP/2 (multiplexado).
         </p>
@@ -166,7 +166,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Seguir usando spriting/concatenación agresiva en HTTP/2.
@@ -194,7 +194,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Decidir si vale la pena seguir combinando archivos JS/CSS en un
             bundle único, o si con HTTP/2 conviene servir chunks más
@@ -222,7 +222,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Tu app se usa mayormente desde celulares en redes móviles con
             pérdida de paquetes frecuente, y la página carga ~30 recursos
@@ -256,7 +256,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Con HTTP/2 dejan de tener sentido las optimizaciones que esquivaban
             el límite de conexiones:{" "}
@@ -280,7 +280,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Mantener domain sharding con HTTP/2.</strong>{" "}
             Suma handshakes y rompe el multiplexado.
@@ -294,7 +294,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Habilitar 103 Early Hints en el CDN para el CSS crítico.</li>
           <li>Revisar la columna Protocol de DevTools para ver qué versión se negoció.</li>
         </ul>
@@ -315,7 +315,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             QUIC identifica la conexión con un{" "}
             <strong className="text-foreground">connection ID</strong>, no con
@@ -336,7 +336,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">HTTP/2 en el borde y HTTP/1.1 hacia el backend sin normalizar.</strong>{" "}
             El downgrade puede reintroducir el smuggling.
@@ -349,7 +349,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Justificar HTTP/3 para una app mobile con usuarios en redes inestables.</li>
           <li>Auditar la cadena CDN → load balancer → backend en busca de downgrades.</li>
         </ul>
@@ -364,7 +364,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Migraste el sitio a HTTP/2, pero la carga no mejoró. En la pestaña
             Network ves assets repartidos en <code>static1.tuapp.com</code>,{" "}

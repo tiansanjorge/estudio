@@ -107,7 +107,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Redis</strong> es un almacén
             clave-valor en memoria, con estructuras (hashes, listas, sets, sorted
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Claves sin TTL.</strong>{" "}
             Una invalidación olvidada sirve el dato viejo para siempre.
@@ -140,7 +140,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Cachear el detalle de un producto que se lee miles de veces por minuto.</li>
           <li>Guardar sesiones compartidas entre varias instancias de la API.</li>
         </ul>
@@ -161,7 +161,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Invalidar con DEL</strong>,
             después del commit, en vez de actualizar la clave: evita que dos
@@ -177,7 +177,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cachear antes de indexar.</strong>{" "}
             Si un índice resuelve la consulta, la caché solo suma invalidación.
@@ -190,7 +190,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Cachear la respuesta de una API externa con rate limit.</li>
           <li>Un LRU en memoria para la configuración, que cambia una vez por semana.</li>
         </ul>
@@ -211,7 +211,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Cache stampede</strong>: una
             clave caliente vence y todas las requests van a la base a la vez. Se
@@ -227,7 +227,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Caché y colas en la misma instancia.</strong>{" "}
             Necesitan políticas de eviction opuestas.
@@ -240,7 +240,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>La home de un e-commerce en Black Friday, con stale-while-revalidate.</li>
           <li>Un ranking en tiempo real con sorted sets.</li>
         </ul>
@@ -255,7 +255,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La página de ofertas recibe 5.000 requests por segundo y se cachea
             con TTL de 5 minutos. Dos problemas: cada 5 minutos la CPU de la base

@@ -109,7 +109,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un WebSocket arranca como un request HTTP con{" "}
             <code>Upgrade: websocket</code> y, con un <code>101</code>, queda
@@ -130,7 +130,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Asumir que la conexión es estable.</strong>{" "}
             En mobile se corta varias veces por sesión.
@@ -143,7 +143,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un chat con ids por mensaje y recuperación del historial al reconectar.</li>
           <li>Notificaciones que solo avisan &quot;hay novedades&quot; y el cliente consulta por HTTP.</li>
         </ul>
@@ -164,7 +164,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Reconexión</strong> automática
             con backoff y jitter, re-autenticación, re-suscripción y resync.{" "}
@@ -181,7 +181,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Reconectar con intervalo fijo.</strong>{" "}
             Tras un deploy, todos los clientes vuelven en el mismo segundo.
@@ -194,7 +194,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Ping cada 25 s y cierre si no hay pong en 10 s.</li>
           <li>Verificar permisos antes de unir a un usuario a la sala de un proyecto.</li>
         </ul>
@@ -215,7 +215,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Backpressure</strong>: clientes
             lentos acumulan mensajes en el buffer del servidor. Se vigila{" "}
@@ -231,7 +231,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Ignorar <code>bufferedAmount</code>.</strong>{" "}
             Unos pocos clientes lentos agotan la memoria del proceso.
@@ -244,7 +244,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Redis Streams como historial de un canal para hacer replay.</li>
           <li>Un marcador en vivo que envía como mucho 4 actualizaciones por segundo.</li>
         </ul>
@@ -259,7 +259,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Diseñá las notificaciones en tiempo real de una app de delivery
             (&quot;tu pedido salió&quot;, &quot;el repartidor está cerca&quot;).

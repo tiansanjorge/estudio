@@ -101,7 +101,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El <strong className="text-foreground">rate limiting</strong>{" "}
             protege contra abuso, clientes con bugs y costos descontrolados.
@@ -122,7 +122,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Limitar solo por IP.</strong>{" "}
             Una botnet la esquiva y una oficina entera comparte la misma.
@@ -135,7 +135,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Limitar el endpoint que llama a un LLM por usuario.</li>
           <li>Límites por plan en una API pública.</li>
         </ul>
@@ -156,7 +156,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Ventana fija</strong> (barata,
             doble en el borde), <strong className="text-foreground">ventana
@@ -173,7 +173,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Bloquear cuentas tras N fallos.</strong>{" "}
             Se convierte en una herramienta de denegación de servicio.
@@ -186,7 +186,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Token bucket para una API móvil con ráfagas al abrir la app.</li>
           <li>Backoff progresivo en el login con CAPTCHA después del tercer fallo.</li>
         </ul>
@@ -207,7 +207,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Rate limiting (rechazar por cliente), throttling (demorar), cuotas
             (uso acumulado del plan) y load shedding (rechazar tráfico para
@@ -224,7 +224,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Leer, calcular y escribir con comandos separados.</strong>{" "}
             Dos instancias consumen la misma ficha.
@@ -237,7 +237,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li><code>@upstash/ratelimit</code> en Route Handlers de Next.js.</li>
           <li>Priorizar el tráfico del checkout sobre el de reportes en un pico.</li>
         </ul>
@@ -252,7 +252,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este limitador se desplegó en 3 instancias serverless. ¿Por qué no
             limita nada y qué cambiarías?

@@ -105,7 +105,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un patrón de diseño es una solución con nombre a un problema que se
             repite. Su valor es doble: la solución en sí y el{" "}
@@ -129,7 +129,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Olvidar desuscribirse.</strong>{" "}
             Un observer que nunca se quita es un memory leak.
@@ -143,7 +143,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Métodos de pago o de envío como estrategias.</li>
           <li>Un bus de eventos de dominio entre módulos.</li>
         </ul>
@@ -164,7 +164,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Otros patrones del día a día:{" "}
             <strong className="text-foreground">Adapter</strong> (envolver una
@@ -184,7 +184,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Singleton con estado mutable global.</strong>{" "}
             Acopla todo y el estado sobrevive entre tests.
@@ -197,7 +197,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una factory de clientes de pago por país.</li>
           <li>Un facade <code>apiClient</code> sobre fetch.</li>
         </ul>
@@ -218,7 +218,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Cada patrón agrega <strong className="text-foreground">indirección</strong>,
             y solo se justifica si compra algo concreto: extensibilidad real,
@@ -235,7 +235,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Interfaces con una sola implementación &quot;por si acaso&quot;.</strong>{" "}
             Costo de lectura sin beneficio.
@@ -248,7 +248,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un <code>EmisorTipado&lt;EventosDeDominio&gt;</code> compartido.</li>
           <li>Revisar un PR que introduce tres capas para un CRUD.</li>
         </ul>
@@ -263,7 +263,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Esta función crece cada vez que se agrega un medio de pago, y además
             dispara el mail y la factura desde adentro. ¿Qué patrones aplicarías?

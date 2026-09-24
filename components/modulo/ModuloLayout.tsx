@@ -17,7 +17,7 @@ export function ModuloLayout({
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-16 px-6 py-16 sm:px-8">
       <header className="flex flex-col gap-3">
-        <span className="text-sm font-medium text-accent">{categoriaTitulo}</span>
+        <span className="text-base font-medium text-accent">{categoriaTitulo}</span>
         <div className="flex items-start justify-between gap-4">
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             {titulo}

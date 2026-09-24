@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">OpenAPI</strong> describe una
             API HTTP en YAML o JSON: endpoints, parámetros, schemas, status y
@@ -136,7 +136,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;Solo renombré un campo&quot;.</strong>{" "}
             Un renombre es un breaking change.
@@ -149,7 +149,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Generar los tipos del frontend con openapi-typescript.</li>
           <li>Acordar el contrato antes de implementar una feature entre dos equipos.</li>
         </ul>
@@ -170,7 +170,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Design-first</strong>: el
             contrato primero, diseñado para el consumidor, con trabajo en
@@ -189,7 +189,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Una v2 por cada cambio.</strong>{" "}
             Cada versión mayor es una API más para mantener.
@@ -202,7 +202,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Schemas de Zod que generan el OpenAPI con zod-openapi.</li>
           <li>Una política de deprecación de 6 meses para la API pública.</li>
         </ul>
@@ -223,7 +223,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Expand/contract</strong>: un
             cambio incompatible en pasos compatibles. Se agrega lo nuevo
@@ -240,7 +240,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Asumir que todos los clientes se actualizan juntos.</strong>{" "}
             Las apps mobile viejas siguen instaladas meses.
@@ -253,7 +253,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Renombrar un campo usado por la app mobile sin romper versiones viejas.</li>
           <li>Un paso de oasdiff que bloquea merges con breaking changes.</li>
         </ul>
@@ -268,7 +268,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Tenés que cambiar <code>precio</code> (number, en pesos) por{" "}
             <code>precio: {"{ monto: number, moneda: string }"}</code> para

@@ -105,7 +105,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Express</strong>: minimalista y
             universal, pero todo lo demás lo elegís vos.{" "}
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Handlers async en Express 4 sin try/catch.</strong>{" "}
             El error no llega al manejador y queda como promesa rechazada.
@@ -141,7 +141,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un servicio nuevo en Fastify con type provider de Zod.</li>
           <li>Un backend de varios equipos organizado en módulos de NestJS.</li>
         </ul>
@@ -162,7 +162,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Fastify</strong> compila la
             validación y la serialización a partir de los schemas, y tiene un
@@ -179,7 +179,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Schemas de respuesta desincronizados con los tipos.</strong>{" "}
             Un type provider los deriva de una sola fuente.
@@ -192,7 +192,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un interceptor que envuelve todas las respuestas en un formato común.</li>
           <li>Un guard global con <code>@Public()</code> para las rutas abiertas.</li>
         </ul>
@@ -213,7 +213,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La <strong className="text-foreground">inyección de dependencias</strong>{" "}
             de NestJS desacopla, facilita los tests (reemplazar providers) y
@@ -229,7 +229,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Providers con scope por request sin necesidad.</strong>{" "}
             Se crean en cada request y ese costo se propaga a quien los usa.
@@ -242,7 +242,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Tests de integración de Nest con la pasarela de pagos reemplazada por un fake.</li>
           <li>Un servicio edge en Hono sobre Cloudflare Workers.</li>
         </ul>
@@ -257,7 +257,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Tu equipo de 3 personas mantiene una API en Express 4 con 80 rutas,
             sin validación ni estructura clara, y alguien propone reescribirla

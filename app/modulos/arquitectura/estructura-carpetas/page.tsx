@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Por capas</strong>: carpetas por
             tipo técnico (<code>components/</code>, <code>hooks/</code>,{" "}
@@ -135,7 +135,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>shared/</code> como cajón de sastre.</strong>{" "}
             Termina con lógica de negocio de todas las features mezclada.
@@ -148,7 +148,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Definir la estructura de un proyecto que va a crecer.</li>
           <li>Asignar ownership de carpetas a equipos (CODEOWNERS).</li>
         </ul>
@@ -169,7 +169,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Cada feature expone una <strong className="text-foreground">API
             pública</strong> (<code>index.ts</code>) y el resto es interno. Los
@@ -186,7 +186,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Imports a internos de otra feature.</strong>{" "}
             Cualquier reorganización interna rompe a las demás.
@@ -199,7 +199,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Configurar <code>eslint-plugin-boundaries</code> con las capas del proyecto.</li>
           <li>Páginas de Next que solo componen features.</li>
         </ul>
@@ -220,7 +220,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Feature-Sliced Design</strong>{" "}
             formaliza la idea con capas jerárquicas (app, pages, widgets,
@@ -236,7 +236,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Migración big-bang de toda la estructura.</strong>{" "}
             Conflictos con todo el trabajo en curso.
@@ -249,7 +249,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un codemod que mueve una feature y actualiza todos sus imports.</li>
           <li>Separar entities de features en un dominio grande.</li>
         </ul>
@@ -264,7 +264,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En tu proyecto por features, <code>shared/components/</code> tiene 80
             componentes, incluidos <code>TarjetaProductoCarrito</code>,{" "}

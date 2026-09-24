@@ -117,7 +117,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un test de API manda un request a la aplicación{" "}
             <strong className="text-foreground">en memoria</strong> (Supertest,{" "}
@@ -139,7 +139,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Testear solo el camino feliz.</strong>{" "}
             Los bugs caros están en permisos y validaciones.
@@ -153,7 +153,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una suite por recurso con los mismos bloques de casos.</li>
           <li>Tests de autorización para cada rol en endpoints administrativos.</li>
         </ul>
@@ -174,7 +174,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Datos de prueba</strong>: base
             real aislada por test (transacción revertida, truncado o una base
@@ -190,7 +190,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Llamar al sandbox del proveedor en cada test.</strong>{" "}
             Lento y dependiente de un tercero; va en un pipeline aparte.
@@ -203,7 +203,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un fake de <code>PasarelaPagos</code> configurable por test.</li>
           <li>Tests en paralelo con una base por worker.</li>
         </ul>
@@ -224,7 +224,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Las <strong className="text-foreground">condiciones de carrera</strong>{" "}
             solo aparecen con requests simultáneos: se testean con{" "}
@@ -241,7 +241,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Leer y después escribir sin atomicidad.</strong>{" "}
             Dos requests leen el mismo stock y los dos venden.
@@ -254,7 +254,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un test de concurrencia para el último ítem en stock.</li>
           <li>Validar cada respuesta de la suite contra el OpenAPI.</li>
         </ul>
@@ -269,7 +269,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Esta es toda la suite de un endpoint de transferencias bancarias.
             ¿Qué le falta?

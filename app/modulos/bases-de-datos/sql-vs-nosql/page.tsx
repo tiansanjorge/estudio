@@ -105,7 +105,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una base <strong className="text-foreground">relacional</strong>{" "}
             guarda cada dato una vez, en tablas con relaciones, y permite
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;Usamos MongoDB porque no hay que definir esquema&quot;.</strong>{" "}
             El esquema existe igual, en el código.
@@ -140,7 +140,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Postgres para un e-commerce; Redis para sesiones y cache.</li>
           <li>Un catálogo con atributos variables por tipo de producto.</li>
         </ul>
@@ -161,7 +161,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En documentos, <strong className="text-foreground">embeber</strong>{" "}
             lo que se lee junto y está acotado;{" "}
@@ -179,7 +179,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Arrays embebidos que crecen sin límite.</strong>{" "}
             Documentos enormes, lentos y con tope de tamaño.
@@ -192,7 +192,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Guardar el precio y el nombre del producto en cada ítem del pedido.</li>
           <li>Metadata de integraciones en una columna JSONB con índice GIN.</li>
         </ul>
@@ -213,7 +213,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">ACID vs BASE</strong> y el
             teorema CAP: consistencia fuerte vs disponibilidad ante particiones.
@@ -229,7 +229,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Scans en DynamoDB para consultas frecuentes.</strong>{" "}
             Cuestan tanto como leer toda la tabla.
@@ -242,7 +242,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Diseño de tabla única para un sistema de reservas serverless.</li>
           <li>Elegir lecturas fuertes solo en el paso crítico del checkout.</li>
         </ul>
@@ -257,7 +257,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una startup arma una plataforma de cursos: usuarios, cursos,
             inscripciones, pagos, progreso por lección y un foro por curso. El

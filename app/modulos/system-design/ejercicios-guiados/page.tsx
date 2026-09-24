@@ -99,7 +99,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El mismo marco para cualquier diseño:{" "}
             <strong className="text-foreground">requisitos, estimación, API,
@@ -119,7 +119,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Saltar a la arquitectura.</strong>{" "}
             Sin requisitos ni números, las decisiones no se pueden justificar.
@@ -132,7 +132,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Practicar el marco completo en 45 minutos cronometrados.</li>
           <li>Reutilizar el razonamiento del acortador en cualquier servicio de lectura masiva.</li>
         </ul>
@@ -153,7 +153,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Nivel 2: el <strong className="text-foreground">feed paginado</strong>.
             El problema central es el fan-out: copiar cada post a los feeds de
@@ -167,7 +167,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Fan-out on write para todos.</strong>{" "}
             Un post de una cuenta enorme genera millones de escrituras.
@@ -180,7 +180,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Feeds de actividad, notificaciones y timelines de cualquier producto social.</li>
           <li>Guardar solo ids en el feed e hidratar los posts desde una caché.</li>
         </ul>
@@ -201,7 +201,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Nivel 3: el <strong className="text-foreground">chat en tiempo real</strong>.
             Conexiones con estado en gateways, un registro de sesiones y ruteo
@@ -215,7 +215,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Enrutar antes de persistir.</strong>{" "}
             Si el gateway destino se cae, el mensaje se pierde.
@@ -228,7 +228,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Chat de soporte, mensajería interna y comentarios en vivo.</li>
           <li>El mismo patrón de gateways sirve para notificaciones en tiempo real.</li>
         </ul>
@@ -243,7 +243,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Aplicá el marco a un ejercicio nuevo: diseñá un sistema de
             reservas de entradas para recitales. Cuando salen a la venta, un

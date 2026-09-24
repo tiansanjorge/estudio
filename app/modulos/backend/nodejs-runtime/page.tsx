@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El event loop ya se vio en JavaScript profundo; acá importa su
             consecuencia en un servidor. El JavaScript corre en{" "}
@@ -135,7 +135,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">APIs sincrónicas en un handler.</strong>{" "}
             <code>readFileSync</code> o <code>bcrypt.hashSync</code> bloquean a
@@ -149,7 +149,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Medir el lag del event loop con <code>monitorEventLoopDelay</code>.</li>
           <li>Diagnosticar por qué un endpoint liviano se vuelve lento bajo carga.</li>
         </ul>
@@ -170,7 +170,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Worker threads</strong> para CPU
             dentro de un servicio; <strong className="text-foreground">child
@@ -188,7 +188,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Crear un worker por request.</strong>{" "}
             Crear hilos es caro: se usa un pool.
@@ -201,7 +201,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Generar PDFs o redimensionar imágenes con Piscina.</li>
           <li>Ajustar <code>UV_THREADPOOL_SIZE</code> en un servicio con mucho hashing.</li>
         </ul>
@@ -222,7 +222,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Los <strong className="text-foreground">memory leaks</strong> en
             servidores suelen ser caches sin límite, listeners que no se quitan
@@ -237,7 +237,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Ignorar SIGTERM.</strong>{" "}
             Cada deploy corta requests en vuelo y deja jobs a medias.
@@ -250,7 +250,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un handler de SIGTERM con timeout menor al período de gracia de Kubernetes.</li>
           <li>Heap snapshots automáticos cerca del límite de memoria.</li>
         </ul>
@@ -265,7 +265,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este endpoint de exportación hace que todo el servidor se vuelva
             lento cuando alguien exporta, y la memoria crece día a día. ¿Por

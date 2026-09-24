@@ -25,7 +25,7 @@ export function NivelTabs({ niveles }: NivelTabsProps) {
             key={nivel}
             type="button"
             onClick={() => setActivo(nivel)}
-            className={`rounded-lg px-4 py-1.5 text-sm font-medium transition-colors ${
+            className={`rounded-lg px-4 py-1.5 text-base font-medium transition-colors ${
               activo === nivel
                 ? "bg-accent-soft text-accent"
                 : "text-muted-foreground hover:text-foreground"

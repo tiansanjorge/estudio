@@ -105,7 +105,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un secreto nunca va al repositorio: el historial de git es
             permanente. En local, <code>.env</code> en el{" "}
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;Es un repo privado&quot;.</strong>{" "}
             Los accesos cambian, se clona en muchas máquinas y el historial es
@@ -141,7 +141,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un <code>env.ts</code> que valida las variables con Zod al arrancar.</li>
           <li>Una Route Handler que llama a un servicio con la clave secreta, en vez de exponerla.</li>
         </ul>
@@ -162,7 +162,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Ante una filtración, <strong className="text-foreground">rotar
             primero</strong>: borrar el archivo no sirve. Después revisar logs,
@@ -178,7 +178,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Actions de terceros sin fijar versión.</strong>{" "}
             Una versión comprometida corre con tus secretos.
@@ -191,7 +191,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>gitleaks en un hook de pre-commit y en el CI.</li>
           <li>Deploy a AWS desde GitHub Actions con OIDC y un rol acotado.</li>
         </ul>
@@ -212,7 +212,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La <strong className="text-foreground">rotación</strong> acota el
             daño de filtraciones que no detectaste. Sin downtime requiere dos
@@ -229,7 +229,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">La clave de cifrado en una variable al lado de la base.</strong>{" "}
             Un acceso al servidor da datos y clave juntos.
@@ -242,7 +242,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Rotación automática de la contraseña de RDS con Secrets Manager.</li>
           <li>Guardar tokens OAuth de terceros cifrados con KMS.</li>
         </ul>
@@ -257,7 +257,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un Dockerfile de producción. ¿Qué problemas de manejo de secretos
             tiene?

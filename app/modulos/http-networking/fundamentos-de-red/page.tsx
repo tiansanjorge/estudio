@@ -125,7 +125,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Antes de que el servidor vea tu request pasan varias cosas, y casi
             todas son <strong className="text-foreground">idas y vueltas</strong>{" "}
@@ -156,7 +156,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Medir solo desde la oficina, cerca del servidor.
@@ -172,7 +172,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Leer la pestaña Network (timing de cada request) para ver dónde se va el tiempo.</li>
           <li>Responder en una entrevista &quot;¿qué pasa cuando escribís una URL?&quot;.</li>
         </ul>
@@ -193,7 +193,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Hay que reducir <strong className="text-foreground">round trips</strong>{" "}
             y <strong className="text-foreground">distancia</strong>: CDN para
@@ -212,7 +212,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Preconnect a diez orígenes.</strong>{" "}
             Las conexiones no usadas se descartan y compiten con las
@@ -230,7 +230,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Preconnect al origen de las fuentes y de la API principal.</li>
           <li>Planificar el cambio de proveedor de hosting con TTL bajo.</li>
         </ul>
@@ -251,7 +251,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">TCP slow start</strong>: una
             conexión nueva arranca con una ventana de ~10 segmentos (~14 KB) y
@@ -273,7 +273,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Habilitar 0-RTT para todo.</strong>{" "}
             Un POST repetido por replay puede duplicar un pago.
@@ -287,7 +287,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Inlinear el CSS crítico y diferir el resto para que el primer documento sea chico.</li>
           <li>Configurar el CDN para aceptar 0-RTT solo en GET.</li>
         </ul>
@@ -302,7 +302,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Usuarios de Europa reportan que tu app, alojada en Buenos Aires,
             tarda ~1,5 s en mostrar algo, aunque el servidor responde en 50 ms.

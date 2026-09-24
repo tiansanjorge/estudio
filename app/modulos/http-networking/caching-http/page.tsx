@@ -118,7 +118,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El servidor le dice al cliente cómo cachear una respuesta con el
             header <code>Cache-Control</code>. La directiva más común es{" "}
@@ -150,7 +150,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           Elegí una directiva, hacé peticiones y avanzá el reloj simulado
           para ver cuándo hay HIT, MISS o revalidación.
         </p>
@@ -158,7 +158,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Pensar que no-cache significa &ldquo;no cachear&rdquo;.
@@ -184,7 +184,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Assets con hash en el nombre (<code>app.a1b2c3.js</code>) con{" "}
             <code>max-age</code> larguísimo: si cambia el contenido, cambia
@@ -212,7 +212,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Tenés un endpoint <code>/api/perfil</code> que cambia cada vez
             que el usuario edita su perfil, pero no muy seguido. Necesitás
@@ -244,7 +244,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La política depende del tipo de recurso. Assets con hash en el
             nombre: <code>public, max-age=31536000, immutable</code> (cache
@@ -264,7 +264,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cachear el HTML con max-age largo.</strong>{" "}
             Los usuarios siguen viendo la versión anterior después del deploy.
@@ -281,7 +281,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Definir la tabla de Cache-Control por tipo de ruta de una app.</li>
           <li>Un catálogo con <code>s-maxage</code> y <code>stale-while-revalidate</code> en el CDN.</li>
         </ul>
@@ -302,7 +302,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Cache poisoning</strong>: si la
             app usa un header que no forma parte de la clave del cache para
@@ -325,7 +325,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cachear respuestas de error en el CDN.</strong>{" "}
             Un 500 transitorio queda servido a todos durante el TTL.
@@ -338,7 +338,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Revisar qué headers usa el backend para armar URLs antes de poner un CDN adelante.</li>
           <li>Invalidar por tags (surrogate keys) en el CDN en vez de purgar todo.</li>
         </ul>
@@ -353,7 +353,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Después de un deploy, algunos usuarios ven la página rota: el HTML
             nuevo carga un JS viejo, o al revés. Esta es la configuración.

@@ -60,7 +60,7 @@ export function Quiz({ preguntas }: QuizProps) {
                     type="button"
                     onClick={() => responder(preguntaIndex, opcionIndex)}
                     disabled={respuesta !== null}
-                    className={`rounded-xl border px-4 py-2 text-left text-sm transition-colors disabled:cursor-default ${estilo}`}
+                    className={`rounded-xl border px-4 py-2 text-left text-base transition-colors disabled:cursor-default ${estilo}`}
                   >
                     {opcion}
                   </button>
@@ -68,12 +68,12 @@ export function Quiz({ preguntas }: QuizProps) {
               })}
             </div>
             {respuesta !== null && (
-              <p className="text-sm text-muted-foreground">{item.explicacion}</p>
+              <p className="prosa">{item.explicacion}</p>
             )}
           </div>
         );
       })}
-      <p className="text-sm font-medium text-muted-foreground">
+      <p className="text-base font-medium text-muted-foreground">
         {respondidas === preguntas.length
           ? `Resultado: ${correctas} / ${preguntas.length}`
           : `Respondidas: ${respondidas} / ${preguntas.length}`}

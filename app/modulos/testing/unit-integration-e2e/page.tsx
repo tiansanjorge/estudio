@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Unit</strong>: una unidad
             aislada, sin DOM ni red. <strong className="text-foreground">Integración</strong>:
@@ -135,7 +135,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Llamar &quot;unitario&quot; a cualquier test de Jest.</strong>{" "}
             Renderizar una página con su store y sus hijos ya es integración.
@@ -148,7 +148,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Decidir en qué nivel testear cada parte de una feature nueva.</li>
           <li>Explicar en un postmortem por qué los tests no atraparon un bug.</li>
         </ul>
@@ -169,7 +169,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En cualquier nivel, un buen test prueba{" "}
             <strong className="text-foreground">comportamiento</strong>, es
@@ -187,7 +187,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">SQLite para testear una app en Postgres.</strong>{" "}
             Constraints, tipos y JSONB se comportan distinto.
@@ -200,7 +200,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Testcontainers con Postgres para los tests de repositorios.</li>
           <li>Renombrar tests para que describan comportamiento.</li>
         </ul>
@@ -221,7 +221,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un e2e estable espera{" "}
             <strong className="text-foreground">condiciones</strong>, no
@@ -238,7 +238,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Loguearse por la UI en cada e2e.</strong>{" "}
             Suma minutos y un punto de falla a cada test.
@@ -251,7 +251,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Shardear 40 e2e en 4 máquinas del CI.</li>
           <li>Chromatic sobre el Storybook del design system.</li>
         </ul>
@@ -266,7 +266,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Este e2e falla una de cada cinco veces en el CI y nunca en local.
             ¿Qué lo hace frágil?

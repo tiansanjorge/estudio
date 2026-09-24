@@ -70,7 +70,7 @@ export default function EntrevistaPage() {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 px-6 py-16 sm:px-8">
       <header className="flex flex-col gap-3">
-        <span className="text-sm font-medium text-accent">Repaso</span>
+        <span className="text-base font-medium text-accent">Repaso</span>
         <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
           Preguntas de entrevista
         </h1>
@@ -87,7 +87,7 @@ export default function EntrevistaPage() {
               key={n}
               type="button"
               onClick={() => setNivel(n)}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+              className={`rounded-lg px-3 py-1.5 text-base font-medium transition-colors ${
                 nivel === n
                   ? "bg-accent-soft text-accent"
                   : "text-muted-foreground hover:text-foreground"
@@ -116,10 +116,10 @@ export default function EntrevistaPage() {
         </div>
       </div>
 
-      <p className="text-sm text-muted-foreground">{ETIQUETAS_NIVEL[nivel]}</p>
+      <p className="text-base text-muted-foreground">{ETIQUETAS_NIVEL[nivel]}</p>
 
       {grupos.length === 0 && (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-base text-muted-foreground">
           Todavía no hay preguntas cargadas en este nivel.
         </p>
       )}
@@ -169,7 +169,7 @@ function CategoriaAcordeon({
             <span className="text-lg font-semibold text-foreground">
               {grupo.categoriaTitulo}
             </span>
-            <span className="text-sm text-muted-foreground">
+            <span className="text-base text-muted-foreground">
               {grupo.modulos.length}{" "}
               {grupo.modulos.length === 1 ? "módulo" : "módulos"} ·{" "}
               {grupo.totalPreguntas}{" "}
@@ -226,7 +226,7 @@ function ModuloPreguntas({
         </h3>
         <Link
           href={rutaModulo(modulo.categoriaSlug, modulo.moduloSlug)}
-          className="shrink-0 text-sm font-medium text-accent hover:underline"
+          className="shrink-0 text-base font-medium text-accent hover:underline"
         >
           Ver módulo →
         </Link>
@@ -251,7 +251,7 @@ function PreguntaCard({
   return (
     <div className="flex flex-col gap-2 rounded-xl border border-border bg-background p-4">
       <p className="font-medium text-foreground">{item.pregunta}</p>
-      <p className="text-sm leading-6 text-muted-foreground">
+      <p className="prosa">
         {idioma === "es" ? item.respuestaEs : item.respuestaEn}
       </p>
       {item.codigo && (
@@ -260,18 +260,18 @@ function PreguntaCard({
         </pre>
       )}
       {item.tradeoffs && (
-        <p className="text-sm leading-6 text-muted-foreground">
+        <p className="prosa">
           <span className="font-medium text-foreground">Trade-offs: </span>
           {item.tradeoffs}
         </p>
       )}
       {item.repregunta && (
         <div className="flex flex-col gap-1 rounded-lg bg-accent-soft/50 p-3">
-          <p className="text-sm font-medium text-accent">
+          <p className="text-base font-medium text-accent">
             Repregunta: {item.repregunta}
           </p>
           {(item.respuestaRepreguntaEs || item.respuestaRepreguntaEn) && (
-            <p className="text-sm leading-6 text-muted-foreground">
+            <p className="prosa">
               {idioma === "es"
                 ? item.respuestaRepreguntaEs
                 : item.respuestaRepreguntaEn}

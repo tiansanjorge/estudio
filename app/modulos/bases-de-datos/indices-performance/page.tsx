@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un <strong className="text-foreground">índice</strong> (B-tree por
             defecto) guarda valores ordenados con punteros a las filas: buscar
@@ -133,7 +133,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Foreign keys sin índice.</strong>{" "}
             Postgres no los crea solo; los joins y los borrados en cascada se
@@ -147,7 +147,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Buscar un usuario por email en el login.</li>
           <li>Diagnosticar un endpoint lento con EXPLAIN ANALYZE.</li>
         </ul>
@@ -168,7 +168,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Índices compuestos</strong>:
             regla del prefijo izquierdo; columnas de igualdad primero, rango u
@@ -183,7 +183,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               <code>WHERE date(created_at) = &apos;2026-09-01&apos;</code>.
@@ -198,7 +198,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un índice (usuario_id, creado_el) para el historial de un usuario.</li>
           <li>Un índice sobre lower(email) para login sin distinguir mayúsculas.</li>
         </ul>
@@ -219,7 +219,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Índices <strong className="text-foreground">cubrientes</strong>{" "}
             (<code>INCLUDE</code>), <strong className="text-foreground">parciales</strong>{" "}
@@ -234,7 +234,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cursor sin desempate.</strong>{" "}
             Ordenar solo por fecha saltea filas con la misma fecha; sumar el id.
@@ -249,7 +249,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un índice parcial para la cola de pedidos pendientes.</li>
           <li>Un índice GIN sobre una columna JSONB de atributos.</li>
         </ul>
@@ -264,7 +264,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Esta consulta, la más frecuente de la app, tarda 800 ms en una tabla
             de 5 millones de filas. Diseñá el índice.

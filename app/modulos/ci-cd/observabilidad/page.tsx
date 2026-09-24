@@ -95,7 +95,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Monitoreo</strong> responde si
             funciona; <strong className="text-foreground">observabilidad</strong>,
@@ -114,7 +114,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Dashboards con promedios.</strong>{" "}
             La cola lenta, donde están los problemas, no aparece.
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un dashboard RED por endpoint de la API.</li>
           <li>Encontrar que la latencia subió solo para un cliente con muchos datos.</li>
         </ul>
@@ -148,7 +148,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">SLI, SLO y error budget</strong>:
             medir lo que siente el usuario, fijar un objetivo menor a 100% y usar
@@ -163,7 +163,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Promediar el p99 de varias instancias.</strong>{" "}
             El resultado no es el p99 del servicio; hay que sumar histogramas.
@@ -176,7 +176,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un SLO de 99,5% para el checkout y congelar features si se agota el budget.</li>
           <li>Un histograma de latencia con la ruta como plantilla.</li>
         </ul>
@@ -197,7 +197,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">OpenTelemetry</strong>: SDKs,
             protocolo y collector estándar; las trazas se propagan con el header{" "}
@@ -212,7 +212,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Alertar por CPU al 90%.</strong>{" "}
             A veces no le importa a nadie, y el equipo aprende a ignorar las alertas.
@@ -225,7 +225,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un collector que guarda el 100% de las trazas con error y el 5% del resto.</li>
           <li>Dos alertas de burn rate: una que despierta a alguien y otra que abre un ticket.</li>
         </ul>
@@ -240,7 +240,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El equipo recibe 40 alertas por semana (CPU alta, memoria alta, un
             pod reiniciado, disco al 80%) y casi todas se ignoran. La semana

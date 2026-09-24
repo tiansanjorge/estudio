@@ -117,7 +117,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El request encola un <strong className="text-foreground">job</strong>{" "}
             y responde; <strong className="text-foreground">workers</strong> en
@@ -139,7 +139,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Sin límite de intentos.</strong>{" "}
             Un job roto se reintenta para siempre.
@@ -152,7 +152,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Emails transaccionales con 5 intentos y backoff exponencial.</li>
           <li>Un job programado que limpia sesiones vencidas cada noche.</li>
         </ul>
@@ -173,7 +173,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Entrega <strong className="text-foreground">al menos una vez</strong>:
             los jobs tienen que ser idempotentes (jobId determinístico, registrar
@@ -189,7 +189,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Newsletter y emails transaccionales en la misma cola.</strong>{" "}
             El de &quot;restablecer contraseña&quot; espera detrás de 100.000.
@@ -202,7 +202,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li><code>limiter: {"{ max: 10, duration: 1000 }"}</code> en la cola de emails.</li>
           <li>Workers de PDFs separados, con concurrencia baja.</li>
         </ul>
@@ -223,7 +223,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Encolar y confirmar</strong> son
             dos escrituras: outbox en la misma transacción, o una cola sobre la
@@ -239,7 +239,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Encolar dentro de una transacción que después hace rollback.</strong>{" "}
             El worker procesa algo que no existe.
@@ -252,7 +252,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Autoescalar workers según la profundidad de la cola.</li>
           <li>Bull Board para inspeccionar y reprocesar fallidos.</li>
         </ul>
@@ -267,7 +267,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>¿Qué problemas tiene este flujo de alta de pedido?</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`await db.$transaction(async (tx) => {

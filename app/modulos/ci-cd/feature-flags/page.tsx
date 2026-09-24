@@ -99,7 +99,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un <strong className="text-foreground">feature flag</strong> es un
             condicional decidido en configuración, en runtime. Separa el deploy
@@ -118,7 +118,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un default peligroso.</strong>{" "}
             Si el servicio de flags no responde, se activa lo que no estaba listo.
@@ -131,7 +131,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Lanzar un checkout nuevo al 5%, 25% y 100% de los usuarios.</li>
           <li>Un kill switch para apagar una integración con un proveedor caído.</li>
         </ul>
@@ -152,7 +152,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Rollout</strong>: hash de la
             flag y el usuario, estable entre requests. Evaluar en el servidor y
@@ -167,7 +167,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Evaluar distinto en server y client.</strong>{" "}
             El HTML del servidor no coincide con el render del cliente.
@@ -180,7 +180,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Beta de una funcionalidad para clientes del plan pro.</li>
           <li>Un ticket de limpieza creado junto con cada flag de release.</li>
         </ul>
@@ -201,7 +201,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Distribuido</strong>: evaluación
             local con defaults seguros, un solo punto de decisión para flujos que
@@ -217,7 +217,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cachear una respuesta que depende de una flag.</strong>{" "}
             Un usuario recibe la variante de otro.
@@ -230,7 +230,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un experimento de precios con guardrails de reembolsos y errores.</li>
           <li>Propagar la variante en un header entre la API y los workers.</li>
         </ul>
@@ -245,7 +245,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un e-commerce con Next.js va a reemplazar el motor de cálculo de
             envíos. El nuevo guarda un campo <code>zona_envio</code> en cada

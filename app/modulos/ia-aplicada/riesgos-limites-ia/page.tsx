@@ -99,7 +99,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La IA rinde en patrones claros y verificación rápida; menos en
             arquitectura, requisitos ambiguos, comportamiento en producción y
@@ -118,7 +118,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Delegar por dificultad y no por riesgo.</strong>{" "}
             Una migración &quot;simple&quot; de producción es irreversible.
@@ -131,7 +131,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Delegar tests y componentes que siguen patrones existentes.</li>
           <li>Usar la IA como sparring para una decisión de arquitectura, sin delegar la decisión.</li>
         </ul>
@@ -152,7 +152,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Privacidad y propiedad</strong>:
             lo que entra al contexto va al proveedor; herramientas aprobadas con
@@ -168,7 +168,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un .env dentro de lo que el asistente puede leer.</strong>{" "}
             Los secretos terminan en el contexto sin que nadie lo decida.
@@ -181,7 +181,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una política del equipo sobre qué datos se pueden compartir con asistentes.</li>
           <li>ADRs escritos por personas para las decisiones de fondo.</li>
         </ul>
@@ -202,7 +202,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Agentes</strong>: mínimo
             privilegio, sandbox, aprobación para lo irreversible, allowlists,
@@ -217,7 +217,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Un agente con acceso a producción &quot;para que sea más útil&quot;.</strong>{" "}
             Un malentendido se convierte en un incidente.
@@ -230,7 +230,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un agente en un contenedor, sin red externa y con aprobación para cada push.</li>
           <li>Tipos estrictos y tests como red de seguridad para código humano y generado.</li>
         </ul>
@@ -245,7 +245,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Tu equipo quiere dejar un agente de IA trabajando de noche: toma
             issues etiquetados como &quot;fáciles&quot;, los implementa, corre los

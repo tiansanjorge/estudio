@@ -101,7 +101,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una <strong className="text-foreground">transacción</strong> agrupa
             varias operaciones en una unidad: <code>BEGIN</code>, las sentencias,
@@ -122,7 +122,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Escrituras relacionadas sin transacción.</strong>{" "}
             Si falla la segunda, queda un pedido sin ítems o un débito sin crédito.
@@ -135,7 +135,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Crear un pedido con sus ítems y descontar el stock.</li>
           <li>Una transferencia entre dos cuentas.</li>
         </ul>
@@ -156,7 +156,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Niveles de aislamiento</strong>:
             READ COMMITTED (default en Postgres), REPEATABLE READ y SERIALIZABLE.
@@ -172,7 +172,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Leer, calcular en la app y escribir.</strong>{" "}
             En READ COMMITTED, dos requests simultáneas pisan el resultado sin error.
@@ -185,7 +185,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Descontar stock con <code>stock = stock - 1 WHERE stock &gt; 0</code>.</li>
           <li>Bloqueo optimista con <code>version</code> en un formulario de edición largo.</li>
         </ul>
@@ -206,7 +206,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">MVCC</strong>: cada UPDATE crea
             una versión nueva de la fila y cada transacción lee desde una
@@ -223,7 +223,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">SERIALIZABLE sin reintentos.</strong>{" "}
             Los 40001 llegan al usuario como errores 500.
@@ -236,7 +236,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>SERIALIZABLE para reglas que abarcan varias filas, como reservas sin superposición.</li>
           <li><code>idle_in_transaction_session_timeout</code> para cortar transacciones olvidadas.</li>
         </ul>
@@ -251,7 +251,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un sistema de turnos no debe permitir dos reservas superpuestas en la
             misma sala. Este código corre en READ COMMITTED y, bajo carga, aparecen

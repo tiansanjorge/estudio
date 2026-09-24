@@ -119,7 +119,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Los <strong className="text-foreground">headers</strong> son pares
             clave-valor que viajan junto a cada petición y respuesta HTTP,
@@ -152,7 +152,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           Combiná método y permiso del servidor para ver si el navegador
           dispara preflight y si la respuesta termina permitida o
           bloqueada.
@@ -161,7 +161,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Pensar que CORS protege al servidor.
@@ -187,7 +187,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             Configurar un backend para que acepte peticiones desde el
             dominio del frontend en un entorno con dominios distintos.
@@ -213,7 +213,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Tu frontend en <code>https://app.miempresa.com</code> hace un{" "}
             <code>fetch</code> con método <code>PUT</code> y{" "}
@@ -249,7 +249,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Con <strong className="text-foreground">credenciales</strong>{" "}
             (cookies o auth del navegador), el cliente usa{" "}
@@ -275,7 +275,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Reflejar el origen sin <code>Vary: Origin</code>.</strong>{" "}
             Un CDN puede servirle a un origen la respuesta de otro.
@@ -292,7 +292,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Configurar CORS de una API para un frontend en otro dominio con sesión por cookie.</li>
           <li>Leer un header <code>X-Total-Count</code> de paginación desde el cliente.</li>
         </ul>
@@ -313,7 +313,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La configuración de CORS más peligrosa es{" "}
             <strong className="text-foreground">
@@ -336,7 +336,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">CSP con <code>unsafe-inline</code> en scripts.</strong>{" "}
             Anula buena parte de la protección contra XSS.
@@ -349,7 +349,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Auditar la configuración de CORS de una API en un pentest.</li>
           <li>Desplegar una CSP con nonce por request desde el servidor.</li>
         </ul>
@@ -364,7 +364,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Esta configuración &quot;arregló&quot; un error de CORS en
             producción. ¿Qué riesgo introdujo y cómo la corregís?

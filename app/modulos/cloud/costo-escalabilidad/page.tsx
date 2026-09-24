@@ -95,7 +95,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             La nube cobra por <strong className="text-foreground">cómputo</strong>,{" "}
             <strong className="text-foreground">almacenamiento</strong> y{" "}
@@ -115,7 +115,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Estimar solo el cómputo.</strong>{" "}
             La red, los logs y el almacenamiento aparecen después en la factura.
@@ -128,7 +128,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Estimar el costo de un MVP con la calculadora del proveedor.</li>
           <li>Decidir si un servicio con tráfico constante sale de serverless.</li>
         </ul>
@@ -149,7 +149,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Descuentos</strong>: compromiso
             (reservas, savings plans) para la base estable, on-demand para lo
@@ -164,7 +164,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Spot para la base de datos.</strong>{" "}
             Una interrupción con minutos de aviso es una caída.
@@ -177,7 +177,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Runners de CI en instancias spot.</li>
           <li>Un dashboard de costo por cliente activo, por equipo.</li>
         </ul>
@@ -198,7 +198,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Costos ocultos</strong>:
             transferencia entre zonas y a internet, observabilidad, recursos
@@ -214,7 +214,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Loguear cada request con el payload completo.</strong>{" "}
             La observabilidad termina costando más que la aplicación.
@@ -227,7 +227,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Reglas de ciclo de vida para logs y backups con más de 90 días.</li>
           <li>Rightsizing trimestral de las instancias y bases más caras.</li>
         </ul>
@@ -242,7 +242,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un SaaS factura 40.000 dólares por mes y su factura de AWS pasó de
             4.000 a 11.000 en seis meses, mientras los clientes crecieron un 20%.

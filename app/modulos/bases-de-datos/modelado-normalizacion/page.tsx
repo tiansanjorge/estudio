@@ -109,7 +109,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Normalizar</strong> es separar
             entidades en tablas y relacionarlas con foreign keys, para que cada
@@ -131,7 +131,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Listas separadas por comas en una columna.</strong>{" "}
             Imposibles de consultar, indexar o relacionar.
@@ -144,7 +144,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Modelar clientes, productos, pedidos e ítems de un e-commerce.</li>
           <li>Pasar a tablas un Excel que el negocio usaba como base de datos.</li>
         </ul>
@@ -165,7 +165,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Desnormalizar</strong> de forma
             deliberada: contadores, totales, vistas materializadas o fotos
@@ -182,7 +182,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">El email como clave primaria.</strong>{" "}
             Cuando el usuario lo cambia, hay que actualizar cada referencia.
@@ -195,7 +195,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un contador de comentarios mantenido por trigger.</li>
           <li>Ids internos bigint y un id público para las URLs.</li>
         </ul>
@@ -216,7 +216,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Formas normales</strong>: 1FN
             (valores atómicos), 2FN (nada depende de parte de la clave), 3FN
@@ -233,7 +233,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Sobrescribir el precio del producto sin historial.</strong>{" "}
             Los reportes de meses anteriores cambian solos.
@@ -246,7 +246,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una tabla de precios con vigencia para listas de precios por fecha.</li>
           <li>Auditoría de cambios en datos sensibles con triggers.</li>
         </ul>
@@ -261,7 +261,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>Normalizá esta tabla de una clínica.</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`turnos (

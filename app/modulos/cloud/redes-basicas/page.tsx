@@ -91,7 +91,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una <strong className="text-foreground">VPC</strong> se divide en
             subredes públicas (con ruta a internet) y privadas (sin ella). El
@@ -112,7 +112,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Base de datos en una subred pública.</strong>{" "}
             La única protección que queda es la contraseña.
@@ -125,7 +125,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una VPC con subredes públicas y privadas en dos zonas.</li>
           <li>CloudFront delante del frontend y del balanceador de la API.</li>
         </ul>
@@ -146,7 +146,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Security groups</strong>{" "}
             (stateful, por recurso, solo permitir, pueden referenciarse entre sí)
@@ -162,7 +162,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Health checks que dependen de la base.</strong>{" "}
             Un problema momentáneo de la base saca a todas las instancias a la vez.
@@ -175,7 +175,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un ALB que rutea <code>/api</code> y <code>/admin</code> a servicios distintos.</li>
           <li>Un NLB para un servicio TCP que un cliente permite por IP.</li>
         </ul>
@@ -196,7 +196,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">CDN</strong>: clave de caché
             correcta, nada privado en caché compartida, assets con hash en vez de
@@ -211,7 +211,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cachear en el CDN una página con datos del usuario.</strong>{" "}
             El siguiente visitante ve los datos del anterior.
@@ -224,7 +224,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un bucket S3 que solo puede leer CloudFront.</li>
           <li>Un endpoint de interfaz para leer Secrets Manager sin pasar por el NAT.</li>
         </ul>
@@ -239,7 +239,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Después de migrar la API a subredes privadas, pasan tres cosas: los
             webhooks a un proveedor de pagos fallan por timeout, la factura de

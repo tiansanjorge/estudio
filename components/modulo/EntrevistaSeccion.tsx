@@ -12,7 +12,7 @@ export function EntrevistaSeccion({ preguntas }: EntrevistaSeccionProps) {
 
   if (preguntas.length === 0) {
     return (
-      <p className="text-sm text-muted-foreground">
+      <p className="text-base text-muted-foreground">
         Todavía no hay preguntas de entrevista para este nivel.
       </p>
     );
@@ -54,7 +54,7 @@ export function EntrevistaSeccion({ preguntas }: EntrevistaSeccionProps) {
             className="flex flex-col gap-2 rounded-xl border border-border p-4"
           >
             <p className="font-medium text-foreground">{item.pregunta}</p>
-            <p className="text-sm leading-6 text-muted-foreground">
+            <p className="prosa">
               {idioma === "es" ? item.respuestaEs : item.respuestaEn}
             </p>
             {item.codigo && (
@@ -63,7 +63,7 @@ export function EntrevistaSeccion({ preguntas }: EntrevistaSeccionProps) {
               </pre>
             )}
             {item.tradeoffs && (
-              <p className="text-sm leading-6 text-muted-foreground">
+              <p className="prosa">
                 <span className="font-medium text-foreground">
                   Trade-offs:{" "}
                 </span>
@@ -72,11 +72,11 @@ export function EntrevistaSeccion({ preguntas }: EntrevistaSeccionProps) {
             )}
             {item.repregunta && (
               <div className="flex flex-col gap-1 rounded-lg bg-accent-soft/50 p-3">
-                <p className="text-sm font-medium text-accent">
+                <p className="text-base font-medium text-accent">
                   Repregunta: {item.repregunta}
                 </p>
                 {(item.respuestaRepreguntaEs || item.respuestaRepreguntaEn) && (
-                  <p className="text-sm leading-6 text-muted-foreground">
+                  <p className="prosa">
                     {idioma === "es"
                       ? item.respuestaRepreguntaEs
                       : item.respuestaRepreguntaEn}

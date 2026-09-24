@@ -95,7 +95,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un <strong className="text-foreground">ORM</strong> traduce entre
             tablas y objetos. Prisma parte de un <code>schema.prisma</code> y
@@ -114,7 +114,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Queries adentro de un loop.</strong>{" "}
             Con 5 filas en desarrollo no se nota; con 500 en producción, sí.
@@ -127,7 +127,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>CRUD tipado de punta a punta en una API con TypeScript.</li>
           <li>Listar pedidos con su cliente usando <code>include</code>.</li>
         </ul>
@@ -148,7 +148,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un espectro de abstracción:{" "}
             <strong className="text-foreground">Prisma</strong> (schema propio,
@@ -164,7 +164,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>$queryRawUnsafe</code> con input del usuario.</strong>{" "}
             Es inyección SQL; los nombres de columna dinámicos van contra una lista blanca.
@@ -177,7 +177,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un ranking de clientes con <code>$queryRaw</code> y GROUP BY.</li>
           <li>Elegir Drizzle en un proyecto serverless con muchas consultas complejas.</li>
         </ul>
@@ -198,7 +198,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Conexiones</strong>: cada
             PrismaClient tiene su pool y Postgres admite pocas conexiones. En
@@ -215,7 +215,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Migrar contra la URL del pooler.</strong>{" "}
             El modo transacción no mantiene estado de sesión.
@@ -228,7 +228,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una app Next.js en Vercel contra el endpoint pooled de Neon.</li>
           <li>Importar un CSV de 10.000 filas con <code>createMany</code> por lotes.</li>
         </ul>
@@ -243,7 +243,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El endpoint del feed tarda 1,2 s. Muestra 20 posts con el nombre del
             autor y la cantidad de comentarios. ¿Qué problemas tiene y cómo lo

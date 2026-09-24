@@ -117,7 +117,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">TDD</strong> invierte el orden:
             primero el test, después el código, en ciclos de tres fases.{" "}
@@ -139,7 +139,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Saltarse el refactor.</strong>{" "}
             Sin esa fase, TDD produce código que pasa los tests pero se degrada.
@@ -153,7 +153,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Corregir un bug: primero el test que lo reproduce.</li>
           <li>Implementar reglas de negocio con muchos casos.</li>
         </ul>
@@ -174,7 +174,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Fake it till you make it</strong>{" "}
             y <strong className="text-foreground">triangulación</strong>:
@@ -191,7 +191,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Aplicar TDD como dogma en un spike.</strong>{" "}
             Se tiran los tests junto con el prototipo.
@@ -204,7 +204,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un parser de CSV con formatos variados.</li>
           <li>Las reglas de descuento de un checkout.</li>
         </ul>
@@ -225,7 +225,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Hay dos escuelas: <strong className="text-foreground">inside-out</strong>{" "}
             (clásica, desde el dominio, pocos mocks) y{" "}
@@ -243,7 +243,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;Arreglar&quot; bugs mientras se caracteriza.</strong>{" "}
             Primero se fija el comportamiento actual; los cambios van después y
@@ -257,7 +257,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Approval tests sobre un generador de PDFs heredado.</li>
           <li>Un test de aceptación por endpoint que guía el desarrollo de la feature.</li>
         </ul>
@@ -272,7 +272,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Tenés que agregar un descuento por cantidad a esta función de 300
             líneas, sin tests, que además consulta la base y manda un mail.

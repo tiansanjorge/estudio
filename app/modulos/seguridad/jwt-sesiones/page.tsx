@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Con <strong className="text-foreground">sesiones</strong>, el
             servidor guarda el estado y el navegador solo tiene un id opaco en
@@ -136,7 +136,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Datos sensibles en el payload.</strong>{" "}
             Se leen pegando el token en cualquier decodificador.
@@ -149,7 +149,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una app web con sesiones en Redis y cookie HttpOnly.</li>
           <li>JWT de vida corta para autenticar llamadas entre servicios.</li>
         </ul>
@@ -170,7 +170,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El token o el id de sesión va en una cookie{" "}
             <strong className="text-foreground">HttpOnly, Secure, SameSite</strong>:
@@ -188,7 +188,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Refresh token en localStorage.</strong>{" "}
             Es la credencial de vida larga: es lo último que tiene que quedar expuesto.
@@ -201,7 +201,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Access token de 15 minutos y refresh de 7 días en cookies separadas.</li>
           <li>Un guard de NestJS que extrae el JWT de la cookie en vez del header.</li>
         </ul>
@@ -222,7 +222,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Las vulnerabilidades de JWT vienen de verificar mal:{" "}
             <code>alg: none</code>, confusión RS256/HS256, secretos débiles, no
@@ -241,7 +241,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Confiar en el rol del token para decisiones críticas.</strong>{" "}
             Pudo cambiar después de emitido.
@@ -254,7 +254,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Verificar tokens de un proveedor de identidad con su JWKS.</li>
           <li>Auditar la configuración de <code>jwtVerify</code> de un servicio.</li>
         </ul>
@@ -269,7 +269,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>¿Qué está mal en este manejo de tokens?</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`// login

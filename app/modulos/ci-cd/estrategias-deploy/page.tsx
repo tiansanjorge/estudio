@@ -103,7 +103,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Recreate</strong> (con downtime),{" "}
             <strong className="text-foreground">rolling</strong> (de a tandas),{" "}
@@ -123,7 +123,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Rollback que reconstruye.</strong>{" "}
             Más lento y puede producir un artefacto distinto al que funcionaba.
@@ -136,7 +136,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Rolling en Kubernetes para una API sin estado.</li>
           <li>Rollback instantáneo en Vercel a un deploy anterior.</li>
         </ul>
@@ -157,7 +157,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Blue-green vs canary</strong>:
             rollback instantáneo y pruebas previas contra radio de impacto
@@ -172,7 +172,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Readiness igual a liveness.</strong>{" "}
             La instancia recibe tráfico antes de poder atenderlo.
@@ -185,7 +185,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Canary automático con Argo Rollouts o Flagger según la tasa de errores.</li>
           <li>Blue-green para un cambio grande de infraestructura.</li>
         </ul>
@@ -206,7 +206,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Convivencia de versiones</strong>:
             base, colas, caché, sesiones, conexiones largas y clientes viejos
@@ -222,7 +222,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cambiar la forma de un objeto cacheado.</strong>{" "}
             v1 lee lo que escribió v2 y falla; versionar las claves.
@@ -235,7 +235,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Shadow traffic para validar una reescritura del motor de precios.</li>
           <li>Un canary interno: primero los empleados, después todos.</li>
         </ul>
@@ -250,7 +250,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un checkout procesa pagos. El equipo va a desplegar una versión que
             cambia el formato de los eventos <code>pago.confirmado</code> que

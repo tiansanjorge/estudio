@@ -113,7 +113,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">XSS</strong>: el JavaScript del
             atacante se ejecuta en tu página. React escapa todo lo que se
@@ -137,7 +137,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>href</code> construido con datos del usuario.</strong>{" "}
             Un <code>javascript:</code> ejecuta código al hacer click, incluso en React.
@@ -150,7 +150,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Revisar cada uso de <code>dangerouslySetInnerHTML</code> en el código.</li>
           <li>Cookies de sesión con <code>SameSite=Lax</code> por defecto.</li>
         </ul>
@@ -171,7 +171,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Contra CSRF, en capas: cookie <code>SameSite=Lax</code> o{" "}
             <code>Strict</code>, GETs que nunca cambian estado, y para lo
@@ -188,7 +188,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Sanitizar con regex.</strong>{" "}
             El HTML tiene demasiados casos borde.
@@ -201,7 +201,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un componente <code>HtmlSeguro</code> que centraliza la sanitización.</li>
           <li>Verificar <code>Sec-Fetch-Site</code> en endpoints de pagos.</li>
         </ul>
@@ -222,7 +222,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una <strong className="text-foreground">CSP</strong> con{" "}
             <code>script-src</code> basada en nonces y{" "}
@@ -239,7 +239,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">CSP con <code>&apos;unsafe-inline&apos;</code>.</strong>{" "}
             Tiene el header, pero no la protección.
@@ -252,7 +252,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>CSP con nonce generado en el Proxy de Next.js.</li>
           <li>Desplegar la CSP en <code>Report-Only</code> y revisar los reportes.</li>
         </ul>
@@ -267,7 +267,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>Este perfil público tiene dos vulnerabilidades. ¿Cuáles?</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`function Perfil({ usuario }) {

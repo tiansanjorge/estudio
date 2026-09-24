@@ -119,7 +119,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">REST</strong> modela la API
             como recursos con URLs propias (<code>/usuarios/42</code>,{" "}
@@ -153,7 +153,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Interactivo" titulo="Playground">
-        <p className="mb-4 text-sm text-muted-foreground">
+        <p className="mb-4 text-base text-muted-foreground">
           Conectá en modo polling o WebSocket y mirá la diferencia en la
           actividad de red durante unos segundos.
         </p>
@@ -161,7 +161,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">
               Usar GraphQL para todo &ldquo;porque es más moderno&rdquo;.
@@ -189,7 +189,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             REST: la mayoría de los CRUDs y catálogos, donde el cacheo por
             URL y la simplicidad importan más que la flexibilidad.
@@ -215,7 +215,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Estás armando un dashboard de e-commerce con: (1) una tabla de
             productos con muchos filtros y columnas que cambian según el
@@ -249,7 +249,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             En GraphQL cada campo tiene su resolver, y eso genera el{" "}
             <strong className="text-foreground">problema N+1</strong>: pedir 50
@@ -271,7 +271,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Resolvers que consultan la base uno por uno.</strong>{" "}
             El N+1 aparece recién con datos reales.
@@ -288,7 +288,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Streaming de la respuesta de un LLM con SSE.</li>
           <li>Un BFF que arma la respuesta exacta de cada pantalla sobre varios servicios REST.</li>
         </ul>
@@ -309,7 +309,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una API GraphQL pública necesita límites que REST no: profundidad,
             costo por query, paginación obligatoria y rate limiting por costo.
@@ -328,7 +328,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Introspección abierta en una API privada.</strong>{" "}
             Expone el schema completo.
@@ -341,7 +341,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un chat con varias instancias sincronizadas por Redis pub/sub.</li>
           <li>Una API GraphQL con límite de complejidad por plan de cliente.</li>
         </ul>
@@ -356,7 +356,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Esta query es válida contra tu API GraphQL pública. ¿Por qué es un
             problema y qué defensas pondrías?

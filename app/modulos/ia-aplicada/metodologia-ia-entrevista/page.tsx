@@ -103,7 +103,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una buena respuesta sobre tu uso de IA muestra{" "}
             <strong className="text-foreground">criterio, proceso,
@@ -122,7 +122,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Presumir porcentajes de código generado.</strong>{" "}
             Suena a falta de criterio, no a productividad.
@@ -135,7 +135,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Preparar una respuesta de dos minutos con un caso propio.</li>
           <li>Tener claro qué tareas delegás y cuáles no, y por qué.</li>
         </ul>
@@ -156,7 +156,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Historias</strong>: una vez que
             la IA se equivocó, cómo lo detectaste y qué cambiaste. Muestra que
@@ -171,7 +171,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Usar IA en un proceso que la prohíbe.</strong>{" "}
             Se nota en la entrevista de seguimiento y rompe la confianza.
@@ -184,7 +184,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Una sección &quot;Uso de IA&quot; en el README de un take-home.</li>
           <li>Una historia preparada de un error detectado por tu proceso.</li>
         </ul>
@@ -205,7 +205,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Liderazgo</strong>: introducir
             la IA en un equipo con objetivo, bases de seguridad, un piloto y
@@ -220,7 +220,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;Me hace diez veces más productivo&quot;.</strong>{" "}
             Sin medición, suena a exageración.
@@ -233,7 +233,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un piloto de un mes con métricas antes y después.</li>
           <li>Una guía de uso de IA escrita por el equipo y versionada en el repo.</li>
         </ul>
@@ -248,7 +248,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Escribí tu propia respuesta de dos minutos a &quot;¿cómo usás la IA
             para programar?&quot;, con un caso real tuyo. Después revisala con

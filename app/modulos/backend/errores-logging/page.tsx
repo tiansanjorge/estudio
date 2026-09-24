@@ -109,7 +109,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Errores <strong className="text-foreground">esperados</strong>{" "}
             (no encontrado, sin stock, proveedor caído): tipados, con un código
@@ -131,7 +131,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>catch (e) {"{}"}</code> vacío.</strong>{" "}
             El error desaparece y el bug queda escondido.
@@ -144,7 +144,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un error middleware que traduce errores de dominio a Problem Details.</li>
           <li>pino con un child logger por request.</li>
         </ul>
@@ -165,7 +165,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Nunca en los logs: contraseñas, tokens, headers de autorización,
             tarjetas ni datos personales de más. Redacción automática en el
@@ -180,7 +180,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Loguear el error de una librería HTTP completo.</strong>{" "}
             Muchas incluyen los headers del request, con el token.
@@ -193,7 +193,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Configurar <code>redact</code> en el logger del proyecto.</li>
           <li>Activar <code>no-floating-promises</code> en ESLint.</li>
         </ul>
@@ -214,7 +214,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Tracing distribuido</strong>:
             un id de traza propagado con <code>traceparent</code>, spans por
@@ -231,7 +231,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Cada servicio con su propio id de request.</strong>{" "}
             No se pueden unir los logs de una misma operación.
@@ -244,7 +244,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>OpenTelemetry con auto-instrumentación y exportación a Grafana Tempo.</li>
           <li>Un SLO de 99,9% para el checkout con alertas por burn rate.</li>
         </ul>
@@ -259,7 +259,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>¿Qué problemas de manejo de errores y logging tiene este código?</p>
           <pre className="overflow-x-auto rounded-xl border border-border bg-background p-4 font-mono text-xs text-foreground">
 {`app.post("/login", async (req, res) => {

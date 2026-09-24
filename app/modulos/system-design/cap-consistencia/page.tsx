@@ -91,7 +91,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Las particiones pasan, así que la elección real es qué hacer durante
             una: <strong className="text-foreground">CP</strong> (el lado que no
@@ -109,7 +109,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;Elegí dos de tres&quot;.</strong>{" "}
             La tolerancia a particiones no es opcional en una red real.
@@ -122,7 +122,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Reservas de asientos con consistencia fuerte.</li>
           <li>Un carrito que acepta cambios aunque una réplica esté aislada.</li>
         </ul>
@@ -143,7 +143,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">PACELC</strong>: sin partición,
             la elección es entre latencia y consistencia. Los quórums (R + W &gt;
@@ -158,7 +158,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Consistencia fuerte en todo &quot;por las dudas&quot;.</strong>{" "}
             Se paga latencia en cada escritura, también en datos que no la necesitan.
@@ -171,7 +171,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Lecturas con quórum para datos críticos y con R = 1 para el resto.</li>
           <li>Comentarios con consistencia causal: nadie ve la respuesta antes que el comentario.</li>
         </ul>
@@ -192,7 +192,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Conflictos en AP</strong>:
             last-write-wins (pierde escrituras), relojes vectoriales (detectan
@@ -206,7 +206,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Clusters de consenso con número par de nodos.</strong>{" "}
             Cuatro nodos toleran las mismas fallas que tres.
@@ -219,7 +219,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Un editor colaborativo basado en CRDTs.</li>
           <li>etcd para la configuración y la elección de líder de un sistema.</li>
         </ul>
@@ -234,7 +234,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una app de reservas de canchas funciona en dos regiones para que los
             usuarios de cada país tengan baja latencia. Un corte entre regiones

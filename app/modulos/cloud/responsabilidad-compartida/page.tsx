@@ -99,7 +99,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             El proveedor se ocupa de la seguridad <strong className="text-foreground">de</strong>{" "}
             la nube (datacenters, hardware, virtualización); el cliente, de la
@@ -119,7 +119,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">&quot;Está en la nube, entonces es seguro&quot;.</strong>{" "}
             La infraestructura lo es; tu configuración, no necesariamente.
@@ -132,7 +132,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Elegir Lambda para no tener que parchear sistemas operativos.</li>
           <li>Revisar qué capas quedan de tu lado antes de migrar a un servicio gestionado.</li>
         </ul>
@@ -153,7 +153,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Incidentes del cliente</strong>:
             configuración expuesta, IAM demasiado amplio, claves filtradas. Se
@@ -169,7 +169,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Backups en la misma cuenta y con los mismos permisos.</strong>{" "}
             Quien borra la base puede borrar también sus snapshots.
@@ -182,7 +182,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Políticas de organización que prohíben desactivar el cifrado.</li>
           <li>Copias de backups en una cuenta separada con object lock.</li>
         </ul>
@@ -203,7 +203,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Compliance</strong>: se heredan
             los controles del proveedor, no la certificación. Residencia de
@@ -218,7 +218,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Backups replicados a otra región sin mirar la regulación.</strong>{" "}
             Los datos pueden terminar fuera de la jurisdicción permitida.
@@ -231,7 +231,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Presentar los reportes de AWS Artifact en una auditoría SOC 2.</li>
           <li>CloudTrail enviado a una cuenta de auditoría que el equipo no puede modificar.</li>
         </ul>
@@ -246,7 +246,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Una startup de salud corre en AWS con una sola cuenta: la API en
             EC2 con Node 16, un Postgres en RDS con acceso público &quot;para

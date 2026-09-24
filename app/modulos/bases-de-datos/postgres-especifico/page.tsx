@@ -103,7 +103,7 @@ function NivelUno() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Los <strong className="text-foreground">constraints</strong> (NOT
             NULL, UNIQUE, FOREIGN KEY, CHECK) son reglas que la base garantiza
@@ -123,7 +123,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">Unicidad solo en la aplicación.</strong>{" "}
             Dos requests simultáneas pasan la verificación y las dos insertan.
@@ -136,7 +136,7 @@ function NivelUno() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Responder 409 al capturar el error 23505 de un UNIQUE.</li>
           <li>Guardar el payload crudo de un webhook en JSONB.</li>
         </ul>
@@ -157,7 +157,7 @@ function NivelDos() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Tipos</strong>:{" "}
             <code>timestamptz</code> para instantes, <code>numeric</code> para
@@ -173,7 +173,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground"><code>timestamp</code> sin zona.</strong>{" "}
             Guarda una hora de reloj sin contexto y termina en horas corridas.
@@ -186,7 +186,7 @@ function NivelDos() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Filtrar productos por atributos variables con <code>@&gt;</code> y un GIN.</li>
           <li>UUID v7 como id público de recursos expuestos en la API.</li>
         </ul>
@@ -207,7 +207,7 @@ function NivelTres() {
   return (
     <>
       <Seccion eyebrow="Concepto" titulo="Explicación">
-        <div className="flex flex-col gap-4 text-sm leading-7 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             <strong className="text-foreground">Constraints avanzados</strong>:
             unique parcial, EXCLUDE para superposiciones, CHECK entre columnas,
@@ -222,7 +222,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Cuidado" titulo="Errores comunes">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>
             <strong className="text-foreground">ON DELETE CASCADE en todo.</strong>{" "}
             Borrar un cliente se lleva sus facturas; para lo que tiene valor propio, RESTRICT.
@@ -235,7 +235,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Aplicación" titulo="Casos de uso">
-        <ul className="flex flex-col gap-3 text-sm leading-6 text-muted-foreground">
+        <ul className="flex flex-col gap-3 prosa">
           <li>Turnos sin superposición con EXCLUDE.</li>
           <li>Una cola de emails con SKIP LOCKED, encolada en la misma transacción que el pedido.</li>
         </ul>
@@ -250,7 +250,7 @@ function NivelTres() {
       </Seccion>
 
       <Seccion eyebrow="Práctica" titulo="Desafío">
-        <div className="flex flex-col gap-4 text-sm leading-6 text-muted-foreground">
+        <div className="flex flex-col gap-4 prosa">
           <p>
             Un SaaS multi-tenant tiene esta tabla. Expresá en la base estas
             reglas: el SKU es único por organización (no global), solo entre
