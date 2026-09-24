@@ -124,6 +124,7 @@ import { entrevistaEstimacion } from "./system-design/estimacion-entrevista";
 import { entrevistaEjerciciosGuiados } from "./system-design/ejercicios-guiados-entrevista";
 import { entrevistaPromptEngineering } from "./ia-aplicada/prompt-engineering-entrevista";
 import { entrevistaEvaluacionOutputIa } from "./ia-aplicada/evaluacion-output-ia-entrevista";
+import { entrevistaMcpServers } from "./ia-aplicada/mcp-servers-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -1012,5 +1013,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "evaluacion-output-ia",
     moduloTitulo: "Evaluación de output de IA / code review de IA",
     preguntas: entrevistaEvaluacionOutputIa,
+  },
+  {
+    categoriaSlug: "ia-aplicada",
+    categoriaTitulo: "IA aplicada al desarrollo",
+    moduloSlug: "mcp-servers",
+    moduloTitulo: "MCP servers — qué son y para qué sirven",
+    preguntas: entrevistaMcpServers,
   },
 ];
