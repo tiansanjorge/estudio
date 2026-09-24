@@ -125,6 +125,7 @@ import { entrevistaEjerciciosGuiados } from "./system-design/ejercicios-guiados-
 import { entrevistaPromptEngineering } from "./ia-aplicada/prompt-engineering-entrevista";
 import { entrevistaEvaluacionOutputIa } from "./ia-aplicada/evaluacion-output-ia-entrevista";
 import { entrevistaMcpServers } from "./ia-aplicada/mcp-servers-entrevista";
+import { entrevistaRiesgosLimitesIa } from "./ia-aplicada/riesgos-limites-ia-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -1020,5 +1021,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "mcp-servers",
     moduloTitulo: "MCP servers — qué son y para qué sirven",
     preguntas: entrevistaMcpServers,
+  },
+  {
+    categoriaSlug: "ia-aplicada",
+    categoriaTitulo: "IA aplicada al desarrollo",
+    moduloSlug: "riesgos-limites-ia",
+    moduloTitulo: "Riesgos y límites del desarrollo asistido por IA",
+    preguntas: entrevistaRiesgosLimitesIa,
   },
 ];

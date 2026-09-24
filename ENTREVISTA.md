@@ -199,7 +199,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Prompt engineering aplicado a desarrollo (Nivel 1/2/3 + Entrevista)
 - ✅ Evaluación de output de IA / code review de IA (Nivel 1/2/3 + Entrevista)
 - ✅ MCP servers — qué son y para qué sirven (Nivel 1/2/3 + Entrevista)
-- ☐ Riesgos y límites del desarrollo 100% asistido por IA
+- ✅ Riesgos y límites del desarrollo 100% asistido por IA (Nivel 1/2/3 + Entrevista)
 - ☐ Cómo comunicar en entrevista tu metodología de trabajo con IA
 
 ## Vista de repaso
