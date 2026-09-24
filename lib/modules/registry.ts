@@ -195,7 +195,18 @@ export const categorias: Categoria[] = [
       { slug: "escalabilidad-db", titulo: "Réplicas y sharding", estado: "disponible" },
     ],
   },
-  { slug: "devops", titulo: "DevOps", modulos: [] },
+  {
+    slug: "ci-cd",
+    titulo: "CI/CD",
+    modulos: [
+      { slug: "pipelines-github-actions", titulo: "Pipelines (GitHub Actions)", estado: "disponible" },
+      { slug: "estrategias-deploy", titulo: "Estrategias de deploy", estado: "proximamente" },
+      { slug: "docker", titulo: "Docker (nociones)", estado: "proximamente" },
+      { slug: "variables-secretos-ci", titulo: "Variables y secretos en CI", estado: "proximamente" },
+      { slug: "observabilidad", titulo: "Observabilidad", estado: "proximamente" },
+      { slug: "feature-flags", titulo: "Feature flags", estado: "proximamente" },
+    ],
+  },
   { slug: "ia-aplicada", titulo: "IA aplicada al desarrollo", modulos: [] },
 ];
 

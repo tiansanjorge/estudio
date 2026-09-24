@@ -103,6 +103,7 @@ import { entrevistaMigraciones } from "./bases-de-datos/migraciones-entrevista";
 import { entrevistaPostgresEspecifico } from "./bases-de-datos/postgres-especifico-entrevista";
 import { entrevistaRedisCaching } from "./bases-de-datos/redis-caching-entrevista";
 import { entrevistaEscalabilidadDb } from "./bases-de-datos/escalabilidad-db-entrevista";
+import { entrevistaPipelinesGithubActions } from "./ci-cd/pipelines-github-actions-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -844,5 +845,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "escalabilidad-db",
     moduloTitulo: "Réplicas y sharding",
     preguntas: entrevistaEscalabilidadDb,
+  },
+  {
+    categoriaSlug: "ci-cd",
+    categoriaTitulo: "CI/CD",
+    moduloSlug: "pipelines-github-actions",
+    moduloTitulo: "Pipelines (GitHub Actions)",
+    preguntas: entrevistaPipelinesGithubActions,
   },
 ];

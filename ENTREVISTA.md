@@ -171,7 +171,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Nociones de escalabilidad (réplicas, sharding) (Nivel 1/2/3 + Entrevista)
 
 ### CI/CD (antes "DevOps")
-- ☐ Pipelines (GitHub Actions)
+- ✅ Pipelines (GitHub Actions) (Nivel 1/2/3 + Entrevista)
 - ☐ Estrategias de deploy (blue-green, canary, rolling)
 - ☐ Docker (nociones)
 - ☐ Variables y secretos en CI
