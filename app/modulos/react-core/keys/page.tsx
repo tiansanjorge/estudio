@@ -26,9 +26,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Para qué usa React las keys en una lista?",
     opciones: [
-      "Solo para ordenar los elementos alfabéticamente",
-      "Para identificar qué elemento es 'el mismo' entre un render y el siguiente, y decidir qué reutilizar",
-      "Para aplicarles estilos CSS únicos",
+      "Para ordenar la lista: React renderiza los elementos según el valor de su key",
+      "Para saber qué elemento es 'el mismo' entre renders y decidir qué reutilizar",
+      "Para indexar los elementos y acceder a ellos más rápido desde el DOM",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -37,22 +37,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué usar el índice del array como key es riesgoso si la lista puede reordenarse?",
     opciones: [
-      "Porque React tarda más en calcular índices",
-      "Porque React empareja por posición: si el orden cambia, termina asociando el estado de una fila con datos de otra",
-      "Porque los índices no son números válidos como key",
+      "Porque dos listas distintas en la misma página pueden repetir los mismos índices",
+      "Porque React re-renderiza toda la lista cada vez que cambia su largo",
+      "Porque React empareja por posición: al reordenar, el estado de una fila queda en otra",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Si insertás o eliminás en el medio de la lista, la posición de cada elemento cambia, pero su key (el índice) puede coincidir con la de otro dato distinto — React reutiliza esa instancia con su estado viejo pegado al dato nuevo.",
   },
   {
     pregunta: "¿Se puede leer el valor de key dentro del componente hijo como this.props.key o props.key?",
     opciones: [
-      "Sí, siempre",
-      "No, React la reserva internamente para reconciliación y no la expone como prop",
-      "Solo en componentes de clase",
+      "No: React la usa para reconciliar y no la pasa como prop",
+      "Sí, como props.key, igual que cualquier otra prop que le pases",
+      "Solo en componentes de clase, leyendo this.props.key",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "key es un atributo especial que React consume para hacer el matching entre renders. Si el componente necesita ese valor, hay que pasarlo también como otro prop con otro nombre.",
   },
@@ -63,9 +63,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué pasa si le cambiás la key a un componente puntual (no a un elemento de lista)?",
     opciones: [
-      "No tiene ningún efecto, key solo aplica a listas",
-      "React desmonta la instancia vieja y monta una nueva, reseteando todo su estado interno — una técnica deliberada, no un bug",
-      "React lanza un error de compilación",
+      "Nada: la key solo tiene efecto dentro de una lista renderizada con map",
+      "React lo desmonta y monta uno nuevo, reseteando su estado: es una técnica deliberada",
+      "React lo re-renderiza con las mismas props, pero conserva su estado interno",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -75,11 +75,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo le asignás una key a un item de lista que necesita renderizar dos nodos raíz (dt y dd) sin un div extra?",
     opciones: [
-      "No es posible, hay que usar un div envolvente",
-      "Con la forma larga de Fragment (<React.Fragment key={id}>), porque la forma abreviada <>...</> no acepta props",
-      "Poniendo la key en el primero de los dos nodos únicamente",
+      "Con la forma corta <key={id}>...</>, que acepta la key como único atributo",
+      "Poniendo la misma key en el <dt> y en el <dd>, para que React los agrupe",
+      "Con <React.Fragment key={id}>, porque la forma corta <>...</> no acepta props",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El Fragment abreviado no acepta props. Cuando un item de lista necesita más de un elemento raíz y también una key, hace falta la forma larga de Fragment.",
   },
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué React puede reconciliar listas en tiempo lineal en vez de usar el algoritmo general de diffing de árboles (mucho más costoso)?",
     opciones: [
-      "Porque React no reconcilia listas, las remonta siempre por completo",
-      "Porque usa heurísticas: tipos distintos producen árboles distintos, y las keys permiten emparejar elementos entre renders sin comparar todo el árbol",
-      "Porque las listas en React tienen un límite de elementos",
+      "Por heurísticas: tipos distintos dan árboles distintos, y las keys emparejan elementos sin comparar todo",
+      "Porque compara los elementos por su contenido serializado, que es más rápido que recorrer el árbol",
+      "Porque mantiene un índice de todos los nodos del DOM y lo actualiza en cada commit",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El diffing general de árboles es O(n³). Las keys le permiten a React recorrer ambas listas una sola vez y saber exactamente qué mover, agregar o eliminar, en tiempo lineal.",
   },
@@ -102,9 +102,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Combinás usuarios y productos en una lista, ambos con id que puede coincidir numéricamente. ¿Qué riesgo hay si usás el id crudo como key?",
     opciones: [
-      "Ninguno, las keys son únicas a nivel global de la app",
-      "Colisión real entre hermanos: React no puede distinguir un usuario id=1 de un producto id=1, generando comportamiento indefinido",
-      "React lanza un error de compilación al detectar la colisión",
+      "Ninguno: React ya combina la key con el tipo de componente para distinguirlos",
+      "Colisión entre hermanos: React no distingue el usuario 1 del producto 1",
+      "Solo un warning en consola; el renderizado sigue siendo correcto",
     ],
     respuestaCorrecta: 1,
     explicacion:

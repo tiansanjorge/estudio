@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál de estos cambios es compatible hacia atrás?",
     opciones: [
-      "Renombrar un campo de la respuesta",
       "Agregar un campo opcional a la respuesta",
-      "Hacer obligatorio un campo del request",
+      "Agregar un campo obligatorio al request",
+      "Cambiar el tipo de un campo de number a string",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Los clientes ignoran lo que no conocen; los otros dos rompen a clientes existentes.",
   },
   {
     pregunta: "¿Qué se puede generar a partir de un contrato OpenAPI?",
     opciones: [
-      "Solo documentación",
+      "Solo la documentación interactiva, como Swagger UI",
       "Tipos y clientes, mocks, validación y tests de contrato",
-      "Solo el servidor",
+      "La implementación completa del servidor, lista para producción",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,18 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué ventaja principal tiene design-first?",
     opciones: [
-      "El contrato nunca se desactualiza",
-      "Front y back trabajan en paralelo sobre un contrato pensado para el consumidor",
-      "No hace falta escribir código",
+      "Que la documentación se genera sola desde el código del servidor",
+      "Que el contrato nunca cambia después de la primera versión",
+      "Front y back avanzan en paralelo sobre un contrato pensado para quien lo usa",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El riesgo es que la implementación se desvíe si no se valida.",
   },
   {
     pregunta: "¿Qué headers comunican que un endpoint está deprecado y cuándo se apaga?",
-    opciones: ["Cache-Control y ETag", "Deprecation y Sunset", "Allow y Vary"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Deprecation y Sunset",
+      "Expires y Retry-After",
+      "Warning y Cache-Control",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Junto con deprecated: true en el contrato y comunicación directa a los clientes.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "En expand/contract, ¿cuándo se quita el campo viejo?",
     opciones: [
-      "En el mismo deploy que se agrega el nuevo",
-      "Cuando el monitoreo muestra que nadie lo usa o vence el plazo anunciado",
-      "Nunca",
+      "En el mismo deploy en que se agrega el nuevo",
+      "Cuando nadie lo usa según el monitoreo, o vence el plazo",
+      "En la siguiente versión mayor, sin mirar el uso",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace oasdiff en un pipeline?",
     opciones: [
-      "Genera el frontend",
+      "Valida que el contrato sea un OpenAPI sintácticamente correcto",
+      "Genera los tipos del cliente a partir del contrato del PR",
       "Compara el contrato del PR con el de main y detecta breaking changes",
-      "Despliega la API",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un cambio incompatible falla el CI o exige aprobación explícita.",
   },

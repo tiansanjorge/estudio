@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace useMemo?",
     opciones: [
-      "Memoiza una función para que nunca se vuelva a crear",
-      "Memoiza el resultado de un cálculo, recalculándolo solo cuando sus dependencias cambian",
-      "Evita que un componente se vuelva a renderizar",
+      "Memoiza el resultado de un cálculo y lo recalcula cuando cambian sus deps",
+      "Memoiza el componente y evita su re-render si las props no cambiaron",
+      "Guarda el resultado entre montajes, aunque el componente se desmonte",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Si ninguna dependencia del array cambió, useMemo devuelve el valor ya calculado en el render anterior sin volver a ejecutar la función.",
   },
   {
     pregunta: "¿useMemo garantiza que el valor memoizado nunca se recalcule si las deps no cambiaron?",
     opciones: [
-      "Sí, es una garantía absoluta del lenguaje",
-      "No, React lo documenta como optimización de performance — en casos raros puede recalcular igual, así que no hay que depender de esto para correctitud",
-      "Solo lo garantiza en modo producción",
+      "Sí: mientras las dependencias no cambien, el valor es siempre el mismo",
+      "No: es una optimización y React puede recalcular; no dependas de eso",
+      "Sí, salvo que el componente se desmonte y se vuelva a montar",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo tiene sentido usar useMemo para un objeto trivial como { a, b }?",
     opciones: [
-      "Nunca, es siempre innecesario para objetos simples",
-      "Cuando ese objeto se pasa a un componente memo o se usa como dependencia de otro hook, y lo que importa es su IDENTIDAD estable, no el costo de crearlo",
-      "Solo si el objeto tiene más de 10 propiedades",
+      "Nunca: crear un objeto chico siempre es más barato que memoizarlo",
+      "Cuando el objeto tiene más de un par de propiedades anidadas",
+      "Cuando va a un componente memo o a deps de otro hook: importa su identidad",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un objeto literal nuevo en cada render rompe la comparación superficial de memo o dispara efectos innecesariamente, aunque calcularlo sea trivial.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Si el array de dependencias de un useMemo no incluye todo lo que la función usa, ¿qué bug produce?",
     opciones: [
-      "Un error de compilación inmediato",
-      "El mismo problema de stale closure que useEffect: el valor memoizado queda desactualizado silenciosamente",
-      "React ignora el useMemo por completo",
+      "Stale closure: el valor memoizado queda desactualizado sin avisar",
+      "Un loop infinito: el cálculo se vuelve a ejecutar en cada render",
+      "Un error en runtime: React valida que las deps cubran todo lo usado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La función queda capturando el valor viejo de la variable omitida, y como no está en las deps, nunca se recalcula cuando esa variable cambia de verdad.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿El React Compiler vuelve inútil aprender useMemo?",
     opciones: [
-      "Sí, ya no hace falta saber nada sobre memoización manual",
-      "No: sigue siendo necesario para diagnosticar cuándo el compilador no puede memoizar con seguridad, y para trabajar en código legacy",
-      "Solo es útil en proyectos que no usan TypeScript",
+      "Sí: el compilador memoiza todo y los useMemo manuales pasan a ignorarse",
+      "No: hace falta para diagnosticar lo que el compilador no memoiza",
+      "Sí, salvo en componentes de clase, que el compilador no llega a procesar",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué useMemo no garantiza preservar la identidad de un valor entre cualquier par de renders?",
     opciones: [
-      "Porque siempre recalcula en cada render de todas formas",
-      "Porque bajo renderizado concurrente, React puede descartar un árbol de trabajo-en-progreso a medio calcular y reintentar desde cero, perdiendo los valores memoizados de ese intento",
-      "Porque solo funciona en componentes de clase",
+      "Porque useMemo se reinicia en cada commit, aunque las deps no cambien",
+      "Porque en modo concurrente el cálculo se ejecuta en un worker aparte",
+      "Porque React puede descartar un render en progreso y reintentarlo sin caché",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "En un modelo de render que puede pausarse, descartarse y reintentarse (visto en el módulo de Fiber), prometer identidad absoluta no sería una promesa que React pudiera cumplir siempre.",
   },

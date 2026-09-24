@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué significa un 100 en accesibilidad en Lighthouse?",
     opciones: [
-      "Que la página cumple WCAG",
-      "Que no se encontraron las violaciones que las reglas automáticas pueden detectar",
-      "Que la probó un lector de pantalla",
+      "Que no hay violaciones de las que las reglas automáticas detectan",
+      "Que la página cumple WCAG 2.2 nivel AA en todos sus criterios",
+      "Que la página se puede usar entera con teclado y lector de pantalla",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Las reglas automáticas no juzgan comportamiento ni significado; el 100 es un piso.",
   },
   {
     pregunta: "¿Cuál de estos problemas NO detecta axe?",
     opciones: [
-      "Una imagen sin alt",
+      "Una imagen sin texto alternativo",
       "Un div con onClick que no responde al teclado",
-      "Un input sin label",
+      "Un input sin label asociado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Un test usa getByRole('button', { name: 'Guardar' }) y alguien cambia el botón por un div. ¿Qué pasa?",
     opciones: [
-      "El test sigue pasando",
-      "El test falla, porque el div no tiene rol de botón",
-      "El test se saltea",
+      "Pasa igual, porque busca por el texto visible 'Guardar'",
+      "Pasa, pero con un warning de accesibilidad en la consola",
+      "Falla, porque el div no tiene rol de botón",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Las queries por rol cubren de paso la accesibilidad del componente.",
   },
   {
     pregunta: "Un proyecto legacy tiene 400 violaciones de axe. ¿Cómo lo sumás al CI?",
     opciones: [
-      "Desactivando axe hasta arreglar todo",
       "Con una línea base: el CI falla solo ante violaciones nuevas",
-      "Haciendo que el CI falle desde hoy con las 400",
+      "Arreglando las 400 antes de activar el chequeo en el CI",
+      "Solo como warning, sin que ninguna violación falle el CI",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Frena el crecimiento sin bloquear al equipo, y la deuda se paga de a poco.",
   },
@@ -74,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué se suele desactivar la regla color-contrast en jest-axe?",
     opciones: [
-      "Porque el contraste no importa en tests",
-      "Porque jsdom no tiene layout ni estilos computados reales, y la regla no puede calcularse",
-      "Porque es una regla deprecada",
+      "Porque genera falsos positivos con los colores del modo oscuro",
+      "Porque jsdom no calcula estilos ni layout reales",
+      "Porque el contraste se valida mejor en revisión de diseño",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -85,8 +85,8 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hacés con los resultados 'incomplete' de axe?",
     opciones: [
-      "Romper el build",
-      "Ignorarlos siempre",
+      "Tratarlos como violaciones y bloquear el CI",
+      "Ignorarlos: son casos que axe no pudo evaluar",
       "No bloquear el CI, pero revisarlos a mano",
     ],
     respuestaCorrecta: 2,

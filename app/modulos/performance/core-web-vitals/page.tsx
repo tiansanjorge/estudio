@@ -25,18 +25,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿En qué percentil se evalúan las Core Web Vitals?",
     opciones: [
-      "En el promedio de todas las visitas",
       "En el percentil 75 de usuarios reales",
-      "En el mejor resultado de Lighthouse",
+      "En la mediana (p50) de usuarios reales",
+      "En el percentil 95 de los tests de laboratorio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El p75 exige que la gran mayoría de las visitas tenga buena experiencia, no solo el promedio.",
   },
   {
     pregunta: "¿Qué métrica NO se puede medir en un test de laboratorio como Lighthouse?",
-    opciones: ["LCP", "CLS", "INP"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "LCP",
+      "INP",
+      "CLS",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "INP necesita interacciones reales. En laboratorio se usa Total Blocking Time como aproximación.",
   },
@@ -46,11 +50,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "La imagen principal de la home tiene loading=\"lazy\". ¿Qué efecto tiene en el LCP?",
     opciones: [
-      "Lo mejora, porque descarga menos datos al inicio",
-      "Lo empeora, porque el navegador demora la descarga hasta calcular el layout",
-      "Ninguno, lazy solo afecta imágenes fuera de pantalla",
+      "Lo mejora, porque el navegador prioriza el resto del contenido",
+      "Ninguno, porque loading=\"lazy\" solo afecta a imágenes fuera de pantalla",
+      "Lo empeora: la descarga espera a que se calcule el layout",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Una imagen que siempre va a estar visible tiene que pedirse lo antes posible, con prioridad alta.",
   },
@@ -58,8 +62,8 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta: "Filtrar una lista grande al tipear hace que el input se trabe. ¿Qué mejora el INP?",
     opciones: [
       "Mover el filtrado a un startTransition para que el input se pinte primero",
-      "Agregar más useEffect",
-      "Aumentar el tamaño de la fuente del input",
+      "Memoizar el filtrado con useMemo para no recalcularlo en cada tecla",
+      "Pasar el input a no controlado para que no dispare renders al tipear",
     ],
     respuestaCorrecta: 0,
     explicacion:
@@ -71,9 +75,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo agrega el CLS los layout shifts de una sesión?",
     opciones: [
-      "Suma todos los shifts desde que se abrió la página",
-      "Toma la peor 'session window' (shifts a menos de 1 s entre sí, máximo 5 s)",
-      "Promedia los shifts de la carga inicial",
+      "Suma todos los shifts de la sesión, de principio a fin",
+      "Toma la peor 'session window': shifts a menos de 1 s, máximo 5 s",
+      "Promedia los shifts de cada carga de página de la sesión",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -82,11 +86,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un acordeón que el usuario abre empuja el contenido hacia abajo. ¿Suma CLS?",
     opciones: [
-      "Sí, siempre",
-      "No, los shifts dentro de los 500 ms posteriores a una interacción se excluyen",
-      "Solo si la animación dura más de 1 segundo",
+      "Sí: cualquier movimiento de contenido visible cuenta para el CLS",
+      "Sí, salvo que el acordeón use una transición de CSS para abrirse",
+      "No: se excluyen los shifts de los 500 ms después de una interacción",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un movimiento que el usuario provocó es esperado; CLS mide solo los inesperados.",
   },

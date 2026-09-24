@@ -24,9 +24,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia fundamental hay entre require() e import?",
     opciones: [
-      "Ninguna, son intercambiables siempre",
-      "require() es dinámico y se resuelve en runtime; import es estático y se analiza antes de ejecutar cualquier código",
-      "import solo funciona en el navegador, nunca en Node",
+      "require es síncrono e import asíncrono; fuera de eso se comportan igual",
+      "require se resuelve en runtime; import es estático y se analiza antes de ejecutar",
+      "require copia los exports e import los referencia; esa es la única diferencia",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -34,19 +34,23 @@ const preguntas: PreguntaQuiz[] = [
   },
   {
     pregunta: "¿Qué campo de package.json determina si un .js se trata como ESM o CommonJS?",
-    opciones: ['"main"', '"type"', '"scripts"'],
-    respuestaCorrecta: 1,
+    opciones: [
+      "\"type\"",
+      "\"module\"",
+      "\"exports\"",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       '"type": "module" trata los .js como ESM; sin ese campo (o con "commonjs") se tratan como CJS. Las extensiones .mjs/.cjs fuerzan el modo sin importar package.json.',
   },
   {
     pregunta: "¿Se puede hacer un import condicional, como dentro de un if?",
     opciones: [
-      "Sí, igual que require()",
-      "No con import estático; para eso existe el import() dinámico, que devuelve una Promise",
-      "No, JavaScript no permite carga condicional de ningún tipo",
+      "Sí: un import dentro de un if se hoistea, pero solo corre si se cumple la condición",
+      "Sí, pero solo en archivos .mjs, donde import se evalúa en runtime",
+      "Con import estático no; para eso está import(), que devuelve una Promise",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "import estático se hoistea al tope del módulo y no puede depender de una condición en runtime. import() dinámico sí permite carga condicional, pero es asincrónico.",
   },
@@ -57,9 +61,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué ESM permite mejor tree-shaking que CommonJS?",
     opciones: [
-      "Porque ESM es más rápido de parsear",
-      "Porque los imports/exports estáticos permiten a un bundler saber de antemano, sin ejecutar código, qué se usa y qué se puede eliminar",
-      "CommonJS no soporta tree-shaking por una limitación de sintaxis, no de análisis",
+      "Porque en ESM el runtime descarta solo los exports que nadie usa",
+      "Porque los imports y exports estáticos se analizan sin ejecutar código",
+      "Porque en ESM cada export se compila como un chunk separado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -69,11 +73,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué es el 'dual package hazard'?",
     opciones: [
-      "Un error de sintaxis al mezclar require e import",
-      "Una librería publicada en ambos formatos termina cargada dos veces en el mismo proceso, con estado module-level duplicado e independiente",
-      "Un warning de ESLint sin consecuencias reales",
+      "Que una librería se cargue dos veces (CJS y ESM), con su estado duplicado",
+      "Que publicar ambos formatos duplique el tamaño del paquete en el bundle",
+      "Que mezclar require e import en un mismo archivo rompa la resolución",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Si la librería mantiene un singleton o caché a nivel de módulo, cada copia (CJS y ESM) tiene su propio estado, rompiendo la garantía de instancia única compartida.",
   },
@@ -84,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "En una dependencia circular, ¿qué ve un módulo B que usa un valor de A dentro de una función que corre DESPUÉS del ciclo de carga?",
     opciones: [
-      "Con CJS, siempre ve el valor final actualizado; con ESM, siempre falla",
-      "Con CJS depende de cómo guardó el valor: si lo desestructuró en el require, queda con un valor viejo; con ESM, el live binding ya refleja el valor final",
-      "Ambos sistemas se comportan exactamente igual en este caso",
+      "CJS: siempre el valor final; ESM: lanza ReferenceError por la TDZ",
+      "Los dos ven undefined: el ciclo congela los valores al momento del import",
+      "CJS: depende de si lo desestructuró en el require; ESM: el live binding ya tiene el valor final",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "require() devuelve el MISMO objeto module.exports, incompleto en ese momento. Si B guarda el objeto y lee la propiedad después, ve el valor final; si la desestructuró en el require (o A reasignó module.exports), se queda con lo viejo. Los named exports de ESM son referencias en vivo: siempre reflejan la asignación final.",
   },
@@ -96,9 +100,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Para qué sirve \"sideEffects\": false en package.json?",
     opciones: [
-      "Desactiva el motor de JavaScript de efectos secundarios",
-      "Le dice al bundler que puede eliminar archivos completos del paquete si nada importa nombres específicos de ellos, no solo exports no usados",
-      "Es solo metadata informativa sin efecto en el bundle",
+      "Le prohíbe al paquete ejecutar código al importarse, como un polyfill",
+      "Permite descartar archivos enteros del paquete si no se usa nada de ellos",
+      "Activa el tree-shaking de exports, que sin esa marca no se hace nunca",
     ],
     respuestaCorrecta: 1,
     explicacion:

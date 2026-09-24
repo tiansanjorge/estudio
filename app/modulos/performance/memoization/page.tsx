@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace React.memo en términos de propagación de re-renders?",
     opciones: [
-      "Evita que el componente se monte más de una vez",
-      "Crea un límite: si las props no cambiaron de referencia, corta la propagación del re-render del padre hacia ese subárbol",
-      "Mejora la velocidad de cualquier render, memoizado o no",
+      "Si las props no cambiaron, corta el re-render del padre en ese subárbol",
+      "Hace que el componente solo se re-renderice cuando cambia su estado propio",
+      "Guarda el DOM del componente y lo reutiliza sin volver a reconciliarlo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Sin ningún límite de memoización, cualquier re-render de un componente re-renderiza también a todos sus descendientes, sin importar si sus props cambiaron.",
   },
   {
     pregunta: "¿Por qué no envolver todos los componentes en React.memo por costumbre?",
     opciones: [
-      "React.memo no está disponible para todos los componentes",
-      "Cada componente memoizado tiene un costo propio de comparación de props, que puede superar al costo de simplemente re-renderizar componentes baratos",
-      "Rompe el orden de los hooks",
+      "Porque memo impide que el componente reciba cambios de Context",
+      "Porque comparar props tiene costo, y puede superar al de re-renderizar",
+      "Porque memo rompe los componentes que reciben children",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Un componente contenedor grande está envuelto en memo, pero recibe children creado como JSX nuevo en cada render del padre. ¿Sirve el memo?",
     opciones: [
-      "Sí, siempre evita el re-render sin importar cómo se pase children",
-      "No completamente: children es un elemento nuevo en cada render del padre, y la comparación superficial de memo detecta ese cambio igual",
-      "Solo funciona si el contenedor no tiene hijos",
+      "Sí: memo ignora children y compara solo el resto de las props",
+      "Sí, siempre que children tenga el mismo contenido que en el render anterior",
+      "No del todo: children es un elemento nuevo en cada render y memo lo detecta",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El límite de memoización tiene que colocarse donde las props que realmente importan puedan mantenerse estables, no simplemente en el componente más externo.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo confirmarías que un componente realmente tiene un costo de render alto antes de memoizarlo?",
     opciones: [
-      "Por intuición, si 'parece' que debería ser costoso",
-      "Con el Profiler de React DevTools, midiendo tiempo de render real durante una interacción grabada",
-      "Contando la cantidad de líneas de código del componente",
+      "Con el Profiler de React DevTools, grabando una interacción real",
+      "Contando cuántas veces se re-renderiza con un console.log en el cuerpo",
+      "Con Lighthouse, mirando el Total Blocking Time de la página",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Memoizar sin medir primero es común terminar optimizando un componente que en realidad no era el cuello de botella real.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo cambia el React Compiler la estrategia general de dónde colocar límites de memoización?",
     opciones: [
-      "La elimina por completo, ya no hay nada que entender sobre memoización",
-      "Cambia el foco: en vez de decidir manualmente dónde poner memo, el trabajo pasa a escribir componentes que sigan las reglas de React estrictamente",
-      "Solo funciona si se usa React.memo en todos los componentes de todas formas",
+      "Obliga a marcar a mano qué componentes memoizar con una directiva",
+      "El trabajo pasa a escribir componentes que respeten las reglas de React",
+      "Memoiza solo los componentes que ya estaban envueltos en React.memo",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Para una lista de miles de elementos, ¿alcanza con memoizar cada item?",
     opciones: [
-      "Sí, siempre es suficiente",
-      "No completamente: memo evita re-renders innecesarios, pero no evita que React y el navegador mantengan miles de nodos reales — para eso hace falta virtualización",
-      "No, memoizar items individuales nunca tiene efecto en listas grandes",
+      "Sí: con memo, React ya no crea los nodos de los items que no cambiaron",
+      "Sí, si además las keys son estables y los callbacks usan useCallback",
+      "No: evita re-renders, pero siguen existiendo miles de nodos en el DOM",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es un problema distinto al que memo resuelve: no es re-render, es la cantidad de nodos existentes en el DOM, que necesita una técnica distinta.",
   },

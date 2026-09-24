@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Zustand necesita envolver la app en un Provider, como Context?",
     opciones: [
-      "Sí, siempre es obligatorio",
-      "No: create() arma un store externo a React, expuesto como hook, sin necesitar Provider",
-      "Solo si se usan más de dos stores",
+      "No: create() arma un store externo a React, expuesto como hook",
+      "Sí: sin Provider, cada componente crea su propia copia del store",
+      "Solo en SSR, donde el Provider evita compartir estado entre requests",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Cualquier componente puede importar el hook del store y usarlo directamente, sin envolver la app en nada.",
   },
   {
     pregunta: "¿Por qué es importante usar un selector al leer del store?",
     opciones: [
-      "Es solo una cuestión de estilo, no tiene efecto real",
-      "El componente se suscribe solo a la porción seleccionada, re-renderizando únicamente cuando esa porción cambia",
-      "Sin selector, Zustand no funciona en absoluto",
+      "Porque sin selector el hook devuelve undefined hasta la primera acción",
+      "Para suscribirse solo a esa porción y re-renderizar cuando ella cambia",
+      "Porque el selector congela el estado leído y evita mutaciones accidentales",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué trade-off hay entre Zustand y Redux Toolkit?",
     opciones: [
-      "Ninguno, son intercambiables sin diferencia real",
-      "Zustand es minimalista (menos boilerplate, más flexibilidad); Redux Toolkit impone más estructura y tiene un ecosistema de herramientas más maduro",
-      "Zustand solo funciona con TypeScript",
+      "Zustand no soporta middleware; Redux Toolkit sí, pero con más boilerplate",
+      "Zustand solo sirve para estado local; Redux Toolkit, para estado global",
+      "Zustand es mínimo y flexible; RTK impone estructura y tiene mejor tooling",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "En equipos grandes sin convenciones propias, la flexibilidad de Zustand puede llevar a stores organizados de forma inconsistente entre sí.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo se evita el boilerplate de spread manual para actualizar estado anidado en Zustand?",
     opciones: [
-      "No es posible, siempre hay que hacer spread manual",
-      "Con el middleware immer, que permite escribir la actualización como si se mutara el estado directamente, generando inmutabilidad por debajo",
-      "Usando useReducer en vez de Zustand",
+      "Con el middleware immer, que deja escribir la actualización como una mutación",
+      "Con el middleware persist, que aplana el estado antes de guardarlo",
+      "Mutando el estado directo: Zustand detecta el cambio con un Proxy",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es la misma técnica de 'mutación aparente, inmutabilidad real' que usa Redux Toolkit internamente.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Sobre qué API está implementado el hook que devuelve create() de Zustand?",
     opciones: [
-      "useState de React",
-      "useSyncExternalStore, que permite selección granular y evita el problema de tearing bajo renderizado concurrente",
-      "useContext con un Provider oculto",
+      "useContext, con un Provider implícito que Zustand monta en la raíz",
+      "useSyncExternalStore, que permite selectores y evita el tearing",
+      "useReducer, con un reducer genérico que aplica cada set()",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Un selector devuelve un objeto literal nuevo en cada llamada (useStore((s) => ({ a: s.a, b: s.b }))). ¿Qué problema causa?",
     opciones: [
-      "Ninguno, Zustand lo optimiza automáticamente",
-      "Re-renderiza en cada actualización del store, porque la comparación por referencia siempre detecta un objeto 'distinto'",
-      "Lanza un error de compilación",
+      "Ninguno: Zustand compara el resultado del selector con igualdad profunda",
+      "Un error en desarrollo: los selectores tienen que devolver primitivos",
+      "Re-renderiza en cada cambio del store: el objeto siempre es 'distinto'",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Se soluciona pasando un comparador shallow como segundo argumento del hook, para comparar propiedades en vez de referencia.",
   },

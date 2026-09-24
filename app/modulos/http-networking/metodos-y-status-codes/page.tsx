@@ -26,22 +26,34 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál de estos métodos es idempotente?",
-    opciones: ["POST", "PATCH", "PUT"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "POST",
+      "PUT",
+      "PATCH",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "PUT reemplaza el recurso entero: llamarlo N veces con el mismo body da siempre el mismo resultado. POST y PATCH no garantizan eso.",
   },
   {
     pregunta: "Mandaste un token vencido a un endpoint protegido. ¿Qué status esperás?",
-    opciones: ["403 Forbidden", "401 Unauthorized", "400 Bad Request"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "403 Forbidden",
+      "400 Bad Request",
+      "401 Unauthorized",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "401 es 'no sé quién sos' (falla la autenticación). 403 es 'sé quién sos, pero no tenés permiso' (falla la autorización).",
   },
   {
     pregunta: "¿Qué dispara el navegador antes de un POST cross-origin con headers custom?",
-    opciones: ["Un GET", "Un OPTIONS (preflight)", "Un HEAD"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Un OPTIONS (preflight)",
+      "Un HEAD de verificación",
+      "Un GET al mismo endpoint",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "El navegador manda un OPTIONS preflight para preguntarle al servidor si el método y los headers están permitidos antes de mandar la petición real.",
   },
@@ -51,9 +63,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Un cliente reintenta un POST de pago tras un timeout. ¿Qué evita el doble cobro?",
     opciones: [
-      "Cambiar el POST por GET",
-      "Una idempotency key: el servidor devuelve el resultado guardado si la key se repite",
-      "Esperar más antes de reintentar",
+      "Cambiar el POST por un PUT, que es idempotente por definición",
+      "Una idempotency key: si se repite, el servidor devuelve el resultado guardado",
+      "Que el cliente espere más antes de reintentar, con backoff exponencial",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -61,7 +73,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   },
   {
     pregunta: "Aceptás un pedido para generar un reporte que tarda minutos. ¿Qué status devolvés?",
-    opciones: ["200 OK", "201 Created", "202 Accepted"],
+    opciones: [
+      "201 Created",
+      "102 Processing",
+      "202 Accepted",
+    ],
     respuestaCorrecta: 2,
     explicacion:
       "202 indica que se aceptó pero todavía no terminó; se acompaña con una URL para consultar el estado.",
@@ -71,17 +87,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Después de procesar un formulario POST, ¿qué redirect evita el reenvío al refrescar?",
-    opciones: ["307 Temporary Redirect", "303 See Other", "308 Permanent Redirect"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "303 See Other",
+      "307 Temporary Redirect",
+      "301 Moved Permanently",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "303 fuerza un GET a la página de resultado (patrón Post/Redirect/Get). 307 y 308 conservan el POST.",
   },
   {
     pregunta: "¿Por qué una API respondería 404 ante un recurso que existe pero es de otro usuario?",
     opciones: [
-      "Por error",
+      "Porque 403 obliga al cliente a reautenticarse y cortaría la sesión",
       "Para no revelar que el recurso existe y evitar la enumeración",
-      "Porque 403 está deprecado",
+      "Porque el recurso no existe para ese usuario, que es lo que define 404",
     ],
     respuestaCorrecta: 1,
     explicacion:

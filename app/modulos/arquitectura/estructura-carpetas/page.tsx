@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "En una estructura por features, ¿dónde vive el hook useCarrito?",
-    opciones: ["src/hooks/", "src/features/carrito/", "src/shared/"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "src/features/carrito/",
+      "src/hooks/",
+      "src/shared/hooks/",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Junto al resto del código del carrito: lo que cambia junto vive junto.",
   },
   {
     pregunta: "¿Cuándo algo se mueve a shared/?",
     opciones: [
-      "Por las dudas, apenas se crea",
+      "Apenas se crea, por si alguna otra feature lo necesita",
       "Cuando dos o más features lo usan de verdad y es genérico",
-      "Nunca",
+      "Cuando el archivo supera cierto tamaño o complejidad",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo se evita que otra feature importe un componente interno del carrito?",
     opciones: [
-      "Con un comentario en el archivo",
-      "Con una API pública en index.ts y reglas de lint que prohíben imports internos",
-      "No se puede evitar",
+      "Poniendo el componente en una carpeta llamada private/",
+      "Con un comentario de @internal en el componente",
+      "Con un index.ts público y reglas de lint contra imports internos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Las reglas en el CI hacen que el límite se cumpla.",
   },
   {
     pregunta: "En Next.js, ¿qué conviene que contenga app/carrito/page.tsx?",
     opciones: [
-      "Toda la lógica del carrito",
-      "Poca cosa: componer piezas de features/carrito y resolver params o metadata",
-      "Solo estilos",
+      "Poca cosa: componer features/carrito y resolver params o metadata",
+      "Toda la lógica del carrito, porque Next agrupa el código por ruta",
+      "Los componentes del carrito, para que se hagan code splitting",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Las rutas quedan delgadas y el dominio vive en features.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "En Feature-Sliced Design, ¿de qué capas puede importar una feature?",
     opciones: [
-      "De cualquiera",
+      "De cualquier capa, siempre que no haya ciclos",
       "Solo de las capas de abajo (entities, shared)",
-      "Solo de pages",
+      "De otras features y de las capas de abajo",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Al migrar de capas a features, ¿qué conviene evitar?",
     opciones: [
-      "PRs chicos",
+      "Migrar de a una feature por vez en PRs separados",
+      "Dejar código viejo en capas mientras se migra",
       "Mezclar la reorganización con cambios de lógica",
-      "Reexports temporales",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Mover archivos y cambiar comportamiento en el mismo PR esconde bugs.",
   },

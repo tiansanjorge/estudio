@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Un route.ts exporta GET y POST. Llega un PATCH. ¿Qué pasa?",
     opciones: [
-      "Se ejecuta POST",
       "Next responde 405 Method Not Allowed automáticamente",
-      "Da error de build",
+      "Next lo deriva al handler de POST, el método más parecido",
+      "Next responde 404, porque no existe una ruta para ese método",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Cada método es un export; lo que no está exportado recibe 405.",
   },
   {
     pregunta: "Tu page necesita la lista de productos. ¿Cómo la obtenés?",
     opciones: [
-      "Con fetch a tu propio /api/productos",
+      "Con un fetch a tu propio Route Handler, que la devuelve como JSON",
       "Consultando la fuente directamente desde el Server Component",
-      "Con una Server Action",
+      "Con un useEffect en un Client Component que llama a la API",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,15 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "El body de un POST no pasa la validación con Zod. ¿Qué status corresponde?",
-    opciones: ["200", "400", "500"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "500",
+      "401",
+      "400",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Es un error del cliente (datos inválidos), no del servidor.",
   },
   {
     pregunta: "Con el modelo clásico, ¿qué métodos de un Route Handler se pueden cachear?",
-    opciones: ["Todos", "Solo GET", "Solo POST"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Solo GET",
+      "GET y HEAD",
+      "GET y POST",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Los demás métodos nunca se cachean, aunque estén en el mismo archivo.",
   },
@@ -66,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Si no exportás OPTIONS, ¿qué responde Next a un OPTIONS?",
     opciones: [
-      "405",
-      "204 con el header Allow listando los métodos implementados",
-      "Los headers de CORS necesarios para cualquier origen",
+      "405, porque OPTIONS no está implementado",
+      "204 con Allow listando los métodos implementados",
+      "200 con los headers de CORS por defecto",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -77,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un handler serverless guarda un contador de requests en una variable. ¿Qué problema tiene?",
     opciones: [
-      "Ninguno",
-      "Cada instancia tiene su propia memoria efímera: el contador no es global ni persistente",
-      "Las variables no existen en serverless",
+      "Ninguno: la variable vive en el módulo y se comparte entre requests",
+      "Que se reinicia en cada request, porque el módulo se vuelve a evaluar",
+      "Cada instancia tiene su memoria efímera: no es global ni persistente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El estado compartido va a un store externo como Redis.",
   },

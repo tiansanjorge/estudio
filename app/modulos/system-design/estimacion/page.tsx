@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "100 millones de acciones por día, ¿cuántas por segundo aproximadamente?",
-    opciones: ["100", "1.000", "100.000"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "1.000",
+      "10.000",
+      "100",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Un día tiene unos 10⁵ segundos: 10⁸ / 10⁵ = 10³.",
   },
   {
     pregunta: "¿Qué importa más en una estimación de entrevista?",
-    opciones: ["El número exacto", "El orden de magnitud y los supuestos explícitos", "Usar calculadora"],
+    opciones: [
+      "Llegar al número exacto, aunque lleve más tiempo",
+      "El orden de magnitud y los supuestos explícitos",
+      "Usar las cifras reales de producción de la empresa",
+    ],
     respuestaCorrecta: 1,
     explicacion: "La decisión de diseño no cambia entre 1.150 y 1.200 requests por segundo.",
   },
@@ -38,14 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "El almacenamiento estimado es de petabytes de imágenes. ¿Dónde van?",
-    opciones: ["En una columna de la base", "En almacenamiento de objetos, con metadatos en la base", "En memoria"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "En la base de datos, como columnas binarias",
+      "En el disco de cada servidor de aplicación",
+      "En almacenamiento de objetos, con metadatos en la base",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Son dos problemas distintos: archivos grandes y metadatos chicos.",
   },
   {
     pregunta: "La relación lecturas/escrituras es 100 a 1. ¿Dónde ponés el esfuerzo?",
-    opciones: ["Optimizar las escrituras", "Caché, réplicas de lectura y CDN", "Colas de escritura"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Caché, réplicas de lectura y CDN",
+      "Sharding de escrituras y colas",
+      "Más CPU en el servidor de base",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "El volumen está en las lecturas.",
   },
 ];
@@ -53,14 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "3.000 req/s y cada una tarda 20 ms. ¿Cuántas están en curso en promedio?",
-    opciones: ["60", "150", "3.000"],
-    respuestaCorrecta: 0,
+    opciones: [
+      "150",
+      "60",
+      "600",
+    ],
+    respuestaCorrecta: 1,
     explicacion: "Ley de Little: 3.000 × 0,02 = 60.",
   },
   {
     pregunta: "Un enlace de red de 1 Gbps, ¿cuántos megabytes por segundo transfiere como máximo?",
-    opciones: ["1.000 MB/s", "Unos 125 MB/s", "8.000 MB/s"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Unos 1.000 MB/s",
+      "Unos 12 MB/s",
+      "Unos 125 MB/s",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Gbps son bits: se divide por 8.",
   },
 ];

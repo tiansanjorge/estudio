@@ -24,16 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué frase preocupa más a quien entrevista?",
     opciones: [
-      "Todo lo que genera pasa por tests y mi revisión",
       "Le pido lo que necesito y, si funciona, lo subo",
-      "La uso como sparring en decisiones de diseño",
+      "La uso para el boilerplate y reviso lo que genera",
+      "No la uso en código que no podría escribir yo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "'Si funciona' no es verificación.",
   },
   {
     pregunta: "¿Qué vale más en una respuesta sobre tu uso de IA?",
-    opciones: ["La lista de herramientas que usás", "Un ejemplo real con lo que hizo la IA, lo que hiciste vos y el resultado", "El porcentaje de código generado"],
+    opciones: [
+      "La lista de herramientas que usás y cuánto tiempo te ahorran",
+      "Un ejemplo real: qué hizo la IA, qué hiciste vos y cómo salió",
+      "Aclarar que la usás poco, para mostrar que no dependés de ella",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Un caso concreto muestra criterio mejor que cualquier generalización.",
   },
@@ -43,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "En un take-home donde se permite IA, ¿qué conviene hacer?",
     opciones: [
-      "No mencionarlo",
-      "Declarar en el README qué partes hiciste con ayuda y qué decisiones fueron tuyas",
-      "Usarla para todo sin revisar",
+      "No mencionarla, para que evalúen solo el resultado",
+      "Usarla lo menos posible, para que se vea tu código",
+      "Declarar en el README qué hiciste con ayuda y qué decidiste vos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Muestra cómo trabajarías con el equipo, y te prepara para la entrevista de seguimiento.",
   },
   {
     pregunta: "Te preguntan por una vez que la IA te llevó por mal camino. ¿Qué se evalúa?",
     opciones: [
-      "Que la IA se haya equivocado",
       "Cómo lo detectaste y qué cambiaste en tu forma de trabajar",
-      "Qué herramienta usabas",
+      "Qué herramienta de IA fue y por qué dejaste de usarla",
+      "Cuánto tiempo perdiste hasta darte cuenta del error",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Que la IA se equivoque es esperable; lo que importa es tu proceso.",
   },
 ];
@@ -65,18 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué métrica muestra mejor si la IA mejora la entrega de un equipo?",
-    opciones: ["Líneas de código generadas", "Tiempo de ciclo y tasa de defectos", "Sugerencias aceptadas"],
+    opciones: [
+      "Líneas de código escritas por día",
+      "Tiempo de ciclo y tasa de defectos",
+      "Cantidad de PRs abiertos por semana",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Las métricas de uso miden actividad, no resultados.",
   },
   {
     pregunta: "¿Qué conviene evitar al introducir IA en un equipo?",
     opciones: [
-      "Un piloto acotado con medición",
+      "Empezar con un piloto chico y medir el resultado",
+      "Acordar reglas de revisión para el código generado",
       "Imponerla o prohibirla por decreto",
-      "Una política de qué datos se pueden compartir",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Las dos cosas generan uso a escondidas y sin cuidado.",
   },
 ];

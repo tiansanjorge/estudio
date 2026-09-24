@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia hay entre useEffect(fn), useEffect(fn, []) y useEffect(fn, [a, b])?",
     opciones: [
-      "Ninguna, los tres se comportan igual",
-      "Sin array corre en cada render; con [] corre solo al montar; con [a, b] corre al montar y cuando a o b cambien",
-      "Solo el tercero es válido, los otros dan error",
+      "Sin array: en cada render; []: solo al montar; [a, b]: al montar y cuando cambien",
+      "Sin array: solo al montar; []: en cada render; [a, b]: cuando cambien",
+      "Sin array: nunca; []: solo al montar; [a, b]: cuando cambien, no al montar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El array de dependencias controla cuándo React decide volver a ejecutar el efecto, comparando cada valor contra el del render anterior.",
   },
   {
     pregunta: "¿Cuándo hace falta una función de cleanup en un useEffect?",
     opciones: [
-      "Siempre, todo useEffect necesita cleanup",
-      "Cuando el efecto se suscribe a algo que sigue existiendo después (listener, timer, suscripción)",
-      "Nunca, React limpia todo automáticamente sin necesidad de retornar nada",
+      "Cuando el efecto cambia estado, para deshacer el cambio al desmontar",
+      "Cuando el efecto deja algo vivo: un listener, un timer, una suscripción",
+      "Cuando el efecto es async, para esperar a que termine la promesa",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Un fetch dentro de un useEffect depende de un query que cambia rápido. ¿Qué riesgo hay sin protección adicional?",
     opciones: [
-      "Ninguno, fetch siempre resuelve en orden",
-      "Race condition: un fetch más viejo puede resolver después de uno más nuevo, sobreescribiendo el resultado correcto",
-      "El componente deja de renderizar por completo",
+      "Que React cancela el fetch anterior y el componente queda sin datos",
+      "Un loop infinito: cada respuesta cambia el query y dispara otro fetch",
+      "Race condition: una respuesta vieja puede llegar después y pisar la nueva",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "La solución estándar es usar el cleanup como bandera de 'ya no vigente', o un AbortController para cancelar la request anterior cuando el efecto se vuelve a ejecutar.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Conviene un único useEffect con varias responsabilidades, o varios chicos y enfocados?",
     opciones: [
-      "Uno grande siempre es mejor, menos código repetido",
-      "Varios chicos: mezclar responsabilidades obliga a que el array de deps combine todo, disparando el efecto entero por cambios que no le importan a todas las partes",
-      "Da exactamente igual en cualquier caso",
+      "Varios chicos: uno grande se re-ejecuta entero por cambios ajenos a sus partes",
+      "Uno solo: cada useEffect extra agrega un render adicional al componente",
+      "Uno solo: React no garantiza el orden entre efectos y podrían pisarse entre sí",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Separarlos deja que cada efecto reaccione solo a lo que realmente le importa, y facilita razonar sobre qué efecto hace qué cuando algo falla.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué problema resuelve useEffectEvent que omitir una dependencia a mano no resuelve bien?",
     opciones: [
-      "Ninguno, son equivalentes en la práctica",
-      "Evita el stale closure: permite leer siempre la versión más reciente de un valor sin que dispare el efecto, en vez de quedar 'congelado' con el valor viejo al omitirlo de las deps",
-      "Sirve para reemplazar useState por completo",
+      "Correr el efecto de forma síncrona antes del paint, como useLayoutEffect",
+      "Leer siempre el valor más reciente sin que ese valor dispare el efecto",
+      "Omitir dependencias sin que el linter se queje, con el mismo resultado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué Strict Mode invoca dos veces el ciclo montar→limpiar→montar de los efectos en desarrollo?",
     opciones: [
-      "Es un bug conocido sin solución",
-      "Para exponer efectos con cleanup faltante o incorrecto: si el cleanup no desuscribe bien, quedan suscripciones duplicadas visibles de inmediato",
-      "Solo ocurre en componentes de clase",
+      "Para medir cuánto tarda cada efecto y avisar si supera un frame",
+      "Porque en desarrollo React desactiva el batching y repite cada efecto",
+      "Para exponer cleanups faltantes, que dejan suscripciones duplicadas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un bug que en un solo montaje normal podría pasar desapercibido en desarrollo aparece de inmediato con el patrón doble de Strict Mode.",
   },

@@ -26,31 +26,31 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué tipo de dato es 'props' en un componente de función?",
     opciones: [
-      "Una clase especial de React",
-      "Un objeto JavaScript normal, con una clave por cada prop pasada",
-      "Un array de valores en orden",
+      "Un Proxy de React que detecta cuándo cambia cada prop",
+      "Un objeto inmutable creado con Object.freeze por el componente padre",
+      "Un objeto JavaScript normal, con una clave por cada prop",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "<Tarjeta nombre='Ana' activo={true} /> simplemente llama a Tarjeta({ nombre: 'Ana', activo: true }). Es un objeto común, nada mágico.",
   },
   {
     pregunta: "¿Qué es 'children' en términos de props?",
     opciones: [
-      "Una API completamente distinta a props",
-      "Una prop más, cuyo valor es lo que se escribió entre las etiquetas de apertura y cierre del componente",
-      "Solo existe en componentes de clase",
+      "Una prop más: su valor es lo que se escribió entre las etiquetas del componente",
+      "Una API especial de React, separada de las props, para acceder a los hijos",
+      "Un array con los componentes hijos ya renderizados en el DOM",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "children no es magia: es simplemente la prop que React arma automáticamente con el contenido que pusiste entre <Componente>...</Componente>.",
   },
   {
     pregunta: "¿Cuál es el problema principal del prop drilling?",
     opciones: [
-      "Que React lo prohíbe explícitamente",
-      "Que componentes intermedios terminan acoplados a datos que no usan, solo para reenviarlos",
-      "Que hace que la app sea más lenta",
+      "Que cada nivel intermedio agrega un re-render que no pasaría con Context",
+      "Que los componentes intermedios quedan acoplados a datos que no usan",
+      "Que después de cierta profundidad React deja de pasar las props hacia abajo",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué riesgo tiene hacer {...props} sin filtrar sobre un elemento del DOM?",
     opciones: [
-      "Ninguno, React filtra automáticamente lo que no corresponde",
-      "Cualquier prop que no sea un atributo HTML válido termina como atributo desconocido en el DOM, con warning en consola",
-      "Hace que el componente sea más lento",
+      "Que las props de más pisan los event handlers que el componente definió antes",
+      "Que React descarta todo el spread si detecta una prop que no conoce",
+      "Que las props que no son atributos HTML válidos terminan en el DOM, con warnings",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Además del warning, se pierde control sobre la API pública del componente: cualquiera puede pasar cualquier prop, incluso colisionando con una manejada internamente.",
   },
@@ -74,11 +74,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué reemplaza a defaultProps en componentes de función modernos?",
     opciones: [
-      "Ya no se pueden dar valores por defecto a props",
-      "Valores por defecto en el destructuring de parámetros, JavaScript estándar sin API especial de React",
-      "Un hook llamado useDefaultProps",
+      "Valores por defecto en el destructuring de los parámetros",
+      "El hook useDefaultProps, que se llama al inicio del componente",
+      "El operador ?? aplicado a cada prop dentro del JSX",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es más simple y explícito en el mismo lugar donde se leen los props, sin depender de una propiedad estática separada que sincronizar con la firma del componente.",
   },
@@ -88,9 +88,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Dentro de un componente, ¿podés leer props.key?",
     opciones: [
-      "Sí, funciona como cualquier otro prop",
-      "No, key es un prop reservado que React intercepta antes de que llegue al objeto de props del componente",
-      "Solo en componentes de clase",
+      "Sí, pero solo si el componente se renderiza dentro de una lista",
+      "No: React intercepta key antes de armar el objeto de props",
+      "Sí, aunque vale undefined hasta el segundo render",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -100,11 +100,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué pasar un árbol costoso como children (en vez de crearlo inline) puede evitar re-renders innecesarios?",
     opciones: [
-      "Porque children siempre se memoiza automáticamente por React",
-      "Porque quien creó ese elemento JSX más arriba no volvió a ejecutarse, así que sigue siendo la misma referencia y React puede saltear su reconciliación",
-      "Porque children nunca se renderiza si el padre cambia de estado",
+      "Porque React memoiza automáticamente todo lo que recibe por children",
+      "Porque children se renderiza en otra pasada, después del resto del componente",
+      "Es la misma referencia: quien creó ese JSX no se re-ejecutó, y React lo saltea",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es la base del patrón 'levantar el contenido, no el estado': si el padre que cambia de estado recibe ese árbol costoso como prop en vez de crearlo, React ve la misma referencia entre renders y salta esa parte.",
   },

@@ -24,18 +24,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué costo tiene agregar un índice?",
     opciones: [
-      "Ninguno",
-      "Espacio y escrituras más lentas: se actualiza en cada INSERT/UPDATE/DELETE",
-      "Hace más lentas las lecturas",
+      "Espacio y escrituras más lentas: se actualiza en cada cambio",
+      "Lecturas más lentas en las columnas que no forman parte del índice",
+      "Ninguno relevante: Postgres lo mantiene en segundo plano",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Por eso se crean para consultas reales, no en todas las columnas.",
   },
   {
     pregunta: "¿Qué herramienta muestra el plan real de una consulta en Postgres?",
-    opciones: ["EXPLAIN ANALYZE", "VACUUM", "SHOW TABLES"],
-    respuestaCorrecta: 0,
+    opciones: [
+      "EXPLAIN",
+      "EXPLAIN ANALYZE",
+      "pg_stat_statements",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "Muestra el plan, las filas estimadas contra las reales y los tiempos.",
   },
@@ -45,8 +49,8 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Con un índice (cliente_id, fecha), ¿qué consulta NO lo aprovecha bien?",
     opciones: [
-      "WHERE cliente_id = 42",
-      "WHERE cliente_id = 42 AND fecha >= '2026-01-01'",
+      "WHERE cliente_id = 7",
+      "WHERE cliente_id = 7 AND fecha >= '2026-01-01'",
       "WHERE fecha >= '2026-01-01'",
     ],
     respuestaCorrecta: 2,
@@ -56,11 +60,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Hay índice sobre email, pero la consulta usa lower(email). ¿Qué pasa?",
     opciones: [
-      "Usa el índice igual",
-      "No lo usa: hace falta un índice de expresión sobre lower(email)",
-      "Da error",
+      "No lo usa: hace falta un índice sobre lower(email)",
+      "Lo usa igual: Postgres aplica lower() al recorrerlo",
+      "Lo usa si la columna tiene collation case-insensitive",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El índice guarda email, no el resultado de la función.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué logra INCLUDE (total) en un índice?",
     opciones: [
-      "Ordena por total",
-      "Permite responder solo con el índice (Index Only Scan) sin tocar la tabla",
-      "Hace el total único",
+      "Que se pueda filtrar por total además de por la clave del índice",
+      "Responder solo con el índice (Index Only Scan), sin ir a la tabla",
+      "Que el índice se ordene también por total, para los ORDER BY",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué OFFSET 100000 es lento?",
     opciones: [
-      "Porque no usa índices nunca",
-      "Porque recorre y descarta las 100.000 filas previas",
-      "Porque bloquea la tabla",
+      "Porque obliga a ordenar la tabla entera antes de devolver nada",
+      "Porque desactiva el uso de índices en toda la consulta",
+      "Porque recorre y descarta las 100.000 filas anteriores",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "La paginación por cursor arranca directo después de la última fila vista.",
   },

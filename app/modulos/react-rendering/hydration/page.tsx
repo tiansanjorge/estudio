@@ -26,20 +26,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace React durante la hydration?",
     opciones: [
-      "Descarta el HTML del servidor y arma el DOM de nuevo desde cero",
-      "Reutiliza el HTML que ya está en la página y le conecta los event listeners y el estado de React",
-      "Descarga imágenes adicionales",
+      "Reutiliza el HTML del servidor y le conecta los listeners y el estado",
+      "Reemplaza el HTML del servidor por uno nuevo, calculado en el cliente",
+      "Descarga el estado del servidor y vuelve a renderizar desde cero",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Hydration reutiliza el DOM existente (renderizado por el servidor) en vez de recrearlo — solo lo 'conecta' con React para que se vuelva interactivo.",
   },
   {
     pregunta: "¿Qué es un hydration mismatch?",
     opciones: [
-      "Un error de sintaxis en el JSX",
-      "Cuando el HTML que calculó el servidor no coincide con lo que el cliente calcula al hidratar el mismo componente",
-      "Cuando el CSS no carga a tiempo",
+      "Que el cliente y el servidor usen versiones distintas de React al renderizar",
+      "Que el HTML del servidor no coincida con lo que el cliente calcula al hidratar",
+      "Que un componente intente hidratarse antes de que llegue su bundle de JavaScript",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,11 +48,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál es el patrón seguro para mostrar algo que solo se puede calcular en el cliente (como localStorage)?",
     opciones: [
-      "Leerlo directamente en el cuerpo del componente",
-      "useState con un valor inicial neutro (igual en servidor y cliente) + useEffect que lo actualiza después del mount",
-      "Usar suppressHydrationWarning en todos los casos",
+      "Leer localStorage en el cuerpo del componente, protegido con typeof window",
+      "Leer localStorage en el inicializador de useState, que solo corre en el cliente",
+      "Arrancar con un valor neutro igual en los dos lados y actualizarlo en un useEffect",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Arrancar con un valor neutro asegura que el primer render del cliente coincida con el del servidor (sin mismatch), y recién en useEffect — que solo corre en el cliente, después de hidratar — se actualiza con el valor real.",
   },
@@ -63,11 +63,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué habilita el streaming SSR con Suspense boundaries respecto a la hydration?",
     opciones: [
-      "Nada, la hydration siempre es un único paso para todo el árbol",
-      "Selective hydration: cada sección se hidrata independientemente a medida que llega, y React puede priorizar la sección con la que el usuario intenta interactuar",
-      "Elimina por completo la necesidad de hidratar",
+      "Hidratar cada sección por separado y priorizar la que el usuario intenta usar",
+      "Saltear la hidratación en las secciones que no tienen interactividad",
+      "Hidratar todo junto, pero recién cuando llega la última sección del HTML",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Las secciones envueltas en Suspense que tardan más se completan y transmiten después, sin bloquear al resto de la página, y se hidratan cuando llegan.",
   },
@@ -75,9 +75,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Si el usuario hace click en una sección que todavía no terminó de hidratarse, ¿el evento se pierde?",
     opciones: [
-      "Sí, siempre se pierde y hay que volver a hacer click después",
-      "No, generalmente se registra y usa como señal para elevar la prioridad de hidratación de esa sección específica",
-      "Solo funciona si la sección tiene su propio error boundary",
+      "Sí: los clicks antes de hidratar se pierden, por eso conviene hidratar rápido",
+      "No: suele registrarse y sube la prioridad de hidratación de esa sección",
+      "No: el navegador lo ejecuta con el HTML estático, sin pasar por React",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Todos los hydration mismatches tienen el mismo costo de recuperación?",
     opciones: [
-      "Sí, React siempre descarta y rehace el árbol completo",
-      "No: un mismatch de texto se puede parchear puntualmente; un mismatch estructural (tipo de elemento distinto) obliga a descartar y re-renderizar toda esa porción en el cliente",
-      "No, pero solo importa la diferencia en desarrollo, no en producción",
+      "Sí: cualquier mismatch, aunque sea un texto, obliga a re-renderizar toda la página en el cliente",
+      "Sí: React siempre parchea solo el nodo distinto, sea un texto o un elemento de otro tipo",
+      "No: un texto distinto se parchea; una estructura distinta obliga a re-renderizar esa parte",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un mismatch estructural es notoriamente más costoso y visible (puede causar un salto de layout perceptible), a diferencia de uno de texto que React puede corregir sin descartar el resto del árbol.",
   },
@@ -102,11 +102,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo evitarías el flash de tema incorrecto sin depender de un script anti-flash ni de useEffect?",
     opciones: [
-      "No es posible evitarlo de ninguna forma",
-      "Guardando la preferencia también en una cookie, que viaja en cada request y le permite al servidor renderizar el tema correcto desde el primer byte",
-      "Usando siempre localStorage y aumentando el timeout del useEffect",
+      "Guardando la preferencia en una cookie, así el servidor ya renderiza el tema correcto",
+      "Leyendo localStorage durante el SSR, para que el HTML llegue con el tema guardado del usuario",
+      "Ocultando el body con CSS hasta que termine la hidratación y recién ahí aplicar el tema",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "A diferencia de localStorage, una cookie viaja automáticamente al servidor en cada request, eliminando la discrepancia entre lo que el servidor manda y lo que el cliente muestra.",
   },

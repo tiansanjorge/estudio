@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué modelo escala a cero cuando no hay tráfico, por default?",
-    opciones: ["VMs con autoscaling", "Serverless de funciones", "Un cluster de Kubernetes"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Serverless de funciones",
+      "Contenedores en ECS",
+      "VMs con autoscaling",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Sin invocaciones no hay instancias, y no se paga por ellas.",
   },
   {
     pregunta: "Un worker que consume una cola sin parar las 24 horas, ¿dónde encaja mejor?",
-    opciones: ["Funciones serverless", "Contenedores", "Un CDN"],
+    opciones: [
+      "Funciones serverless",
+      "Contenedores",
+      "Funciones en el edge",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Es un proceso de larga vida con carga constante: justo lo que serverless hace peor.",
   },
@@ -38,18 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué elimina los cold starts a cambio de pagar capacidad ociosa?",
-    opciones: ["Achicar el bundle", "Provisioned concurrency o un mínimo de instancias", "Usar más memoria"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Más memoria asignada a la función",
+      "Un runtime más liviano, como Go",
+      "Provisioned concurrency o instancias mínimas",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Es volver en parte al modelo de instancias siempre prendidas.",
   },
   {
     pregunta: "Cien funciones concurrentes contra un Postgres sin pooler. ¿Qué pasa?",
     opciones: [
-      "Nada, Postgres las encola",
       "Se agotan las conexiones de la base",
-      "Las funciones comparten una conexión",
+      "Las funciones hacen cola y esperan su turno",
+      "Postgres reparte una conexión entre varias",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Cada instancia abre la suya; hace falta un pooler o un driver sobre HTTP.",
   },
 ];
@@ -57,18 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué señal suele reflejar mejor la carga de una API que espera IO?",
-    opciones: ["Uso de CPU", "Requests concurrentes por instancia", "Uso de disco"],
+    opciones: [
+      "Uso de CPU por instancia",
+      "Requests concurrentes por instancia",
+      "Uso de memoria por instancia",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Una app que espera a la base puede saturarse con la CPU baja.",
   },
   {
     pregunta: "¿Cuándo tiene sentido Kubernetes?",
     opciones: [
-      "Siempre, es el estándar",
-      "Con muchos servicios y equipos, y gente para operar la plataforma",
-      "Para una API con tres endpoints",
+      "Siempre que la app use contenedores, aunque sea uno solo",
+      "Cuando el tráfico es bajo y hay que ahorrar en cómputo",
+      "Con muchos servicios y equipos, y gente para operarlo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Su costo operativo solo se justifica a cierta escala.",
   },
 ];

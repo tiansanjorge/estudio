@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Traés 50 pedidos y, en un loop, buscás el cliente de cada uno. ¿Cuántas queries son?",
-    opciones: ["1", "2", "51"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "51",
+      "2",
+      "50",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "1 para la lista y 1 por pedido: el problema N+1.",
   },
   {
     pregunta: "¿Cuántas queries hace Prisma con include por defecto?",
-    opciones: ["Una por fila", "2: la lista y los relacionados con WHERE id IN (...)", "Siempre 1 con JOIN"],
+    opciones: [
+      "1: un JOIN entre la lista y los relacionados",
+      "2: la lista y los relacionados con WHERE id IN (...)",
+      "Una por cada fila de la lista, más la inicial",
+    ],
     respuestaCorrecta: 1,
     explicacion: 'Para una sola query con JOIN existe relationLoadStrategy: "join".',
   },
@@ -39,16 +47,20 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál de estas formas es vulnerable a inyección SQL?",
     opciones: [
+      "prisma.usuario.findMany({ where: { email } })",
       "prisma.$queryRaw`... WHERE email = ${email}`",
       "prisma.$queryRawUnsafe(`... WHERE email = '${email}'`)",
-      "prisma.usuario.findUnique({ where: { email } })",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "El tagged template parametriza los valores; la versión Unsafe concatena el string.",
   },
   {
     pregunta: "El equipo piensa en SQL y la app tiene muchos reportes complejos. ¿Qué encaja mejor?",
-    opciones: ["Drizzle o un query builder como Kysely", "Solo Prisma, sin SQL crudo", "Guardar todo en JSON"],
+    opciones: [
+      "Drizzle o un query builder como Kysely",
+      "Prisma, con include para los joins",
+      "Un ORM con Active Record, como TypeORM",
+    ],
     respuestaCorrecta: 0,
     explicacion: "Su API es SQL tipado, así que las consultas complejas se expresan mejor.",
   },
@@ -58,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué el hot reload de Next.js puede agotar las conexiones a la base?",
     opciones: [
-      "Porque desactiva el pool",
+      "Porque Next abre una conexión nueva por cada request en desarrollo",
       "Porque cada recarga crea un PrismaClient nuevo con su propio pool",
-      "Porque abre una conexión por componente",
+      "Porque Prisma no cierra las conexiones cuando termina cada query",
     ],
     respuestaCorrecta: 1,
     explicacion: "Se evita guardando la instancia en globalThis fuera de producción.",
   },
   {
     pregunta: "¿Contra qué URL conviene correr las migraciones si la app usa un pooler en modo transacción?",
-    opciones: ["La del pooler", "La conexión directa a la base", "Da igual"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "La del pooler en modo transacción, igual que la app",
+      "La del pooler en modo sesión, con un pool más chico",
+      "La conexión directa a la base",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "El pooler no mantiene estado de sesión, que las migraciones pueden necesitar.",
   },
 ];

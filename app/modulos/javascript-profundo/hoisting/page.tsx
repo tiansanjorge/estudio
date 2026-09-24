@@ -26,21 +26,33 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasa si accedés a una variable var antes de la línea donde se declara?",
-    opciones: ["Da ReferenceError", "Devuelve undefined, sin error", "Devuelve null"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Lanza ReferenceError, porque está en la Temporal Dead Zone",
+      "Devuelve el valor asignado más abajo: se hoistea la línea completa",
+      "Devuelve undefined: se hoistea la declaración, no la asignación",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "var se hoistea con valor undefined desde la fase de creación. Leerla antes de su asignación no da error, solo undefined.",
   },
   {
     pregunta: "¿Qué pasa si accedés a una variable let antes de la línea donde se declara?",
-    opciones: ["Devuelve undefined", "ReferenceError, por la Temporal Dead Zone", "Devuelve el valor por defecto del tipo"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "ReferenceError: la variable existe, pero está en la Temporal Dead Zone",
+      "ReferenceError: let no se hoistea, así que la variable todavía no existe",
+      "Devuelve undefined, igual que var, porque también se hoistea",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "let (y const) se hoistean, pero quedan en la TDZ: no tienen un valor accesible hasta que se ejecuta su línea de declaración.",
   },
   {
     pregunta: "¿Se puede llamar a una function declaration antes de la línea donde está escrita?",
-    opciones: ["No, nunca", "Sí, porque se hoistea completa con su cuerpo incluido", "Solo si es una arrow function"],
+    opciones: [
+      "Sí, pero vale undefined hasta llegar a su línea, como un var",
+      "Sí: se hoistea completa, con su cuerpo incluido",
+      "No: queda en la Temporal Dead Zone hasta su línea, como let",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "A diferencia de var/let/const, una function declaration se hoistea entera — el motor ya tiene la función completa disponible desde la fase de creación.",
@@ -52,11 +64,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Una class declaration se puede usar antes de su línea, igual que una function declaration?",
     opciones: [
-      "Sí, las clases se hoistean completas igual que las funciones",
-      "No: se hoistea pero queda en la Temporal Dead Zone, como let/const",
-      "No se hoistea en absoluto",
+      "Sí: una clase es una función por debajo, así que se hoistea completa",
+      "No: las clases no se hoistean y su nombre no existe hasta esa línea",
+      "No: se hoistea, pero queda en la Temporal Dead Zone, como let/const",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Aunque sintácticamente se parece a una function declaration, para hoisting una clase sigue las reglas de let/const: usarla antes de su línea lanza ReferenceError.",
   },
@@ -64,11 +76,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué reglas de lint como no-use-before-define prohíben confiar en el hoisting de funciones?",
     opciones: [
-      "Porque el hoisting de funciones no funciona en todos los navegadores",
-      "Es una regla de legibilidad: hace que el código se lea en el mismo orden en que se ejecuta, y evita bugs si la función se reemplaza por una const con arrow function",
-      "Porque las function declarations están deprecadas",
+      "Por legibilidad: el código se lee en el orden en que corre, y evita bugs si se pasa a const + arrow",
+      "Porque el hoisting de funciones se comporta distinto según el navegador y el modo estricto",
+      "Porque el bundler no puede hacer tree-shaking de funciones que se usan antes de declararse",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "No es un problema de corrección técnica sino de mantenibilidad: forzar declarar-antes-de-usar evita saltos hacia adelante en el archivo y protege contra un futuro refactor a arrow function, que sí tiene TDZ.",
   },
@@ -79,9 +91,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "function f(a = b, b) {} — ¿qué pasa al llamar a f()?",
     opciones: [
-      "Funciona normalmente, b es undefined",
-      "Lanza ReferenceError, porque b todavía está en la TDZ del scope de parámetros cuando se evalúa el default de a",
-      "a queda como undefined silenciosamente",
+      "a queda undefined, porque b se hoistea como var dentro de los parámetros",
+      "ReferenceError: b sigue en la TDZ cuando se evalúa el default de a",
+      "Funciona: los defaults se evalúan después de declarar todos los parámetros",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -91,11 +103,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo se evalúa la cláusula extends de una clase?",
     opciones: [
-      "Recién cuando se hace new de la clase",
-      "Inmediatamente cuando se ejecuta la declaración de la clase",
-      "Nunca se evalúa si la clase no se instancia",
+      "Cuando se ejecuta la declaración de la clase",
+      "Cuando se hace el primer new de la clase",
+      "Cuando el constructor llama a super()",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Por eso class B extends A {} lanza ReferenceError en ese momento si A todavía está en su propia TDZ, no cuando se hace new B().",
   },

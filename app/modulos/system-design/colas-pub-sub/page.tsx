@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Facturación, envíos y analítica tienen que enterarse de cada pedido. ¿Qué modelo?",
-    opciones: ["Una cola compartida", "Pub/sub: cada suscriptor recibe su copia", "Una llamada HTTP a cada uno"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Pub/sub: cada suscriptor recibe su copia",
+      "Una cola compartida por los tres consumidores",
+      "Llamadas HTTP del checkout a cada servicio",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "En una cola compartida, cada mensaje lo recibiría uno solo de los tres.",
   },
   {
     pregunta: "¿Qué permite Kafka que una cola tradicional no?",
-    opciones: ["Borrar mensajes al leerlos", "Releer el historial desde cualquier offset", "Enviar emails"],
+    opciones: [
+      "Garantizar exactly-once sin ningún trabajo del consumidor",
+      "Releer el historial desde cualquier offset",
+      "Borrar cada mensaje apenas un consumidor lo procesa",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Retiene los mensajes aunque se hayan consumido.",
   },
@@ -38,14 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué garantía da SQS estándar?",
-    opciones: ["At-most-once", "At-least-once", "Exactly-once de punta a punta"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Exactly-once y en orden",
+      "At-most-once",
+      "At-least-once",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Un mensaje puede llegar más de una vez: el consumidor tiene que ser idempotente.",
   },
   {
     pregunta: "¿Cómo mantenés en orden los eventos de cada pedido en Kafka?",
-    opciones: ["Con un solo consumidor global", "Usando el id del pedido como clave de partición", "No se puede"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Usando el id del pedido como clave de partición",
+      "Con un topic de una sola partición para todo",
+      "Ordenándolos por timestamp en el consumidor",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Misma clave, misma partición, y dentro de una partición hay orden.",
   },
 ];
@@ -53,18 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un topic con 6 particiones y 10 consumidores en el grupo. ¿Cuántos trabajan?",
-    opciones: ["10", "6", "1"],
+    opciones: [
+      "10",
+      "6",
+      "5",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Una partición la lee un solo consumidor del grupo: 4 quedan ociosos.",
   },
   {
     pregunta: "Un job de SQS tarda 90 segundos y el visibility timeout es 30. ¿Qué pasa?",
     opciones: [
-      "Nada",
+      "SQS extiende el timeout solo mientras el consumidor siga vivo",
+      "El mensaje va a la dead-letter queue por tardar demasiado",
       "El mensaje reaparece y otro consumidor lo procesa en paralelo",
-      "SQS lo borra",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Hay que subir el timeout o extenderlo mientras se procesa.",
   },
 ];

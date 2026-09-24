@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué React.lazy siempre se usa junto con Suspense?",
     opciones: [
-      "Es solo una convención, no hay una razón técnica",
-      "Mientras el código del componente lazy se descarga, React necesita mostrar algo — Suspense provee ese fallback",
-      "Suspense es requerido por sintaxis, sin efecto real",
+      "Porque mientras se descarga el código, React necesita un fallback que mostrar",
+      "Porque Suspense es el que dispara el import() dinámico del componente",
+      "Porque sin Suspense el componente lazy se renderiza en el servidor",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Suspense muestra un fallback mientras el componente lazy todavía no está disponible, y lo reemplaza automáticamente por el componente real en cuanto termina de cargar.",
   },
   {
     pregunta: "¿Qué tipo de componentes conviene cargar de forma lazy?",
     opciones: [
-      "El contenido que el usuario ve apenas entra a la página",
-      "Componentes que no son visibles de inmediato: modales, pestañas secundarias, rutas poco visitadas",
-      "Cualquier componente, sin importar su visibilidad",
+      "Los más pesados de la página, aunque se vean apenas carga",
+      "Los que no se ven de entrada: modales, pestañas secundarias, rutas poco usadas",
+      "Todos los que tengan estado, porque son los más caros de hidratar",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué riesgo tiene el lazy loading demasiado agresivo (muchos chunks chicos)?",
     opciones: [
-      "Ninguno, cuantos más chunks mejor siempre",
-      "Cada import() dinámico es una request adicional; muchas requests chicas pueden generar más overhead acumulado que pocos chunks grandes bien elegidos",
-      "Rompe la sintaxis de JavaScript",
+      "Que el bundler deja de hacer tree-shaking en los módulos cargados con import()",
+      "Que los componentes lazy pierden su estado cada vez que se vuelven a mostrar",
+      "Cada import() es otra request: muchas chicas pueden costar más que pocas grandes",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El punto óptimo suele estar en dividir por unidades de navegación reales, no en fragmentar cada componente individual.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo evitarías que el usuario vea el fallback de Suspense al hacer click en un enlace que probablemente va a visitar?",
     opciones: [
-      "No es posible evitarlo de ninguna forma",
-      "Con preloading: disparar el import() dinámico en el onMouseEnter del enlace, antes del click real",
-      "Aumentando el tiempo del fallback",
+      "Disparando el import() en el onMouseEnter del enlace, antes del click",
+      "Poniendo el fallback en null, así no se muestra nada mientras carga",
+      "Envolviendo la navegación en startTransition para que espere la descarga",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Si la descarga ya terminó (o está en curso) cuando el usuario hace click, el fallback se muestra por mucho menos tiempo o directamente no se muestra.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Si el import() de un componente lazy falla, ¿Suspense captura ese error?",
     opciones: [
-      "Sí, Suspense maneja tanto la carga como los errores",
-      "No: Suspense solo maneja el estado de carga; el error hay que capturarlo con un error boundary por fuera",
-      "Solo si el componente usa try/catch internamente",
+      "Sí: Suspense muestra el fallback hasta que el import() se reintente con éxito",
+      "No: Suspense maneja la carga; el error lo tiene que capturar un error boundary",
+      "Sí, y lo reintenta automáticamente hasta tres veces antes de mostrar el error",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Si un import() lazy falló y el usuario hace click en 'reintentar', ¿alcanza con re-renderizar el mismo componente?",
     opciones: [
-      "Sí, siempre reintenta la descarga automáticamente",
-      "No necesariamente: React.lazy cachea la Promise rechazada, hace falta cambiar la key para forzar una descarga nueva",
-      "No, hay que recargar toda la página siempre",
+      "Sí: cada render vuelve a ejecutar el import() del componente lazy",
+      "Sí, siempre que el error boundary se resetee antes de re-renderizar",
+      "No: React.lazy cachea la Promise rechazada; hay que cambiar la key",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Cambiar la key del componente lazy (o del boundary que lo envuelve) hace que React lo trate como una instancia nueva y dispare el import() de cero.",
   },

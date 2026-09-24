@@ -23,16 +23,20 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué suele escalarse verticalmente primero?",
-    opciones: ["La capa de aplicación sin estado", "La base de datos", "El CDN"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "La base de datos",
+      "La API sin estado",
+      "El CDN",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Repartir una base con estado es mucho más complejo que agrandar la máquina.",
   },
   {
     pregunta: "La app guarda la sesión en memoria y agregás una segunda instancia. ¿Qué pasa?",
     opciones: [
-      "Nada",
-      "Los usuarios pierden la sesión cuando el balanceador los manda a la otra instancia",
-      "La sesión se copia sola",
+      "Nada: el balanceador replica la memoria entre instancias",
+      "Los usuarios pierden la sesión al caer en la otra instancia",
+      "Las sesiones se duplican y cada usuario tiene dos",
     ],
     respuestaCorrecta: 1,
     explicacion: "El estado tiene que ir a un almacén compartido o a un token.",
@@ -42,18 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Con requests de duración muy variable, ¿qué algoritmo reparte mejor la carga?",
-    opciones: ["Round-robin", "Least connections", "Hash por IP"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Round robin",
+      "IP hash",
+      "Least connections",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Mira cuántas requests activas tiene cada servidor, no solo cuántas le mandó.",
   },
   {
     pregunta: "¿Qué problema traen las sticky sessions con autoscaling?",
     opciones: [
-      "Ninguno",
-      "Las instancias nuevas solo reciben usuarios nuevos y tardan en aliviar a las sobrecargadas",
-      "Desactivan el autoscaling",
+      "Las instancias nuevas solo reciben usuarios nuevos y tardan en aliviar",
+      "Las instancias nuevas no pueden leer las cookies de las sesiones viejas",
+      "El balanceador deja de hacer health checks sobre las instancias",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Los usuarios existentes siguen atados a su instancia original.",
   },
 ];
@@ -61,18 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Con hash % N, pasar de 4 a 5 servidores de caché, ¿qué fracción de claves cambia de servidor?",
-    opciones: ["Alrededor del 20%", "Alrededor del 80%", "Ninguna"],
+    opciones: [
+      "Alrededor del 20%",
+      "Alrededor del 80%",
+      "Alrededor del 50%",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Con consistent hashing se movería solo alrededor de 1/5.",
   },
   {
     pregunta: "Ante un pico que supera la capacidad, ¿qué conviene?",
     opciones: [
-      "Aceptar todo y responder lento para todos",
-      "Rechazar rápido el excedente con 503 y priorizar lo importante",
-      "Reintentar inmediatamente todo lo que falla",
+      "Encolar todo el excedente hasta que haya capacidad",
+      "Subir los timeouts para que ningún request falle",
+      "Rechazar rápido el excedente con 503 y priorizar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Load shedding protege a los usuarios que sí se pueden atender.",
   },
 ];

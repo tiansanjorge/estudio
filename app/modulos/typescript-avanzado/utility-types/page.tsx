@@ -23,9 +23,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace Partial<T>?",
     opciones: [
-      "Elimina la mitad de las propiedades de T",
-      "Hace que todas las propiedades de T sean opcionales",
-      "Convierte T en un array",
+      "Hace opcionales las propiedades de T, incluidas las anidadas",
+      "Hace opcionales todas las propiedades de T",
+      "Toma solo algunas propiedades de T, las que le indiques",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -34,22 +34,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿En qué se diferencian Pick<T, K> y Omit<T, K>?",
     opciones: [
-      "Son exactamente lo mismo",
-      "Pick se queda solo con las propiedades K; Omit se queda con todas menos las K",
-      "Pick es para arrays, Omit es para objetos",
+      "Pick exige que K exista en T; Omit también, pero además las vuelve opcionales",
+      "Pick copia las propiedades K; Omit las marca como never sin quitarlas",
+      "Pick se queda solo con las K; Omit se queda con todas menos las K",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Pick construye un tipo quedándose únicamente con las claves indicadas. Omit hace lo inverso: todas las propiedades del tipo original excepto las indicadas.",
   },
   {
     pregunta: "¿Por qué conviene derivar un tipo con Pick/Omit en vez de copiarlo a mano?",
     opciones: [
-      "Por una cuestión de estilo únicamente, no tiene impacto real",
-      "Porque una copia manual puede desincronizarse si el tipo original cambia; el derivado se actualiza solo",
-      "Porque Pick/Omit son más rápidos en tiempo de ejecución",
+      "Porque una copia manual se desincroniza si cambia el tipo original",
+      "Porque los tipos derivados compilan más rápido que los escritos a mano",
+      "Porque solo los tipos derivados se pueden exportar entre módulos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Los utility types no existen en runtime — la ventaja es en compilación: si el tipo base cambia, el derivado lo refleja automáticamente y el compilador avisa donde haga falta ajustar código.",
   },
@@ -59,9 +59,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "type Nullable<T> = { [K in keyof T]: T[K] | null } — ¿qué mecanismo usa?",
     opciones: [
-      "Es una función especial del compilador sin relación con otros utility types",
-      "Un mapped type, el mismo mecanismo que usan por debajo Partial y Readonly",
-      "Un decorator de clase",
+      "Un conditional type que distribuye null sobre cada propiedad",
+      "Un mapped type, el mismo mecanismo que Partial y Readonly",
+      "Un index signature que agrega null a cualquier clave nueva",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -70,11 +70,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Readonly<Config> donde Config tiene una propiedad anidada objeto — ¿protege esa propiedad anidada?",
     opciones: [
-      "Sí, Readonly siempre es profundo (deep readonly)",
-      "No, Readonly solo protege el primer nivel; el objeto anidado sigue siendo mutable",
-      "Solo si se usa junto con const",
+      "Sí: Readonly se aplica recursivamente a todos los niveles del objeto",
+      "Sí, pero solo en compilación; en runtime el objeto sigue siendo mutable",
+      "No: protege el primer nivel, y el objeto anidado sigue siendo mutable",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "TypeScript no incluye un DeepReadonly nativo. Para inmutabilidad real en todos los niveles hay que escribir un mapped type recursivo propio o usar una librería.",
   },
@@ -85,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué permite la cláusula 'as' dentro de un mapped type (key remapping)?",
     opciones: [
-      "Cambiar el tipo de TypeScript en tiempo de ejecución",
-      "Transformar el nombre de cada clave al mapear, incluso generando nombres nuevos con template literal types",
-      "Convertir un mapped type en una clase",
+      "Renombrar cada clave al mapear, incluso con template literal types",
+      "Castear el valor de cada propiedad a otro tipo durante el mapeo",
+      "Filtrar solo las claves opcionales del tipo original",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Combinado con template literal types permite generar, por ejemplo, un getter por cada propiedad con un nombre derivado (getNombre, getEdad). Mapear una clave a never la excluye del resultado.",
   },
@@ -97,9 +97,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "NonNullable<string | null | undefined> da como resultado 'string'. ¿Por qué funciona así con un union?",
     opciones: [
-      "Porque TypeScript tiene un caso especial hardcodeado para NonNullable",
-      "Porque es un conditional type distributivo: la condición se evalúa por separado en cada miembro del union, y null/undefined se descartan a never",
-      "Porque los union types con null siempre colapsan a su primer miembro",
+      "Porque TypeScript elimina null y undefined de cualquier union al compilar",
+      "Porque distribuye la condición por cada miembro, y null y undefined dan never",
+      "Porque NonNullable toma solo el primer miembro de la union",
     ],
     respuestaCorrecta: 1,
     explicacion:

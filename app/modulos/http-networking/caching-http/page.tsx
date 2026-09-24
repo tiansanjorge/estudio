@@ -26,17 +26,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia hay entre no-store y no-cache?",
     opciones: [
-      "Son sinónimos",
-      "no-store nunca guarda nada; no-cache sí guarda, pero revalida antes de usar la copia",
-      "no-cache es más estricto que no-store",
+      "no-store nunca guarda; no-cache guarda, pero revalida antes de usar la copia",
+      "no-cache nunca guarda; no-store guarda, pero solo en el cache del navegador",
+      "Ninguna en la práctica: los dos obligan a pedir siempre la respuesta completa",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "no-store prohíbe guardar cualquier copia. no-cache sí permite guardarla, pero obliga a revalidar con el servidor antes de reutilizarla.",
   },
   {
     pregunta: "Con max-age=3600 vencido, el servidor confirma que el contenido no cambió. ¿Qué status responde?",
-    opciones: ["200 con el body completo de nuevo", "304 Not Modified, sin body", "204 No Content"],
+    opciones: [
+      "200 OK con el mismo body, para que el cliente lo vuelva a guardar",
+      "304 Not Modified, sin body",
+      "204 No Content, porque no hay nada nuevo que mandar",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "304 le dice al cliente 'seguí usando tu copia', sin volver a mandar el body — solo se transfieren los headers.",
@@ -44,11 +48,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Para qué sirve stale-while-revalidate?",
     opciones: [
-      "Para bloquear al usuario hasta que termine de revalidar",
+      "Para extender max-age automáticamente mientras el contenido no cambie",
+      "Para servir la copia vieja solo cuando el servidor está caído",
       "Para servir la copia vieja al instante mientras revalida en segundo plano",
-      "Para forzar que nunca se cachee nada",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Prioriza velocidad: el usuario ve la respuesta cacheada inmediatamente, y el navegador actualiza la copia en background para la próxima vez.",
   },
@@ -58,17 +62,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué un archivo app.3f9a1c.js puede cachearse un año?",
     opciones: [
-      "Porque los JS nunca cambian",
-      "Porque el hash cambia con cada versión: la misma URL siempre tiene el mismo contenido",
-      "Porque el navegador lo revalida igual",
+      "Porque el hash cambia con cada versión: esa URL siempre tiene el mismo contenido",
+      "Porque los .js se cachean por defecto un año en todos los navegadores",
+      "Porque el hash le permite al CDN invalidar la copia vieja cuando hay deploy",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es cache busting: un deploy nuevo genera nombres nuevos, que el HTML (sin cachear) referencia.",
   },
   {
     pregunta: "¿Qué directiva impide que un CDN compartido guarde una respuesta por usuario?",
-    opciones: ["public", "private", "immutable"],
+    opciones: [
+      "no-cache",
+      "private",
+      "must-revalidate",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "private permite guardarla solo en el navegador de ese usuario.",
@@ -79,18 +87,22 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué explota un ataque de cache poisoning típico?",
     opciones: [
-      "Un max-age demasiado corto",
+      "Un max-age demasiado largo, que deja una respuesta vieja servida por días",
+      "Un ETag predecible, que permite fabricar una versión válida del recurso",
       "Headers que cambian la respuesta pero no forman parte de la clave del cache",
-      "El uso de ETag",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El CDN guarda la respuesta manipulada bajo la URL normal y se la sirve a todos.",
   },
   {
     pregunta: "Una entrada muy pedida vence y el backend se cae por la avalancha. ¿Qué ayuda?",
-    opciones: ["Vary: *", "stale-while-revalidate y request coalescing", "no-store"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "stale-while-revalidate y request coalescing",
+      "Bajar el max-age para que venza de a poco",
+      "Pasar la respuesta a no-cache con ETag",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Se sigue sirviendo la copia vieja y un solo request regenera la entrada.",
   },

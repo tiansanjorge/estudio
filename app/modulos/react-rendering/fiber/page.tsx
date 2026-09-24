@@ -26,31 +26,31 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema del reconciler viejo (React 15) vino a resolver Fiber?",
     opciones: [
-      "Que los componentes de clase eran muy lentos de escribir",
-      "Que renderizar un árbol grande era una sola operación recursiva ininterrumpible, capaz de trabar el hilo principal",
-      "Que JSX no soportaba fragmentos",
+      "Que no podía comparar listas sin keys y volvía a crear todos los elementos en cada render",
+      "Que escribía en el DOM en cada setState por separado, sin agrupar los cambios del evento",
+      "Que renderizar un árbol grande era una recursión que no se podía interrumpir",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El reconciler recursivo no podía pausarse a mitad de camino: una vez que empezaba a renderizar un árbol grande, el navegador no podía atender nada más (input, animaciones) hasta que terminara.",
   },
   {
     pregunta: "¿Qué es, en esencia, una 'unidad de trabajo' en Fiber?",
     opciones: [
-      "Un archivo de código fuente",
-      "Un pedazo chico del trabajo de render (aproximadamente un componente), después del cual React puede ceder el control",
-      "Una petición de red",
+      "Un pedazo chico del render (más o menos un componente), tras el cual React puede ceder",
+      "Un render completo del árbol, que React puede repetir desde cero si algo falla a mitad",
+      "Una mutación del DOM, que React agrupa con otras parecidas antes de aplicarlas juntas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Fiber divide el render en unidades pequeñas. Entre unidad y unidad hay un punto donde React puede pausar, dejar que el navegador atienda algo más urgente, y retomar después exactamente donde había quedado.",
   },
   {
     pregunta: "¿Fiber cambia QUÉ calcula React (el resultado del render) o CÓMO lo ejecuta?",
     opciones: [
-      "Cambia el resultado: con Fiber, React renderiza cosas distintas",
-      "Cambia la ejecución: el resultado final es el mismo, pero el trabajo se puede pausar, priorizar y retomar",
-      "Reemplaza JSX por otro lenguaje",
+      "Cambia el resultado: el diffing es más preciso y termina generando menos mutaciones",
+      "Cambia la ejecución: mismo resultado, pero el trabajo se puede pausar y priorizar",
+      "Cambia las dos cosas: calcula menos nodos y además lo hace en un hilo aparte",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -63,11 +63,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué son los árboles 'current' y 'work-in-progress' en Fiber?",
     opciones: [
-      "Son sinónimos, React solo mantiene un árbol",
-      "Current es lo que está en pantalla; work-in-progress es una copia donde React calcula la próxima actualización, que puede descartarse sin afectar lo visible",
-      "Current es el árbol del servidor, work-in-progress es el del cliente",
+      "Current es el árbol que renderizó el servidor; work-in-progress, el que se hidrata en el cliente",
+      "Current es el Virtual DOM ya comparado; work-in-progress, el DOM real que se está mutando",
+      "Current es lo que se ve; work-in-progress, un borrador descartable de la próxima versión",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es la técnica de 'double buffering': si el trabajo en progreso se descarta a mitad de camino, el árbol current nunca se vio afectado. Recién al completarse se intercambian, en Commit.",
   },
@@ -75,11 +75,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo decide React qué actualización procesar primero cuando hay varias pendientes?",
     opciones: [
-      "Siempre en el orden en que se dispararon (FIFO)",
-      "Con un sistema de 'lanes': cada actualización tiene una prioridad según su origen (click urgente vs transición de baja prioridad)",
-      "Al azar, para evitar sesgos",
+      "Con 'lanes': cada actualización tiene una prioridad según su origen",
+      "Por orden de llegada: la primera que se disparó es la primera que se procesa",
+      "Por profundidad: primero las de los componentes más cercanos a la raíz",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Una interacción directa del usuario tiene una lane de alta prioridad; una actualización en startTransition, una de baja prioridad. React siempre prioriza las lanes más altas.",
   },
@@ -90,9 +90,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué React implementó su propio Scheduler en vez de usar requestIdleCallback del navegador?",
     opciones: [
-      "requestIdleCallback no existe en ningún navegador",
-      "Su timing es inconsistente entre navegadores y no da el control fino que React necesita sobre cuándo ceder el control",
-      "Por una cuestión de licencias de software",
+      "Porque requestIdleCallback no existe en Node y React necesita el mismo código en SSR",
+      "Porque su timing es inconsistente y no le da a React control fino sobre cuándo ceder",
+      "Porque requestIdleCallback solo corre una vez por frame y React necesita varias",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -102,11 +102,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Dentro del procesamiento de un fiber, ¿qué diferencia hay entre 'begin work' y 'complete work'?",
     opciones: [
-      "Son la misma fase con nombres distintos",
-      "Begin work es descendente (crea fibers hijos bajando por el árbol); complete work es ascendente (completa cada fiber al subir, una vez sin más hijos)",
-      "Begin work ocurre en el servidor, complete work en el cliente",
+      "Begin work calcula el render y complete work aplica los cambios al DOM",
+      "Begin work corre en render y complete work en commit, ya en el DOM real",
+      "Begin work baja creando fibers hijos; complete work sube completando cada uno",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es el mismo patrón de recorrido en profundidad de una recursión normal, pero con punteros explícitos en vez de la pila de llamadas de JavaScript, para poder pausarlo entre pasos.",
   },

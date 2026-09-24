@@ -24,22 +24,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace ReactDOM.createPortal(children, domNode)?",
     opciones: [
-      "Crea un nuevo componente de React desde cero",
-      "Renderiza children en un nodo del DOM distinto al del padre, aunque siga siendo hijo lógico en el árbol de React",
-      "Mueve un componente a otra ruta de la aplicación",
+      "Monta children como una app de React separada, con su propio árbol y su propio estado",
+      "Mueve children a otro nodo del DOM y los saca del árbol de React del padre",
+      "Renderiza children en otro nodo del DOM, pero sigue siendo hijo en el árbol de React",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Resuelve el problema clásico de modales y tooltips atrapados por overflow: hidden o z-index de un contenedor padre — el portal escapa de esa jerarquía del DOM sin romper la jerarquía lógica de React.",
   },
   {
     pregunta: "¿Para qué tipo de UI se usa típicamente un portal?",
     opciones: [
-      "Componentes que nunca cambian de estado",
-      "Modales, tooltips, menús desplegables, notificaciones — UI que necesita renderizarse por encima de todo sin ser recortada",
-      "Cualquier componente que use useState",
+      "Modales, tooltips y menús: UI que tiene que quedar por encima sin ser recortada",
+      "Listas muy largas, para renderizar fuera de pantalla los elementos que no se ven",
+      "Componentes que cargan datos, para que el fetch no bloquee al resto de la página",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Todos comparten el mismo problema: si se renderizaran en su posición natural del árbol, quedarían atrapados por el overflow o z-index de algún contenedor padre.",
   },
@@ -50,9 +50,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Un evento disparado dentro de un portal, ¿burbujea por el DOM real o por el árbol de React?",
     opciones: [
-      "Por el DOM real, siguiendo la posición física del nodo",
-      "Por el árbol de React: sigue burbujeando hacia los componentes ancestros en JSX, no hacia los ancestros reales del DOM",
-      "No burbujea en absoluto, queda aislado",
+      "Por el DOM real: sube hasta <body>, porque ahí está montado el portal",
+      "Por el árbol de React: llega a los ancestros del JSX, no a los del DOM",
+      "Por ninguno: los eventos dentro de un portal no burbujean hacia afuera",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué un selector CSS como .padre > .contenido-modal no aplica estilos al contenido de un portal?",
     opciones: [
-      "Porque los portales no soportan CSS",
-      "Porque el selector depende de la relación de descendencia real en el DOM, que el portal específicamente rompe",
-      "Porque hay que usar !important siempre con portales",
+      "Porque React agrega un shadow DOM alrededor del contenido del portal",
+      "Porque los estilos del padre se aplican recién después de que el portal se monta",
+      "Porque el selector depende del DOM real, y el portal cambia dónde queda el contenido",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "CSS no ve la jerarquía de React, solo el DOM real. El contenido del portal está montado en otro nodo completamente distinto, así que el selector falla silenciosamente.",
   },
@@ -77,9 +77,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué llamar a createPortal con document.getElementById directamente puede romper el SSR en Next.js?",
     opciones: [
-      "document no existe en el entorno de Node donde corre el server-side rendering",
-      "createPortal solo funciona en producción, no en desarrollo",
-      "Next.js prohíbe el uso de createPortal por completo",
+      "Porque document no existe en el entorno de Node donde corre el SSR",
+      "Porque Next.js prohíbe usar portales dentro de Server Components",
+      "Porque el nodo de destino todavía no existe durante la hidratación",
     ],
     respuestaCorrecta: 0,
     explicacion:
@@ -89,9 +89,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Un portal es inmune a quedar visualmente 'atrapado' por un z-index bajo, incluso montado cerca de la raíz del documento?",
     opciones: [
-      "Sí, siempre queda por encima de todo lo demás",
-      "No: si un ancestro real del nodo destino crea su propio stacking context (transform, filter, opacity < 1), puede acotar el z-index del contenido del portal igual",
-      "Solo es un problema en navegadores antiguos",
+      "Sí: al montarse cerca de la raíz, su z-index compite con toda la página",
+      "No: si un ancestro del nodo destino crea un stacking context, lo sigue acotando",
+      "Sí, siempre que el contenido del portal tenga position: fixed",
     ],
     respuestaCorrecta: 1,
     explicacion:

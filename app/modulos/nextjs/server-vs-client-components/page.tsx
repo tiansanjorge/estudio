@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué puede hacer un Server Component que un Client Component no?",
     opciones: [
-      "Usar useState",
-      "Leer la base de datos o usar secretos sin mandar ese código al navegador",
-      "Manejar un onClick",
+      "Leer la base o usar secretos sin mandar ese código al navegador",
+      "Renderizarse a HTML en la carga inicial, antes de hidratar",
+      "Usar hooks como useState y useEffect en el servidor",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Corre solo en el servidor: su código no está en el bundle del cliente.",
   },
   {
     pregunta: "¿Un Client Component se renderiza en el servidor en la carga inicial?",
     opciones: [
-      "No, solo en el navegador",
-      "Sí, se prerenderiza a HTML y después se hidrata",
-      "Solo si no usa estado",
+      "No: solo se renderiza en el navegador, después de descargar su JS",
+      "Sí: se prerenderiza a HTML y después se hidrata",
+      "Solo si no usa hooks; si usa, se renderiza recién en el cliente",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,18 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Un Client Component recibe <Carrito /> como children desde la page. ¿Qué es Carrito?",
     opciones: [
-      "Un Client Component, porque está adentro de uno",
+      "Un Client Component: todo lo que está dentro de uno pasa al cliente",
+      "Depende: es cliente si Carrito usa algún hook, y servidor si no",
       "Un Server Component, porque lo importa y renderiza la page",
-      "Da error: no se puede anidar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "La frontera sigue el grafo de imports, no la posición visual en el árbol.",
   },
   {
     pregunta: "¿Cuál de estas props NO se puede pasar de un Server Component a un Client Component?",
-    opciones: ["Un objeto plano", "Una Promise", "Una función común como onClick"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "Una función común como onClick",
+      "Una Promise sin resolver",
+      "Un objeto Date",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Las funciones no se serializan; sí se pueden pasar Server Actions.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace import \"server-only\" en un módulo?",
     opciones: [
-      "Lo ejecuta dos veces",
+      "Marca el módulo para que corra solo en el runtime de Node",
       "Hace fallar el build si se importa desde el cliente",
-      "Oculta las variables de entorno",
+      "Oculta sus exports del bundle, pero deja que el cliente lo importe",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo se comparten datos del servidor con muchos Client Components sin bloquear el render?",
     opciones: [
-      "Con un Context en un Server Component",
-      "Pasando la Promise sin await a un Provider de cliente y leyéndola con use()",
-      "Con variables globales",
+      "Resolviendo los datos en el layout y pasándolos por props a cada componente",
+      "Guardándolos en un store global que el servidor serializa en el HTML",
+      "Pasando la Promise sin await a un Provider y leyéndola con use()",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El render no espera la consulta, y los consumidores suspenden hasta que se resuelve.",
   },

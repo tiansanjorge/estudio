@@ -26,31 +26,31 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué determina si un objeto es candidato a ser liberado por el Garbage Collector?",
     opciones: [
-      "Que hayan pasado más de unos segundos desde que se creó",
-      "Que ya no sea alcanzable desde ningún root (variables globales, el scope en ejecución, etc.)",
-      "Que ocupe más de cierto tamaño en memoria",
+      "Que su contador de referencias llegue a cero",
+      "Que nadie lo haya accedido durante varios ciclos del GC",
+      "Que ya no sea alcanzable desde ningún root",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El criterio es reachability, no tiempo ni tamaño: si no existe ningún camino de referencias desde un root hasta ese objeto, es basura recolectable.",
   },
   {
     pregunta: "Dos objetos se referencian mutuamente (A → B y B → A), pero nada externo los referencia. ¿El motor de JS los recolecta?",
     opciones: [
-      "No, porque se referencian entre sí y nunca llegan a cero referencias",
-      "Sí: el algoritmo de mark-and-sweep no los considera alcanzables aunque formen un ciclo",
-      "Depende del navegador",
+      "Sí: mark-and-sweep parte de los roots, y el ciclo no es alcanzable",
+      "No: se referencian entre sí, así que su contador nunca llega a cero",
+      "Solo si alguno de los dos está guardado en un WeakRef o un WeakMap",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "A diferencia de un conteo simple de referencias, mark-and-sweep parte desde los roots. Un ciclo que nadie alcanza desde afuera queda igual de recolectable.",
   },
   {
     pregunta: "¿Cuál de estas es una causa típica de fuga de memoria en frontend?",
     opciones: [
-      "Declarar demasiadas variables const",
-      "No remover un event listener que retiene una closure con datos grandes",
-      "Usar arrow functions en vez de function declarations",
+      "Muchas variables locales grandes en una función que se llama seguido",
+      "Un event listener sin remover que retiene una closure con datos grandes",
+      "Objetos grandes que se crean en un loop y se descartan en cada vuelta",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -63,11 +63,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué V8 divide el heap en una generación joven y una vieja?",
     opciones: [
-      "Para ahorrar espacio en disco",
-      "Porque la mayoría de los objetos mueren jóvenes: recolectar la generación joven seguido con un algoritmo rápido es más eficiente que tratar todo el heap igual",
-      "Es un requisito de la spec de ECMAScript",
+      "Para mover los objetos viejos a una zona comprimida y liberar RAM",
+      "Para que la recolección de la zona vieja corra en paralelo con el código",
+      "Porque la mayoría de los objetos muere joven, y recolectar esa zona seguido es barato",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Los objetos nuevos van a una generación joven pequeña, recolectada muy seguido (Scavenger). Los que sobreviven se promueven a la generación vieja, recolectada con menos frecuencia usando Mark-Compact.",
   },
@@ -75,11 +75,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué perdés al usar WeakMap en vez de Map para evitar leaks?",
     opciones: [
-      "Nada, son funcionalmente idénticos",
-      "No podés iterar sus entradas ni conocer su tamaño (no tiene .size), porque su contenido puede desaparecer en cualquier momento por el GC",
-      "WeakMap es mucho más lento en cada operación",
+      "No podés iterarlo ni saber su tamaño: sus entradas pueden desaparecer en cualquier momento",
+      "Sus valores quedan débiles: pueden recolectarse aunque la clave siga viva",
+      "Solo acepta strings como claves, así que no sirve para asociar datos a objetos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Las claves de un WeakMap son referencias débiles: si nada más referencia la clave, la entrada desaparece sola. A cambio de esa limpieza automática, se pierde la capacidad de iterar o medir el tamaño.",
   },
@@ -90,9 +90,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Guardás una referencia a un solo nodo hijo de un árbol del DOM removido. ¿Qué queda retenido en memoria?",
     opciones: [
-      "Solo ese nodo hijo puntual",
-      "Todo el subárbol completo, porque los nodos del DOM tienen referencias bidireccionales padre-hijo (parentNode)",
-      "Nada, el navegador libera todo lo removido del documento automáticamente",
+      "Solo ese nodo: al removerlo, el navegador corta los vínculos con su padre",
+      "Todo el subárbol: desde el hijo se llega al resto por parentNode y childNodes",
+      "Nada: los nodos fuera del documento se liberan aunque tengas una referencia",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -102,11 +102,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué no conviene depender de FinalizationRegistry para lógica de negocio crítica?",
     opciones: [
-      "Porque solo funciona en Node, no en el navegador",
-      "Porque la spec no garantiza cuándo (ni si) el callback de finalización va a correr",
-      "Porque tiene un límite de 100 registros por proceso",
+      "Porque el callback corre sincrónicamente y bloquea al GC mientras dura",
+      "Porque solo avisa de objetos registrados antes de la primera recolección",
+      "Porque la spec no garantiza cuándo, ni si, va a correr el callback",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El momento de ejecución depende de la heurística interna del motor y puede tardar arbitrariamente o no correr antes de que el proceso termine. Solo sirve para limpieza de 'mejor esfuerzo', no para lógica determinística.",
   },

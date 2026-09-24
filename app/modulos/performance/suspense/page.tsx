@@ -24,11 +24,11 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "En 'Suspense para data fetching', ¿cómo se comunica un componente con su Suspense ancestro cuando los datos no están listos?",
     opciones: [
-      "Llamando a una función especial suspend()",
-      "Lanzando (throw) una Promise sin resolver durante el render — React la intercepta en vez de tratarla como un error",
-      "Devolviendo null desde el componente",
+      "Lanzando una Promise pendiente durante el render, que React intercepta",
+      "Devolviendo null mientras carga, y Suspense detecta que no hay contenido",
+      "Llamando a un callback suspend() que Suspense le pasa por Context",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es el mismo mecanismo que Suspense usa para code splitting, pero ahora la Promise representa datos en tránsito en vez de un chunk de código.",
   },
@@ -36,9 +36,9 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja tiene sobre manejar isLoading con useState en cada componente?",
     opciones: [
-      "Ninguna, es solo otra forma de escribir lo mismo",
-      "Elimina la lógica condicional de carga de cada componente individual, delegándola a un único límite de Suspense que puede envolver varios a la vez",
-      "Hace que los datos lleguen más rápido",
+      "Que los datos se cargan en paralelo, cosa que con isLoading no se puede",
+      "Saca la lógica de carga de cada componente y la delega a un límite común",
+      "Que el fallback se renderiza en el servidor y nunca llega al cliente",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -50,11 +50,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es un 'request waterfall' en el contexto de fetch-on-render?",
     opciones: [
-      "Un patrón deseable de carga progresiva",
-      "Peticiones de red que terminan encadenadas secuencialmente porque cada componente hijo recién dispara su fetch al montar, dependiendo de que el padre monte primero",
-      "Un error de sintaxis en useEffect",
+      "Requests que se repiten porque cada re-render vuelve a disparar el fetch",
+      "Requests que llegan desordenados y hay que reordenar antes de mostrar",
+      "Requests en cadena porque cada hijo recién pide sus datos al montar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Render-as-you-fetch evita esto disparando las peticiones ANTES de montar los componentes, para que arranquen todas en paralelo.",
   },
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué conviene usar varios Suspense boundaries anidados en vez de uno solo para toda la pantalla?",
     opciones: [
-      "No hay diferencia, es solo estilo de código",
-      "Cada sección puede mostrar su contenido apenas está lista, en vez de esperar a que TODO lo que está bajo un único Suspense grande esté disponible",
-      "Un solo Suspense grande es más rápido",
+      "Para que cada sección aparezca apenas está lista, sin esperar a todas",
+      "Porque un único Suspense solo puede esperar a una Promise por vez",
+      "Porque React reintenta más rápido las secciones con boundary propio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es el mismo principio de selective hydration aplicado al momento de mostrar contenido: progresivo, sección por sección.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace internamente use(promesa) si la Promise todavía está pendiente?",
     opciones: [
-      "Devuelve undefined",
-      "Lanza la Promise misma (throw promesa), y React la reconoce como señal de Suspense en vez de propagarla como error",
-      "Bloquea el hilo principal hasta que resuelva",
+      "Espera la Promise de forma síncrona, bloqueando el render hasta que resuelva",
+      "Lanza la Promise, y React la toma como señal de Suspense, no como error",
+      "Devuelve undefined y programa un re-render para cuando la Promise resuelva",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué no se puede llamar a use() con una Promise creada de nuevo en cada render?",
     opciones: [
-      "Sí se puede, no hay ningún problema",
-      "Cada render crearía una Promise nueva que empieza pendiente desde cero, causando un ciclo de suspender indefinidamente",
-      "React lanza un error de sintaxis en ese caso",
+      "Porque use() solo acepta Promises que vienen de un Server Component",
+      "Porque la Promise nueva se resuelve antes de que React pueda suspender",
+      "Porque cada render crea otra Promise pendiente y suspende sin fin",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "La Promise debe crearse una sola vez fuera del ciclo de render (cache de peticiones, prop del padre, o librería de data fetching).",
   },

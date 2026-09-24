@@ -25,17 +25,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta:
       "¿Qué se ejecuta primero cuando el call stack queda vacío: la cola de microtasks o la de macrotasks?",
-    opciones: ["La cola de macrotasks", "La cola de microtasks", "Da igual el orden"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "La cola de microtasks, completa, antes de tomar la próxima macrotask",
+      "La macrotask más antigua, y después las microtasks que haya generado",
+      "Se alternan de a una: una macrotask, una microtask, y así sucesivamente",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "El Event Loop siempre vacía por completo la cola de microtasks antes de tomar la siguiente macrotask.",
   },
   {
     pregunta: "¿Qué es una macrotask?",
     opciones: [
-      "El callback de una Promise",
-      "El callback de setTimeout, setInterval o un evento del DOM",
-      "Una función síncrona dentro de main()",
+      "El callback de un .then(), de un await o de un queueMicrotask",
+      "El callback de un setTimeout, de un setInterval o de un evento del DOM",
+      "Cualquier callback que tarde más de 50 ms en ejecutarse",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,11 +49,11 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué setTimeout(fn, 0) no se ejecuta inmediatamente después del código síncrono?",
     opciones: [
-      "Porque el navegador lo bloquea",
-      "Porque siempre tiene que esperar a que el call stack esté vacío y se agoten las microtasks pendientes",
-      "Porque 0ms en realidad significa 1000ms",
+      "Porque el navegador redondea el 0 a un mínimo de 4 ms antes de encolarlo",
+      "Porque setTimeout espera a que el navegador pinte un frame antes de ejecutar",
+      "Porque espera a que el stack se vacíe y se agoten las microtasks pendientes",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Aunque el timer venza en 0ms, su callback recién entra al call stack cuando este está vacío y no quedan microtasks pendientes.",
   },
@@ -60,11 +64,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "En Node.js, ¿qué se ejecuta primero: process.nextTick o una microtask de Promise?",
     opciones: [
-      "Da igual, comparten la misma cola",
-      "process.nextTick tiene su propia cola y se vacía antes que las microtasks de Promise",
-      "Las microtasks de Promise siempre van primero",
+      "process.nextTick: tiene su propia cola, que se vacía antes que la de Promise",
+      "La microtask de Promise: nextTick es una macrotask de la fase de timers",
+      "Comparten la misma cola y corren en el orden en que se encolaron",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "process.nextTick es una cola aparte, con más prioridad que la de microtasks de Promise, y se vacía por completo antes que esta última en cada vuelta.",
   },
@@ -72,9 +76,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿El navegador puede ejecutar un ciclo de render entre dos macrotasks?",
     opciones: [
-      "No, el render solo ocurre al final de todo el script",
-      "Sí, el navegador puede pintar entre macrotasks (después de vaciar microtasks)",
-      "Solo si se usa requestAnimationFrame explícitamente",
+      "No: el navegador pinta recién cuando la cola de macrotasks queda vacía",
+      "Sí: después de una macrotask y sus microtasks, puede pintar antes de la siguiente",
+      "Solo si hay un requestAnimationFrame pendiente; si no, nunca pinta en el medio",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -87,11 +91,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Dentro de un callback de I/O en Node, ¿qué corre primero: setImmediate o setTimeout(fn, 0)?",
     opciones: [
-      "setTimeout(fn, 0) siempre",
-      "setImmediate siempre, porque el callback ya está en la fase poll y check es la siguiente",
-      "Es indeterminado en todos los casos",
+      "setTimeout(fn, 0): la fase de timers siempre va primero en cada vuelta",
+      "Es indeterminado: depende de cuánto tardó el proceso en arrancar",
+      "setImmediate: desde la fase poll, la siguiente fase es check",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Dentro de un callback de I/O (fase poll), setImmediate corre en la fase check inmediatamente después, mientras que el timer recién se evalúa en la próxima vuelta del loop.",
   },
@@ -99,11 +103,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué pasa si encadenás process.nextTick de forma recursiva e indefinida?",
     opciones: [
-      "Node lo detecta y lo corta automáticamente",
-      "El loop nunca avanza a la fase de timers, I/O ni cierra el proceso: 'nextTick starvation'",
-      "No tiene ningún efecto porque nextTick es asincrónico",
+      "El loop nunca avanza de fase: timers e I/O quedan bloqueados (starvation)",
+      "Node detecta el ciclo y, pasado un límite de profundidad, lo corta con un warning",
+      "Cada nextTick le cede el turno a una fase del loop, así que el I/O sigue fluyendo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Como la cola de nextTick se vacía por completo antes de que el loop avance, encadenarla recursivamente sin fin bloquea I/O, timers y el cierre del proceso.",
   },

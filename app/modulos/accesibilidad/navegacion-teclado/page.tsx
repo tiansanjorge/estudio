@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué tecla se espera que active un botón, además de Enter?",
-    opciones: ["Tab", "Espacio", "Escape"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Espacio",
+      "Tab",
+      "Flecha abajo",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Los botones se activan con Enter y Espacio; los links, solo con Enter.",
   },
   {
     pregunta: "¿Para qué sirve un skip link?",
     opciones: [
-      "Para saltar publicidades",
-      "Para que el usuario de teclado vaya directo al contenido sin atravesar toda la navegación",
-      "Para mejorar el SEO",
+      "Para saltear los elementos decorativos al leer la página",
+      "Para ir directo al contenido sin atravesar toda la navegación",
+      "Para volver al principio de la página desde cualquier punto",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,18 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Con flex-direction: row-reverse, ¿en qué orden recorre Tab los elementos?",
     opciones: [
-      "En el orden visual, de izquierda a derecha",
+      "En el orden visual: el navegador sigue lo que se ve en pantalla",
+      "En el orden visual, salvo que los elementos tengan tabIndex",
       "En el orden del DOM, que queda invertido respecto de lo que se ve",
-      "En orden alfabético",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Tab y los lectores de pantalla siguen el DOM; CSS solo cambia la presentación.",
   },
   {
     pregunta: "En una toolbar con roving tabindex, ¿cuántos elementos tienen tabIndex=0?",
-    opciones: ["Todos", "Uno: el activo", "Ninguno"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Uno: el activo",
+      "Todos los botones",
+      "Ninguno: la toolbar",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Uno solo, para que el grupo sea una única parada de Tab; el resto tiene -1.",
   },
@@ -66,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué un combobox suele usar aria-activedescendant en vez de roving tabindex?",
     opciones: [
-      "Porque es más moderno",
-      "Porque el foco tiene que quedarse en el input para que el usuario siga escribiendo",
-      "Porque roving tabindex no funciona con listas",
+      "Porque roving tabindex no funciona dentro de listas con scroll",
+      "Porque el foco tiene que quedar en el input para seguir escribiendo",
+      "Porque aria-activedescendant es obligatorio en el rol combobox",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -77,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pide WCAG para los atajos de una sola tecla?",
     opciones: [
-      "Que estén prohibidos",
-      "Que se puedan desactivar, reasignar, o funcionen solo con el componente enfocado",
-      "Que usen siempre la tecla Ctrl",
+      "Que usen siempre un modificador, como Ctrl o Alt",
+      "Que estén listados en una página de ayuda del sitio",
+      "Que se puedan desactivar, reasignar o funcionar solo con foco",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Protege a usuarios de control por voz y de lectores de pantalla (criterio 2.1.4).",
   },

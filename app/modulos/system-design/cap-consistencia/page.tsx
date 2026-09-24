@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Según CAP, ¿cuándo hay que elegir entre consistencia y disponibilidad?",
-    opciones: ["Siempre", "Cuando hay una partición de red", "Nunca, se pueden tener las tres"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Cuando hay una partición de red",
+      "Siempre, en cada escritura",
+      "Cuando la latencia supera el SLO",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Sin partición, un sistema puede ser consistente y disponible a la vez.",
   },
   {
     pregunta: "¿Qué dato conviene tratar como CP?",
-    opciones: ["El contador de likes", "El saldo de una cuenta", "El feed de noticias"],
+    opciones: [
+      "El contador de likes de un post",
+      "El saldo de una cuenta",
+      "El feed de publicaciones de un usuario",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Un saldo viejo puede permitir gastar dos veces el mismo dinero.",
   },
@@ -38,14 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Con N = 3 réplicas, ¿qué combinación garantiza leer la última escritura?",
-    opciones: ["W = 1, R = 1", "W = 2, R = 2", "W = 1, R = 2"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "W = 1, R = 1",
+      "W = 1, R = 2",
+      "W = 2, R = 2",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "R + W = 4 > 3: los conjuntos siempre se superponen.",
   },
   {
     pregunta: "Un usuario edita su perfil y al recargar ve la versión anterior. ¿Qué garantía falta?",
-    opciones: ["Consistencia causal", "Read-your-writes", "Tolerancia a particiones"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Read-your-writes",
+      "Monotonic reads",
+      "Consistencia causal",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Un usuario siempre debería ver sus propias escrituras.",
   },
 ];
@@ -54,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué riesgo tiene last-write-wins?",
     opciones: [
-      "Es lento",
-      "Descarta en silencio escrituras concurrentes y depende de relojes no sincronizados",
-      "Necesita consenso",
+      "Que las lecturas quedan bloqueadas hasta que todas las réplicas coincidan",
+      "Descarta escrituras concurrentes en silencio y depende de relojes desincronizados",
+      "Que cada escritura necesita confirmación de la mayoría de las réplicas",
     ],
     respuestaCorrecta: 1,
     explicacion: "Por eso existen los relojes vectoriales y los CRDTs.",
   },
   {
     pregunta: "¿Cuántas fallas tolera un cluster de consenso de 5 nodos?",
-    opciones: ["1", "2", "4"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "1",
+      "4",
+      "2",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Con 2f + 1 nodos se toleran f fallas: la mayoría de 5 es 3.",
   },
 ];

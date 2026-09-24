@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Al cerrar un modal, ¿a dónde debería volver el foco?",
     opciones: [
-      "Al inicio del documento",
       "Al elemento que abrió el modal",
-      "A ningún lado, el navegador lo decide",
+      "Al primer elemento enfocable de la página",
+      "Al <body>, para que el usuario arranque de nuevo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Así el usuario de teclado sigue exactamente donde estaba antes de abrirlo.",
   },
   {
     pregunta: "¿Qué pseudo-clase permite mostrar el indicador de foco solo a usuarios de teclado?",
-    opciones: [":focus", ":focus-visible", ":hover"],
+    opciones: [
+      ":focus-within",
+      ":focus-visible",
+      ":focus",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "El navegador aplica :focus-visible cuando el foco llega por teclado, no al hacer click con el mouse.",
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "En una SPA, ¿qué pasa con el foco al navegar a otra ruta si no hacés nada?",
     opciones: [
-      "Vuelve al inicio del documento, como en una carga normal",
-      "Queda en el link clickeado (o se pierde) y el lector no anuncia el cambio",
-      "Se mueve al h1 de la nueva página automáticamente",
+      "Vuelve al inicio del documento, como en una carga de página normal",
+      "Se mueve solo al primer encabezado de la ruta nueva",
+      "Queda en el link o se pierde, y el lector no anuncia el cambio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "No hay carga de documento nueva, así que el comportamiento del navegador hay que replicarlo a mano.",
   },
   {
     pregunta: "El usuario borra el ítem enfocado de una lista. ¿Qué conviene hacer con el foco?",
     opciones: [
-      "Nada, el navegador lo mueve al ítem siguiente",
-      "Moverlo explícitamente al ítem vecino o al título si la lista quedó vacía",
-      "Recargar la página",
+      "Moverlo al ítem vecino, o al título si la lista quedó vacía",
+      "Nada: el navegador lo pasa solo al siguiente elemento enfocable",
+      "Mandarlo al botón de agregar, que suele ser la próxima acción",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Si no se maneja, el foco cae al body y el usuario pierde su lugar.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace showModal() de <dialog> que un focus trap manual con Tab no hace?",
     opciones: [
-      "Nada, son equivalentes",
-      "Vuelve inerte el resto de la página, también para los comandos de lectura del lector de pantalla",
-      "Solo agrega una animación de entrada",
+      "Mueve el foco al primer campo, cosa que un trap manual no puede hacer",
+      "Vuelve inerte el resto de la página, también para el lector de pantalla",
+      "Cierra el diálogo con Escape, que un trap manual no permite interceptar",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Para qué se usa tabIndex={-1}?",
     opciones: [
-      "Para ocultar el elemento visualmente",
-      "Para hacerlo enfocable por código sin agregarlo al recorrido con Tab",
-      "Para que sea el primero en el orden de Tab",
+      "Para sacarlo del foco por completo, incluso desde código",
+      "Para ponerlo último en el orden de Tab de la página",
+      "Para poder enfocarlo por código sin sumarlo al recorrido con Tab",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es el valor para destinos de foco programático, como un h1 al navegar.",
   },

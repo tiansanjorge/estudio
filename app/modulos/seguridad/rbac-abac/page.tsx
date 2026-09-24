@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "'Un editor solo puede editar documentos de su departamento'. ¿Qué modelo lo expresa naturalmente?",
-    opciones: ["RBAC puro", "ABAC", "Ninguno"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "ABAC",
+      "RBAC",
+      "ACL por usuario",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Depende de atributos del usuario y del recurso; con RBAC puro haría falta un rol por departamento.",
   },
   {
     pregunta: "¿Qué conviene chequear en el código?",
     opciones: [
-      "usuario.rol === 'admin' en cada endpoint",
-      "puede(usuario, 'pedido:reembolsar'), con el mapeo rol → permisos en un solo lugar",
-      "Nada, lo resuelve el frontend",
+      "usuario.rol === 'admin' en cada lugar que lo necesite",
+      "puede(usuario, 'pedido:reembolsar'), con los permisos en un solo lugar",
+      "usuario.roles.includes('soporte') || usuario.roles.includes('admin')",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -44,19 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "En un SaaS, un usuario es admin de la org A y lector de la org B. ¿Dónde vive el rol?",
-    opciones: ["En el usuario", "En la membresía (usuario + organización)", "En el token para siempre"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "En el usuario, como una lista de roles globales",
+      "En el token, con un claim por organización",
+      "En la membresía (usuario + organización)",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "El rol depende de la organización activa.",
   },
   {
     pregunta: "¿Qué permisos debería tener el usuario de base de datos de la aplicación?",
     opciones: [
-      "Superusuario, por comodidad",
-      "Lectura y escritura sobre sus tablas, sin poder borrar tablas ni cambiar el esquema",
-      "Solo lectura",
+      "Lectura y escritura sobre sus tablas, sin borrar tablas ni cambiar el esquema",
+      "Owner del esquema, para que la app pueda correr sus propias migraciones",
+      "Solo lectura, y las escrituras se hacen con un usuario aparte por request",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Mínimo privilegio: las migraciones usan otro usuario con más permisos.",
   },
@@ -65,7 +73,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué modelo usa un sistema tipo Google Drive, con carpetas y documentos compartidos?",
-    opciones: ["RBAC", "ReBAC (relaciones en un grafo)", "Listas de IPs"],
+    opciones: [
+      "RBAC con un rol por carpeta",
+      "ReBAC (relaciones en un grafo)",
+      "ABAC con atributos del archivo",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Los permisos se heredan por relaciones: carpeta, equipo, organización.",
@@ -73,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuándo rinde un motor de políticas como OPA o Cedar?",
     opciones: [
-      "Siempre",
-      "Con muchos servicios, reglas complejas o requisitos fuertes de auditoría",
-      "Nunca",
+      "Siempre: centralizar las reglas es mejor que tenerlas en el código",
+      "Cuando la app es chica y las reglas cambian muy seguido",
+      "Con muchos servicios, reglas complejas o auditoría exigente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Para reglas moderadas, una capa de autorización centralizada en el código suele alcanzar.",
   },

@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué no todo el estado de una app debería vivir en un store global?",
     opciones: [
-      "Por una limitación técnica de las librerías de estado",
-      "Porque agrega acoplamiento y complejidad sin beneficio cuando el estado solo le importa a un componente o a una rama chica del árbol",
-      "Porque los stores globales son más lentos en runtime",
+      "Porque suma acoplamiento y complejidad cuando el dato le importa a un solo lugar",
+      "Porque los stores globales no pueden guardar estado que cambia muy seguido",
+      "Porque cada dato global agrega peso al bundle inicial de la aplicación",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Cualquier componente de la app queda técnicamente habilitado para leer o modificar ese estado, dificultando razonar sobre quién lo cambia y por qué.",
   },
   {
     pregunta: "¿Qué tres categorías de estado NO deberían vivir en Redux/Zustand por costumbre?",
     opciones: [
-      "El tema visual, el idioma y el usuario autenticado",
-      "Estado de UI puramente local, estado derivable de la URL, y server state (que va en TanStack Query)",
-      "Ninguna, todo el estado debería centralizarse siempre",
+      "Estado de formularios, preferencias del usuario y datos de sesión",
+      "Estado de UI local, estado derivable de la URL y server state",
+      "Estado de autenticación, feature flags y configuración del tema",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja tiene guardar un filtro de búsqueda en la URL en vez de en un store global?",
     opciones: [
-      "Ninguna ventaja real, es solo preferencia",
-      "Es compartible por link, sobrevive a un refresh, y el botón de atrás/adelante funciona solo",
-      "Es más rápido de leer que un store en memoria",
+      "Que la URL se lee más rápido que el store, sin disparar re-renders",
+      "Que el filtro queda protegido: el usuario no lo puede modificar a mano",
+      "Se comparte por link, sobrevive al refresh y atrás/adelante funciona solo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El costo es que solo se pueden guardar datos serializables a string, con límites prácticos de longitud de URL.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuál es el costo real de 'levantar' estado a un store global antes de tener una necesidad concreta?",
     opciones: [
-      "Ninguno, siempre es mejor tenerlo centralizado desde el principio",
-      "Acoplamiento y re-renders innecesarios, además de más indirección para entender quién es responsable de ese dato",
-      "Un costo de performance en el bundle final",
+      "Acoplamiento, re-renders de más y más indirección para saber quién es dueño del dato",
+      "Más peso en el bundle, porque cada store se carga completo en el primer render",
+      "Pérdida de datos al recargar, porque el store global no persiste entre sesiones",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Entender un estado local requiere mirar un solo componente; entender un estado global requiere rastrear todos los lugares que lo leen o modifican.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cuál es el orden de niveles del principio de 'colocación de estado'?",
     opciones: [
-      "Siempre empezar por un store global y bajar de nivel si no hace falta",
-      "Variable local sin estado → useState local → URL → padre común más cercano → Context/librería global, subiendo solo cuando hay necesidad real",
-      "No existe un orden recomendado, depende del gusto del equipo",
+      "Context → padre común → useState local → URL, bajando a medida que se usa menos",
+      "Variable local → useState → URL → padre común → Context o librería global",
+      "URL → useState local → Context → store global, según cuánto dura el dato",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué a veces el problema no es DÓNDE vive un estado, sino que ni siquiera debería ser estado?",
     opciones: [
-      "Nunca pasa eso, todo dato mostrado en UI necesita ser estado",
-      "Porque un dato derivable de estado/props existentes (un total, una lista filtrada) puede calcularse directo en el render, sin promoverlo a estado propio",
-      "Porque React no permite calcular valores durante el render",
+      "Porque algunos datos conviene guardarlos en refs para no disparar renders",
+      "Porque ciertos valores deberían vivir en el servidor y no en el cliente",
+      "Porque un dato derivable se puede calcular en el render, sin ser estado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Promoverlo a estado propio y encima subirlo a un store global combina dos errores: el dato innecesario en sí, y su ubicación innecesariamente alta en la jerarquía.",
   },

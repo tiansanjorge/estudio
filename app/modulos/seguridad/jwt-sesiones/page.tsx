@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Quién puede leer el payload de un JWT?",
     opciones: [
-      "Solo el servidor que tiene el secreto",
-      "Cualquiera que tenga el token: está codificado, no cifrado",
-      "Nadie",
+      "Cualquiera con el token: está codificado, no cifrado",
+      "Solo el servidor que tiene la clave de firma",
+      "Solo el cliente al que se le emitió el token",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La firma protege la integridad, no la confidencialidad.",
   },
   {
     pregunta: "¿Qué es más fácil de revocar al instante?",
-    opciones: ["Un JWT", "Una sesión guardada en el servidor", "Son iguales"],
+    opciones: [
+      "Un JWT de corta duración",
+      "Una sesión guardada en el servidor",
+      "Un JWT firmado con RS256",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Borrar la sesión la invalida; un JWT sigue siendo válido hasta que vence.",
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué no guardar el token en localStorage?",
     opciones: [
-      "Porque tiene poco espacio",
-      "Porque cualquier script en la página (un XSS) puede leerlo y robarlo",
-      "Porque se borra al cerrar la pestaña",
+      "Porque se borra al cerrar la pestaña y obliga a loguearse otra vez",
+      "Porque viaja en cada request, como una cookie, y agrega peso",
+      "Porque cualquier script de la página (un XSS) puede leerlo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Una cookie HttpOnly no es accesible desde JavaScript.",
   },
   {
     pregunta: "¿Qué hace la rotación de refresh tokens?",
     opciones: [
-      "Cambia el algoritmo de firma",
-      "Emite uno nuevo en cada uso e invalida el anterior, detectando reutilizaciones",
-      "Alarga la vida del access token",
+      "Emite uno nuevo en cada uso e invalida el anterior, detectando reusos",
+      "Cambia la clave de firma cada cierto tiempo para todos los tokens",
+      "Renueva el access token solo, sin que el cliente tenga que pedirlo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Si aparece un refresh token ya usado, es señal de robo y se revoca la familia.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo se evita el ataque de confusión de algoritmos (RS256 → HS256)?",
     opciones: [
-      "Confiando en el header alg",
+      "Usando claves más largas para que HS256 no sea adivinable",
       "Fijando en el servidor la lista de algoritmos aceptados",
-      "Usando secretos más largos",
+      "Leyendo el algoritmo del header del token antes de verificar",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Varios servicios necesitan verificar tokens. ¿Qué conviene?",
     opciones: [
-      "HS256 con el secreto copiado en todos",
-      "RS256/ES256: firma con clave privada y verificación con la pública (JWKS)",
-      "No firmar los tokens",
+      "HS256 con el mismo secreto compartido en todos los servicios",
+      "Que cada servicio consulte al emisor para validar cada token",
+      "RS256/ES256: firma con la privada y verificación con la pública (JWKS)",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Así verificar no implica poder emitir tokens.",
   },

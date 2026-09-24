@@ -23,16 +23,20 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Un pedido se crea, pero falla la inserción de sus ítems. Dentro de una transacción, ¿qué queda en la base?",
-    opciones: ["El pedido sin ítems", "Nada: se revierte todo", "Depende del ORM"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Nada: se revierte todo",
+      "El pedido, sin sus ítems",
+      "El pedido y los ítems que llegaron a insertarse",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Atomicidad: todas las operaciones o ninguna.",
   },
   {
     pregunta: "¿Qué conviene NO hacer dentro de una transacción?",
     opciones: [
-      "Insertar en dos tablas",
+      "Hacer varias escrituras en tablas distintas",
       "Llamar a una API externa o enviar un email",
-      "Leer una fila antes de actualizarla",
+      "Leer datos que después se van a actualizar",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -43,18 +47,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál es el nivel de aislamiento por defecto en Postgres?",
-    opciones: ["READ UNCOMMITTED", "READ COMMITTED", "SERIALIZABLE"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "REPEATABLE READ",
+      "SERIALIZABLE",
+      "READ COMMITTED",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "En MySQL/InnoDB, en cambio, es REPEATABLE READ.",
   },
   {
     pregunta: "¿Cuál es la forma más simple de evitar un lost update al descontar stock?",
     opciones: [
-      "Leer el stock, restar en la aplicación y guardar",
       "UPDATE ... SET stock = stock - 1 WHERE stock > 0",
-      "Subir el pool de conexiones",
+      "Leer el stock, restarlo en el código y guardarlo",
+      "Subir el aislamiento a READ UNCOMMITTED",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "La base hace la cuenta sobre el valor actual, bloqueando la fila durante el UPDATE.",
   },
 ];
@@ -62,19 +70,23 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué nivel de Postgres detecta el write skew?",
-    opciones: ["READ COMMITTED", "REPEATABLE READ", "SERIALIZABLE"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "REPEATABLE READ",
+      "SERIALIZABLE",
+      "READ COMMITTED",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "REPEATABLE READ es snapshot isolation y lo permite; SSI detecta la dependencia lectura/escritura y aborta una transacción.",
   },
   {
     pregunta: "¿Por qué una transacción abierta durante horas degrada la base?",
     opciones: [
-      "Porque bloquea todas las lecturas",
-      "Porque VACUUM no puede limpiar las versiones que su snapshot todavía podría ver",
-      "Porque llena el WAL",
+      "Porque bloquea todas las tablas que leyó hasta que termina",
+      "Porque ocupa una conexión y el pool se queda sin lugar",
+      "Porque VACUUM no puede limpiar versiones que su snapshot podría ver",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Las versiones muertas se acumulan (bloat) y los scans se vuelven más lentos.",
   },
 ];

@@ -23,9 +23,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué determina si dos tipos son compatibles en TypeScript?",
     opciones: [
-      "Que tengan exactamente el mismo nombre",
-      "Que tengan la misma forma (las mismas propiedades con los mismos tipos), sin importar el nombre",
-      "Que uno declare explícitamente heredar del otro",
+      "Que tengan el mismo nombre o que uno extienda explícitamente al otro",
+      "Que tengan la misma forma, sin importar cómo se llamen",
+      "Que se hayan declarado en el mismo archivo o en el mismo namespace",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -34,11 +34,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Una función espera { nombre: string }. ¿Podés pasarle un objeto con más propiedades de las que pide?",
     opciones: [
-      "No, nunca",
-      "Sí, alcanza con que tenga (al menos) las propiedades requeridas",
-      "Solo si esas propiedades extra son opcionales",
+      "No: el objeto tiene que tener exactamente las propiedades del tipo",
+      "Solo si las propiedades extra son opcionales en el objeto original",
+      "Sí: alcanza con que tenga, al menos, las propiedades requeridas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El structural typing permite que cualquier objeto que 'calce' con la forma esperada sirva, sin necesidad de declarar explícitamente ser de ese tipo.",
   },
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué usar({ nombre: 'app', extra: true }) da error pero usar(variableConEsaMismaForma) no?",
     opciones: [
-      "Es un bug de TypeScript",
-      "El excess property check solo se aplica a object literals directos, no a variables",
-      "Las variables siempre tienen prioridad sobre los literales",
+      "El excess property check solo aplica a object literals directos",
+      "Porque la variable fue inferida con un tipo más amplio que el literal",
+      "Porque true es un literal y las variables se ensanchan a boolean",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "TypeScript asume que un literal con una propiedad de más es casi seguro un error de tipeo. Con una variable, no aplica esa verificación extra.",
   },
@@ -61,9 +61,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo simularías nominal typing para que un UserId y un ProductId (ambos strings) no sean intercambiables?",
     opciones: [
-      "No es posible en TypeScript",
-      "Con branded types: agregar una propiedad de marca imposible de tener en la práctica, como { __brand: 'UserId' }",
-      "Usando enum en vez de string",
+      "Con type alias distintos: type UserId = string y type ProductId = string",
+      "Con branded types: una propiedad de marca como { __brand: 'UserId' }",
+      "Con interfaces separadas, que TypeScript compara por nombre",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -76,11 +76,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué es la bivarianza de parámetros de método en TypeScript?",
     opciones: [
-      "Un error del compilador que se va a corregir en el futuro",
-      "Una decisión de diseño deliberada: los métodos aceptan tanto covarianza como contravarianza en sus parámetros, priorizando patrones comunes de POO sobre el rigor estricto",
-      "Solo aplica a funciones async",
+      "Un bug conocido del compilador que strictFunctionTypes corrige en todos los casos",
+      "Que un método puede recibir dos tipos de parámetros distintos en cada llamada",
+      "Una decisión deliberada: los métodos aceptan co y contravarianza, por los patrones de POO",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Permite que jerarquías de clases sobreescriban métodos con parámetros más específicos sin fricción, aunque técnicamente sea 'unsound'. Con strictFunctionTypes, esto NO aplica a funciones asignadas como propiedades.",
   },
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Dos clases con un campo private del mismo nombre y tipo, declaradas por separado — ¿son estructuralmente compatibles?",
     opciones: [
-      "Sí, siempre, porque TypeScript es 100% estructural",
-      "No: los miembros private/protected solo son compatibles si vienen de la misma declaración (herencia), no por coincidencia de nombre",
-      "Solo si ambas clases están en el mismo archivo",
+      "No: los miembros private solo son compatibles si vienen de la misma declaración",
+      "Sí: TypeScript compara la forma, y private no forma parte de ella",
+      "Sí, salvo que el campo use # (private nativo de JavaScript)",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es una de las pocas excepciones nominales en TypeScript, deliberada para no romper la encapsulación que private busca garantizar.",
   },

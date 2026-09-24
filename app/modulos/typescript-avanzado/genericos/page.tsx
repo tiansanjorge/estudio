@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia a un genérico de usar any?",
     opciones: [
-      "Ninguna, son intercambiables",
-      "any descarta toda información de tipo; un genérico preserva la relación entre el tipo de entrada y el de salida",
-      "Los genéricos solo funcionan con arrays",
+      "any descarta el tipo; un genérico preserva la relación entre entrada y salida",
+      "Ninguna en compilación; el genérico solo documenta mejor la intención",
+      "El genérico valida los tipos en runtime; any los valida solo al compilar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Con any, el compilador deja de verificar cualquier cosa sobre ese valor. Con un genérico, TypeScript sabe exactamente qué tipo entró y lo propaga a la salida.",
   },
   {
     pregunta: "¿Cuándo tiene sentido usar un genérico en vez de duplicar una función por tipo?",
     opciones: [
-      "Nunca, siempre es mejor duplicar código explícito",
-      "Cuando la lógica es idéntica sin importar el tipo concreto (un repositorio CRUD, un wrapper de respuesta de API)",
-      "Solo en clases, nunca en funciones",
+      "Cuando la función recibe muchos parámetros de tipos distintos entre sí",
+      "Cuando la lógica es la misma sin importar el tipo, como un repositorio CRUD",
+      "Siempre que la función sea pública, para que acepte cualquier tipo de entrada",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,11 +45,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Los genéricos existen en el JavaScript compilado final?",
     opciones: [
-      "Sí, se pueden inspeccionar en runtime",
-      "No, son pura información de compilación (type erasure) — desaparecen al emitir el código",
-      "Solo si se usa el flag --keep-generics",
+      "Sí: TypeScript los compila a chequeos de tipo que corren en runtime",
+      "Sí, pero solo cuando el target es ES2022 o posterior",
+      "No: son solo información de compilación y desaparecen al emitir",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un genérico nunca puede usarse para decisiones en runtime. Para distinguir tipos en tiempo de ejecución hace falta información que sobreviva a la compilación (typeof, instanceof, discriminantes explícitos).",
   },
@@ -59,20 +59,20 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasa si escribís function f<T>(x: T) { return x.length; } sin constraint?",
     opciones: [
-      "Compila normalmente, TypeScript infiere que T tiene length",
-      "Error de compilación: TS no puede garantizar que todo T tenga la propiedad length",
-      "Solo funciona en modo no estricto",
+      "Error de compilación: TS no puede asegurar que todo T tenga length",
+      "Compila: TS infiere que T tiene length porque la función la usa",
+      "Compila, pero devuelve undefined si T no tiene length en runtime",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Sin un constraint (T extends { length: number }), TypeScript trata a T como completamente desconocido y no permite acceder a ninguna propiedad sobre él.",
   },
   {
     pregunta: "function getProp<T, K extends keyof T>(obj: T, key: K): T[K] — ¿qué garantiza el constraint K extends keyof T?",
     opciones: [
-      "Que key sea siempre un string",
-      "Que key solo pueda ser un nombre de propiedad que realmente existe en T, con el tipo de retorno exacto de esa propiedad",
-      "Que obj tenga exactamente dos propiedades",
+      "Que key sea un string, y que el retorno sea del tipo unión de todas las propiedades",
+      "Que key sea una propiedad que existe en T, con el tipo exacto de esa propiedad",
+      "Que T tenga al menos una propiedad, para que keyof T no quede vacío",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -85,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "type SoloString<T> = T extends string ? T : never; aplicado a SoloString<string | number> — ¿qué pasa?",
     opciones: [
-      "Se evalúa una sola vez contra la unión completa, dando never",
-      "Se distribuye: evalúa la condición por cada miembro del union por separado y une los resultados, dando 'string'",
-      "Da un error de compilación por ambigüedad",
+      "Da never: string | number no extiende string como un todo",
+      "Da string | number: la condición se evalúa solo para el primer miembro",
+      "Se distribuye por cada miembro del union y el resultado es string",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Cuando T es un parámetro genérico 'naked' y se le pasa un union, TypeScript distribuye la condición sobre cada miembro automáticamente, en vez de evaluarla contra el union completo.",
   },
@@ -97,11 +97,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Para qué sirve la palabra clave infer dentro de un conditional type?",
     opciones: [
-      "Para forzar una conversión de tipo explícita",
-      "Para declarar una variable de tipo nueva que TS infiere automáticamente al hacer match estructural contra el tipo evaluado",
-      "Para marcar un tipo como opcional",
+      "Para declarar un tipo nuevo que TS deduce al hacer match contra el evaluado",
+      "Para pedirle a TS que infiera el tipo de retorno de cualquier función genérica",
+      "Para convertir un tipo en un valor que se puede usar en runtime",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Permite 'extraer' una parte de un tipo complejo sin descomponerlo manualmente — por ejemplo, capturar el tipo de retorno de una función dentro de la rama extends de un conditional type.",
   },

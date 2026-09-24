@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace que una función sea un 'custom hook'?",
     opciones: [
-      "Que devuelva JSX",
-      "Que su nombre empiece con 'use' y llame internamente a otros hooks",
-      "Que esté definida en un archivo separado",
+      "Que su nombre empiece con 'use' y adentro llame a otros hooks",
+      "Que devuelva estado de React y se exporte desde su propio archivo",
+      "Que se registre con createHook para poder usar useState adentro",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Esa combinación permite compartir lógica con estado entre componentes, sin duplicar código ni recurrir a HOCs o render props.",
   },
   {
     pregunta: "Dos componentes distintos usan el mismo custom hook. ¿Comparten el mismo estado?",
     opciones: [
-      "Sí, es una única instancia compartida",
-      "No, cada componente obtiene su propia instancia independiente del estado del hook",
-      "Solo si están en el mismo archivo",
+      "Sí: el hook guarda su estado a nivel de módulo, compartido por todos",
+      "No: cada componente tiene su propia instancia del estado del hook",
+      "Sí, si los dos componentes están dentro del mismo Provider",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo conviene que un custom hook devuelva un array en vez de un objeto?",
     opciones: [
-      "Siempre, un array es la única forma correcta",
-      "Cuando hay pocos valores relacionados y simétricos, dando libertad de renombrar por posición al destructurar (como useState)",
-      "Nunca, los objetos son siempre preferibles",
+      "Con muchos valores, porque un array se desestructura más rápido que un objeto",
+      "Cuando devuelve funciones, para que mantengan la misma referencia",
+      "Con pocos valores simétricos, para renombrarlos libremente al desestructurar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Con varios valores de roles distintos, un objeto es más autodocumentado — no hay que memorizar en qué posición del array está cada cosa.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja tiene componer un custom hook específico sobre uno más genérico (como useUsuario sobre useFetch)?",
     opciones: [
-      "Ninguna, siempre es mejor duplicar la lógica en cada hook",
-      "Aísla cambios: si la lógica genérica se ajusta, todos los hooks específicos que la usan se benefician automáticamente desde un solo lugar",
-      "Hace que el hook específico sea más lento",
+      "Aísla cambios: si se ajusta la lógica genérica, todos los específicos la heredan",
+      "Que el específico hace un solo fetch aunque lo usen varios componentes a la vez",
+      "Que el específico corre una vez por montaje, y el genérico en cada render",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Evita reimplementar el manejo de estados de carga/error en cada hook puntual, formando capas de abstracción reutilizables.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué el prefijo 'use' en un custom hook no es solo estilo?",
     opciones: [
-      "Es puramente estético, sin ningún efecto técnico",
-      "eslint-plugin-react-hooks usa ese patrón de nombre para saber qué funciones auditar con las reglas de los hooks — sin el prefijo, no las verifica",
-      "React rechaza en runtime cualquier función que no empiece con 'use'",
+      "Porque React lo usa en runtime para asignarle un slot de estado a la función",
+      "Porque el linter de hooks usa ese prefijo para saber qué funciones auditar",
+      "Porque el React Compiler solo memoiza funciones que empiezan con 'use'",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué no se puede llamar a un custom hook como una función normal fuera de un componente para testearlo?",
     opciones: [
-      "Sí se puede, sin ninguna restricción",
-      "Porque los hooks internos dependen de un fiber activo de React al cual asociar su estado — sin eso, React lanza un error de 'Invalid hook call'",
-      "Porque los custom hooks solo funcionan en TypeScript",
+      "Porque los hooks solo pueden ejecutarse desde archivos .tsx o .jsx",
+      "Porque un custom hook devuelve JSX y necesita un árbol donde montarse",
+      "Porque sus hooks necesitan un componente en render al cual asociar el estado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Para testear de forma aislada se usa renderHook, que monta un componente de prueba mínimo solo para darle al hook un contexto de renderizado válido.",
   },

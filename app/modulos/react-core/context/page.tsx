@@ -26,22 +26,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema resuelve principalmente Context?",
     opciones: [
-      "Hacer que los componentes rendericen más rápido",
-      "Evitar pasar un dato por props manualmente a través de cada componente intermedio hasta llegar al que realmente lo necesita",
-      "Reemplazar useState en todos los casos",
+      "Evitar re-renders: los consumidores solo se actualizan cuando cambia la parte que usan",
+      "Reemplazar a un store global como Redux para cualquier estado que cambie seguido",
+      "Evitar pasar un dato por props a través de cada componente intermedio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Context deja que un componente profundo lea un valor directamente, sin que los componentes intermedios tengan que recibirlo y reenviarlo como prop.",
   },
   {
     pregunta: "¿Qué reciben los componentes intermedios que no usan useContext?",
     opciones: [
-      "El valor del Context igual, por si lo necesitan después",
-      "Nada relacionado al Context — ni siquiera saben que existe",
-      "Una versión de solo lectura del valor",
+      "Nada del Context: ni siquiera saben que existe",
+      "El value como prop implícita, aunque no la lean",
+      "Un re-render cada vez que cambia el value, aunque no lo usen",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Los componentes que no llaman a useContext ni se enteran de que el dato existe. Solo los que explícitamente lo consumen quedan acoplados a ese Context.",
   },
@@ -49,9 +49,9 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "¿Qué problema de performance puede generar pasar un objeto literal nuevo como value del Provider en cada render?",
     opciones: [
-      "Ninguno, React lo optimiza automáticamente",
-      "Todos los consumidores de ese Context re-renderizan en cada render del Provider, aunque los datos no hayan cambiado realmente",
-      "El Context deja de funcionar",
+      "Que React tiene que serializar el objeto completo para compararlo en cada render",
+      "Re-renderiza a todos los consumidores en cada render del Provider",
+      "Que los consumidores reciben el objeto viejo hasta el próximo commit",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -64,11 +64,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué conviene dividir un Context grande en varios más chicos según frecuencia de cambio?",
     opciones: [
-      "Por una cuestión de organización de archivos únicamente",
-      "Porque cualquier cambio en el value re-renderiza a TODOS los consumidores del Context, sin importar qué parte usen — dividirlo limita el radio de impacto",
-      "Porque React solo permite un Context por árbol",
+      "Porque React limita la cantidad de consumidores que puede tener un mismo Context",
+      "Porque un Context chico se compara más rápido que uno grande en cada render",
+      "Porque cualquier cambio del value re-renderiza a todos sus consumidores",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Si un dato que cambia seguido (notificaciones) comparte Context con uno que cambia poco (usuario), cualquier cambio en el primero re-renderiza también a los consumidores del segundo.",
   },
@@ -76,11 +76,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué limitación tiene Context frente a Zustand/Redux en cuanto a re-renders selectivos?",
     opciones: [
-      "Ninguna, son equivalentes en este aspecto",
-      "Context no soporta suscripción parcial: cualquier cambio en el value re-renderiza a todos los consumidores, sin selectors por porción de estado",
-      "Context es más rápido en todos los casos",
+      "No tiene suscripción parcial: cualquier cambio re-renderiza a todos los consumidores",
+      "No puede guardar funciones ni objetos complejos, solo valores serializables",
+      "No se puede actualizar desde un componente hijo, solo desde el Provider",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Librerías con selectors permiten que cada componente se suscriba solo a la porción de estado que le importa. Context no tiene ese mecanismo incorporado.",
   },
@@ -91,9 +91,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Un componente envuelto en React.memo que usa useContext — ¿evita re-renderizar cuando cambia ese Context?",
     opciones: [
-      "Sí, memo bloquea cualquier causa de re-render",
-      "No: la suscripción de useContext es independiente de las props, memo no puede interceptar ni comparar el valor del Context",
-      "Solo si el Context también está envuelto en memo",
+      "Sí: memo compara el valor del Context igual que compara las props",
+      "No: useContext no pasa por las props, así que memo no lo frena",
+      "Sí, siempre que el value del Provider esté memoizado con useMemo",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -103,11 +103,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo se usa el valor por defecto pasado a createContext(valorDefault)?",
     opciones: [
-      "Como valor inicial dentro de cualquier Provider, hasta que se actualice",
-      "Solo cuando no existe ningún Provider de ese Context por encima del componente que llama a useContext",
-      "Nunca se usa si el Provider ya está definido en algún lugar de la app",
+      "Mientras el Provider todavía no terminó de montarse",
+      "Cuando el Provider recibe value={undefined}",
+      "Cuando no hay ningún Provider de ese Context por encima",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "En cuanto hay un Provider por encima, su value (aunque sea undefined) es lo que reciben los consumidores, sin ninguna influencia del default declarado en createContext.",
   },

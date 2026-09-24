@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Un usuario pide un pedido que no existe. ¿Qué tipo de error es?",
     opciones: [
-      "Un bug inesperado (500)",
       "Un error esperado del dominio, que se traduce a 404",
-      "No es un error",
+      "Un error inesperado, que se loguea como crítico y da 500",
+      "Un error de validación del request, que da 400",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Los errores esperados se modelan tipados y se traducen a respuestas con sentido.",
   },
   {
     pregunta: "¿Qué permite reconstruir el recorrido de un request entre líneas de log intercaladas?",
-    opciones: ["El timestamp", "Un requestId en cada línea", "El nivel de log"],
+    opciones: [
+      "El timestamp de cada línea",
+      "Un requestId en cada línea",
+      "El nivel de log de cada línea",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Con logs estructurados se filtra por ese campo.",
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace la opción redact de pino?",
     opciones: [
-      "Comprime los logs",
-      "Reemplaza campos sensibles (tokens, contraseñas) antes de escribir el log",
-      "Borra los logs viejos",
+      "Descarta los logs de nivel debug en producción",
+      "Comprime los logs antes de mandarlos al colector",
+      "Reemplaza campos sensibles antes de escribir el log",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Evita que un objeto logueado entero filtre credenciales.",
   },
   {
     pregunta: "Ante un uncaughtException, ¿qué conviene hacer?",
     opciones: [
-      "Ignorarlo y seguir",
-      "Loguearlo, intentar un cierre ordenado y dejar que el orquestador reinicie",
-      "Reintentar la operación",
+      "Loguearlo, cerrar ordenadamente y dejar que el orquestador reinicie",
+      "Loguearlo y seguir atendiendo requests, para no cortar el servicio",
+      "Reiniciar solo el handler que falló, sin tocar el proceso",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El proceso puede haber quedado en un estado inconsistente.",
   },
@@ -69,7 +73,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué header estándar propaga el contexto de una traza entre servicios?",
-    opciones: ["x-powered-by", "traceparent (W3C Trace Context)", "cache-control"],
+    opciones: [
+      "X-Request-Id",
+      "traceparent (W3C Trace Context)",
+      "X-Correlation-Id",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "OpenTelemetry lo propaga y lo lee automáticamente.",
@@ -77,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Sobre qué conviene alertar?",
     opciones: [
-      "Cada error individual",
-      "Síntomas que ve el usuario (tasa de errores, latencia p95) respecto de un SLO",
-      "CPU arriba del 50%",
+      "Sobre cada error que aparezca en los logs",
+      "Sobre el uso de CPU y memoria de cada instancia",
+      "Sobre síntomas del usuario (errores, p95) contra un SLO",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Las alertas por causas internas generan fatiga y se terminan ignorando.",
   },

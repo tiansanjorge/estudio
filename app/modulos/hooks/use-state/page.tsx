@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué no se puede llamar a useState dentro de un if?",
     opciones: [
-      "Es solo una convención de estilo recomendada",
-      "React identifica cada hook por el orden exacto en que se llama; un hook condicional cambia ese orden entre renders y desalinea todos los hooks",
-      "JavaScript no permite hooks dentro de bloques condicionales",
+      "React identifica cada hook por su orden de llamada, y un if puede cambiarlo",
+      "Porque useState solo puede declararse en la primera línea del componente",
+      "Porque el estado dentro de un if se reinicia cada vez que cambia la condición",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "React guarda los hooks en una lista interna por orden de llamada, no por nombre. Si el orden cambia entre renders, React empareja mal cada llamada con su estado correspondiente.",
   },
   {
     pregunta: "¿Cuándo conviene usar la forma de función (lazy initializer) en useState?",
     opciones: [
-      "Siempre, es la única forma correcta",
-      "Cuando calcular el valor inicial es costoso, para que solo se ejecute una vez en el montaje",
-      "Nunca, agrega complejidad innecesaria",
+      "Cuando el estado inicial depende de props que pueden cambiar después",
+      "Cuando calcular el valor inicial es costoso, para hacerlo solo al montar",
+      "Cuando el valor inicial es una promesa que hay que esperar",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo conviene agrupar datos relacionados en un solo useState con un objeto, en vez de varios useState separados?",
     opciones: [
-      "Siempre es mejor un solo objeto para todo el estado",
-      "Cuando esos valores casi siempre cambian juntos (como x e y de una posición), para mantenerlos atómicos entre renders",
-      "Nunca, siempre conviene separar cada valor",
+      "Cuando son muchos, porque cada useState de más suma un render",
+      "Cuando alguno es un objeto, porque useState no admite mezclar tipos",
+      "Cuando casi siempre cambian juntos, como x e y de una posición",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Si se actualizan de forma independiente la mayoría de las veces, separarlos es más simple. Si siempre cambian juntos, un objeto evita estados intermedios inconsistentes.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Hace falta incluir el setter de useState en el array de dependencias de un useEffect?",
     opciones: [
-      "Sí, siempre, o el linter falla",
-      "No, React garantiza que su identidad es estable entre renders — nunca cambia mientras el componente esté montado",
-      "Solo si el setter se usa dentro de una condición",
+      "No: React garantiza que el setter mantiene la misma identidad",
+      "Sí: el setter se recrea en cada render, como cualquier función",
+      "Solo si el efecto llama al setter con una función updater",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es la misma garantía de estabilidad que tiene el objeto devuelto por useRef. Los linters de exhaustive-deps lo saben y no lo marcan como dependencia faltante.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "const [operacion] = useState(suma) donde suma es una función — ¿qué guarda operacion?",
     opciones: [
-      "La función suma sin ejecutar",
-      "El resultado de EJECUTAR suma, porque React trata cualquier función pasada a useState como lazy initializer",
-      "undefined, porque useState no acepta funciones",
+      "La función suma, lista para llamarla como operacion()",
+      "El resultado de ejecutar suma: la toma como lazy initializer",
+      "Una versión memoizada de suma, como si fuera useCallback",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Dónde guarda React internamente el estado de cada useState de un componente?",
     opciones: [
-      "En una variable global indexada por nombre de componente",
-      "En una lista enlazada de hooks colgando del fiber del componente, en el orden exacto de las llamadas",
-      "En el DOM, como un atributo data-*",
+      "En un Map global que usa el nombre de la variable como clave",
+      "En la closure del componente, que React conserva entre renders",
+      "En una lista enlazada de hooks del fiber, en el orden de las llamadas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "React avanza un puntero por esa lista en cada render, en el mismo orden. Un hook condicional desalinea ese puntero respecto a los nodos reales, devolviendo el estado equivocado.",
   },

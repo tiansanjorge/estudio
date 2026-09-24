@@ -26,20 +26,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasa durante la fase de Commit?",
     opciones: [
-      "React vuelve a llamar a la función del componente",
-      "React aplica al DOM real, de forma sincrónica, los cambios que Reconciliation decidió que hacían falta",
-      "El navegador pinta la pantalla",
+      "React aplica al DOM, de forma síncrona, los cambios que decidió Reconciliation",
+      "React compara el árbol nuevo con el anterior para decidir qué nodos tienen que cambiar",
+      "El navegador pinta la pantalla y recién después React escribe los cambios en el DOM",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Commit es la fase donde React efectivamente muta el DOM: inserta, actualiza y elimina nodos, y conecta los refs a sus elementos reales.",
   },
   {
     pregunta: "¿Cuándo corren los useLayoutEffect en relación al paint del navegador?",
     opciones: [
-      "Después del paint, igual que useEffect",
-      "Antes del paint: el navegador espera a que terminen para pintar la pantalla",
-      "Durante la fase de Render",
+      "Después del paint, igual que useEffect pero con más prioridad",
+      "Antes del paint: el navegador espera a que terminen para pintar",
+      "Durante el render, antes de que React toque el DOM",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,11 +48,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuándo corren los useEffect normales?",
     opciones: [
-      "Antes de que React mute el DOM",
-      "Después de que el navegador ya pintó la pantalla, de forma asincrónica",
-      "Durante la fase de Reconciliation",
+      "Durante el commit, justo después de mutar el DOM y antes del paint",
+      "Durante el render, en el mismo orden en que se declararon",
+      "Después de que el navegador pintó, de forma asincrónica",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "useEffect corre después del paint, sin bloquear al navegador. Es el lugar correcto para la mayoría de los side effects (fetch, suscripciones) que no necesitan estar listos antes de que el usuario vea la pantalla.",
   },
@@ -63,11 +63,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué puede hacer getSnapshotBeforeUpdate que useLayoutEffect no puede?",
     opciones: [
-      "Nada, son intercambiables",
-      "Capturar información del DOM justo ANTES de que React lo mute, algo que useLayoutEffect (que corre después de la mutación) no puede ver",
-      "Correr antes que el render",
+      "Leer el DOM justo antes de que React lo mute, cosa que useLayoutEffect ya no ve",
+      "Cancelar el commit en curso si detecta que el cambio no es necesario para la UI",
+      "Leer el DOM después del paint, cuando los tamaños de los elementos ya son definitivos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es útil para restaurar posición de scroll al agregar elementos arriba de una lista (por ejemplo, un chat), comparando el estado del DOM antes y después del cambio.",
   },
@@ -75,9 +75,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Un Padre y su Hijo tienen ambos useLayoutEffect. ¿En qué orden corren?",
     opciones: [
-      "Padre primero, después Hijo",
-      "Hijo primero, después Padre — de abajo hacia arriba",
-      "Simultáneamente, sin orden garantizado",
+      "Padre primero, después Hijo: de arriba hacia abajo",
+      "Hijo primero, después Padre: de abajo hacia arriba",
+      "En paralelo, porque cada uno pertenece a otro fiber",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Si Commit es sincrónico y sin interrupciones, ¿por qué los useEffect de una actualización grande pueden tardar en correr?",
     opciones: [
-      "Porque el commit en sí se puede pausar en actualizaciones grandes",
-      "Porque useEffect se programa para correr después del paint, y React puede diferir cuándo exactamente según la prioridad del trabajo pendiente",
-      "Es un bug conocido de React sin solución",
+      "Porque los useEffect corren en un hilo aparte que espera a que el principal se libere",
+      "Porque React ejecuta los efectos recién cuando el usuario deja de interactuar",
+      "Porque useEffect corre después del paint y React decide cuándo según la prioridad",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es intencional: prioriza que el usuario vea la pantalla actualizada cuanto antes, por sobre que los efectos (generalmente invisibles) corran de inmediato.",
   },
@@ -102,11 +102,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Un componente que se re-renderiza siempre genera una mutación real durante Commit?",
     opciones: [
-      "Sí, siempre, toda función que corre de nuevo dispara una mutación",
-      "No: si Reconciliation determina que el resultado es idéntico al anterior, no hay ninguna mutación real que aplicar para ese nodo",
-      "Solo si el componente usa useLayoutEffect",
+      "No: si el resultado es idéntico al anterior, no hay nada que mutar en ese nodo",
+      "Sí: cada render termina reescribiendo los nodos del componente en el DOM",
+      "Sí, aunque el navegador descarta los cambios que no alteran lo visible",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El componente completa su fase de Render (la función corrió), pero su participación en Commit puede ser nula si no hay diffs que aplicar al DOM.",
   },

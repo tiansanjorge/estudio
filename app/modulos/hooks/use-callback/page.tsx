@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué relación hay entre useCallback(fn, deps) y useMemo?",
     opciones: [
-      "No tienen ninguna relación, son mecanismos completamente distintos",
-      "useCallback(fn, deps) es equivalente a useMemo(() => fn, deps) — memoiza específicamente una función",
-      "useCallback reemplaza por completo a useMemo",
+      "useCallback(fn, deps) equivale a useMemo(() => fn, deps)",
+      "useCallback(fn, deps) equivale a useMemo(fn, deps) con otro nombre",
+      "Los dos memoizan el resultado de llamar a fn con las deps",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es más legible y directo que escribir useMemo a mano cuando lo que se quiere memoizar es específicamente una referencia de función.",
   },
   {
     pregunta: "Si el componente hijo que recibe un callback NO está en React.memo, ¿useCallback evita su re-render?",
     opciones: [
-      "Sí, siempre",
-      "No: el hijo re-renderiza igual en cada render del padre, sin importar si la prop cambió de referencia",
-      "Solo si el callback no tiene parámetros",
+      "Sí: si la prop no cambió de referencia, React saltea el render del hijo",
+      "No: sin memo, el hijo re-renderiza cada vez que lo hace el padre",
+      "Sí, pero solo si el callback es la única prop que recibe el hijo",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo tiene sentido estabilizar un callback con useCallback en un componente padre?",
     opciones: [
-      "Siempre, en cualquier función definida en el componente",
-      "Cuando el hijo que lo recibe lo usa como dependencia de un useEffect, para que ese efecto no se dispare de más en cada render del padre",
-      "Nunca, useCallback no tiene ningún caso de uso real",
+      "Siempre que se pase como prop, porque evita el re-render del hijo",
+      "Cuando el callback hace un fetch, para no repetir la request en cada render",
+      "Cuando el hijo lo usa en las deps de un useEffect, para no dispararlo de más",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Sin useCallback en el padre, el callback es una referencia nueva en cada render, disparando el efecto del hijo aunque la lógica no haya cambiado.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Un useCallback tiene como dependencia un objeto creado como literal en el JSX del padre. ¿Funciona la memoización?",
     opciones: [
-      "Sí, siempre, porque el contenido del objeto es el mismo",
-      "No: la comparación es por referencia, y un objeto literal nuevo en cada render anula la memoización",
-      "Solo si el objeto tiene menos de 3 propiedades",
+      "No: el objeto es nuevo en cada render y se compara por referencia",
+      "Sí: React compara las dependencias por contenido, con igualdad profunda",
+      "Sí, si el objeto tiene siempre las mismas claves y los mismos valores",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Para que funcione de verdad, esa dependencia también necesita una referencia estable, típicamente memoizada con su propio useMemo donde se crea.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Un useCallback con array de dependencias vacío lee un estado que cambia después. ¿Qué ve el callback?",
     opciones: [
-      "El valor más reciente del estado, siempre",
-      "El valor VIEJO del estado, congelado desde el momento en que se creó esa versión memoizada",
-      "undefined, porque el array está vacío",
+      "El valor actual: el callback lee el estado cada vez que se ejecuta",
+      "El valor viejo, congelado cuando se creó esa versión del callback",
+      "undefined, porque sin dependencias el callback no captura el estado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo evitarías ese stale closure sin agregar la dependencia (si necesitás mantener la referencia del callback totalmente estable)?",
     opciones: [
-      "No es posible, hay que agregar la dependencia sí o sí",
-      "Guardando el valor en una ref sincronizada con un efecto, y leyendo ref.current dentro del callback en vez del estado directo",
-      "Usando useMemo en vez de useCallback",
+      "Pasando el estado como valor por defecto de un parámetro del callback",
+      "Moviéndolo a useMemo, que siempre ve la versión más nueva del estado",
+      "Guardando el valor en una ref actualizada y leyendo ref.current",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Separa 'qué dispara una nueva versión del callback' (nada) de 'qué valor necesito leer siempre actualizado' (el estado, vía ref) — el mismo patrón conceptual que resuelve useEffectEvent para efectos.",
   },

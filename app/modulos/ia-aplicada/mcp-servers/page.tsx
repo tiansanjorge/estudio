@@ -24,16 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema resuelve MCP?",
     opciones: [
-      "Hace que los modelos razonen mejor",
-      "Estandariza cómo las aplicaciones de IA se conectan a herramientas y datos",
-      "Reemplaza a las APIs REST",
+      "Estandariza cómo la IA se conecta a herramientas y datos",
+      "Entrena al modelo con los datos privados de la empresa",
+      "Reemplaza el function calling de cada proveedor de modelos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Un servicio se expone una vez y lo usa cualquier aplicación compatible.",
   },
   {
     pregunta: "¿Quién decide cuándo se llama a una tool?",
-    opciones: ["El usuario", "El modelo", "El servidor"],
+    opciones: [
+      "El servidor MCP",
+      "El modelo",
+      "El usuario, en cada llamada",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Las tools son model-controlled; los prompts, user-controlled; los resources, application-controlled.",
   },
@@ -42,14 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "En el transporte stdio, ¿de dónde saca el servidor sus credenciales?",
-    opciones: ["De un flujo OAuth del protocolo", "Del entorno, por ejemplo variables de entorno", "No necesita credenciales"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Del token OAuth del usuario",
+      "De los mensajes del modelo",
+      "Del entorno, como variables de entorno",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "El marco de autorización de la especificación es para los transportes HTTP.",
   },
   {
     pregunta: "Una sola app propia necesita que el LLM llame a tu API. ¿Qué es lo más simple?",
-    opciones: ["Un servidor MCP", "Function calling de la API del modelo", "Un webhook"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Function calling de la API del modelo",
+      "Un servidor MCP remoto con OAuth",
+      "Un servidor MCP local por stdio",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "MCP rinde cuando la integración la comparten varias herramientas.",
   },
 ];
@@ -58,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es el token passthrough en un servidor MCP remoto?",
     opciones: [
-      "Renovar tokens automáticamente",
+      "Reenviarle al modelo el token del usuario para que llame a la API",
       "Aceptar tokens no emitidos para el servidor y reenviarlos a otra API",
-      "Guardar tokens en cookies",
+      "Renovar los tokens del usuario sin pedirle permiso otra vez",
     ],
     respuestaCorrecta: 1,
     explicacion: "La especificación lo prohíbe: el servidor solo acepta tokens emitidos para él.",
   },
   {
     pregunta: "Una tool devuelve 10.000 filas. ¿Qué problema trae?",
-    opciones: ["Ninguno", "Llena el contexto del modelo y diluye lo importante", "Rompe JSON-RPC"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "El protocolo MCP corta la respuesta a mil filas",
+      "El servidor tarda demasiado y la llamada da timeout",
+      "Llena el contexto del modelo y diluye lo importante",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Las tools bien diseñadas paginan y resumen.",
   },
 ];

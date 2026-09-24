@@ -24,19 +24,19 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "La base está al 100% de CPU. ¿Qué revisás primero?",
     opciones: [
-      "Shardear",
       "Qué consultas consumen más (pg_stat_statements)",
-      "Agregar tres réplicas",
+      "Si conviene agregar una réplica de lectura",
+      "Si el disco se está quedando sin espacio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Unas pocas consultas sin índice suelen explicar la mayor parte de la carga.",
   },
   {
     pregunta: "Un usuario guarda su perfil y al recargar ve los datos viejos. ¿Qué pasó probablemente?",
     opciones: [
-      "La escritura falló",
+      "La transacción no hizo commit y se revirtió sola",
       "La lectura fue a una réplica con replication lag",
-      "El navegador cacheó el formulario",
+      "El índice de la tabla quedó desactualizado",
     ],
     respuestaCorrecta: 1,
     explicacion: "La réplica todavía no había aplicado el cambio del primario.",
@@ -47,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué ventaja da particionar por mes una tabla de eventos?",
     opciones: [
-      "Más capacidad de escritura en otra máquina",
-      "Borrar un mes viejo con un DROP instantáneo y consultas que leen solo las particiones necesarias",
-      "Joins más rápidos entre servidores",
+      "Repartir la tabla entre varios servidores para escalar las escrituras",
+      "Que cada mes tenga su propio índice, sin límite de tamaño por tabla",
+      "Borrar un mes con un DROP instantáneo y leer solo las particiones necesarias",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Particionar sigue siendo un solo servidor; no agrega capacidad.",
   },
   {
     pregunta: "¿Qué garantiza la replicación sincrónica?",
     opciones: [
-      "Escrituras más rápidas",
       "Que una transacción confirmada ya está en la réplica",
-      "Que no hace falta backup",
+      "Que las lecturas en la réplica son más rápidas",
+      "Que la réplica toma el lugar del primario si este cae",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "A cambio, cada COMMIT espera la confirmación de la réplica.",
   },
 ];
@@ -70,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué una fecha es mala shard key para repartir escrituras?",
     opciones: [
-      "Porque no es numérica",
+      "Porque las fechas no se pueden hashear de forma uniforme",
       "Porque todas las escrituras nuevas caen en el shard del período actual",
-      "Porque no se puede hashear",
+      "Porque obliga a consultar todos los shards para leer un solo día",
     ],
     respuestaCorrecta: 1,
     explicacion: "Una clave monótona concentra la carga en un solo shard.",
   },
   {
     pregunta: "¿Qué protege contra un DELETE sin WHERE ejecutado por error?",
-    opciones: ["Una réplica sincrónica", "Backups con point-in-time recovery", "Sharding"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Una réplica sincrónica en otra zona",
+      "Snapshots diarios del disco",
+      "Backups con point-in-time recovery",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "La réplica copia el error en milisegundos.",
   },
 ];

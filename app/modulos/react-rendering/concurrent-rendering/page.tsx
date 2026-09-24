@@ -26,9 +26,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema resuelve marcar una actualización con startTransition?",
     opciones: [
-      "Hace que el componente use menos memoria",
-      "Evita que una actualización costosa (como re-renderizar una lista grande) bloquee la actualización urgente de otra cosa, como un input",
-      "Reemplaza la necesidad de usar keys en listas",
+      "Que una actualización costosa se calcule en un worker, fuera del hilo principal",
+      "Que una actualización costosa no bloquee una urgente, como escribir en un input",
+      "Que varias actualizaciones seguidas se agrupen en un solo render",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -37,22 +37,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Si el usuario sigue tipeando mientras una transición todavía está calculando, ¿qué hace React?",
     opciones: [
-      "Termina la transición vieja igual, y después arranca la nueva",
-      "Puede descartar el trabajo de la transición en curso (que ya iba a quedar obsoleto) y arrancar una transición nueva con el valor más reciente",
-      "Ignora la tecla nueva hasta que la transición anterior termine",
+      "Termina la transición en curso y después procesa la tecla nueva",
+      "Pone la tecla en cola hasta que la transición termine de renderizar",
+      "Puede descartar la transición obsoleta y arrancar otra con el valor nuevo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "A diferencia de un debounce (que solo retrasa cuándo arranca el trabajo), una transición puede empezar de inmediato y ser abandonada a mitad de camino si llega una actualización más nueva, evitando mostrar (o terminar de calcular) un resultado que ya quedó viejo.",
   },
   {
     pregunta: "¿Qué indica isPending, el segundo valor que devuelve useTransition?",
     opciones: [
-      "Que hubo un error en la actualización",
       "Que hay una transición en curso, todavía no reflejada en pantalla",
-      "Que el componente todavía no montó",
+      "Que la transición falló y React la va a reintentar en el próximo frame",
+      "Que hay datos cargándose dentro del límite de Suspense más cercano",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "isPending es true mientras la actualización marcada como transición sigue procesándose en segundo plano — útil para mostrar un indicador sutil sin bloquear el resto de la UI.",
   },
@@ -63,9 +63,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿En qué se diferencia startTransition de useDeferredValue?",
     opciones: [
-      "Son exactamente lo mismo con nombres distintos",
-      "startTransition envuelve una actualización de estado que vos disparás; useDeferredValue envuelve un valor cuyo origen no controlás (por ejemplo, una prop)",
-      "useDeferredValue solo funciona en Server Components",
+      "startTransition sirve para eventos del usuario; useDeferredValue, para datos de red",
+      "startTransition envuelve un setState tuyo; useDeferredValue, un valor que no controlás",
+      "useDeferredValue espera un tiempo fijo antes de actualizar, como un debounce",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -75,11 +75,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Si una actualización en startTransition hace que un componente suspenda, ¿React muestra el fallback de Suspense inmediatamente?",
     opciones: [
-      "Sí, siempre muestra el fallback de inmediato",
-      "No: mantiene visible el contenido anterior mientras el nuevo se prepara en segundo plano, con isPending en true",
-      "Solo si el componente está envuelto en React.memo",
+      "Sí: cualquier suspensión reemplaza el contenido por el fallback de Suspense más cercano",
+      "Sí, pero solo durante los primeros milisegundos, para evitar un parpadeo de carga",
+      "No: mantiene el contenido anterior mientras prepara el nuevo, con isPending en true",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Esto evita el parpadeo de mostrar un fallback de carga en cada navegación o cambio de pestaña, prefiriendo mantener la pantalla anterior visible un poco más de tiempo.",
   },
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué es 'tearing' en renderizado concurrente?",
     opciones: [
-      "Un error de sintaxis en componentes concurrentes",
-      "Cuando distintas partes de la UI, en el mismo frame, muestran valores inconsistentes de un mismo store externo porque este mutó durante un render pausado",
-      "Un problema exclusivo de Server Components",
+      "Que partes de la UI muestren valores distintos de un mismo store que mutó a mitad de render",
+      "Que el navegador pinte un frame a medias mientras React todavía está haciendo el commit",
+      "Que una transición se descarte tantas veces que nunca llega a mostrarse en pantalla",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "React garantiza consistencia para su propio estado (useState), pero un store externo mutable puede cambiar en cualquier momento, incluso mientras un render está pausado esperando retomar.",
   },
@@ -102,9 +102,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo evita useSyncExternalStore el tearing?",
     opciones: [
-      "Bloqueando todas las mutaciones del store mientras React renderiza",
-      "Verificando que el snapshot del store no haya cambiado entre el inicio del render y el commit; si cambió, fuerza un re-render síncrono adicional",
-      "Copiando el store completo dentro del estado de React en cada render",
+      "Congela el store mientras dura el render, así nadie puede mutarlo",
+      "Si el snapshot cambió durante el render, fuerza un re-render síncrono",
+      "Copia el store completo al empezar cada render y trabaja sobre la copia",
     ],
     respuestaCorrecta: 1,
     explicacion:

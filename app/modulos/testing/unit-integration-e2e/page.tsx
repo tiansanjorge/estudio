@@ -24,18 +24,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "La API renombra un campo y el test de integración con MSW sigue en verde. ¿Por qué?",
     opciones: [
-      "Porque MSW detecta el cambio solo",
-      "Porque el mock sigue devolviendo la forma vieja: es una suposición sobre la API",
-      "Porque los tests de integración no usan red",
+      "Porque el mock sigue devolviendo la forma vieja: es una suposición",
+      "Porque MSW ignora los campos que el componente no renderiza",
+      "Porque el test de integración no llega a ejecutar el fetch",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Lo detecta un e2e contra la API real o un contract test.",
   },
   {
     pregunta: "¿Qué nivel conviene para cubrir 30 casos borde de una función de redondeo?",
-    opciones: ["Unit", "Integración", "E2E"],
-    respuestaCorrecta: 0,
+    opciones: [
+      "E2E",
+      "Unit",
+      "Integración",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "Cada caso cuesta milisegundos; en e2e serían minutos.",
   },
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Un test verifica que se llamó a setState con cierto valor. ¿Qué problema tiene?",
     opciones: [
-      "Ninguno",
-      "Prueba implementación: se rompe en un refactor aunque el comportamiento no cambie",
-      "Es demasiado lento",
+      "Ninguno: verificar el setState es la forma más precisa de testear estado",
+      "Que setState es asíncrono y el test puede leer el valor antes de tiempo",
+      "Prueba implementación: se rompe en un refactor sin cambios de comportamiento",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Mejor verificar lo que ve el usuario.",
   },
   {
     pregunta: "Tu app corre en Postgres. ¿Qué base usás en los tests de integración del backend?",
     opciones: [
-      "SQLite en memoria",
-      "Postgres real (contenedor o rama efímera) con cada test aislado",
-      "Un mock del ORM",
+      "Postgres real (contenedor o rama efímera), con cada test aislado",
+      "SQLite en memoria, que es compatible y mucho más rápido",
+      "Un mock del cliente de base que devuelve datos fijos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Las diferencias entre motores hacen pasar tests que fallan en producción.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué reemplaza a waitForTimeout(2000) en un e2e estable?",
     opciones: [
-      "waitForTimeout(5000)",
-      "Esperar una condición (elemento visible, respuesta de red) con reintentos automáticos",
-      "Reintentar el test entero",
+      "Un timeout más largo, de 5 s, para cubrir el CI lento",
+      "Esperar una condición concreta con reintentos automáticos",
+      "Correr el test en serie para que no compita por recursos",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Dónde rinden más los tests de regresión visual?",
     opciones: [
-      "En toda la app, por las dudas",
-      "En design systems y pantallas críticas, con un entorno de captura fijo",
-      "En APIs",
+      "En todas las páginas, para detectar cualquier cambio de píxel",
+      "En páginas con contenido dinámico, que cambian en cada carga",
+      "En design systems y pantallas críticas, con captura estable",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Cubrir todo genera ruido y aprobaciones constantes.",
   },

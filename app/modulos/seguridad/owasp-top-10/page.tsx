@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué categoría encabeza el OWASP Top 10 (2021)?",
-    opciones: ["Injection", "Broken Access Control", "Cryptographic Failures"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Broken Access Control",
+      "Injection",
+      "Cryptographic Failures",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Usuarios accediendo a datos o acciones que no deberían: la falla más frecuente.",
   },
   {
     pregunta: "¿Qué previene la inyección SQL?",
     opciones: [
-      "Escapar comillas a mano",
-      "Consultas parametrizadas: el input viaja como dato, no como parte de la consulta",
-      "Usar HTTPS",
+      "Escapar las comillas del input antes de concatenarlo en la consulta",
+      "Consultas parametrizadas: el input viaja como dato, no como SQL",
+      "Validar en el frontend que el input no tenga caracteres especiales",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -44,14 +48,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué algoritmo es adecuado para guardar contraseñas?",
-    opciones: ["SHA-256", "MD5 con sal", "Argon2id"],
+    opciones: [
+      "SHA-256 con salt",
+      "AES-256",
+      "Argon2id",
+    ],
     respuestaCorrecta: 2,
     explicacion:
       "Los hashes rápidos permiten fuerza bruta masiva; Argon2id es lento a propósito.",
   },
   {
     pregunta: "¿Qué protege contra que npm install traiga versiones distintas cada vez?",
-    opciones: ["El lockfile commiteado y npm ci", "El .gitignore", "Nada"],
+    opciones: [
+      "El lockfile commiteado y npm ci",
+      "Usar rangos con ^ en package.json",
+      "Correr npm audit antes de instalar",
+    ],
     respuestaCorrecta: 0,
     explicacion:
       "La instalación reproducible es la base de la seguridad de la cadena de suministro.",
@@ -62,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué un SSRF es especialmente grave en AWS?",
     opciones: [
-      "Porque AWS no tiene firewall",
-      "Porque el servicio de metadata de la instancia puede devolver credenciales del rol",
-      "Porque AWS usa HTTP",
+      "Porque AWS no permite filtrar el tráfico saliente de una instancia",
+      "Porque la metadata de la instancia puede devolver credenciales del rol",
+      "Porque el atacante puede apagar la instancia desde afuera",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -72,8 +84,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
   },
   {
     pregunta: "Un checkout que confía en el precio que manda el cliente es un ejemplo de...",
-    opciones: ["Injection", "Insecure Design", "Security Logging Failures"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Injection",
+      "Broken Authentication",
+      "Insecure Design",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "La falla está en el diseño del flujo, no en una línea de código.",
   },

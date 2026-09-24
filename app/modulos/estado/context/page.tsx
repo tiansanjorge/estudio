@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo se combinan Context y useReducer para armar un store global?",
     opciones: [
-      "No se pueden combinar, son alternativas excluyentes",
-      "Un Provider expone { estado, dispatch } por Context; cualquier descendiente lee el estado y dispara acciones sin prop drilling",
-      "useReducer reemplaza por completo la necesidad de Context",
+      "Un Provider expone { estado, dispatch } y cualquier descendiente lee y dispara acciones",
+      "useReducer crea el store global y Context lo sincroniza con localStorage entre pestañas",
+      "Cada componente llama a useReducer y Context mantiene todos esos estados sincronizados",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es, en esencia, el mismo patrón que implementan por debajo librerías como Redux, armado únicamente con herramientas nativas de React.",
   },
   {
     pregunta: "¿Por qué conviene separar estado y dispatch en dos Contexts distintos?",
     opciones: [
-      "Por una cuestión de organización de archivos únicamente",
-      "dispatch tiene identidad estable; separarlo evita que componentes que solo disparan acciones re-rendericen por cambios de estado que no les importan",
-      "React exige que sean dos Contexts separados",
+      "Porque un Context no puede transportar funciones y datos en el mismo value",
+      "dispatch es estable: separarlo evita re-renders en quienes solo disparan acciones",
+      "Porque dispatch cambia en cada render y contaminaría el Context del estado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo empieza a quedarse corto Context + useReducer como store global de toda una app?",
     opciones: [
-      "Nunca, siempre es suficiente para cualquier tamaño de app",
-      "Cuando hace falta selección granular del estado, devtools avanzadas (time-travel), o middleware reutilizable entre stores",
-      "Apenas la app tiene más de un componente",
+      "Cuando el estado supera cierto tamaño, porque Context lo copia en cada render",
+      "Cuando hay más de un Provider, porque no se pueden combinar entre sí",
+      "Cuando hace falta selección granular, devtools con time-travel o middleware",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Context no soporta suscripción parcial nativamente, y no ofrece herramientas de debugging avanzadas ni un sistema de middleware de fábrica.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo implementarías un middleware simple de logging para este patrón, sin librerías externas?",
     opciones: [
-      "No es posible sin una librería dedicada",
-      "Envolviendo el dispatch real en una función que loguea la acción antes de delegar al dispatch original",
-      "Usando console.log directamente dentro del reducer",
+      "Envolviendo el dispatch en una función que loguea y después delega al original",
+      "Agregando un console.log dentro de cada case del reducer",
+      "Con un useEffect que compara el estado nuevo con el anterior en cada render",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es un patrón manual y limitado comparado con el sistema de middleware configurable de Redux, pero cubre el caso simple de loguear acciones en desarrollo.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué Context + useReducer no sufre el problema de tearing bajo renderizado concurrente?",
     opciones: [
-      "Porque React lo bloquea explícitamente",
-      "Porque el estado de useReducer es estado nativo de React, no un store externo mutable — React garantiza consistencia interna para su propio estado",
-      "Porque Context siempre fuerza renders síncronos",
+      "Porque Context congela el value durante todo el render concurrente",
+      "Porque es estado nativo de React, no un store externo mutable",
+      "Porque useReducer siempre renderiza en modo síncrono, nunca concurrente",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Si el tearing no aplica a Context + useReducer, ¿por qué Zustand igual usa useSyncExternalStore?",
     opciones: [
-      "Por una decisión de diseño sin razón técnica real",
-      "Porque Zustand guarda su estado en un store completamente externo a React (para lograr selección granular), y eso SÍ lo expone al problema de tearing",
-      "Porque Zustand no confía en el sistema de estado de React",
+      "Porque Zustand está implementado arriba de Context y hereda sus limitaciones",
+      "Porque useSyncExternalStore es la única forma de compartir estado sin Provider",
+      "Porque guarda el estado fuera de React, y eso sí lo expone al tearing",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es el trade-off inverso: Context+useReducer evita tearing por estar 'adentro' de React pero sin selección granular; un store externo logra selección granular pero necesita resolver tearing explícitamente.",
   },

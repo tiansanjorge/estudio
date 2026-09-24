@@ -24,11 +24,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué obtenés gratis al usar <button> en vez de <div onClick>?",
     opciones: [
-      "Solo estilos por defecto del navegador",
       "Rol de botón, foco con Tab y activación con Enter y Espacio",
-      "Nada, son equivalentes si tienen el mismo onClick",
+      "Rol de botón y foco con Tab; la activación con teclado es aparte",
+      "Solo el rol: el foco y el teclado dependen del onClick",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El div funciona solo con mouse; el teclado y el lector de pantalla no lo reconocen como control.",
   },
@@ -36,8 +36,8 @@ const preguntas: PreguntaQuiz[] = [
     pregunta: "Un botón contiene solo un ícono SVG. ¿Qué anuncia el lector de pantalla?",
     opciones: [
       "El nombre del archivo del ícono",
-      "Solo 'botón', porque no tiene nombre accesible",
-      "Nada, lo saltea",
+      "Solo 'botón', sin nombre accesible",
+      "El contenido del atributo title del SVG",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace role=\"button\" en un div?",
     opciones: [
-      "Lo convierte en un botón completo, con foco y teclado",
-      "Cambia cómo se anuncia, pero no agrega foco ni activación con teclado",
-      "Nada, los roles solo sirven para SEO",
+      "Lo convierte en un botón completo, con foco y teclado incluidos",
+      "Le agrega foco con Tab, pero no la activación con teclado",
+      "Cambia cómo se anuncia, sin agregar foco ni activación con teclado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "ARIA cambia la semántica expuesta, no el comportamiento. El resto hay que implementarlo a mano.",
   },
   {
     pregunta: "Un mensaje de 'Guardado' se monta junto con su role=\"status\" y el lector no lo anuncia. ¿Por qué?",
     opciones: [
-      "role=\"status\" no existe",
-      "Las regiones vivas anuncian cambios dentro de una región que ya estaba en el árbol",
-      "Los lectores de pantalla no anuncian texto corto",
+      "Las regiones vivas anuncian cambios dentro de una región que ya existía",
+      "Porque role=\"status\" es cortés y espera a que el usuario deje de tipear",
+      "Porque hace falta aria-live además de role=\"status\" para que se anuncie",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La región tiene que existir antes, vacía, y cambiar su contenido después.",
   },
@@ -73,19 +73,23 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué técnica oculta visualmente un texto pero lo deja disponible para el lector?",
-    opciones: ["display: none", "aria-hidden=\"true\"", "Una clase sr-only (visually-hidden)"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "display: none",
+      "Una clase sr-only (visually-hidden)",
+      "aria-hidden=\"true\"",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "display: none lo saca de todo; aria-hidden hace lo inverso de lo buscado.",
   },
   {
     pregunta: "En un componente de tabs accesible, ¿cómo se mueve el usuario entre pestañas?",
     opciones: [
-      "Con Tab, una parada por pestaña",
-      "Con las flechas; la tablist es una sola parada de Tab",
-      "Solo con el mouse",
+      "Con Tab, que pasa de una pestaña a la siguiente",
+      "Con Tab entre pestañas y Enter para activarlas",
+      "Con las flechas: la tablist es una sola parada de Tab",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Tab mueve entre controles; las flechas, dentro de un control compuesto (roving tabindex).",
   },

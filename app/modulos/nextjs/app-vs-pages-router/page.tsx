@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "En el App Router, ¿qué archivo hace que una carpeta sea una ruta pública?",
-    opciones: ["index.tsx", "page.tsx", "layout.tsx"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "page.tsx",
+      "layout.tsx",
+      "route.tsx",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Sin page.tsx (o route.ts) la carpeta no expone URL; por eso se pueden colocar otros archivos adentro.",
   },
   {
     pregunta: "¿Qué reemplaza a getServerSideProps en el App Router?",
     opciones: [
-      "getServerData",
+      "Un Route Handler que la page consulta con fetch en cada request",
       "Un Server Component async que pide los datos directamente",
-      "Un useEffect con fetch",
+      "La función generateMetadata, que corre en cada request",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasa al navegar de una ruta de pages/ a una de app/ en una app que migra de a poco?",
     opciones: [
-      "Una navegación del lado del cliente, sin recarga",
+      "Una navegación del lado del cliente, con prefetch como entre rutas de app/",
+      "Una navegación del cliente, pero sin conservar el estado de los layouts",
       "Una navegación completa (hard navigation), sin prefetch entre routers",
-      "Un error de build",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Son dos routers distintos; por eso conviene migrar juntas las secciones que se navegan juntas.",
   },
   {
     pregunta: "¿Por qué un layout del App Router no puede leer searchParams?",
     opciones: [
-      "Porque los layouts no pueden ser async",
-      "Porque no se re-renderiza al navegar, y el valor quedaría desactualizado",
-      "Porque searchParams solo existe en Pages Router",
+      "Porque no se re-renderiza al navegar, y el valor quedaría viejo",
+      "Porque los layouts se renderizan en el build y no conocen la URL",
+      "Porque searchParams solo existe en Client Components",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Se leen en la page (prop searchParams) o en un Client Component con useSearchParams.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "En una navegación del lado del cliente en el App Router, ¿qué descarga el router?",
     opciones: [
-      "El HTML completo de la página nueva",
+      "El HTML completo de la página nueva, como en una carga normal",
       "El RSC payload de los segmentos que cambian",
-      "Todo el bundle de JavaScript de nuevo",
+      "El JSON de los datos, que el cliente renderiza con React",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué reemplaza a fallback de getStaticPaths?",
     opciones: [
-      "dynamicParams, que por defecto genera bajo demanda las rutas no pregeneradas",
-      "fallback sigue igual en generateStaticParams",
-      "Nada: las rutas no pregeneradas siempre dan 404",
+      "revalidate, que regenera en segundo plano las rutas que faltan",
+      "generateStaticParams, que por defecto devuelve 404 para el resto",
+      "dynamicParams, que por defecto genera bajo demanda las que faltan",
     ],
-    respuestaCorrecta: 0,
+    respuestaCorrecta: 2,
     explicacion:
       "Con dynamicParams = false, las rutas fuera de generateStaticParams devuelven 404.",
   },

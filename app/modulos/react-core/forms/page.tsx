@@ -26,20 +26,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace que un input sea 'controlado' en React?",
     opciones: [
-      "Que tenga un placeholder",
-      "Que su value esté atado al estado de React, y el onChange sea el único lugar que actualiza ese estado",
-      "Que use TypeScript",
+      "Que su value venga del estado y el onChange lo actualice",
+      "Que tenga un onChange, aunque su valor no esté atado al estado",
+      "Que tenga una ref de React apuntando al elemento del DOM",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Un input controlado recibe su value desde el estado de React. React 'decide' qué mostrar en cada render — el DOM no maneja el valor por su cuenta.",
   },
   {
     pregunta: "Si un input controlado no llama a setState en su onChange, ¿qué pasa al escribir?",
     opciones: [
-      "El input funciona normal, como uno nativo",
-      "El input no muestra lo que se tipea: React sigue forzando el value viejo en cada render",
-      "Da un error en consola y detiene la app",
+      "Se ve lo que escribís, pero el estado queda desincronizado del DOM",
+      "No se ve lo que escribís: React vuelve a forzar el value viejo",
+      "React lo pasa a no controlado y muestra un warning en consola",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,11 +48,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál es la ventaja principal de un input no controlado (uncontrolled) con ref?",
     opciones: [
-      "Es más seguro",
-      "El DOM maneja su propio valor sin re-renderizar el componente en cada tecla; se lee recién cuando hace falta (ej: al submit)",
-      "Permite usar TypeScript más estricto",
+      "Que el valor queda disponible en el estado sin escribir un onChange",
+      "Que se puede validar en vivo sin disparar renders en el componente",
+      "Que el DOM maneja el valor sin re-renderizar en cada tecla",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un input no controlado deja que el navegador maneje el valor internamente. React no re-renderiza en cada tecla — se accede al valor puntualmente vía ref cuando hace falta.",
   },
@@ -63,11 +63,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué React Hook Form re-renderiza menos que un formulario armado con useState por campo?",
     opciones: [
-      "Porque usa una versión optimizada de React internamente",
-      "Porque registra los inputs como no controlados vía refs, en vez de un useState por campo que re-renderiza el formulario entero en cada tecla",
-      "Porque valida los campos con menos frecuencia",
+      "Porque registra los inputs como no controlados vía refs, en vez de un useState por campo",
+      "Porque memoiza cada campo con React.memo y solo re-renderiza el que cambió",
+      "Porque agrupa todos los cambios y re-renderiza el formulario una vez por segundo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Con useState por campo, escribir en un input dispara un render del formulario entero. React Hook Form evita eso usando refs internamente vía register().",
   },
@@ -75,9 +75,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja tiene compartir un schema de validación (Zod) entre cliente y servidor?",
     opciones: [
-      "Ninguna, siempre hay que duplicar la validación",
-      "Se define la regla una sola vez, evitando que la validación del formulario y la del backend se desincronicen con el tiempo",
-      "Solo sirve para tipar, no valida en runtime",
+      "Que el servidor ya no necesita validar, porque confía en lo que validó el cliente",
+      "Que la regla se define una vez y el form y el backend no se desincronizan",
+      "Que la validación corre una sola vez, en el cliente, y el resultado viaja al server",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja tiene required/type='email' en HTML sobre validar todo con JavaScript?",
     opciones: [
-      "Ninguna, JavaScript siempre es más confiable",
-      "Funciona incluso si JavaScript falla en cargar, y el navegador maneja foco y accesibilidad de esos mensajes de forma consistente",
-      "Es más rápido de escribir, nada más",
+      "Que valida el formato del email contra el servidor de correo del dominio",
+      "Que reemplaza la validación del servidor, porque el navegador no se puede saltear",
+      "Que funciona aunque JS no cargue, con foco y mensajes accesibles del navegador",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Para reglas básicas y universales conviene apoyarse en la validación nativa. Reglas de negocio específicas siguen necesitando JavaScript, pero no hace falta reemplazar todo.",
   },
@@ -102,11 +102,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja de 'progressive enhancement' da el modelo de form actions de React 19 sobre un onSubmit tradicional?",
     opciones: [
-      "Ninguna, funcionan exactamente igual",
-      "El formulario funciona incluso si JavaScript no cargó todavía, porque se engancha al mecanismo nativo action del navegador",
-      "Solo funciona en Server Components, nunca en el cliente",
+      "El formulario funciona aunque JavaScript no haya cargado, usando el action nativo",
+      "El formulario se valida en el servidor sin tener que escribir un endpoint aparte",
+      "El formulario hace optimistic updates automáticamente mientras se envía",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Con <form action={fn}>, React se apoya en el submit nativo del navegador en vez de depender por completo de interceptar el evento con JavaScript.",
   },

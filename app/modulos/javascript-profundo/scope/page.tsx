@@ -26,9 +26,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Cuando el motor de JS busca una variable, ¿en qué orden recorre los scopes?",
     opciones: [
-      "Del scope global hacia adentro",
-      "Del scope más interno (donde está el código) hacia afuera, hasta el global",
-      "En un orden aleatorio",
+      "Desde el scope donde se llamó a la función hacia afuera, hasta el global",
+      "Desde el scope donde está escrito el código hacia afuera, hasta el global",
+      "Desde el global hacia adentro, hasta llegar al scope actual",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -37,22 +37,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es shadowing?",
     opciones: [
-      "Cuando una variable interna con el mismo nombre que una externa oculta a esta última dentro de su propio scope",
-      "Un error de sintaxis por declarar una variable dos veces",
-      "Un tipo de closure",
+      "Que una variable interna con el mismo nombre reasigne el valor de la externa",
+      "Declarar dos veces el mismo nombre en un scope, algo que let no permite",
+      "Que una variable interna con el mismo nombre oculte a la externa en ese scope",
     ],
-    respuestaCorrecta: 0,
+    respuestaCorrecta: 2,
     explicacion:
       "La búsqueda se detiene en la primera coincidencia (la más cercana). Si un scope interno declara una variable con el mismo nombre que uno externo, la interna 'tapa' a la externa mientras estás dentro de ese scope — la externa sigue existiendo intacta.",
   },
   {
     pregunta: "¿Cuál es la diferencia clave entre 'scope' y 'closure'?",
     opciones: [
-      "Son exactamente lo mismo",
-      "El scope es la regla de dónde se puede acceder a una variable; la closure es cuando una función retiene ese acceso después de que el scope externo debería haber desaparecido",
-      "Closure es solo para var, scope es solo para let",
+      "Scope define desde dónde se accede a una variable; closure es una función que conserva ese acceso después",
+      "Scope es el conjunto de variables de una función; closure es la copia de ese conjunto que se hace al retornar",
+      "Scope se resuelve al ejecutar el código; closure es lo que se resuelve al escribirlo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El scope define visibilidad mientras el código se ejecuta. La closure es lo que pasa cuando una función escapa de su scope de origen (se retorna, se guarda) y sigue teniendo acceso a esas variables aunque ya no deberían estar disponibles.",
   },
@@ -63,9 +63,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Un var declarado en el nivel superior de un módulo ES termina como propiedad de window?",
     opciones: [
-      "Sí, igual que en un script clásico",
-      "No, cada módulo ES tiene su propio scope de nivel superior, aislado del objeto global",
-      "Solo si el módulo se carga de forma síncrona",
+      "Sí: un var en el nivel superior siempre crea una propiedad del objeto global",
+      "No: cada módulo ES tiene su propio scope, aislado del objeto global",
+      "Solo si el módulo no usa export; con algún export queda aislado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -75,11 +75,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué se evita el statement `with` en JavaScript moderno?",
     opciones: [
-      "Porque está deprecado solo por convención, pero funciona igual que antes",
-      "Porque mete propiedades de un objeto en el scope chain dinámicamente, impidiendo que el motor optimice la resolución de variables, y está prohibido en strict mode",
-      "Porque no funciona con arrow functions",
+      "Porque copia el objeto en cada acceso, lo que multiplica el uso de memoria",
+      "Porque hace lo mismo que desestructurar, con una sintaxis que confunde a los linters",
+      "Porque mete propiedades en el scope chain en runtime, frena optimizaciones y strict mode lo prohíbe",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El motor no puede saber en tiempo de compilación si un nombre es una variable o una propiedad del objeto. La alternativa moderna para lo mismo es destructuring explícito.",
   },
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué diferencia a la Temporal Dead Zone de simplemente 'la variable no existe todavía'?",
     opciones: [
-      "No hay diferencia, es lo mismo",
-      "typeof sobre una variable no declarada da 'undefined' sin error, pero typeof sobre una variable en TDZ lanza ReferenceError",
-      "La TDZ solo aplica a var, no a let/const",
+      "typeof de una variable no declarada da 'undefined'; en TDZ, lanza ReferenceError",
+      "En TDZ la variable vale undefined; si no está declarada, lanza ReferenceError",
+      "Ninguna: en los dos casos typeof devuelve 'undefined' sin lanzar error",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "let/const se hoistean pero no se inicializan: quedan en un estado 'muerto' desde el inicio del bloque hasta su declaración. Acceder ahí, incluso con typeof, lanza ReferenceError.",
   },
@@ -102,9 +102,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué un `eval` dentro de una función puede afectar la performance de código que no lo usa directamente?",
     opciones: [
-      "No la afecta, eval está aislado en su propio scope",
-      "El motor no puede garantizar qué variables podría crear o modificar eval dinámicamente, así que desactiva optimizaciones de resolución de variables para toda la función que lo contiene",
-      "Solo afecta la performance si eval está en el scope global",
+      "Porque recompila su string en cada llamada, pero el resto de la función no se ve afectado",
+      "Porque el motor no sabe qué variables podría crear o tocar, y desoptimiza toda la función",
+      "Porque eval corre en el scope global y obliga a buscar todas las variables ahí",
     ],
     respuestaCorrecta: 1,
     explicacion:

@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "En EC2, ¿quién parchea el sistema operativo?",
-    opciones: ["AWS", "El cliente", "Nadie, se actualiza solo"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "El cliente",
+      "AWS",
+      "AWS, si se activa el soporte",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "En IaaS, del sistema operativo para arriba es responsabilidad del cliente.",
   },
   {
     pregunta: "¿Qué nunca pasa a ser responsabilidad del proveedor, en ningún modelo?",
-    opciones: ["El hardware", "Los datos, los accesos y la configuración", "El runtime"],
+    opciones: [
+      "El hardware y la red física",
+      "Los datos, los accesos y la configuración",
+      "El sistema operativo de los servicios",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Incluso en SaaS, quién accede a tus datos lo decidís vos.",
   },
@@ -39,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué evita que alguien haga público un bucket por error en toda la cuenta?",
     opciones: [
-      "Revisarlo a mano cada semana",
-      "Bloquear el acceso público a S3 a nivel de cuenta",
-      "Usar nombres de bucket difíciles de adivinar",
+      "Cifrar el bucket con una clave de KMS",
+      "Activar el versionado en todos los buckets",
+      "Bloquear el acceso público a nivel de cuenta",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Un guardrail de cuenta gana aunque una política individual lo permita.",
   },
   {
     pregunta: "Una zona de AWS se cae y tu app, con una sola instancia en esa zona, también. ¿De quién es el problema de tus usuarios?",
     opciones: [
-      "De AWS, que pagará todas las pérdidas",
-      "Tuyo: la resiliencia multi-zona es una decisión de arquitectura del cliente",
-      "De nadie",
+      "Tuyo: el multi-zona es una decisión de arquitectura del cliente",
+      "De AWS: garantiza la disponibilidad de cada zona por contrato",
+      "Compartido: AWS responde por la zona y vos por la app",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "El SLA da créditos sobre la factura, no cubre el impacto en tu negocio.",
   },
 ];
@@ -62,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Tu app corre en AWS, que tiene certificación PCI. ¿Tu sistema es PCI compliant?",
     opciones: [
-      "Sí, automáticamente",
-      "No: heredás controles del proveedor, pero los tuyos los tenés que implementar y demostrar",
-      "Solo si usás Lambda",
+      "Sí: la certificación del proveedor cubre lo que corre encima",
+      "No: heredás controles, pero los tuyos los tenés que implementar y demostrar",
+      "Sí, siempre que uses solo servicios de AWS con certificación PCI",
     ],
     respuestaCorrecta: 1,
     explicacion: "La certificación del proveedor cubre su parte del modelo, no la tuya.",
   },
   {
     pregunta: "En RDS, ¿de quién es que la base sea accesible desde internet?",
-    opciones: ["De AWS", "Del cliente: security groups y acceso público son configuración suya", "Compartida por igual"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "De AWS, que administra la red del servicio gestionado",
+      "De AWS, que expone el endpoint público por defecto",
+      "Del cliente: security groups y acceso público son suyos",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "El servicio es gestionado, pero la exposición de red la configurás vos.",
   },
 ];

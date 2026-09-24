@@ -23,16 +23,20 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Quién es responsable del código que genera un asistente y se mergea?",
-    opciones: ["El modelo", "La persona que abre y aprueba el PR", "Nadie"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Quien abre y aprueba el PR",
+      "El proveedor del asistente",
+      "Nadie en particular: es compartido",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "'Lo generó la IA' no explica un bug en producción.",
   },
   {
     pregunta: "El asistente usa un método de una librería que no te suena. ¿Qué hacés?",
     opciones: [
-      "Confiar, seguro existe",
-      "Verificar que exista en la versión que usa el proyecto",
-      "Borrar la librería",
+      "Confiar si compila: TypeScript ya lo habría marcado",
+      "Verificar que exista en la versión del proyecto",
+      "Pedirle al asistente que confirme que existe",
     ],
     respuestaCorrecta: 1,
     explicacion: "Las APIs inventadas o de otra versión son un error típico.",
@@ -43,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué riesgo hay en que el mismo asistente escriba el código y sus tests?",
     opciones: [
-      "Ninguno",
-      "Pueden compartir el mismo malentendido y validarse entre sí",
-      "Los tests quedan más lentos",
+      "Que los tests quedan demasiado acoplados al framework de testing",
+      "Que los tests tardan más porque cubren todos los casos borde",
+      "Que compartan el mismo malentendido y se validen entre sí",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Por eso conviene definir o revisar primero los tests que expresan lo esperado.",
   },
   {
     pregunta: "¿Para qué conviene usar IA en el code review?",
     opciones: [
-      "Para reemplazar la revisión humana",
-      "Como primera pasada para lo mecánico, liberando a la persona para el criterio",
-      "Para aprobar PRs grandes más rápido",
+      "Como primera pasada de lo mecánico, para dejar el criterio a la persona",
+      "Para aprobar los PRs chicos sin que los mire una persona",
+      "Para reemplazar la revisión humana en los PRs de otra IA",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "No conoce la intención del producto ni decide si el diseño es el correcto.",
   },
 ];
@@ -66,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Cambiás el prompt de una funcionalidad con LLM. ¿Cómo sabés que no empeoró?",
     opciones: [
-      "Probando dos o tres preguntas a mano",
-      "Corriendo el conjunto de evaluación antes y después del cambio",
-      "Esperando quejas de los usuarios",
+      "Probando a mano unos cuantos ejemplos que conocés bien",
+      "Corriendo el conjunto de evaluación antes y después",
+      "Preguntándole al modelo si la versión nueva es mejor",
     ],
     respuestaCorrecta: 1,
     explicacion: "Un cambio que mejora un caso puede empeorar otros diez.",
   },
   {
     pregunta: "¿Qué pasa con el cuello de botella cuando generar código se vuelve barato?",
-    opciones: ["Desaparece", "Se muda a la revisión", "Se muda al diseño gráfico"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Desaparece",
+      "Se muda al deploy",
+      "Se muda a la revisión",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Por eso el proceso protege la revisión: PRs chicos y verificación automática.",
   },
 ];

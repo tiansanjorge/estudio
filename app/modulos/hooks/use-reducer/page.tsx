@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué recibe y qué devuelve una función reducer?",
     opciones: [
-      "Recibe el estado anterior y una acción, devuelve el nuevo estado",
-      "Recibe solo una acción y devuelve un booleano",
-      "Recibe props y devuelve JSX",
+      "Recibe el estado anterior y una acción, y devuelve el nuevo estado",
+      "Recibe una acción y modifica el estado anterior en el lugar",
+      "Recibe el estado y devuelve la acción que React tiene que aplicar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es la misma idea que array.reduce: en vez de mutar el estado anterior, el reducer calcula y devuelve el estado siguiente sin efectos secundarios.",
   },
   {
     pregunta: "¿Cuándo conviene useReducer en vez de varios useState sueltos?",
     opciones: [
-      "Siempre, useReducer es preferible en todos los casos",
-      "Cuando hay varias piezas de estado relacionadas que cambian juntas según distintas acciones",
-      "Solo en componentes de clase",
+      "Cuando el estado es un número o un booleano que cambia muy seguido",
+      "Cuando varios estados relacionados cambian juntos según distintas acciones",
+      "Cuando el estado tiene que compartirse entre varios componentes",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,11 +48,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué el reducer debe ser una función pura, sin fetch ni efectos secundarios?",
     opciones: [
-      "Por una convención de estilo sin consecuencias reales",
-      "Porque React puede llamarlo más de una vez para la misma actualización (por ejemplo, en Strict Mode), duplicando cualquier efecto secundario",
-      "Porque TypeScript no permite efectos secundarios en funciones",
+      "Porque el reducer corre en un worker sin acceso a fetch ni al DOM",
+      "Porque React lo ejecuta en el servidor y no puede esperar promesas",
+      "Porque React puede llamarlo más de una vez por acción, duplicando efectos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un reducer puro también es trivial de testear: se le pasa un estado y una acción, y se compara el resultado, sin mocks ni entorno de renderizado.",
   },
@@ -60,11 +60,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja da el tercer argumento de useReducer (la función 'init')?",
     opciones: [
-      "Permite usar dos reducers a la vez",
-      "Calcula el estado inicial de forma perezosa, ejecutándose solo una vez en el montaje, igual que el lazy initializer de useState",
-      "Convierte el reducer en asincrónico",
+      "Calcula el estado inicial de forma perezosa, una sola vez al montar",
+      "Resetea el estado al valor inicial cada vez que cambian las props",
+      "Se ejecuta antes de cada acción para normalizar el estado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es útil cuando el estado inicial depende de props y ese cálculo no es trivial, y permite reusar la misma función para resetear el estado en una acción de reset.",
   },
@@ -75,9 +75,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo se relaciona internamente useState con useReducer?",
     opciones: [
-      "No tienen ninguna relación, son mecanismos completamente separados",
-      "useState es, conceptualmente, un caso particular de useReducer con un reducer trivial que devuelve la acción recibida como nuevo estado",
-      "useReducer está implementado sobre useState",
+      "useReducer está implementado arriba de useState, con un switch encima",
+      "useState es un useReducer cuyo reducer devuelve la acción como estado",
+      "Son independientes: guardan su estado en estructuras internas distintas",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -87,11 +87,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué useReducer + Context suele ser mejor que Context + varios useState sueltos?",
     opciones: [
-      "Porque useReducer es más rápido en runtime",
-      "Porque separa responsabilidades: el Context solo distribuye estado y dispatch (estable), y toda la lógica de transición queda centralizada y testeable en el reducer",
-      "Porque evita tener que usar Context en absoluto",
+      "Porque useReducer evita que los consumidores re-rendericen al cambiar el estado",
+      "Porque Context no puede transportar varios useState, pero sí un solo reducer",
+      "dispatch es estable y la lógica queda centralizada y testeable en el reducer",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Los componentes consumidores solo necesitan disparar una acción, no saber cómo se calcula el resultado — más limpio que exponer media docena de setters por Context.",
   },

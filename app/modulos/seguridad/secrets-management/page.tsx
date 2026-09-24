@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué va en el repositorio respecto de las variables de entorno?",
     opciones: [
-      "El .env con los valores reales",
       "Un .env.example con los nombres, sin valores",
-      "Nada",
+      "El .env de desarrollo, con valores de prueba",
+      "Los .env de cada entorno, cifrados con git-crypt",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Documenta qué hace falta configurar sin exponer ningún valor.",
   },
   {
     pregunta: "¿Quién puede leer NEXT_PUBLIC_STRIPE_SECRET?",
-    opciones: ["Solo el servidor", "Cualquiera que abra el sitio: queda en el bundle", "Nadie"],
+    opciones: [
+      "Solo el servidor, porque es una variable de entorno",
+      "Cualquiera que abra el sitio: queda en el bundle",
+      "Solo los Client Components, en runtime",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "El prefijo hace que Next lo incruste en el JavaScript del cliente.",
@@ -45,18 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Se pusheó una API key. ¿Cuál es el primer paso?",
     opciones: [
-      "Borrar el archivo en un commit nuevo",
+      "Reescribir el historial de git para borrarla",
+      "Hacer el repositorio privado cuanto antes",
       "Rotar la clave en el proveedor",
-      "Reescribir el historial de git",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El historial y los clones conservan el secreto; solo revocarlo cierra la exposición.",
   },
   {
     pregunta: "¿Qué evita guardar credenciales de larga vida del cloud en el CI?",
-    opciones: ["Base64", "OIDC con credenciales temporales por rol", "Un repo privado"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "OIDC con credenciales temporales por rol",
+      "Guardarlas como secrets cifrados del repo",
+      "Rotarlas a mano cada 90 días",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "El workflow obtiene credenciales de corta duración según el repo y la rama.",
   },
@@ -66,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace falta para rotar un secreto sin downtime?",
     opciones: [
-      "Apagar el sistema durante el cambio",
+      "Rotarlo en el horario de menor tráfico, con los servicios apagados",
       "Que durante la transición sean válidas la versión vieja y la nueva",
-      "Rotar solo de noche",
+      "Guardarlo en un secret manager, que rota sin que la app se entere",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -76,8 +84,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
   },
   {
     pregunta: "En envelope encryption, ¿dónde vive la clave maestra?",
-    opciones: ["En la base, al lado de los datos", "En el KMS, y nunca sale de ahí", "En el código"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Junto a los datos, cifrada con la data key",
+      "En una variable de entorno de la aplicación",
+      "En el KMS, y nunca sale de ahí",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "La app solo pide al KMS que descifre las data keys, con permisos y auditoría.",
   },

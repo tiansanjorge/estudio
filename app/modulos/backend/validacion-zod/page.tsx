@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué verifica TypeScript sobre el body de un request en runtime?",
-    opciones: ["Todo", "Nada: los tipos desaparecen al compilar", "Solo los números"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Nada: los tipos desaparecen al compilar",
+      "Que tenga los campos del tipo declarado",
+      "Solo los tipos primitivos de cada campo",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Los datos externos son unknown en la realidad; hace falta un schema en runtime.",
   },
   {
     pregunta: "Un atacante agrega esAdmin: true al body. ¿Qué lo frena?",
     opciones: [
-      "Que el formulario no tenga ese campo",
-      "Un schema que solo acepta los campos permitidos para esa operación",
-      "HTTPS",
+      "El tipo de TypeScript del DTO, que no incluye esAdmin",
+      "Un schema que acepta solo los campos permitidos",
+      "Un middleware de CORS que filtra el body",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,18 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Dónde se valida la regla 'el email no está registrado'?",
     opciones: [
-      "Solo en el cliente",
-      "En el servidor (y la base con un constraint único)",
-      "En el schema compartido sin acceso a la base",
+      "En el schema de Zod, con un refine",
+      "En el frontend, antes de enviar el form",
+      "En el servidor, con un unique en la base",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Depende de datos del servidor; el cliente solo puede validar la forma.",
   },
   {
     pregunta: "Después de safeParse exitoso, ¿qué datos usa el handler?",
-    opciones: ["req.body", "resultado.data", "Cualquiera de los dos"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "resultado.data",
+      "req.body",
+      "resultado.success",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "resultado.data está normalizado (trim, coerce, defaults) y sin claves de más.",
   },
@@ -65,7 +73,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo se asocia a un campo el error de una regla entre dos campos con refine?",
-    opciones: ["No se puede", "Con la opción path del refine", "Lanzando una excepción"],
+    opciones: [
+      "Con la opción message del refine",
+      "Con la opción path del refine",
+      "Con superRefine en cada campo",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Así el formulario muestra el error junto al input correcto.",
@@ -73,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué validar la respuesta de la API de un proveedor?",
     opciones: [
-      "Para hacerla más rápida",
-      "Para que un cambio del proveedor falle explícitamente en el adaptador y no lejos, con datos corruptos",
-      "No hace falta",
+      "Porque los proveedores no garantizan HTTPS y la respuesta puede venir alterada",
+      "Para cumplir con el contrato y poder reclamarle al proveedor",
+      "Para que un cambio del proveedor falle en el adaptador, no lejos y con datos rotos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es otra frontera que no controlás.",
   },

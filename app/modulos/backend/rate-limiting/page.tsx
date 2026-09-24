@@ -23,14 +23,22 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué status y header se devuelven al superar el límite?",
-    opciones: ["500 y Location", "429 y Retry-After", "403 y Allow"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "429 y Retry-After",
+      "503 y Retry-After",
+      "403 y X-RateLimit-Reset",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Retry-After le dice al cliente cuándo puede volver a intentar.",
   },
   {
     pregunta: "Con 4 instancias y un limitador en memoria de 100/min, ¿cuánto puede hacer un cliente?",
-    opciones: ["100", "Hasta 400, según cómo reparta el balanceador", "25"],
+    opciones: [
+      "100, porque cada instancia sincroniza su contador con las demás",
+      "Hasta 400, según cómo reparta el balanceador",
+      "25, porque el límite se divide entre las instancias",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Cada instancia cuenta por su lado; hace falta un store compartido como Redis.",
@@ -40,19 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué algoritmo permite el doble del límite en el borde entre dos ventanas?",
-    opciones: ["Token bucket", "Ventana fija", "Ventana deslizante"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Token bucket",
+      "Ventana deslizante",
+      "Ventana fija",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Los contadores se reinician en bloques alineados.",
   },
   {
     pregunta: "¿Por qué no bloquear del todo una cuenta tras 5 intentos fallidos?",
     opciones: [
-      "Porque es lento",
-      "Porque un atacante puede dejar sin acceso a cualquier usuario a propósito",
-      "Porque no funciona",
+      "Porque un atacante puede dejar sin acceso a cualquier usuario",
+      "Porque 5 intentos es muy poco y frustra a los usuarios reales",
+      "Porque el bloqueo no frena a un atacante con varias IPs",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Backoff progresivo, CAPTCHA y notificación son alternativas sin ese riesgo.",
   },
@@ -61,7 +73,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "El servicio está saturado y empieza a rechazar reportes para salvar el checkout. ¿Qué es?",
-    opciones: ["Rate limiting", "Load shedding", "Una cuota"],
+    opciones: [
+      "Circuit breaker",
+      "Load shedding",
+      "Backpressure",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Una defensa del sistema entero, priorizando lo crítico.",
@@ -69,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué el token bucket en Redis se implementa con un script Lua?",
     opciones: [
-      "Porque Lua es más rápido que JavaScript",
-      "Para que leer, calcular y descontar sea atómico y no haya carreras entre instancias",
-      "Porque Redis no tiene INCR",
+      "Porque Lua corre más rápido que los comandos sueltos de Redis",
+      "Porque Redis no tiene comandos para leer y escribir números",
+      "Para que leer, calcular y descontar sea atómico entre instancias",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Redis ejecuta el script sin intercalar otros comandos.",
   },

@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "En hexagonal, ¿qué es un puerto?",
     opciones: [
-      "Un puerto TCP del servidor",
-      "Una interfaz que el núcleo declara para lo que necesita del exterior",
-      "Un controller HTTP",
+      "Una interfaz que el núcleo declara para lo que necesita de afuera",
+      "La implementación concreta que conecta el núcleo con una tecnología",
+      "El punto de entrada HTTP de la aplicación, como un controller",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Los adaptadores implementan los puertos con tecnología concreta.",
   },
   {
     pregunta: "Según la regla de dependencias, ¿puede una entidad de dominio importar Prisma?",
-    opciones: ["Sí", "No: las dependencias apuntan hacia adentro", "Solo en tests"],
+    opciones: [
+      "Sí, si solo importa los tipos generados y no el cliente",
+      "No: las dependencias apuntan hacia adentro",
+      "Sí, siempre que la entidad no haga queries directamente",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "El dominio no conoce la infraestructura; la infraestructura conoce al dominio.",
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿En cuál de estos casos Clean suele ser sobre-ingeniería?",
     opciones: [
-      "Un sistema de seguros con reglas complejas",
+      "Un dominio de pagos con muchas reglas y varios proveedores",
+      "Un sistema que tiene que cambiar de base de datos pronto",
       "Un CRUD simple de un backoffice interno",
-      "Un core bancario",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Sin reglas de negocio, las capas agregan ceremonia sin proteger nada.",
   },
   {
     pregunta: "¿Qué es el composition root?",
     opciones: [
-      "La carpeta raíz del repo",
       "El único lugar donde se crean los objetos concretos y se conectan",
-      "El componente raíz de React",
+      "La entidad raíz del dominio, de la que dependen todas las demás",
+      "El módulo que exporta todas las interfaces de los puertos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Cambiar una implementación es tocar una línea ahí.",
   },
@@ -69,7 +73,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué cumple el rol de 'caso de uso' en un frontend React bien organizado?",
-    opciones: ["El JSX", "Los hooks que orquestan lógica y datos", "El CSS"],
+    opciones: [
+      "Los componentes de página, que arman la pantalla",
+      "Los hooks que orquestan lógica y datos",
+      "Los clientes HTTP que hablan con la API",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Los componentes quedan como adaptadores de presentación.",
@@ -77,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué nunca debería llegar a una respuesta de la API?",
     opciones: [
-      "Un DTO",
+      "Un DTO armado específicamente para esa respuesta",
+      "Los ids internos de las entidades de dominio",
       "El objeto del ORM con sus campos internos",
-      "Un status code",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Aunque se use el modelo del ORM como entidad, hacia afuera va un DTO explícito.",
   },

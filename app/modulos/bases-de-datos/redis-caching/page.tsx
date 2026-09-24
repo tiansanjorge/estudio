@@ -24,19 +24,19 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "En cache-aside, ¿qué pasa en un miss?",
     opciones: [
-      "Redis consulta la base solo",
-      "La aplicación consulta la base, guarda el resultado con TTL y lo devuelve",
-      "Se devuelve un error",
+      "La app lee de la base, guarda el resultado con TTL y lo devuelve",
+      "Redis va a buscar el dato a la base y lo guarda solo",
+      "La app devuelve un error y reintenta cuando el dato esté en caché",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "La aplicación maneja la caché; Redis no sabe nada de la base.",
   },
   {
     pregunta: "¿Para qué sirve el TTL si ya se invalida al escribir?",
     opciones: [
-      "Para nada",
-      "Es la red de seguridad: acota cuánto vive un dato viejo si una invalidación falla",
-      "Para ahorrar CPU",
+      "Para liberar memoria de Redis con las claves que ya nadie consulta",
+      "Es la red de seguridad: acota cuánto vive un dato viejo si falla el DEL",
+      "Para que Redis priorice qué claves desalojar cuando se llena",
     ],
     respuestaCorrecta: 1,
     explicacion: "Una invalidación olvidada o fallida deja de ser un bug permanente.",
@@ -47,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Al actualizar un producto, ¿qué conviene hacer con su clave?",
     opciones: [
-      "SET con el valor nuevo, antes del commit",
+      "SET con el valor nuevo antes de escribir en la base",
+      "DEL antes de escribir en la base, para que nadie lea el viejo",
       "DEL después de que la base confirmó",
-      "Nada, que venza sola",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "El SET concurrente puede dejar la caché con el valor equivocado; el DEL no depende del orden.",
   },
   {
     pregunta: "¿Qué desventaja tiene una caché en memoria del proceso con 10 réplicas?",
     opciones: [
-      "Es más lenta que Redis",
       "Cada réplica tiene su copia: invalidar en todas es difícil",
-      "No soporta TTL",
+      "Es más lenta que Redis, porque compite con la app por la CPU",
+      "Se pierde el TTL, porque la memoria del proceso no expira",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Por eso conviene para datos chicos y casi estáticos.",
   },
 ];
@@ -70,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Una clave muy leída vence y la base recibe 500 consultas iguales. ¿Qué la protege?",
     opciones: [
-      "Subir el TTL a infinito",
+      "Un TTL más corto, para que la clave se regenere más seguido",
       "Un lock de single-flight o stale-while-revalidate",
-      "Más réplicas de la app",
+      "Una réplica de lectura más para absorber el pico",
     ],
     respuestaCorrecta: 1,
     explicacion: "Una sola request recalcula; las demás esperan o reciben el valor anterior.",
   },
   {
     pregunta: "¿Qué política de eviction necesita una instancia de Redis que guarda colas de BullMQ?",
-    opciones: ["allkeys-lru", "noeviction", "volatile-random"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "allkeys-lru",
+      "volatile-ttl",
+      "noeviction",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Con eviction, Redis podría borrar jobs en silencio al llenarse.",
   },
 ];

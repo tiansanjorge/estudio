@@ -23,14 +23,22 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál de estas URLs sigue las convenciones REST?",
-    opciones: ["POST /crearPedido", "POST /pedidos", "GET /pedidos/borrar/41"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "POST /pedidos",
+      "POST /crearPedido",
+      "GET /pedidos/crear",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "La URL nombra el recurso; el método indica la acción.",
   },
   {
     pregunta: "En un feed con scroll infinito, llega un post nuevo mientras el usuario lee. ¿Qué paginación evita duplicados?",
-    opciones: ["Offset", "Cursor", "Ninguna"],
+    opciones: [
+      "Offset",
+      "Cursor",
+      "Por número de página",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "El cursor pide lo que viene después del último visto, sin importar lo que se insertó arriba.",
@@ -41,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué conviene incluir en el body de un error para que el cliente lo maneje?",
     opciones: [
-      "El stack trace",
-      "Un código estable legible por máquina, detalle por campo y un requestId",
-      "Solo un mensaje en texto libre",
+      "El stack trace completo, para que el cliente pueda depurar",
+      "Solo un mensaje en texto libre, traducido al idioma del usuario",
+      "Un código estable, detalle por campo y un requestId",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El cliente no debería parsear mensajes; el requestId conecta con los logs.",
   },
   {
     pregunta: "¿Cómo se responde a un POST que inicia un proceso de varios minutos?",
     opciones: [
-      "Se espera y se responde 200 al terminar",
       "202 Accepted con la URL de un recurso de estado",
-      "500 si tarda mucho",
+      "200 OK después de esperar a que termine el proceso",
+      "201 Created con el resultado todavía vacío",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El cliente consulta el estado o recibe un aviso al completar.",
   },
@@ -66,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Dos usuarios editan el mismo pedido y el segundo pisa al primero. ¿Qué lo evita?",
     opciones: [
-      "Un lock global de la tabla",
+      "Un lock en la fila durante toda la edición en pantalla",
       "Concurrencia optimista con ETag e If-Match (412 si cambió)",
-      "Hacer los PUT más rápidos",
+      "Guardar solo los campos que cambió cada usuario, con PATCH",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -76,8 +84,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
   },
   {
     pregunta: "La mayoría de las APIs 'REST' en producción están en qué nivel de Richardson?",
-    opciones: ["Nivel 0", "Nivel 2: recursos más verbos HTTP", "Nivel 3: con hipermedia completa"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Nivel 3: con hipermedia (HATEOAS)",
+      "Nivel 1: recursos, pero todo por POST",
+      "Nivel 2: recursos más verbos HTTP",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "HATEOAS completo rara vez justifica su complejidad para clientes conocidos.",
   },

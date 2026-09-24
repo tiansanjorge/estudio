@@ -23,15 +23,23 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Un switch por tipo de envío crece con cada opción nueva. ¿Qué patrón lo resuelve?",
-    opciones: ["Singleton", "Strategy", "Observer"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Strategy",
+      "Singleton",
+      "Observer",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Cada opción es una estrategia; agregar una no toca el código que las usa.",
   },
   {
     pregunta: "¿Cuál de estos es un ejemplo de Observer en el navegador?",
-    opciones: ["addEventListener", "JSON.parse", "Array.map"],
-    respuestaCorrecta: 0,
+    opciones: [
+      "fetch",
+      "addEventListener",
+      "document.createElement",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "El elemento notifica a los listeners suscriptos cuando ocurre el evento.",
   },
@@ -41,17 +49,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuándo sobra una Factory?",
     opciones: [
-      "Cuando la clase depende de la configuración",
+      "Cuando el objeto necesita varias dependencias para construirse",
+      "Cuando la implementación depende del entorno de ejecución",
       "Cuando hay una sola implementación y construirla es trivial",
-      "Cuando la construcción es compleja",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Ahí un new directo es más claro.",
   },
   {
     pregunta: "Un middleware de Express que agrega logging a cada request es un ejemplo de...",
-    opciones: ["Decorator", "Composite", "Factory"],
+    opciones: [
+      "Decorator",
+      "Adapter",
+      "Factory",
+    ],
     respuestaCorrecta: 0,
     explicacion:
       "Agrega comportamiento envolviendo, sin modificar el handler original.",
@@ -62,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué propone la 'regla de tres'?",
     opciones: [
-      "Tres patrones por módulo",
+      "Que una función no tenga más de tres parámetros",
       "Esperar dos o tres casos reales antes de abstraer",
-      "Tres tests por función",
+      "Que cada módulo tenga como máximo tres dependencias",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -73,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué gana un emisor de eventos tipado con un mapa de eventos?",
     opciones: [
-      "Nada, es igual a uno sin tipos",
-      "Error de compilación si se emite un payload incorrecto o un evento inexistente",
-      "Más velocidad",
+      "Que los eventos se entregan en orden garantizado",
+      "Que los listeners se registran y se limpian solos",
+      "Error de compilación ante un payload o evento inválido",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Y los suscriptores reciben el tipo correcto sin anotaciones.",
   },

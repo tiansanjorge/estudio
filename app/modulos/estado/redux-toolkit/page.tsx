@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué genera automáticamente createSlice?",
     opciones: [
-      "Solo el reducer, hay que escribir los action creators a mano",
-      "Los action creators y el reducer, a partir de un solo objeto de definiciones",
-      "Componentes de React conectados al store",
+      "Los action creators y el reducer, a partir de un solo objeto",
+      "El store completo, con middleware y DevTools ya configurados",
+      "Los selectores memoizados de cada propiedad del estado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "RTK elimina el boilerplate del Redux clásico: constantes de tipos de acción, action creators y reducers con switch grandes escritos a mano.",
   },
   {
     pregunta: "¿Con qué hooks se conecta un componente al store de Redux?",
     opciones: [
-      "useContext y useReducer",
-      "useSelector para leer estado, useDispatch para disparar acciones",
-      "useStore y useAction",
+      "useStore para leer el estado y useReducer para disparar acciones",
+      "useSelector para leer el estado y useDispatch para disparar acciones",
+      "useContext con el Provider del store y useState para las acciones",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo permite RTK escribir código que 'muta' el estado directamente dentro de un reducer?",
     opciones: [
-      "Redux dejó de requerir inmutabilidad en RTK",
-      "createSlice envuelve los reducers con Immer, que usa un Proxy para generar un objeto nuevo inmutable a partir de las 'mutaciones' detectadas",
-      "Usa una copia profunda automática en cada dispatch",
+      "Clona el estado completo con structuredClone antes de pasarlo al reducer",
+      "Congela el estado con Object.freeze y descarta las mutaciones inválidas",
+      "Envuelve los reducers con Immer, que traduce las mutaciones a un objeto nuevo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Esto solo aplica dentro de reducers creados con createSlice — Redux 'a mano' sigue exigiendo el patrón de spread manual explícito.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué pasa si un reducer de createSlice muta el draft Y ADEMÁS retorna explícitamente un valor nuevo?",
     opciones: [
-      "Funciona igual, Immer prioriza el return",
-      "Immer lanza un error en runtime, porque no puede reconciliar ambos enfoques en el mismo reducer",
-      "Redux ignora la mutación y usa solo el estado anterior",
+      "Immer lanza un error: no puede combinar los dos enfoques",
+      "Gana el valor retornado y las mutaciones se descartan",
+      "Immer fusiona las mutaciones con el valor retornado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La regla es: o se muta el draft sin retornar nada, o se retorna un estado nuevo sin tocar el draft — nunca ambas cosas en el mismo reducer.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué se recomienda normalizar el estado (entidades por id) en vez de arrays anidados?",
     opciones: [
-      "Por una preferencia estética sin impacto real",
-      "Actualizar y buscar una entidad puntual pasa de O(n) recorriendo arrays a O(1) accediendo por clave",
-      "Porque Redux no permite arrays en el estado",
+      "Porque Redux no puede serializar arrays anidados en las DevTools",
+      "Porque buscar o actualizar una entidad pasa de O(n) a O(1) por clave",
+      "Porque Immer solo detecta mutaciones en el primer nivel del estado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo elegirías RTK Query sobre TanStack Query?",
     opciones: [
-      "Siempre, RTK Query es estrictamente superior",
-      "Cuando el proyecto ya usa Redux para el resto de su estado y conviene integrar el data fetching al mismo store y DevTools",
-      "Nunca, TanStack Query siempre es mejor",
+      "Cuando necesitás cache con invalidación, que TanStack Query no ofrece",
+      "Cuando la API es GraphQL, porque TanStack Query solo soporta REST",
+      "Cuando ya usás Redux y conviene integrar el fetching al mismo store",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "TanStack Query es agnóstico de cualquier librería de estado global, con una API más liviana para el caso puro de cachear datos del servidor sin adoptar todo el ecosistema de Redux.",
   },

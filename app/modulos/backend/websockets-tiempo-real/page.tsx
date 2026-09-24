@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Con qué status responde el servidor al aceptar un WebSocket?",
-    opciones: ["200 OK", "101 Switching Protocols", "204 No Content"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "101 Switching Protocols",
+      "200 OK",
+      "204 No Content",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "El request HTTP inicial se 'actualiza' a un canal bidireccional.",
   },
   {
     pregunta: "¿Qué pasa con los mensajes emitidos mientras el cliente estaba desconectado?",
     opciones: [
-      "El WebSocket los guarda y los entrega al reconectar",
-      "Se pierden, salvo que diseñes un mecanismo de resync",
-      "Llegan por email",
+      "El servidor los guarda y los reenvía al reconectar",
+      "Se pierden, salvo que diseñes un resync",
+      "El protocolo los reintenta hasta que llegan",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Para qué sirven los heartbeats?",
     opciones: [
-      "Para comprimir mensajes",
-      "Para detectar conexiones muertas y evitar que los proxies cierren las inactivas",
-      "Para autenticar",
+      "Para medir la latencia y ajustar la calidad de los datos",
+      "Para renovar la autenticación de la conexión",
+      "Para detectar conexiones muertas y evitar cierres por inactividad",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "TCP puede dejar una conexión 'abierta' aunque el otro lado ya no exista.",
   },
   {
     pregunta: "¿Por qué hay que verificar el header Origin en el handshake si se autentica por cookie?",
     opciones: [
-      "Por performance",
-      "Porque la cookie viaja aunque la página que abre la conexión sea de otro sitio",
-      "No hace falta",
+      "Porque la cookie viaja aunque la página que conecta sea de otro sitio",
+      "Porque CORS bloquea los WebSockets sin Origin y el cliente no conecta",
+      "Porque Origin trae el token de sesión que hay que validar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Sin ese chequeo, un sitio malicioso puede abrir un WebSocket con la sesión del usuario.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un cliente lento acumula megas en bufferedAmount. ¿Qué hacés en un feed de precios?",
     opciones: [
-      "Seguir mandando todo",
-      "Descartar intermedios y mandar solo el último estado, o muestrear",
-      "Reiniciar el servidor",
+      "Aumentar el buffer para que el cliente se ponga al día",
+      "Descartar intermedios y mandar solo el último estado",
+      "Cerrar la conexión y dejar que el cliente reconecte",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -80,8 +84,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
   },
   {
     pregunta: "¿Qué garantía da un WebSocket sobre que un mensaje fue procesado?",
-    opciones: ["Exactamente una vez", "Ninguna por sí solo: hacen falta ids, ACKs y deduplicación", "Al menos una vez"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Que llegó: TCP confirma cada mensaje al emisor",
+      "Que llegó y se procesó, si el send() no lanzó error",
+      "Ninguna por sí solo: hacen falta ids, ACKs y dedup",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Si la conexión se corta no se sabe qué llegó; la confiabilidad se construye encima.",
   },

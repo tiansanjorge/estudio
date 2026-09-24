@@ -24,16 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué viene incluido en una plataforma tipo Vercel sin configurar infraestructura?",
     opciones: [
-      "Colas de mensajes y bases gestionadas",
       "Deploys por push, previews por PR, CDN y rollback",
-      "Redes privadas con VPC",
+      "Base de datos, colas y workers de larga duración",
+      "Control total de la red, subredes y balanceadores",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Lo que no incluye (colas, redes privadas, cómputo largo) es lo que suele llevar a AWS.",
   },
   {
     pregunta: "Un worker que procesa una cola todo el día, ¿dónde lo corrés?",
-    opciones: ["En una función de la plataforma", "En contenedores, por ejemplo en AWS", "En el navegador"],
+    opciones: [
+      "En funciones de Vercel con un cron",
+      "En contenedores, por ejemplo en AWS",
+      "En Edge Functions, cerca del usuario",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Las plataformas no están pensadas para procesos permanentes.",
   },
@@ -43,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Las funciones corren en Virginia y la base en São Paulo. ¿Qué pasa?",
     opciones: [
-      "Nada",
+      "Nada importante: el CDN cachea las respuestas de la base",
+      "Las funciones se mueven solas a São Paulo con el tráfico",
       "Cada consulta paga la latencia entre regiones",
-      "La plataforma mueve la base sola",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Las funciones van cerca de los datos, no del usuario.",
   },
   {
     pregunta: "Para un equipo de tres personas sin gente de infraestructura, ¿qué pesa más en el costo total?",
     opciones: [
-      "El precio por unidad de la plataforma",
-      "El tiempo de ingeniería que haría falta para operar AWS",
-      "El dominio",
+      "El tiempo de ingeniería para operar AWS",
+      "El precio por request de cada plataforma",
+      "El costo de transferencia de datos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Con poco tráfico, la diferencia de factura rara vez paga ese tiempo.",
   },
 ];
@@ -66,9 +70,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Next.js en tres contenedores, sin caché compartida: ¿qué pasa con una revalidación on-demand?",
     opciones: [
-      "Se aplica en todas las instancias",
+      "Se aplica en las tres, porque Next la propaga",
       "Se aplica solo en la instancia que la recibió",
-      "Falla el build",
+      "No se aplica hasta reiniciar los contenedores",
     ],
     respuestaCorrecta: 1,
     explicacion: "Para propagarla hace falta un cacheHandler compartido.",
@@ -76,11 +80,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Frontend en app.ejemplo.com y API en api.ejemplo.com: ¿cómo se comparte la sesión?",
     opciones: [
-      "Guardando el token en localStorage",
-      "Cookie para el dominio padre y CORS con credenciales para el origen del frontend",
-      "No se puede",
+      "Guardando el token en localStorage y mandándolo en un header",
+      "Con SameSite=None y una cookie distinta para cada subdominio",
+      "Cookie del dominio padre y CORS con credenciales para el front",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Usar subdominios del mismo dominio simplifica cookies y CORS.",
   },
 ];

@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "El servicio de email está caído. ¿Qué pasa con el checkout si se comunica por eventos?",
     opciones: [
-      "Falla el checkout",
-      "El checkout confirma; el evento espera en la cola hasta que el consumidor vuelva",
-      "Se pierde el mail para siempre",
+      "El checkout confirma; el evento espera en la cola a que vuelva",
+      "El checkout falla, porque el evento no se pudo entregar",
+      "El checkout espera a que el email vuelva y reintenta",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La cola desacopla la disponibilidad del productor de la de los consumidores.",
   },
   {
     pregunta: "¿Cuál es un nombre de evento (y no de comando)?",
-    opciones: ["EnviarFactura", "PedidoCreado", "CobrarPedido"],
+    opciones: [
+      "CrearPedido",
+      "PedidoCreado",
+      "ProcesarPedido",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Los eventos describen hechos pasados; los comandos, órdenes.",
@@ -44,15 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué garantía de entrega ofrecen la mayoría de los brokers?",
-    opciones: ["Exactly-once", "At-least-once", "At-most-once siempre"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Exactly-once",
+      "At-most-once",
+      "At-least-once",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Por eso los consumidores tienen que tolerar duplicados.",
   },
   {
     pregunta: "El usuario compra y en 'Mis pedidos' todavía no aparece. ¿Qué es?",
-    opciones: ["Un bug seguro", "Consistencia eventual", "Un problema de CSS"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Consistencia eventual",
+      "Un evento perdido",
+      "Un lost update",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Se maneja con UI optimista, estados intermedios o notificación al completar.",
   },
@@ -62,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué resuelve el patrón Outbox?",
     opciones: [
-      "El orden de los mensajes",
-      "Que guardar en la base y publicar el evento ocurran los dos o ninguno",
-      "La latencia de la cola",
+      "Que los eventos se procesen en el mismo orden en que se publicaron",
+      "Que guardar en la base y publicar el evento pasen los dos o ninguno",
+      "Que un consumidor no procese dos veces el mismo evento",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -73,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "En una saga, ¿qué pasa si falla el cobro después de reservar stock?",
     opciones: [
-      "Se hace rollback distribuido automático",
-      "Se ejecuta la acción compensatoria: liberar el stock",
-      "Nada",
+      "Se hace rollback de la transacción distribuida completa",
+      "El stock queda reservado hasta que se reintente el cobro",
+      "Se ejecuta la compensación: liberar el stock",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Cada paso local tiene su compensación en vez de una transacción global.",
   },

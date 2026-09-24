@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema resuelven principalmente los microservicios?",
     opciones: [
-      "Que el código sea más rápido",
-      "Que muchos equipos desplieguen de forma independiente y escalar partes por separado",
-      "Eliminar los bugs",
+      "Que muchos equipos desplieguen independientes y se escale cada parte",
+      "Que el sistema sea más rápido, al repartir el trabajo entre servicios",
+      "Que el código sea más simple, al dividirlo en proyectos chicos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Son sobre todo una solución organizacional y de escala, con costo de sistema distribuido.",
   },
   {
     pregunta: "Para una startup de 4 devs, ¿qué arquitectura suele convenir?",
-    opciones: ["Microservicios", "Monolito modular", "Microfrontends"],
+    opciones: [
+      "Microservicios",
+      "Monolito modular",
+      "Serverless por función",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Máxima velocidad y refactors baratos mientras el dominio todavía cambia.",
@@ -44,19 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Cada deploy obliga a desplegar tres servicios juntos. ¿Qué es?",
-    opciones: ["Microservicios bien hechos", "Un monolito distribuido", "Un monolito modular"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Microservicios bien separados",
+      "Un monolito modular",
+      "Un monolito distribuido",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Toda la complejidad de la red sin la independencia de despliegue.",
   },
   {
     pregunta: "¿Cómo se sostienen los límites de un monolito modular?",
     opciones: [
-      "Con documentación",
-      "Verificándolos con reglas de dependencias en el CI",
-      "No se pueden sostener",
+      "Con reglas de dependencias verificadas en el CI",
+      "Con una base de datos separada por módulo",
+      "Con un repositorio de git por módulo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Un límite que no se verifica se erosiona con el primer atajo.",
   },
@@ -66,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué propone el patrón Strangler Fig?",
     opciones: [
-      "Reescribir todo el sistema de una vez",
-      "Extraer funcionalidades de a una detrás de una capa de ruteo, hasta reemplazar el sistema viejo",
-      "Duplicar el monolito",
+      "Reescribir el sistema viejo de cero y cambiarlo en un solo corte",
+      "Extraer funcionalidades de a una detrás de un ruteo, hasta reemplazar el viejo",
+      "Congelar el sistema viejo y construir el nuevo al lado, sin conectarlos",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -77,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Según la Ley de Conway, ¿qué determina los límites de un sistema?",
     opciones: [
-      "El lenguaje de programación",
+      "El volumen de tráfico de cada funcionalidad",
+      "Las tecnologías que conoce cada equipo",
       "La estructura de comunicación de la organización",
-      "El proveedor de cloud",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Por eso partir un sistema es una decisión organizacional además de técnica.",
   },

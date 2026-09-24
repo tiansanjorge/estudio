@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué componente de la factura cloud se subestima más seguido?",
-    opciones: ["El cómputo", "La transferencia de datos", "El DNS"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "La transferencia de datos",
+      "El cómputo",
+      "El almacenamiento",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Salida a internet, tráfico entre zonas y NAT se cobran por gigabyte.",
   },
   {
     pregunta: "Con tráfico bajo e irregular, ¿qué suele ser más barato?",
-    opciones: ["Instancias siempre prendidas", "Serverless", "Da igual"],
+    opciones: [
+      "Instancias reservadas",
+      "Serverless",
+      "Contenedores siempre prendidos",
+    ],
     respuestaCorrecta: 1,
     explicacion: "No se paga capacidad ociosa mientras no hay requests.",
   },
@@ -38,18 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué parte del uso conviene cubrir con un compromiso anual?",
-    opciones: ["Los picos de campaña", "La base que va a existir sí o sí", "Los entornos de prueba"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "El pico máximo del año",
+      "Todo el uso actual",
+      "La base que va a existir sí o sí",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Comprometerse con los picos es pagar capacidad que la mayor parte del tiempo no se usa.",
   },
   {
     pregunta: "La factura subió 30% y el costo por pedido bajó 10%. ¿Cómo se lee?",
     opciones: [
-      "Hay un problema de eficiencia",
       "El negocio creció y cada pedido cuesta menos: crecimiento sano",
-      "No dice nada",
+      "Hay un desperdicio del 30% que hay que recortar cuanto antes",
+      "Se abarató el cloud, pero la app se volvió menos eficiente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Las métricas unitarias separan crecimiento de ineficiencia.",
   },
 ];
@@ -57,18 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué protege de una función con un bug que se reinvoca a sí misma?",
-    opciones: ["Más memoria", "Un límite de concurrencia y alertas de anomalía de costo", "Un CDN"],
+    opciones: [
+      "Un presupuesto mensual con aviso por email al superarlo",
+      "Un límite de concurrencia y alertas de anomalía de costo",
+      "Un timeout más corto en la configuración de la función",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Sin límite, el escalado automático convierte el bug en una factura enorme.",
   },
   {
     pregunta: "¿Cuándo tiene sentido reescribir un servicio para ahorrar costo?",
     opciones: [
-      "Siempre que se pueda ahorrar algo",
-      "Cuando el ahorro supera con margen el costo del tiempo del equipo",
-      "Nunca",
+      "Cuando la factura del servicio sube más de un 20%",
+      "Cuando existe una tecnología más eficiente para ese caso",
+      "Cuando el ahorro supera con margen el tiempo del equipo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "El tiempo de ingeniería también es un costo, y el más caro al principio.",
   },
 ];

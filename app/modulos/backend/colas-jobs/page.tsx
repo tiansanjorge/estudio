@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál de estas tareas conviene sacar del request y encolar?",
     opciones: [
-      "Validar el body",
       "Enviar el email de bienvenida",
-      "Verificar la sesión",
+      "Validar el body del registro",
+      "Chequear que el email no exista",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El usuario no necesita esperarlo, y si el proveedor falla se reintenta después.",
   },
   {
     pregunta: "Un job falla siempre porque el email del usuario es inválido. ¿Qué debería pasar?",
     opciones: [
-      "Reintentar para siempre",
-      "Agotar los intentos (o marcarlo no reintentable) e ir a la cola de fallidos",
-      "Borrarlo en silencio",
+      "Reintentarlo con backoff hasta que el email se corrija",
+      "Agotar los intentos (o marcarlo no reintentable) e ir a fallidos",
+      "Borrarlo de la cola para que no bloquee a los demás",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Un worker manda el email y se cae antes de marcar el job como completo. ¿Qué pasa?",
     opciones: [
-      "Nada",
-      "El job se vuelve a ejecutar: por eso tiene que ser idempotente",
-      "El email se cancela",
+      "El job se pierde, porque ya salió de la cola",
+      "Queda marcado como completado por timeout",
+      "Se vuelve a ejecutar: por eso tiene que ser idempotente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Las colas garantizan al menos una vez, no exactamente una vez.",
   },
   {
     pregunta: "Tu proveedor de emails acepta 10 por segundo. ¿Cómo lo respetás con muchos workers?",
     opciones: [
-      "Con un solo worker",
       "Con el rate limiter de la cola, coordinado en Redis entre todos los workers",
-      "No se puede",
+      "Con un setTimeout de 100 ms en cada worker entre email y email",
+      "Con concurrency: 10 en cada worker, que es el límite del proveedor",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El límite se aplica a la cola, no a cada worker por separado.",
   },
@@ -74,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo asegurás que el job se encole solo si la transacción se confirmó?",
     opciones: [
-      "Encolando antes del commit",
+      "Encolando el job antes del commit, dentro del mismo try",
       "Outbox en la misma transacción, o una cola respaldada por la misma base",
-      "Con un setTimeout",
+      "Encolando después del commit, que ya garantiza que el job sale",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -85,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué métrica refleja mejor lo que siente el usuario?",
     opciones: [
-      "El uso de CPU del worker",
-      "La latencia de espera: cuánto tarda un job desde que se encola hasta que empieza",
-      "La cantidad de colas",
+      "La duración de cada job una vez que empieza",
+      "La cantidad de jobs completados por minuto",
+      "Cuánto tarda un job desde que se encola hasta que empieza",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Junto con la profundidad de la cola, es la base para alertar y autoescalar.",
   },

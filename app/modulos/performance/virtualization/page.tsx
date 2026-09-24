@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema resuelve virtualizar una lista larga?",
     opciones: [
-      "Evita que los items se re-rendericen cuando cambian sus datos",
-      "Evita mantener miles de nodos reales en el DOM cuando la mayoría no son visibles en el viewport",
-      "Hace que los datos se descarguen más rápido desde el servidor",
+      "Evita tener miles de nodos en el DOM cuando casi ninguno se ve",
+      "Evita descargar todos los datos de la lista en el primer request",
+      "Evita re-renderizar la lista cuando cambia un solo elemento",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es un problema de CANTIDAD de nodos en el DOM, no de re-renders — por eso memo no lo resuelve, hace falta una técnica distinta.",
   },
   {
     pregunta: "¿A partir de qué tamaño de lista tiene sentido virtualizar?",
     opciones: [
-      "Siempre, incluso con 5 elementos",
-      "A partir de cientos o miles de elementos, donde la cantidad de nodos es en sí misma el problema",
-      "Nunca, es una optimización obsoleta",
+      "Desde unas decenas, porque cada nodo del DOM ya es caro de mantener",
+      "Desde cientos o miles, donde la cantidad de nodos ya es el problema",
+      "Solo si los elementos tienen imágenes, que es lo que realmente pesa",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -50,11 +50,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Con filas de altura FIJA, ¿cómo se calcula la posición de un elemento que todavía no se montó?",
     opciones: [
-      "No se puede calcular sin haberlo renderizado antes",
-      "Con aritmética simple: offset = índice * alturaFila",
-      "Se estima con un promedio de las filas ya visibles",
+      "Midiendo cada fila con getBoundingClientRect al montarla",
+      "Con un ResizeObserver que observa todas las filas",
+      "Con aritmética: offset = índice × alturaFila",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Por eso las alturas fijas son mucho más simples de virtualizar que las variables, que necesitan medir cada elemento.",
   },
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué problema de accesibilidad introduce virtualizar sin cuidado?",
     opciones: [
-      "Ninguno, la virtualización es siempre transparente para la accesibilidad",
-      "Un elemento fuera del viewport se desmonta del DOM, lo que puede perder el foco del teclado y rompe el 'buscar en la página' del navegador",
-      "Hace que los lectores de pantalla lean la lista en un orden aleatorio",
+      "Lo que sale del viewport se desmonta: se pierde el foco y falla el Ctrl+F",
+      "Los lectores de pantalla leen las filas en orden inverso al visual",
+      "El scroll con teclado deja de funcionar dentro del contenedor",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El texto de los elementos no montados no existe en el DOM, así que el navegador no puede encontrarlo ni el foco puede quedar ahí.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Para qué sirve el 'overscan' en una lista virtualizada?",
     opciones: [
-      "Para renderizar toda la lista de una vez, sin virtualizar",
-      "Para montar unos pocos elementos extra antes y después del rango visible, evitando parpadeo durante scroll rápido",
-      "Para reducir la altura total de la lista",
+      "Para precargar los datos de la página siguiente antes de llegar al final",
+      "Para montar algunos elementos extra fuera del rango visible y evitar parpadeos",
+      "Para medir la altura real de las filas antes de mostrarlas",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué cuidado hay que tener con useState al reciclar nodos del DOM en una lista virtualizada?",
     opciones: [
-      "Ninguno, el estado se resetea automáticamente en cada scroll",
-      "El estado interno persiste en el nodo reciclado aunque ahora represente un item de datos distinto, si no se deriva o resetea explícitamente según la identidad del item",
-      "useState no puede usarse dentro de listas virtualizadas",
+      "Que el estado se reinicia en cada scroll y hay que guardarlo en una ref",
+      "Que useState no funciona dentro de filas que se montan y desmontan seguido",
+      "Que el estado queda en el nodo reciclado aunque ahora muestre otro item",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Como el componente no se desmonta (solo cambian sus props), el estado 'hereda' visualmente al nuevo item si no se maneja con cuidado.",
   },

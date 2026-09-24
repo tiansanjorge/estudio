@@ -23,14 +23,22 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué comando de Prisma se corre en producción?",
-    opciones: ["prisma migrate dev", "prisma migrate deploy", "prisma db push"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "prisma migrate deploy",
+      "prisma migrate dev",
+      "prisma db push",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "migrate deploy solo aplica las pendientes; migrate dev genera migraciones y es para desarrollo.",
   },
   {
     pregunta: "Una migración ya se aplicó en staging y tiene un error. ¿Qué hacés?",
-    opciones: ["La edito", "Creo una migración nueva que lo corrija", "Borro la tabla de migraciones"],
+    opciones: [
+      "Edito el archivo de la migración y la vuelvo a aplicar",
+      "Creo una migración nueva que lo corrija",
+      "Hago migrate reset en staging y la corrijo",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Editar una migración aplicada hace que los entornos diverjan.",
   },
@@ -40,21 +48,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué un RENAME COLUMN directo rompe un rolling deploy?",
     opciones: [
-      "Porque es lento",
-      "Porque las instancias de la versión vieja siguen usando el nombre anterior",
-      "Porque Postgres no lo permite",
+      "Porque bloquea la tabla durante varios minutos mientras reescribe los datos",
+      "Porque Postgres no permite renombrar columnas que tienen índices",
+      "Porque las instancias viejas siguen usando el nombre anterior",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Durante el deploy conviven las dos versiones de la app.",
   },
   {
     pregunta: "¿Qué hace que revertir un deploy sea seguro sin tocar la base?",
     opciones: [
-      "Tener down migrations",
-      "Que el schema nuevo sea compatible con la versión vieja del código",
-      "Correr las migraciones al arrancar la app",
+      "Que el schema nuevo sea compatible con el código viejo",
+      "Tener un script de down para cada migración",
+      "Hacer un backup antes de cada migración",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Es lo que garantiza expand/contract en cada paso.",
   },
 ];
@@ -63,21 +71,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo agregás una foreign key a una tabla de 100 millones de filas sin bloquearla?",
     opciones: [
+      "Con CREATE INDEX CONCURRENTLY sobre la columna antes de agregarla",
       "ADD CONSTRAINT ... NOT VALID y después VALIDATE CONSTRAINT",
-      "En una ventana de mantenimiento, siempre",
-      "No se puede",
+      "Agregándola de noche, cuando no hay tráfico en la tabla",
     ],
-    respuestaCorrecta: 0,
+    respuestaCorrecta: 1,
     explicacion: "La validación posterior usa un lock que no bloquea escrituras.",
   },
   {
     pregunta: "¿Para qué sirve SET lock_timeout en una migración?",
     opciones: [
-      "Para que termine más rápido",
-      "Para que no quede esperando un lock y encole todas las consultas detrás",
-      "Para evitar deadlocks entre migraciones",
+      "Para que la migración entera se cancele si tarda más de lo esperado",
+      "Para liberar los locks que dejó abiertos una migración anterior",
+      "Para no quedar esperando un lock y encolar todas las consultas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Si no consigue el lock en pocos segundos, falla y se reintenta.",
   },
 ];

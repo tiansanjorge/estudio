@@ -26,11 +26,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué headers hacen que una petición deje de ser 'simple' y dispare preflight?",
     opciones: [
-      "Accept y User-Agent",
+      "Accept y Accept-Language con valores distintos de los por defecto",
+      "Cookie y Authorization, porque llevan credenciales",
       "Content-Type: application/json y headers custom",
-      "Origin siempre",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un Content-Type distinto a los simples (form-urlencoded, text/plain, multipart) o cualquier header custom (como Authorization con un esquema no estándar) fuerza el preflight.",
   },
@@ -38,17 +38,21 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "Un GET cross-origin sin Access-Control-Allow-Origin en la respuesta: ¿el servidor llegó a procesarlo?",
     opciones: [
-      "No, el navegador lo bloqueó antes de mandarlo",
-      "Sí, el servidor lo procesó igual; el navegador solo bloquea que el JS lea la respuesta",
-      "Depende del método HTTP",
+      "Sí: el servidor lo procesó; el navegador solo impide que el JS lea la respuesta",
+      "No: el navegador lo frena antes de enviarlo, porque el origen no está permitido",
+      "No: el servidor lo rechaza con un 403 al ver un Origin que no conoce",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Al ser una request simple, el navegador la manda sin preflight. CORS no impide que el servidor la reciba y procese — solo impide que el JavaScript del cliente lea la respuesta.",
   },
   {
     pregunta: "¿Qué header identifica el estado actual de un recurso para validar caché?",
-    opciones: ["Cache-Control", "ETag", "Content-Type"],
+    opciones: [
+      "Last-Modified",
+      "ETag",
+      "Cache-Control",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "ETag es un identificador del estado del recurso. El cliente lo manda de vuelta en If-None-Match para preguntar si cambió.",
@@ -58,19 +62,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Con credentials: 'include', ¿qué valor de Access-Control-Allow-Origin es inválido?",
-    opciones: ["https://app.ejemplo.com", "*", "El origen exacto reflejado desde una lista blanca"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "El origen exacto, como https://app.com",
+      "null, para pedidos desde archivos locales",
+      "*",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Con credenciales, el comodín no está permitido: hay que devolver el origen exacto.",
   },
   {
     pregunta: "¿CORS impide que un POST de formulario cross-origin llegue al servidor?",
     opciones: [
-      "Sí, siempre",
-      "No: el request simple se envía y se procesa; CORS solo bloquea que el JS lea la respuesta",
-      "Solo si el servidor usa HTTPS",
+      "No: un request simple se envía y se procesa; CORS solo impide leer la respuesta",
+      "Sí: el navegador manda un preflight y, si falla, el POST nunca sale",
+      "Sí, salvo que el formulario use method=\"GET\" en vez de POST",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Por eso CORS no protege contra CSRF: para eso están SameSite, tokens o chequear Origin.",
   },
@@ -80,9 +88,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un servidor valida el origen con origin.includes('ejemplo.com'). ¿Qué problema tiene?",
     opciones: [
-      "Ninguno",
-      "Acepta dominios de un atacante como ejemplo.com.atacante.com",
-      "Es muy lento",
+      "Rechaza los subdominios legítimos, como app.ejemplo.com",
+      "Acepta dominios del atacante, como ejemplo.com.atacante.com",
+      "Distingue mayúsculas, así que falla con Ejemplo.com",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -90,8 +98,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
   },
   {
     pregunta: "¿Qué directiva de CSP evita que tu sitio se embeba en un iframe ajeno?",
-    opciones: ["script-src", "frame-ancestors", "connect-src"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "frame-src",
+      "default-src 'self'",
+      "frame-ancestors",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "frame-ancestors protege contra clickjacking y reemplaza a X-Frame-Options.",
   },

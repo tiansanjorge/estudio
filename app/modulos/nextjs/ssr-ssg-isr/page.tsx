@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuándo genera el HTML una página SSG?",
-    opciones: ["En cada request", "En el build", "En el navegador"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "En el build",
+      "En cada request",
+      "En el primer request",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Se sirve el mismo HTML hasta el próximo deploy (o una revalidación, si es ISR).",
   },
   {
     pregunta: "¿Qué hace que una ruta del App Router pase a renderizarse en cada request?",
     opciones: [
-      "Tener más de un componente",
+      "Tener un Client Component con estado en la página",
       "Usar APIs del request como cookies(), headers() o searchParams",
-      "Usar Tailwind",
+      "Hacer un fetch sin opciones de caché en un Server Component",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Con revalidate = 3600, llega un visitante 2 horas después de la última generación. ¿Qué recibe?",
     opciones: [
-      "La versión nueva, después de esperar el render",
+      "Espera a que se regenere y recibe la versión nueva",
+      "Recibe un error, porque la versión cacheada ya venció",
       "La versión cacheada al instante, y se regenera en segundo plano",
-      "Un error 404",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Stale-while-revalidate: el siguiente visitante recibe la versión nueva.",
   },
   {
     pregunta: "200.000 productos: ¿qué hacés con generateStaticParams?",
     opciones: [
-      "Devolver los 200.000",
       "Devolver los más visitados y dejar que el resto se genere en la primera visita",
-      "No usarlo y hacer todo SSR",
+      "Devolver los 200.000, para que ninguna visita espere una generación",
+      "No usarlo y marcar toda la ruta como dinámica para evitar el build largo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "dynamicParams es true por defecto: lo no pregenerado se genera bajo demanda y se cachea.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Con tres instancias y el cache por defecto, llamás a revalidatePath. ¿Qué pasa?",
     opciones: [
-      "Se invalidan las tres",
+      "Se invalidan las tres, porque Next propaga la invalidación",
       "Solo se invalida la instancia que recibió la llamada",
-      "Se reinician las instancias",
+      "No se invalida ninguna hasta el próximo deploy",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué cambia Partial Prerendering respecto de SSG/SSR?",
     opciones: [
-      "Nada, es otro nombre para ISR",
+      "Que las páginas estáticas pasan a regenerarse en cada request",
+      "Que el HTML se genera en el edge en vez de en el servidor de origen",
       "La decisión estático/dinámico pasa de la ruta a cada parte de la página",
-      "Elimina el render en el servidor",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Shell estático + huecos dinámicos por streaming en la misma respuesta.",
   },

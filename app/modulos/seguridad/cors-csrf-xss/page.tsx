@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace React con un string renderizado en JSX, como <p>{comentario}</p>?",
     opciones: [
-      "Lo interpreta como HTML",
       "Lo escapa: se muestra como texto literal",
-      "Lo ejecuta si tiene un script",
+      "Lo sanitiza: saca los <script> y deja el resto",
+      "Lo inserta como HTML si contiene etiquetas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La protección se pierde con dangerouslySetInnerHTML o manipulando el DOM directo.",
   },
   {
     pregunta: "En un ataque CSRF, ¿el atacante puede leer la respuesta?",
     opciones: [
-      "Sí, siempre",
+      "Sí: la respuesta vuelve a la página del atacante, que la procesa",
       "No, pero no le hace falta: el efecto (la transferencia) ya ocurrió",
-      "Solo con HTTPS",
+      "No, y por eso CSRF solo sirve para leer datos, no para modificarlos",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,19 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Con SameSite=Lax, ¿viaja la cookie en un POST de formulario desde otro sitio?",
-    opciones: ["Sí", "No", "Solo si es HTTPS"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Sí, porque es una navegación de nivel superior",
+      "Sí, salvo que la cookie además sea HttpOnly",
+      "No",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Lax solo la envía en navegaciones de primer nivel con GET.",
   },
   {
     pregunta: "¿Cómo se renderiza de forma segura el HTML de un editor enriquecido?",
     opciones: [
-      "Con una regex que borra <script>",
       "Sanitizando con DOMPurify y una allowlist mínima, al renderizar",
-      "Con dangerouslySetInnerHTML directo",
+      "Escapando el HTML al guardarlo y usándolo tal cual al renderizar",
+      "Con dangerouslySetInnerHTML, que React protege contra scripts",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Las regex caseras fallan con los muchos casos raros del HTML.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué usar nonces en la CSP en vez de 'unsafe-inline'?",
     opciones: [
-      "Son más rápidos",
-      "Permiten solo los scripts inline legítimos; uno inyectado no conoce el nonce",
-      "No hay diferencia",
+      "Porque los nonces cifran los scripts y el atacante no puede leerlos",
+      "Solo pasan los scripts inline legítimos; uno inyectado no conoce el nonce",
+      "Porque 'unsafe-inline' bloquea también los scripts externos del sitio",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿CORS protege contra CSRF?",
     opciones: [
-      "Sí, completamente",
-      "No: un formulario o una imagen hacen requests cross-site sin pasar por CORS",
-      "Solo con credenciales",
+      "Sí: el navegador bloquea todo request cross-origin sin ACAO",
+      "Sí, siempre que el servidor no devuelva Allow-Origin: *",
+      "No: un form o una imagen hacen requests sin pasar por CORS",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "CORS controla la lectura de respuestas; CSRF solo necesita que el request llegue.",
   },

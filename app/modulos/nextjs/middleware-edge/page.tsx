@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia visible tiene un rewrite respecto de un redirect?",
     opciones: [
-      "Ninguna",
       "Con rewrite la URL del navegador no cambia; con redirect sí",
-      "El rewrite solo funciona en desarrollo",
+      "Con rewrite cambia la URL; con redirect se sirve otra página en la misma URL",
+      "Ninguna visible: solo cambia el status code que ve el crawler",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El redirect provoca un segundo request a otra URL; el rewrite se resuelve dentro del servidor.",
   },
   {
     pregunta: "En Next.js 16, ¿cómo se llama el archivo que antes era middleware.ts?",
-    opciones: ["edge.ts", "proxy.ts", "server.ts"],
+    opciones: [
+      "edge.ts",
+      "proxy.ts",
+      "handler.ts",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Misma funcionalidad, nuevo nombre; hay un codemod para migrar.",
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Sin matcher, un redirect de auth en el Proxy manda todo a /login. ¿Qué se rompe?",
     opciones: [
-      "Nada",
-      "Los requests de JS, CSS e imágenes también se redirigen y la página de login queda rota",
-      "Solo las API routes",
+      "Nada: el Proxy ignora por defecto los archivos estáticos de _next",
+      "Solo las rutas de API, que pasan a devolver HTML en vez de JSON",
+      "También se redirigen JS, CSS e imágenes, y el login queda roto",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Sin matcher, el Proxy corre también sobre _next/static, _next/image y public.",
   },
   {
     pregunta: "¿Dónde tiene que estar la verificación de autorización definitiva?",
     opciones: [
-      "Solo en el Proxy",
-      "Cerca de los datos: capa de acceso a datos, Server Actions y Route Handlers",
-      "En el cliente",
+      "Cerca de los datos: acceso a datos, Server Actions y Route Handlers",
+      "En el Proxy, que corre antes de cada request y centraliza el chequeo",
+      "En el layout raíz, que envuelve a todas las páginas protegidas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El Proxy hace chequeos optimistas; un matcher mal configurado deja rutas sin cubrir.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasó con runtime = 'edge' en Next.js 16?",
     opciones: [
-      "Pasó a ser el default",
+      "Pasó a ser el runtime por defecto de todo el Proxy",
       "Quedó deprecado; el Proxy usa Node.js por defecto",
-      "Se volvió obligatorio en el Proxy",
+      "Se eliminó y ahora falla el build si se declara",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un redirect está en next.config y otro en el Proxy para la misma ruta. ¿Cuál gana?",
     opciones: [
-      "El del Proxy",
+      "El del Proxy, porque es código y pisa a la configuración estática",
+      "El último que se agregó, según el orden del deploy",
       "El de next.config, porque se evalúa antes",
-      "Ninguno, da error",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Orden: headers y redirects de next.config, después el Proxy, después los rewrites.",
   },

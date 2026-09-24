@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué query conviene para encontrar un botón?",
     opciones: [
-      "getByTestId('btn')",
       "getByRole('button', { name: 'Guardar' })",
-      "container.querySelector('.btn')",
+      "getByTestId('boton-guardar')",
+      "getByText('Guardar')",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Busca como el usuario y verifica de paso rol y nombre accesible.",
   },
   {
     pregunta: "¿Cómo afirmás que un mensaje de error NO se muestra?",
     opciones: [
-      "expect(getByRole('alert')).toBeNull()",
+      "expect(getByRole('alert')).not.toBeInTheDocument()",
       "expect(queryByRole('alert')).not.toBeInTheDocument()",
-      "await findByRole('alert')",
+      "expect(await findByRole('alert')).toBeNull()",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué userEvent en vez de fireEvent para escribir en un input?",
     opciones: [
-      "Es más corto",
-      "Simula la secuencia real de eventos (foco, teclas, input) y respeta disabled",
-      "fireEvent está deprecado",
+      "Porque fireEvent está deprecado desde React 18",
+      "Porque userEvent es síncrono y evita los warnings de act",
+      "Simula la secuencia real de eventos y respeta disabled",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Atrapa bugs que un único evento sintético no dispara.",
   },
   {
     pregunta: "¿Por qué crear un QueryClient nuevo en cada test?",
     opciones: [
-      "Por performance",
       "Para que el cache de un test no contamine al siguiente",
-      "Porque React Query lo exige",
+      "Porque un QueryClient solo puede usarse con un render",
+      "Para que los reintentos arranquen de cero en cada test",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Y con retry: false, para que los tests de error no esperen reintentos.",
   },
@@ -74,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Aparece el warning 'not wrapped in act(...)'. ¿Cuál es el arreglo correcto?",
     opciones: [
-      "Envolver todo en act() a mano",
+      "Envolver el render en act() para silenciar el warning",
       "Esperar el resultado de la actualización con findBy o waitFor",
-      "Silenciar el warning",
+      "Pasar a fake timers para que el efecto corra en el acto",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -84,8 +84,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
   },
   {
     pregunta: "¿Qué no va adentro de un waitFor?",
-    opciones: ["Un assert", "Acciones como clicks", "Un getBy"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Assertions con expect",
+      "Queries con getBy",
+      "Acciones como clicks",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "waitFor reintenta la función: la acción se ejecutaría varias veces.",
   },

@@ -24,19 +24,19 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia a continuous deployment de continuous delivery?",
     opciones: [
-      "Ninguna",
-      "En deployment, cada cambio que pasa el pipeline llega a producción sin intervención",
-      "Delivery no corre tests",
+      "En deployment, todo cambio que pasa el pipeline llega a producción solo",
+      "En deployment se despliega a staging; en delivery, a producción",
+      "Son sinónimos: los dos nombran el mismo proceso de despliegue",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "En delivery el cambio queda listo, pero alguien decide cuándo desplegarlo.",
   },
   {
     pregunta: "Dos jobs de un workflow sin needs, ¿cómo corren?",
     opciones: [
-      "En orden, en la misma máquina",
+      "En serie, en el orden en que aparecen en el archivo",
       "En paralelo, cada uno en un runner nuevo",
-      "Solo corre el primero",
+      "En paralelo, compartiendo el mismo runner",
     ],
     respuestaCorrecta: 1,
     explicacion: "Por eso cada job hace su propio checkout e instalación.",
@@ -46,18 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Llegan tres pushes seguidos al mismo PR. ¿Qué evita correr tres pipelines completos?",
-    opciones: ["Un cron", "concurrency con cancel-in-progress", "Más runners"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Cache de dependencias entre corridas",
+      "Un paths filter en el trigger",
+      "concurrency con cancel-in-progress",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Cada push nuevo cancela la ejecución anterior del mismo grupo.",
   },
   {
     pregunta: "¿Qué resuelve una merge queue?",
     opciones: [
-      "Que los PRs se revisen más rápido",
       "Que dos PRs que pasan por separado no rompan main al combinarse",
-      "Que no haga falta CI",
+      "Que los PRs se mergeen en el orden en que se abrieron",
+      "Que ningún PR se mergee sin la aprobación de un reviewer",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Prueba cada PR junto con los que tiene adelante en la cola.",
   },
 ];
@@ -66,9 +70,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué fijar las actions de terceros a un SHA en vez de a un tag?",
     opciones: [
-      "Porque es más rápido",
-      "Porque el dueño puede mover un tag a otro código; un SHA es inmutable",
-      "Porque GitHub lo exige",
+      "Porque los tags no se pueden usar en workflows de repos privados",
+      "Porque el dueño puede mover un tag; un SHA es inmutable",
+      "Porque un SHA hace que la action se descargue más rápido",
     ],
     respuestaCorrecta: 1,
     explicacion: "Un tag movido a código malicioso tendría acceso a tus secretos.",
@@ -76,11 +80,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué significa build once, deploy many?",
     opciones: [
-      "Desplegar muchas veces por día",
-      "Construir un artefacto una vez y promover ese mismo artefacto por todos los entornos",
-      "Tener un solo entorno",
+      "Hacer un solo build por día y desplegarlo varias veces si hace falta",
+      "Construir una imagen distinta por entorno, desde el mismo commit",
+      "Construir un artefacto una vez y promoverlo igual por todos los entornos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Así lo que se probó en staging es exactamente lo que llega a producción.",
   },
 ];

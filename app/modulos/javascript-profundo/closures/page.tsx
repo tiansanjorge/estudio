@@ -26,11 +26,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es una closure?",
     opciones: [
-      "Una función que se ejecuta sola sin ser llamada",
-      "Una función que retiene acceso al scope donde fue creada, incluso después de que esa función externa ya retornó",
-      "Un tipo de bucle en JavaScript",
+      "Una función que conserva acceso a las variables del scope donde fue definida, aunque ese scope ya haya terminado",
+      "Una función que guarda una copia de los valores de las variables externas en el momento en que se crea",
+      "Una función anidada que puede leer las variables de la función que la llama, esté donde esté definida",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La función interna 'cierra' sobre las variables de su scope léxico. Esas variables siguen vivas mientras la closure exista, aunque la función que las creó ya haya terminado de ejecutarse.",
   },
@@ -38,9 +38,9 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "En el bug clásico de var dentro de un for con setTimeout, ¿por qué los 3 callbacks imprimen el mismo número?",
     opciones: [
-      "Porque setTimeout siempre imprime el último valor",
-      "Porque var crea una sola variable compartida por todas las vueltas del loop, y los timeouts corren después de que el loop ya terminó",
-      "Porque hay un error de sintaxis",
+      "Porque setTimeout lee el valor de i recién cuando vence el timer, y para entonces el loop ya lo había incrementado",
+      "Porque var crea una sola variable para todo el loop, y los callbacks la leen cuando el loop ya terminó",
+      "Porque los tres callbacks se encolan en la misma macrotask y comparten el mismo contexto de ejecución",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -50,11 +50,11 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "Dos llamadas a la misma función factory (que retorna una closure) — ¿comparten el estado que capturan?",
     opciones: [
-      "Sí, siempre comparten las mismas variables",
-      "No, cada llamada crea un scope nuevo e independiente",
-      "Depende de si se usa let o const",
+      "No: cada llamada ejecuta el cuerpo otra vez y crea un scope propio",
+      "Sí: las closures apuntan al mismo código, así que comparten sus variables",
+      "Solo comparten las variables declaradas con var; let y const son propias",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Cada invocación de la función factory ejecuta el cuerpo de nuevo, creando un scope propio. Las closures que devuelve cada llamada capturan scopes distintos, sin importar que compartan el mismo código.",
   },
@@ -65,11 +65,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué las closures suelen pesar más en memoria que los métodos de una clase, a escala?",
     opciones: [
-      "Porque las closures son más lentas de ejecutar",
-      "Porque cada llamada a la función factory crea una copia nueva de los métodos internos, mientras que los métodos de una clase se comparten en el prototipo",
-      "Porque las closures no se pueden recolectar por el garbage collector",
+      "Porque cada closure mantiene vivo el call stack completo desde el que fue creada",
+      "Porque V8 no puede optimizar closures y las guarda como objetos genéricos más pesados",
+      "Porque cada llamada a la factory crea funciones nuevas, y los métodos de clase viven una vez en el prototipo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Los métodos de una clase viven una sola vez en el prototipo y se comparten entre instancias. Con closures, cada invocación de la factory function define funciones internas nuevas, así que se duplican por instancia.",
   },
@@ -77,11 +77,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué reemplazó al module pattern (IIFE + closures) para encapsular código y evitar el scope global?",
     opciones: [
-      "Los Web Workers",
-      "Los ES Modules, que dan scope por archivo de forma nativa",
-      "Las arrow functions",
+      "Los ES Modules, que le dan un scope propio a cada archivo",
+      "Las clases con campos privados (#), que encapsulan estado sin closures",
+      "El modo estricto, que impide crear variables globales implícitas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Los ES Modules le dan a cada archivo su propio scope sin necesidad de envolver el código en una IIFE, además de mejor soporte de tooling (tree-shaking, imports estáticos).",
   },
@@ -92,9 +92,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Si dos closures distintas comparten el mismo scope léxico (están definidas dentro de la misma función), ¿qué pasa si solo una de ellas usa una variable pesada?",
     opciones: [
-      "Solo esa closure retiene la variable, la otra no se ve afectada",
-      "Ambas comparten el mismo contexto interno, así que la variable queda retenida mientras cualquiera de las dos exista",
-      "V8 elimina la variable automáticamente si detecta que no se usa en ambas",
+      "Solo la closure que la usa la retiene: V8 analiza cada función por separado",
+      "Ambas comparten el mismo contexto: la variable vive mientras cualquiera de las dos exista",
+      "Ninguna la retiene: se libera al retornar la función externa, salvo que se exporte",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -104,11 +104,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "En un loop con async/await usando var (no let), ¿qué valor leen las continuaciones async al resolverse?",
     opciones: [
-      "El valor que tenía la variable en el momento de cada await",
-      "El valor final que quedó en la variable compartida cuando el loop síncrono terminó",
-      "Siempre undefined",
+      "El valor que tenía la variable en el momento en que se ejecutó cada await",
+      "El valor de la primera vuelta, porque await congela el scope al pausar",
+      "El valor final que dejó el loop en la única variable compartida",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "var es function-scoped: todas las continuaciones comparten el mismo binding. Cuando finalmente se resuelven, leen el valor final que dejó el loop — el mismo bug clásico de var, ahora con async/await en vez de setTimeout.",
   },

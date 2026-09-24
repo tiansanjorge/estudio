@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Dos Server Components del mismo render hacen el mismo fetch GET. ¿Cuántas veces se ejecuta?",
     opciones: [
-      "Dos veces",
       "Una: Next memoiza los fetch iguales dentro del render",
-      "Ninguna, se cachea desde el build",
+      "Dos: cada componente hace su propio request",
+      "Una, pero solo si el fetch tiene cache: 'force-cache'",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es memoización por request, no un cache persistente. Para un ORM se usa React.cache.",
   },
   {
     pregunta: "Tres consultas independientes con await una tras otra. ¿Cuánto tarda la page?",
     opciones: [
-      "Lo que tarde la más lenta",
+      "Lo que tarda la más lenta, porque Next las paraleliza solo",
       "La suma de las tres",
-      "Lo que tarde la más rápida",
+      "Lo que tarda la primera, porque el resto se hace en streaming",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,18 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Con Cache Components habilitado, ¿se cachea un fetch por defecto?",
     opciones: [
-      "Sí, con force-cache",
+      "Sí: todos los fetch GET se cachean salvo que digas lo contrario",
+      "Sí, pero solo durante el build; en runtime siempre va a la red",
       "No: el caching es opt-in con \"use cache\"",
-      "Solo los GET",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Nada se cachea si no lo pedís explícitamente.",
   },
   {
     pregunta: "Un usuario edita su perfil y tiene que ver el cambio al instante. ¿Qué usás en la Server Action?",
-    opciones: ["revalidateTag('perfil', 'max')", "updateTag('perfil')", "No hace falta invalidar"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "updateTag('perfil')",
+      "revalidateTag('perfil')",
+      "router.refresh()",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "updateTag expira de inmediato (read-your-own-writes); revalidateTag serviría la versión vieja una vez.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "En serverless, ¿por qué una función con \"use cache\" puede ejecutarse más de lo esperado?",
     opciones: [
-      "Porque use cache no funciona en serverless",
-      "Porque el store por defecto es en memoria por instancia, y las instancias arrancan vacías",
-      "Porque cacheLife se ignora",
+      "Porque en serverless el caché se desactiva y cada request vuelve a ejecutar",
+      "Porque el store por defecto es memoria por instancia, y arrancan vacías",
+      "Porque \"use cache\" se invalida automáticamente en cada deploy nuevo",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué no se puede leer cookies() dentro de un \"use cache\" compartido?",
     opciones: [
-      "Porque cookies() es sincrónico",
+      "Porque cookies() es asíncrona y \"use cache\" solo admite código síncrono",
+      "Porque las cookies no llegan al servidor en requests cacheados",
       "Porque el resultado de un usuario podría guardarse y servirse a otro",
-      "Porque las cookies no existen en el servidor",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Se extrae el valor afuera y se pasa como argumento (parte de la clave), o se usa \"use cache: private\".",
   },

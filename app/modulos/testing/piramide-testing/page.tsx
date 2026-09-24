@@ -23,15 +23,23 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué nivel de la pirámide da feedback más rápido y localiza mejor el error?",
-    opciones: ["E2E", "Integración", "Unit"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "Unit",
+      "Integración",
+      "E2E",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Corre en milisegundos y apunta a una unidad concreta; a cambio, prueba menos partes juntas.",
   },
   {
     pregunta: "Una suite con 200 e2e y 20 unitarios es un ejemplo de...",
-    opciones: ["Pirámide", "Trofeo", "Cono de helado"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "Testing trophy",
+      "Cono de helado",
+      "Pirámide invertida sana",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "La pirámide invertida: lenta, frágil y cara de mantener.",
   },
@@ -40,19 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Dónde pone el grueso del esfuerzo el testing trophy?",
-    opciones: ["Unit", "Integración", "E2E"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Unit",
+      "E2E",
+      "Integración",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Tests que usan varias piezas juntas como un usuario, sin llegar al costo de un e2e.",
   },
   {
     pregunta: "Un test pasa al segundo reintento en el CI. ¿Qué es?",
     opciones: [
-      "Un test sano",
       "Un test flaky que hay que registrar y arreglar",
-      "Un bug del CI",
+      "Un test que pasó: el reintento existe para eso",
+      "Un problema del runner del CI, no del test",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Los reintentos esconden la flakiness si no se reportan.",
   },
@@ -62,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué mide el mutation testing?",
     opciones: [
-      "Qué líneas se ejecutan",
-      "Si los tests detectan cambios introducidos a propósito en el código",
-      "La velocidad de la suite",
+      "Qué porcentaje de líneas ejecuta la suite de tests",
+      "Si los tests detectan cambios introducidos a propósito",
+      "Si los tests siguen pasando con datos de entrada aleatorios",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -72,8 +84,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
   },
   {
     pregunta: "¿Qué reemplaza a los e2e que levantan todos los microservicios?",
-    opciones: ["Más e2e en paralelo", "Contract tests (por ejemplo Pact)", "Tests manuales"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Tests de integración con todos los servicios mockeados",
+      "Smoke tests contra producción después de cada deploy",
+      "Contract tests (por ejemplo Pact)",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Cada proveedor verifica en su CI los contratos de sus consumidores, sin levantarlos.",
   },

@@ -26,20 +26,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué un componente de React debe empezar con mayúscula?",
     opciones: [
-      "Es solo una convención de estilo sin efecto real",
-      "Para que JSX lo distinga de una etiqueta HTML nativa (minúscula = tag del DOM)",
-      "Porque JavaScript lo exige para cualquier función",
+      "Para que JSX lo distinga de una etiqueta nativa: en minúscula lo trata como tag del DOM",
+      "Porque React registra los componentes por nombre y solo acepta identificadores en PascalCase",
+      "Porque el bundler usa la mayúscula para detectar qué archivos exportan componentes",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "JSX usa la primera letra para decidir cómo tratar un tag: minúscula lo interpreta como elemento HTML nativo (<div>), mayúscula lo busca como un componente definido por vos (<Boton />).",
   },
   {
     pregunta: "¿En qué dirección fluyen los props en un árbol de componentes?",
     opciones: [
-      "De hijo a padre",
+      "En los dos sentidos: si el hijo modifica un prop, el padre ve el cambio",
       "De padre a hijo, en un solo sentido",
-      "En cualquier dirección, según convenga",
+      "De padre a hijo, y del hijo a los hermanos que comparten el mismo padre",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,11 +48,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema genera definir un componente dentro del cuerpo de otro componente?",
     opciones: [
-      "Ninguno, es una práctica común",
-      "Se vuelve a crear en cada render del padre, así que React lo trata como un componente distinto cada vez y pierde su estado",
-      "No se puede, da un error de sintaxis",
+      "Ninguno funcional: solo es más lento porque la función se vuelve a crear en cada render",
+      "El componente interno no puede usar hooks, porque no está definido en el nivel superior",
+      "Es un tipo nuevo en cada render: React lo desmonta y lo vuelve a montar, perdiendo su estado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "React identifica componentes por su referencia de función. Si la función se redefine en cada render, React ve un tipo 'nuevo' cada vez, desmonta la instancia anterior (perdiendo su estado) y monta una nueva.",
   },
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuándo conviene un input no controlado (con ref) en vez de controlado?",
     opciones: [
-      "Nunca, siempre es mejor controlado",
-      "Cuando no necesitás reaccionar a cada tecla, para evitar un re-render en cada cambio",
-      "Solo funciona con componentes de clase",
+      "Cuando no necesitás reaccionar a cada tecla y alcanza con leer el valor al final",
+      "Cuando el valor tiene que validarse en vivo mientras el usuario escribe",
+      "Cuando el valor inicial viene de props y puede cambiar después del montaje",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "En formularios grandes, controlar cada campo genera renders innecesarios en cada tecla. Un input no controlado deja que el DOM maneje su propio valor y se lee con una ref solo cuando hace falta.",
   },
@@ -74,9 +74,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué problema resuelve el patrón compound components (Tabs/Tab)?",
     opciones: [
-      "Mejora la performance de renderizado",
-      "Evita una API con muchos props de coordinación, compartiendo estado implícito entre padre e hijos vía Context",
-      "Permite usar componentes de clase junto a hooks",
+      "Que cada Tab maneje su propio estado sin depender de un componente padre",
+      "Evita una API llena de props de coordinación: padre e hijos comparten estado implícito vía Context",
+      "Permite renderizar los Tab en cualquier lugar del árbol, aunque no estén dentro de Tabs",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -89,11 +89,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Un if renderiza <FormularioA/> o <FormularioB/> en la misma posición del árbol según una condición. Si la condición cambia, ¿qué pasa?",
     opciones: [
-      "React actualiza el componente existente con los nuevos props",
-      "React desmonta por completo la instancia anterior (perdiendo su estado) y monta una nueva del otro tipo",
-      "React mantiene ambos montados y alterna cuál se muestra",
+      "React reutiliza la instancia y solo actualiza lo que cambió, así que el estado se conserva",
+      "Se conserva el estado de los inputs con el mismo name, y se resetea el resto",
+      "React desmonta la instancia anterior, con su estado, y monta una nueva del otro tipo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "React decide reconciliar o reemplazar comparando el TIPO del elemento en cada posición. Si el tipo cambia, es un reemplazo completo, no una actualización incremental.",
   },
@@ -101,11 +101,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "<Hijo onClick={() => algo()} /> envuelto en React.memo — ¿evita el re-render de Hijo cuando Padre renderiza de nuevo?",
     opciones: [
-      "Sí, siempre, porque memo compara profundamente las props",
-      "No: la función inline es una referencia nueva en cada render de Padre, y memo hace comparación superficial",
-      "Solo si Hijo no usa la prop onClick internamente",
+      "No: la función inline es nueva en cada render y memo compara por referencia",
+      "Sí: memo ignora las props que son funciones y compara solo los datos",
+      "Sí, siempre que algo() devuelva el mismo resultado en cada render",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Para que memo funcione ahí, la función necesita una referencia estable con useCallback, o pasarse desde afuera del componente si es verdaderamente constante.",
   },

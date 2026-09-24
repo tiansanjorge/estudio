@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué tipo de componente puede ser un error boundary?",
     opciones: [
-      "Cualquier componente de función con un try/catch",
-      "Solo un componente de clase, con getDerivedStateFromError y/o componentDidCatch",
-      "Un hook llamado useErrorBoundary",
+      "Solo un componente de clase, con getDerivedStateFromError o componentDidCatch",
+      "Cualquier componente de función que use el hook useErrorBoundary de React",
+      "Cualquier componente que envuelva su render en un try/catch",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "No existe un equivalente nativo con hooks. React no ofrece (todavía) una forma de implementar un error boundary con function components sin usar una clase por debajo.",
   },
   {
     pregunta: "¿Qué pasa si envolvés toda la app en un único error boundary en la raíz?",
     opciones: [
-      "Es la mejor práctica recomendada siempre",
-      "Un error en cualquier parte de la app tumba TODO lo que ese boundary envuelve, dejando a los usuarios sin poder usar nada",
-      "No cambia nada respecto a no tener ningún boundary",
+      "Solo se reemplaza el componente que falló; el resto de la app sigue funcionando",
+      "Cualquier error reemplaza toda la app por el fallback, no solo la parte rota",
+      "El boundary reintenta renderizar el componente que falló hasta que funcione",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -50,11 +50,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Un error dentro de un onClick es capturado por un error boundary que envuelve ese botón?",
     opciones: [
-      "Sí, cualquier error del árbol es capturado",
-      "No, los error boundaries solo cubren errores durante render y lifecycle, no dentro de event handlers",
-      "Solo si el botón está en un componente de clase",
+      "Sí: el boundary captura cualquier error de los componentes que envuelve",
+      "Sí, pero solo si el handler es síncrono; los errores async se pierden",
+      "No: los boundaries cubren errores de render y lifecycle, no de event handlers",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un error dentro de un event handler necesita su propio try/catch. Tampoco se capturan errores en código asincrónico ni en el propio boundary.",
   },
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Dónde conviene loguear un error capturado a un servicio externo como Sentry?",
     opciones: [
-      "En getDerivedStateFromError",
-      "En componentDidCatch, porque corre en la fase de commit, segura para efectos secundarios",
-      "Da igual, ambos son equivalentes",
+      "En componentDidCatch: corre en la fase de commit, segura para efectos",
+      "En getDerivedStateFromError, que es el primero en enterarse del error",
+      "En el render del fallback, justo antes de mostrarle el error al usuario",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "getDerivedStateFromError corre en la fase de render, que React puede llamar múltiples veces o descartar — debe ser puro. componentDidCatch corre en commit, seguro para efectos secundarios.",
   },
@@ -77,9 +77,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿En qué se diferencia lo que captura Suspense de lo que captura un error boundary?",
     opciones: [
-      "Son exactamente el mismo mecanismo con nombres distintos",
-      "Suspense captura una Promise lanzada (señal de 'todavía no'), un error boundary captura errores reales (señal de 'esto se rompió')",
-      "Suspense solo funciona en el servidor",
+      "Suspense captura errores de red; el boundary, errores del código de los componentes",
+      "Suspense atrapa una Promise lanzada ('todavía no'); el boundary, un error real",
+      "Ninguna: Suspense es un error boundary que además muestra un fallback de carga",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -89,11 +89,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Si el fallback de un error boundary lanza un error al renderizarse, ¿quién lo captura?",
     opciones: [
-      "El mismo boundary, en un segundo intento automático",
-      "El error boundary ancestro más cercano, si existe; si no hay ninguno, la app entera se desmonta",
-      "React lo ignora silenciosamente",
+      "El mismo boundary, que entra en un loop de reintentos hasta que el fallback funcione",
+      "Nadie: React lo ignora y deja el último contenido que se renderizó bien",
+      "El boundary ancestro más cercano; si no hay ninguno, se desmonta la app entera",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El boundary que falló no puede capturar su propio error de render. Por eso el fallback debe ser deliberadamente simple y robusto — es la última línea de defensa.",
   },

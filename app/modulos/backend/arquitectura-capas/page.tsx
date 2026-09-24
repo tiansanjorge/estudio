@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿En qué capa va la regla 'un cupón vencido no se aplica'?",
-    opciones: ["Controller", "Service", "Repository"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Service",
+      "Controller",
+      "Repository",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Es lógica de negocio: no depende de HTTP ni de cómo se guardan los datos.",
   },
   {
     pregunta: "¿Qué sabe el service sobre HTTP?",
     opciones: [
-      "Todo: lee req y responde con res",
-      "Nada: recibe datos, aplica reglas y devuelve un resultado o lanza un error de dominio",
-      "Solo los status codes",
+      "Lo necesario para elegir el status code que devuelve cada error",
+      "Nada: recibe datos, aplica reglas y devuelve un resultado o un error de dominio",
+      "Recibe el objeto request para leer headers y parámetros directamente",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Quién decide la frontera de una transacción?",
     opciones: [
-      "Cada repository por su cuenta",
-      "El service, que sabe qué pasos forman una operación de negocio atómica",
-      "El controller",
+      "El repository, que es el que habla con la base de datos",
+      "El controller, que abre y cierra una transacción por request",
+      "El service, que sabe qué pasos forman una operación atómica",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Sin exponer detalles de la base, con una unidad de trabajo o propagación implícita.",
   },
   {
     pregunta: "¿Cuándo sobra un repository sobre Prisma?",
     opciones: [
-      "Nunca",
       "Cuando solo reenvía cada llamada al ORM sin agregar nada",
-      "Siempre",
+      "Nunca: el repository siempre aísla al service del ORM",
+      "Cuando el proyecto usa una sola base de datos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Suma valor con consultas complejas, reglas transversales o tests sin base.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué caracteriza a un modelo anémico?",
     opciones: [
-      "Entidades con mucho comportamiento",
-      "Entidades solo con datos y toda la lógica en servicios externos",
-      "No usar base de datos",
+      "Entidades con pocas propiedades, divididas en muchas tablas",
+      "Entidades con solo datos y toda la lógica en servicios",
+      "Servicios chicos que no tocan la base de datos",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué dependencia invierte Hexagonal respecto de las capas clásicas?",
     opciones: [
-      "Controller → service",
-      "Service → repository concreto: el service define la interfaz y el adaptador la implementa",
-      "Ninguna",
+      "Controller → service: el service pasa a llamar al controller",
+      "Repository → base: la base define la interfaz del repository",
+      "Service → repository: el service define la interfaz y el adaptador la cumple",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Así el núcleo no depende de la base ni del ORM.",
   },

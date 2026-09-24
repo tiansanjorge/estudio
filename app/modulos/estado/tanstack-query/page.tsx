@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia hay entre 'client state' y 'server state'?",
     opciones: [
-      "Ninguna, son el mismo concepto con nombres distintos",
-      "Client state le pertenece al frontend (un modal abierto); server state es una copia de datos que viven en otro lugar y pueden desactualizarse",
-      "Server state solo existe en aplicaciones con SSR",
+      "Client state es del frontend; server state es una copia de datos ajenos que envejece",
+      "Client state vive en el navegador; server state vive en el render del servidor",
+      "Client state se guarda en memoria; server state se guarda en localStorage",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Meter server state en Redux/Zustand obliga a reimplementar a mano cacheo, deduplicación y revalidación — exactamente lo que TanStack Query resuelve out of the box.",
   },
   {
     pregunta: "Dos componentes usan useQuery con la misma queryKey al mismo tiempo. ¿Qué pasa?",
     opciones: [
-      "Se hacen dos peticiones de red independientes",
-      "TanStack Query deduplica: hace una sola petición y comparte el resultado entre ambos componentes",
-      "El segundo componente da un error",
+      "Se hacen dos peticiones y gana la última en llegar",
+      "Deduplica: hace una sola petición y comparte el resultado",
+      "El segundo espera a que termine el primero y vuelve a pedir",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuál es la diferencia entre staleTime y gcTime?",
     opciones: [
-      "Son sinónimos, ambos controlan lo mismo",
-      "staleTime es cuánto tiempo el dato se considera fresco (sin refetch); gcTime es cuánto dura en memoria después de que nadie lo usa",
-      "gcTime solo aplica en producción",
+      "staleTime es cada cuánto se refetchea solo; gcTime, cuánto tarda en expirar",
+      "staleTime es cuánto dura en memoria sin uso; gcTime, cuánto se considera fresco",
+      "staleTime es cuánto se considera fresco; gcTime, cuánto dura en memoria sin uso",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un dato puede estar 'viejo' (stale) pero seguir en caché — useQuery lo muestra igual mientras revalida en segundo plano.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué no conviene guardar los datos de una query también en Redux o Zustand 'por las dudas'?",
     opciones: [
-      "No hay ningún problema en hacerlo, es una buena práctica",
-      "Crea dos fuentes de verdad: la caché de TanStack Query se sincroniza sola, la copia manual hay que actualizarla a mano, perdiendo esa sincronización",
-      "TanStack Query no permite leer sus datos desde otro lugar",
+      "Porque crea dos fuentes de verdad, y la copia manual deja de sincronizarse",
+      "Porque TanStack Query no permite leer sus datos desde fuera de un hook",
+      "Porque duplicar los datos en memoria hace que el GC los recolecte antes",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "TanStack Query ya es el lugar donde vive el server state — duplicarlo reintroduce el problema que la librería vino a resolver.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué riesgo hay que manejar explícitamente al implementar una optimistic update?",
     opciones: [
-      "Ninguno, TanStack Query lo maneja todo automáticamente",
-      "Qué pasa si la mutación real falla: hay que revertir explícitamente el cambio optimista al estado anterior (rollback)",
-      "Que el usuario haga doble click accidentalmente",
+      "Que el cambio optimista se aplique dos veces si el usuario hace doble click",
+      "Que la mutación falle: hay que revertir el cambio al estado anterior",
+      "Que la UI quede bloqueada hasta que el servidor confirme la mutación",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué es importante cancelar queries en curso antes de aplicar un cambio optimista?",
     opciones: [
-      "No es necesario, es un paso opcional sin efecto real",
-      "Evita una race condition donde un refetch en vuelo trae datos viejos y pisa silenciosamente el cambio optimista recién aplicado",
-      "Es solo para mejorar la performance de la red",
+      "Para liberar la conexión y que la mutación salga más rápido",
+      "Porque TanStack Query no permite mutar mientras hay una query activa",
+      "Para que un refetch en vuelo no traiga datos viejos y pise el cambio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Cancelar asegura que el próximo dato que llegue a esa key sea posterior al cambio optimista, no uno anterior que llegó tarde.",
   },

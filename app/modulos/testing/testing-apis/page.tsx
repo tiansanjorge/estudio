@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Un POST con datos inválidos responde 400. ¿Qué más verificás?",
     opciones: [
-      "Nada más",
       "Que no se haya guardado nada en la base",
-      "Que tarde menos de 1 segundo",
+      "Que la respuesta tarde menos de 200 ms",
+      "Que el header Content-Type sea text/plain",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Una respuesta de error con un registro guardado igual es un bug.",
   },
   {
     pregunta: "¿Qué hace Supertest?",
     opciones: [
-      "Mockea la base de datos",
+      "Levanta el servidor en un puerto real y le pega con fetch",
       "Hace requests a la app en memoria, sin abrir un puerto",
-      "Genera documentación",
+      "Genera los tests automáticamente a partir de las rutas",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué preferir factories a fixtures gigantes compartidas?",
     opciones: [
-      "Son más rápidas",
-      "Cada test crea y declara solo los datos que le importan, sin depender de otros",
-      "No hay diferencia",
+      "Porque las factories insertan los datos más rápido en la base",
+      "Porque las fixtures no se pueden versionar junto con el código",
+      "Cada test declara solo los datos que le importan, sin depender de otros",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Las fixtures compartidas acoplan tests entre sí y esconden qué dato usa cada uno.",
   },
   {
     pregunta: "¿Qué escenarios de un servicio de pagos conviene testear sí o sí?",
     opciones: [
-      "Solo el pago aprobado",
       "Rechazos, timeouts, respuestas inesperadas y webhooks duplicados",
-      "Ninguno, es un tercero",
+      "El pago exitoso con cada tarjeta y cada moneda soportada",
+      "La latencia de la pasarela bajo carga en cada release",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El camino feliz es el que menos sorpresas trae en producción.",
   },
@@ -74,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo se testea una condición de carrera en un endpoint?",
     opciones: [
-      "Con requests secuenciales",
-      "Disparando requests en paralelo contra una base real y verificando el estado final",
-      "Con mocks de la base",
+      "Llamando al endpoint dos veces seguidas con await y comparando",
+      "Con requests en paralelo contra una base real, verificando el estado final",
+      "Mockeando la base para que tarde y forzar el orden de las escrituras",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -85,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace una herramienta como Schemathesis a partir de un OpenAPI?",
     opciones: [
-      "Genera el frontend",
-      "Genera cientos de requests automáticos para encontrar 500s y violaciones del contrato",
-      "Traduce la documentación",
+      "Genera la documentación interactiva de la API a partir del contrato",
+      "Genera los mocks de MSW para usar en los tests del frontend",
+      "Genera cientos de requests para encontrar 500s y violaciones del contrato",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es testing basado en propiedades sobre la especificación.",
   },

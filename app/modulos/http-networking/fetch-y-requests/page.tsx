@@ -26,9 +26,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "fetch('/api/x') devuelve un 500. ¿La Promise de fetch se rechaza?",
     opciones: [
-      "Sí, siempre que el status no sea 2xx",
-      "No, se resuelve igual — hay que chequear response.ok",
-      "Solo si el 500 viene sin body",
+      "Sí: cualquier status 4xx o 5xx rechaza la Promise con un TypeError",
+      "No: se resuelve igual, y hay que chequear response.ok",
+      "Solo los 5xx la rechazan; los 4xx se resuelven como error del cliente",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -38,18 +38,22 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "Escribís 'r' y después 'react' rápido en un buscador sin cancelación. La respuesta de 'r' tarda más y llega después que la de 'react'. ¿Qué termina mostrando la UI?",
     opciones: [
-      "Los resultados de 'react' (la búsqueda más reciente)",
-      "Los resultados de 'r' (la que llegó al final)",
-      "Un error",
+      "Los de 'react': el navegador descarta la respuesta de un request más viejo",
+      "Los de 'react': fetch resuelve las promesas en el orden en que se crearon",
+      "Los de 'r': la respuesta que llega última pisa a la anterior",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Sin cancelar requests obsoletas, gana la última respuesta en llegar, no la última en pedirse. Eso es una race condition.",
   },
   {
     pregunta: "¿Con qué herramienta se cancela un fetch en curso?",
-    opciones: ["clearTimeout", "AbortController", "response.cancel()"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "AbortController",
+      "Promise.race con un timeout",
+      "response.body.cancel()",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Se crea un AbortController, se manda su signal en las opciones de fetch, y controller.abort() cancela la petición.",
   },
@@ -58,19 +62,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál de estos status conviene reintentar automáticamente?",
-    opciones: ["400 Bad Request", "404 Not Found", "503 Service Unavailable"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "422 Unprocessable Entity",
+      "503 Service Unavailable",
+      "409 Conflict",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "Un 503 es transitorio; un 400 o 404 van a fallar igual en el reintento.",
   },
   {
     pregunta: "¿Para qué se agrega jitter al backoff exponencial?",
     opciones: [
-      "Para que los reintentos sean más rápidos",
-      "Para que miles de clientes no reintenten todos al mismo tiempo",
-      "Para evitar CORS",
+      "Para que cada reintento espere más que el anterior",
+      "Para no reintentar requests que no son idempotentes",
+      "Para que miles de clientes no reintenten todos a la vez",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Sin aleatoriedad, los reintentos sincronizados generan picos que vuelven a tirar el servicio.",
   },
@@ -79,14 +87,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué evento conviene usar para mandar analytics antes de que el usuario se vaya?",
-    opciones: ["unload", "visibilitychange (cuando pasa a hidden)", "click"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "visibilitychange, cuando pasa a hidden",
+      "beforeunload, justo antes de cerrar",
+      "unload, cuando la página se descarga",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "unload no es confiable en mobile y rompe el back/forward cache.",
   },
   {
     pregunta: "Un servicio lleva 2 minutos caído. ¿Qué patrón evita seguir golpeándolo?",
-    opciones: ["Más reintentos", "Circuit breaker", "Debounce"],
+    opciones: [
+      "Retry con backoff exponencial",
+      "Circuit breaker",
+      "Timeout más corto por request",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Tras N fallas, rechaza de inmediato durante un tiempo y después prueba con un request.",

@@ -23,11 +23,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es el 'discriminante' en una discriminated union?",
     opciones: [
-      "Cualquier propiedad opcional del tipo",
-      "Una propiedad literal compartida por todas las variantes, con un valor distinto en cada una, que TypeScript usa para angostar el tipo",
-      "El nombre del tipo en sí",
+      "Una propiedad literal común a todas las variantes, con un valor distinto en cada una",
+      "La primera propiedad declarada en cada variante, que TypeScript usa para ordenarlas",
+      "Un type guard que se escribe una vez y TypeScript aplica a todas las variantes",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Dentro de un if que compara esa propiedad contra un valor literal, TypeScript sabe con certeza en qué variante estás y da acceso seguro a sus propiedades exclusivas.",
   },
@@ -35,9 +35,9 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué una discriminated union es mejor que una interfaz con propiedades todas opcionales para representar distintos estados?",
     opciones: [
-      "No hay diferencia real, es solo preferencia de estilo",
-      "La interfaz con opcionales permite combinaciones imposibles (ej: datos y error presentes a la vez); la union no",
-      "Las discriminated unions son más rápidas en runtime",
+      "Porque la union ocupa menos memoria en runtime que un objeto con opcionales",
+      "Porque los opcionales permiten combinaciones imposibles, como datos y error a la vez",
+      "Porque TypeScript no puede hacer narrowing sobre propiedades opcionales",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -50,11 +50,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Para qué sirve asignar el valor en el default de un switch a una variable de tipo never?",
     opciones: [
-      "Es solo una convención de estilo sin efecto real",
-      "Hace que el compilador falle si en el futuro se agrega una variante nueva al union sin manejarla en el switch",
-      "Mejora la performance del switch en runtime",
+      "Para que el switch lance un error en runtime si llega un valor inesperado",
+      "Para que TypeScript deje de exigir un return al final de la función",
+      "Para que no compile si se agrega una variante nueva sin manejarla",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Si todas las variantes fueron cubiertas, el valor restante es never y compila. Si alguien agrega una variante sin su case, deja de ser never y la asignación falla — un bug silencioso se vuelve error de build.",
   },
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo necesitás un user-defined type guard (función con retorno 'v is Tipo') en vez de narrowing automático?",
     opciones: [
-      "Siempre, para cualquier chequeo de tipo",
-      "Cuando la lógica de discriminación es más elaborada que un simple typeof/instanceof/propiedad literal",
-      "Nunca, TypeScript siempre puede inferir el narrowing solo",
+      "Cuando discriminar requiere más lógica que un typeof, instanceof o literal",
+      "Siempre que el tipo venga de una API, porque el narrowing no funciona con any",
+      "Cuando la union tiene más de dos variantes y el switch deja de alcanzar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Por ejemplo, validar la forma completa de un objeto que llegó sin tipos desde una API externa. La función declara explícitamente qué tipo verifica, y TypeScript confía en esa declaración fuera de la función.",
   },
@@ -77,9 +77,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué pasa si dos variantes de un union usan tipo: string en vez de tipo: 'a' y tipo: 'b'?",
     opciones: [
-      "No cambia nada, TypeScript sigue angostando igual",
-      "El narrowing basado en discriminante deja de funcionar, porque ambas variantes son compatibles entre sí a nivel de tipo",
-      "TypeScript lanza un error de compilación al declarar el union",
+      "Nada: TypeScript infiere los literales a partir de los valores que se asignan",
+      "El narrowing deja de funcionar: las dos variantes pasan a ser compatibles",
+      "Error de compilación: el discriminante tiene que ser único en cada variante",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -89,11 +89,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo extraerías solo la variante de error de un union Resultado sin reescribir su forma a mano?",
     opciones: [
-      "Con Extract<Resultado, { tipo: 'error' }>, aprovechando que es un conditional type distributivo",
-      "No es posible, hay que copiar la definición manualmente",
-      "Con Omit<Resultado, 'exito'>",
+      "Con Pick<Resultado, 'error'>, que toma la variante por su nombre",
+      "Con Omit<Resultado, 'exito'>, que descarta las demás variantes",
+      "Con Extract<Resultado, { tipo: 'error' }>, que distribuye sobre la union",
     ],
-    respuestaCorrecta: 0,
+    respuestaCorrecta: 2,
     explicacion:
       "Extract evalúa la condición de asignabilidad contra cada miembro del union por separado y se queda con los que matchean — funciona naturalmente con discriminated unions.",
   },

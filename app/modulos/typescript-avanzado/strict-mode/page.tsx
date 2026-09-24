@@ -23,9 +23,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es realmente `strict: true` en tsconfig.json?",
     opciones: [
-      "Un único chequeo adicional del compilador",
-      "Un paraguas que activa varios flags independientes a la vez (strictNullChecks, noImplicitAny, etc.)",
-      "Una opción que solo afecta el linter, no el compilador",
+      "Un modo que activa 'use strict' de JavaScript en todos los archivos emitidos",
+      "Un paraguas que activa varios flags a la vez, como strictNullChecks y noImplicitAny",
+      "Un flag que hace que cualquier warning del compilador pase a ser error",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -34,11 +34,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Sin strictNullChecks, ¿qué pasa si le pasás null a una función que espera un string?",
     opciones: [
-      "Error de compilación inmediato",
-      "Compila sin avisar nada, y el error solo aparece en runtime",
-      "TypeScript convierte automáticamente null en un string vacío",
+      "Error de compilación: null no es asignable a string",
+      "Compila, y TypeScript agrega un chequeo de null en runtime",
+      "Compila sin avisar, y el error aparece recién en runtime",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Sin strictNullChecks, null y undefined son asignables a cualquier tipo. El clásico error de runtime 'Cannot read property of undefined' se descubre recién ahí, no en compilación.",
   },
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuál es la estrategia recomendada para migrar strict mode en un proyecto legacy grande?",
     opciones: [
-      "Activar strict: true de golpe y arreglar todos los errores en un único sprint",
-      "Migrar de a un flag por vez, empezando por noImplicitAny, excluyendo temporalmente archivos legacy pendientes",
-      "No vale la pena migrar proyectos legacy, es mejor reescribirlos desde cero",
+      "De a un flag por vez, empezando por noImplicitAny y excluyendo lo legacy",
+      "Activar strict completo y silenciar cada error con // @ts-ignore",
+      "Reescribir primero los módulos legacy en JavaScript y después activarlo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Activar todo de golpe en un codebase grande puede generar cientos o miles de errores simultáneos. Migrar gradualmente permite que el resto del equipo no quede bloqueado mientras se resuelve.",
   },
@@ -61,9 +61,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué noUncheckedIndexedAccess no está incluido dentro de strict?",
     opciones: [
-      "Porque es un flag experimental sin terminar",
-      "Porque es particularmente ruidoso: agrega undefined a todo acceso por índice, generando muchos chequeos adicionales en código que indexa mucho",
-      "Porque solo aplica a TypeScript 5+",
+      "Porque todavía es experimental y puede cambiar de comportamiento",
+      "Porque es muy ruidoso: agrega undefined a cada acceso por índice",
+      "Porque solo aplica a arrays y strict agrupa flags de objetos",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -76,11 +76,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué strictPropertyInitialization depende de que strictNullChecks esté activo?",
     opciones: [
-      "No depende de nada, son completamente independientes",
-      "Porque sin strictNullChecks el sistema de tipos no distingue 'declarado' de 'declarado pero podría no estar asignado todavía'",
-      "Porque strictPropertyInitialization reemplaza a strictNullChecks",
+      "Porque los dos flags se agregaron en la misma versión de TypeScript",
+      "Porque sin él, los constructores no pueden inicializar propiedades",
+      "Porque sin él no se distingue 'declarado' de 'todavía sin asignar'",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "strictPropertyInitialization exige que toda propiedad no opcional esté inicializada en todos los paths del constructor. Sin strictNullChecks, no habría nada concreto que verificar ahí.",
   },
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué significa que un sistema de tipos sea 'sound', y por qué TypeScript acepta ser unsound en ciertos puntos?",
     opciones: [
-      "Sound significa que nunca tiene bugs; TypeScript es unsound porque tiene bugs de diseño",
-      "Sound garantiza matemáticamente que un programa que compila nunca falla por tipos en runtime; TypeScript sacrifica esto en puntos puntuales para no romper la ergonomía de JavaScript",
-      "Son sinónimos, no hay diferencia real",
+      "Sound: si compila, no falla por tipos en runtime; TS lo resigna en puntos para ser ergonómico",
+      "Sound: detecta todos los bugs lógicos; TS lo resigna porque analizar lógica es muy lento",
+      "Sound: cada tipo existe en runtime; TS lo resigna porque borra los tipos al compilar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La bivarianza de métodos, any como escape hatch, o el indexado sin chequeo son unsoundness deliberado: TypeScript prioriza dar la mayor seguridad posible sin forzar reescrituras poco naturales de JavaScript existente.",
   },

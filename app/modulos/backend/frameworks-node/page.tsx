@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué framework impone una estructura de módulos, controllers e inyección de dependencias?",
-    opciones: ["Express", "Fastify", "NestJS"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "NestJS",
+      "Fastify",
+      "Hono",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Express y Fastify dejan la estructura a criterio del equipo.",
   },
   {
     pregunta: "En Express, ¿dónde se registra el manejador de errores?",
     opciones: [
-      "Al principio, antes de todo",
+      "Al principio, con app.use(errorHandler) antes de las rutas",
       "Al final, con la firma (err, req, res, next)",
-      "Dentro de cada ruta",
+      "En cada ruta, con un try/catch alrededor del handler",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,18 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué le da velocidad a Fastify al responder?",
     opciones: [
-      "Usa otro lenguaje",
-      "Compila la serialización a partir del schema de respuesta",
-      "Desactiva la validación",
+      "Que corre sobre un servidor HTTP escrito en C++",
+      "Que cachea las respuestas de cada ruta en memoria",
+      "Que compila la serialización a partir del schema",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Además filtra los campos que no están en el schema.",
   },
   {
     pregunta: "En NestJS, ¿qué pieza decide si un request está autorizado?",
-    opciones: ["Pipe", "Guard", "Interceptor"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Guard",
+      "Interceptor",
+      "Pipe",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Los pipes validan/transforman parámetros; los interceptors envuelven la ejecución.",
   },
@@ -66,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué permite overrideProvider en un test de NestJS?",
     opciones: [
-      "Cambiar el puerto",
-      "Reemplazar una dependencia (por ejemplo la pasarela de pagos) por un fake",
-      "Saltear los guards",
+      "Cambiar la configuración del módulo según el entorno",
+      "Reemplazar una dependencia, como la pasarela de pagos, por un fake",
+      "Saltear los guards de autenticación en los tests de e2e",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -76,8 +84,12 @@ const preguntasNivel3: PreguntaQuiz[] = [
   },
   {
     pregunta: "Necesitás que el mismo código corra en Node, Bun y Cloudflare Workers. ¿Qué encaja mejor?",
-    opciones: ["Express", "Hono, basado en APIs web estándar", "NestJS"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Express, que es el más compatible",
+      "NestJS, con su adaptador de plataforma",
+      "Hono, basado en APIs web estándar",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Usa Request/Response estándar, disponibles en todos esos runtimes.",
   },

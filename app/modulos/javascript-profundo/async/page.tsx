@@ -25,28 +25,32 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué devuelve siempre una función declarada como async?",
-    opciones: ["El valor que hace return", "Una Promise", "undefined hasta que termine"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "El valor del return, si adentro no hay ningún await",
+      "Una Promise, pero solo si adentro hay al menos un await",
+      "Una Promise, aunque el return sea un valor común",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Aunque hagas return de un valor normal, una función async siempre envuelve ese valor en una Promise automáticamente.",
   },
   {
     pregunta: "Al llegar a un await, ¿qué pasa con el resto del programa?",
     opciones: [
-      "Se congela todo hasta que resuelva",
-      "Sigue ejecutándose normalmente; solo la función async se pausa y libera el control",
-      "Se cancela la función que llamó a la async",
+      "Solo esa función se pausa; quien la llamó sigue ejecutando su código",
+      "El hilo se bloquea hasta que la promesa resuelve, como una llamada síncrona",
+      "Se pausan esa función y quien la llamó, hasta que termine toda la cadena",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "await no bloquea el hilo principal. Pausa esa función async puntual y le devuelve el control a quien la llamó, que sigue ejecutando su código síncrono.",
   },
   {
     pregunta: "¿Por qué usar await dentro del callback de array.forEach no funciona como uno esperaría?",
     opciones: [
-      "forEach no acepta funciones async",
-      "forEach no espera las promesas que devuelve su callback: el loop 'termina' antes de que las operaciones async resuelvan",
-      "Da un error de sintaxis",
+      "forEach sí espera cada await, pero los errores de adentro no llegan al try/catch de afuera",
+      "forEach ignora la promesa que devuelve el callback, así que no espera a ninguna",
+      "Los callbacks async se ejecutan recién cuando el forEach terminó de recorrer el array",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -59,11 +63,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo empieza a ejecutarse el código dentro de una función async?",
     opciones: [
-      "Recién en la siguiente vuelta del Event Loop",
-      "Inmediatamente y de forma síncrona, hasta llegar al primer await",
-      "Solo cuando alguien hace await sobre su resultado",
+      "En la próxima microtask: una función async siempre arranca diferida",
+      "Cuando alguien hace await o .then() sobre la promesa que devuelve",
+      "En el acto, de forma síncrona, hasta llegar al primer await",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Igual que cualquier función normal, corre síncrono en el momento en que se la llama. Recién en el primer await se pausa y le devuelve el control al llamador.",
   },
@@ -71,11 +75,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué te da un async generator (async function*) que una función async normal no da?",
     opciones: [
-      "Se ejecuta más rápido",
-      "Puede emitir múltiples valores en el tiempo, consumidos con for await...of, en vez de una sola Promise",
-      "No puede usar await adentro",
+      "Emitir varios valores a lo largo del tiempo, consumidos con for await...of",
+      "Ejecutar sus awaits en paralelo, en vez de uno detrás del otro",
+      "Correr en un hilo aparte, así no bloquea el event loop mientras produce",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es útil para procesar datos que llegan de a poco (streams, paginación) sin cargar todo en memoria, dejando que el consumidor procese cada valor a medida que se emite.",
   },
@@ -86,9 +90,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué es una 'floating promise' y por qué es riesgosa?",
     opciones: [
-      "Una promesa que nunca se resuelve",
-      "Llamar a algo que devuelve una Promise sin await ni .catch(), así que un rechazo se vuelve un unhandled rejection silencioso",
-      "Una promesa creada dentro de un loop",
+      "Una Promise que queda pendiente para siempre porque nadie llamó a resolve()",
+      "Una Promise que se llama sin await ni .catch(): si rechaza, nadie se entera",
+      "Una Promise creada fuera de una función async, que corre sin manejo de errores",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -98,11 +102,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué riesgo tiene usar top-level await si hay una dependencia circular entre módulos?",
     opciones: [
-      "Ninguno, top-level await es siempre seguro",
-      "Puede generar un deadlock: un módulo espera a otro que a su vez necesita algo del primero, que sigue pausado",
-      "Solo funciona en el navegador, nunca en Node",
+      "Que el módulo importado se evalúe dos veces, una por cada lado del ciclo",
+      "Que los imports del ciclo reciban undefined en vez de un error de TDZ",
+      "Un deadlock: cada módulo espera a otro que sigue pausado en su await",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Top-level await pausa la evaluación de todo el grafo de módulos que dependen de él. Con dependencia circular entre dos módulos que lo usan, se puede llegar a un deadlock que el runtime suele detectar y reportar como error.",
   },

@@ -25,20 +25,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué necesita implementar un objeto para ser iterable?",
     opciones: [
-      "Un método llamado iterate()",
-      "El método Symbol.iterator, que devuelve un iterator con .next()",
-      "Heredar de Array",
+      "Un método [Symbol.iterator] que devuelva un objeto con .next()",
+      "Un método .next() propio que devuelva { value, done }",
+      "Una propiedad length y claves numéricas, como un array",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "for...of, spread y destructuring usan este protocolo por debajo. No son casos especiales para arrays: funcionan con cualquier objeto que implemente Symbol.iterator.",
   },
   {
     pregunta: "¿Qué devuelve llamar a una función generadora (function*)?",
     opciones: [
-      "Ejecuta el cuerpo completo inmediatamente y devuelve el resultado final",
-      "Un objeto iterator pausado antes de la primera línea, listo para avanzar con .next()",
-      "undefined hasta que se le haga await",
+      "Ejecuta el cuerpo hasta el primer yield y devuelve ese valor",
+      "Un iterator pausado antes de la primera línea del cuerpo",
+      "Un array con todos los valores que produciría cada yield",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -47,11 +47,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Después de que un generador termina (done: true), ¿qué devuelve una llamada extra a .next()?",
     opciones: [
-      "Vuelve a ejecutar el generador desde el principio",
-      "Siempre { value: undefined, done: true }",
-      "Lanza un error",
+      "Otra vez { value: <el valor del return>, done: true }",
+      "Reinicia el generador y devuelve su primer valor",
+      "{ value: undefined, done: true }, siempre",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un generador (o iterator) ya agotado no se reinicia solo. Cualquier llamada posterior a .next() devuelve consistentemente done: true.",
   },
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué pasa si hacés Array.from() sobre un generador que representa una secuencia infinita?",
     opciones: [
-      "Devuelve un array vacío inmediatamente",
-      "El proceso se cuelga: Array.from agota el iterable llamando a .next() hasta done: true, que nunca llega",
-      "JavaScript detecta la secuencia infinita y lanza un error controlado",
+      "Se cuelga: llama a .next() hasta un done: true que nunca llega",
+      "Toma valores hasta el largo máximo de un array y lanza RangeError",
+      "Devuelve un array vacío: no puede saber el largo por adelantado",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Un generador infinito debe consumirse con un límite explícito (un break en for...of, o tomar N valores manualmente), nunca materializarse entero con Array.from o spread.",
   },
@@ -74,9 +74,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué hace yield* que un loop manual con yield uno por uno no garantiza?",
     opciones: [
-      "Es solo una forma más corta de escribir lo mismo, sin diferencia funcional",
-      "Reenvía correctamente next(valor), throw() y return() al generador delegado, además de iterar sus valores",
-      "Convierte el generador delegado en síncrono",
+      "Nada distinto: es una forma más corta de un for...of con yield",
+      "Reenvía next(valor), throw() y return() al generador delegado",
+      "Ejecuta el generador delegado completo antes de ceder el primer valor",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -89,11 +89,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Un for...of sobre un generador se corta con un break. Si el generador tiene un try/finally, ¿corre el finally?",
     opciones: [
-      "No, el finally solo corre si el generador llega a completarse solo",
-      "Sí: el break invoca automáticamente a gen.return(), que fuerza al generador a ejecutar el finally pendiente",
-      "Solo si se llama a gen.return() explícitamente en el código",
+      "No: el finally corre solo si el generador llega al final por sí mismo",
+      "Sí, pero recién cuando el GC recolecta el generador abandonado",
+      "Sí: el break llama a gen.return(), que ejecuta el finally pendiente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El motor llama a .return() del iterator cuando un for...of se corta antes de tiempo. En un generador, eso dispara el finally pendiente, permitiendo cleanup.",
   },
@@ -101,11 +101,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿En qué se diferencia el .next() de un async iterator del de un iterator síncrono?",
     opciones: [
-      "No hay diferencia, ambos devuelven {value, done} directamente",
-      "El de un async iterator devuelve una Promise que resuelve a {value, done}, porque producir el siguiente valor puede ser asincrónico",
-      "Un async iterator no tiene método next()",
+      "Devuelve una Promise que resuelve a { value, done }",
+      "Devuelve { value, done }, donde value es una Promise",
+      "Es igual, pero se consume con await dentro de un for...of",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Symbol.asyncIterator define un .next() que devuelve una Promise. for await...of consume ese protocolo esperando cada Promise antes de continuar.",
   },

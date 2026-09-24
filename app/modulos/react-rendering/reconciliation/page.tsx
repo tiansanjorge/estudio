@@ -27,9 +27,9 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "Un componente <Boton color='blanco' /> pasa a renderizar <Boton color='negro' /> en la misma posición. ¿Qué hace React?",
     opciones: [
-      "Destruye la instancia anterior y monta una nueva desde cero",
-      "Reutiliza la misma instancia, solo actualiza la prop color",
-      "Ignora el cambio de color",
+      "Desmonta el botón viejo y monta uno nuevo con color negro",
+      "Reutiliza la misma instancia y solo actualiza la prop color",
+      "Crea una instancia nueva, pero le copia el estado de la anterior",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -39,22 +39,22 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "Un <BotonClaro /> pasa a renderizar <BotonOscuro /> en la misma posición. ¿Qué pasa con el estado interno de BotonClaro?",
     opciones: [
-      "Se transfiere automáticamente a BotonOscuro",
-      "Se pierde por completo: BotonOscuro arranca con estado inicial nuevo",
-      "Queda 'congelado' hasta que se vuelva a mostrar BotonClaro",
+      "Se conserva: React reutiliza el estado porque la posición es la misma",
+      "Se conserva solo si los dos componentes declaran los mismos hooks",
+      "Se pierde: BotonOscuro arranca con su estado inicial",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Al ser tipos distintos, React da por hecho que producen árboles distintos: destruye toda la subrama de BotonClaro (con su estado) y monta BotonOscuro desde cero.",
   },
   {
     pregunta: "¿Por qué el algoritmo de reconciliation de React es heurístico en vez de comparar el árbol entero de forma exhaustiva?",
     opciones: [
-      "Porque React es un framework simple que no necesita ser preciso",
-      "Porque un diff exhaustivo de árboles es computacionalmente muy caro (cúbico); las heurísticas de tipo+posición+key lo resuelven en tiempo lineal",
-      "Porque los navegadores no soportan comparaciones complejas",
+      "Porque un diff exhaustivo es cúbico; tipo, posición y key lo resuelven en tiempo lineal",
+      "Porque comparar árboles de forma exacta solo es posible en el servidor, donde hay más memoria",
+      "Porque el DOM no expone su estructura completa y React no puede compararla con precisión",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Comparar dos árboles de forma exhaustiva es O(n³). React asume que elementos de distinto tipo producen árboles distintos y usa las keys para identidad en listas — con eso baja el costo a O(n), a cambio de estas reglas que hay que conocer.",
   },
@@ -65,9 +65,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿React reconcilia listas keyed con un único pase por key, o hay algo más sofisticado?",
     opciones: [
-      "Solo un mapeo simple por key, siempre",
-      "Primero escanea desde ambos extremos buscando prefijo/sufijo sin cambios; solo usa un mapa de keys para la sección del medio que realmente se reordenó",
-      "Recorre el árbol completo comparando cada nodo contra todos los demás",
+      "Un único pase: arma un mapa con todas las keys y empareja cada elemento",
+      "Primero recorta el prefijo y el sufijo iguales; usa el mapa de keys solo para el medio",
+      "Compara cada key contra todas las demás, por eso conviene que las listas sean cortas",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -77,11 +77,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Un componente renderiza a veces un elemento suelto y a veces un array en la misma posición. ¿Qué riesgo tiene esto?",
     opciones: [
-      "Ninguno, React lo maneja de forma transparente",
-      "React puede tratarlo como un cambio de tipo, generando destrucciones y remontajes innecesarios",
-      "Solo funciona si ambos casos usan la misma key",
+      "Ninguno: React normaliza todo a array antes de comparar",
+      "Un warning por keys faltantes, pero el resultado es el mismo",
+      "Que React lo trate como cambio de tipo y remonte sin necesidad",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "La práctica recomendada es ser consistente: envolver siempre en un array, aunque tenga un solo elemento, para que React reconcilie esa posición siempre como 'una lista'.",
   },
@@ -92,11 +92,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿React.Children.map trata a children siempre como un array plano y predecible?",
     opciones: [
-      "Sí, children siempre es un array normal de JavaScript",
-      "No: children es una estructura opaca (elemento único, array, Fragment, texto, null) y estas utilidades existen justamente para manejar esa variabilidad",
-      "Solo es un array si el componente usa TypeScript",
+      "No: children es opaco (elemento, array, Fragment, texto o null) y estas utilidades lo resuelven",
+      "Sí: React convierte children a un array plano antes de pasárselo a cualquier componente hijo",
+      "Sí, salvo cuando children es un único elemento, que llega como objeto y hay que envolverlo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Aun así tienen limitaciones (React.Children.only lanza excepción con más de un hijo). Componentes que necesitan manipular children de forma compleja suelen preferir un array explícito como prop.",
   },
@@ -104,9 +104,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "En una lista de 100 items donde solo uno cambió sus props, ¿cómo se complementan reconciliation y React.memo?",
     opciones: [
-      "Son la misma cosa, memo reemplaza a reconciliation",
-      "Reconciliation resuelve que los 100 siguen siendo 'los mismos' por su key; memo evita que los 99 sin cambios de props vuelvan a ejecutar su función",
-      "Reconciliation decide qué re-renderiza; memo decide qué se destruye",
+      "Reconciliation ya evita ejecutar los 99 sin cambios; memo solo evita tocar su DOM",
+      "Las keys los identifican entre renders; memo evita ejecutar los 99 que no cambiaron",
+      "memo reemplaza a las keys: con memo, React ya sabe qué items son los mismos",
     ],
     respuestaCorrecta: 1,
     explicacion:

@@ -23,16 +23,20 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "La URL pública de la API de staging, ¿variable o secreto?",
-    opciones: ["Secreto", "Variable", "Hardcodeada en el código"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Variable",
+      "Secreto",
+      "Secreto del entorno",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Filtrarla no le da acceso a nadie: es configuración no sensible.",
   },
   {
     pregunta: "Falta DATABASE_URL en producción. ¿Cuándo debería enterarse el equipo?",
     opciones: [
-      "Cuando un usuario use la funcionalidad",
+      "Con la primera consulta que falle en un request",
       "Al arrancar la app, que no debería levantar sin ella",
-      "En el próximo deploy",
+      "En el build, que tendría que fallar al no encontrarla",
     ],
     respuestaCorrecta: 1,
     explicacion: "Validar la configuración al arrancar convierte un bug latente en un error inmediato.",
@@ -43,17 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasa con NEXT_PUBLIC_API_URL al hacer el build?",
     opciones: [
-      "Se lee en cada request",
-      "Su valor queda grabado en el JavaScript del cliente",
-      "Se encripta",
+      "Se lee en runtime desde el entorno del servidor",
+      "Se expone solo en los Server Components",
+      "Su valor queda grabado en el JS del cliente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Por eso ese build no se puede promover a otro entorno con otra URL.",
   },
   {
     pregunta: "Un script imprime el secreto codificado en base64. ¿Lo enmascara el CI?",
-    opciones: ["Sí, siempre", "No: el enmascarado busca el valor exacto", "Solo en repos privados"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "No: el enmascarado busca el valor exacto",
+      "Sí: el CI enmascara también sus codificaciones",
+      "Sí, si el secreto fue marcado como sensible",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Cualquier transformación del valor esquiva el enmascarado.",
   },
 ];
@@ -62,9 +70,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué condición de la trust policy deja que cualquier branch asuma el rol de producción?",
     opciones: [
-      'sub = "repo:org/repo:environment:production"',
-      'sub like "repo:org/repo:*"',
-      'aud = "sts.amazonaws.com"',
+      "sub = \"repo:org/repo:ref:refs/heads/main\"",
+      "sub like \"repo:org/repo:*\"",
+      "aud = \"sts.amazonaws.com\"",
     ],
     respuestaCorrecta: 1,
     explicacion: "El comodín acepta cualquier ref o PR del repositorio.",
@@ -72,11 +80,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué gana la app al leer sus secretos de un secret manager en runtime?",
     opciones: [
-      "Arranca más rápido",
-      "El CI no necesita conocer las credenciales de producción",
-      "No hace falta rotarlos",
+      "Que los secretos no ocupan lugar en la imagen del contenedor",
+      "Que la app arranca más rápido, sin leer variables de entorno",
+      "Que el CI no necesita conocer las credenciales de producción",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Un pipeline comprometido puede desplegar, pero no leer la base.",
   },
 ];

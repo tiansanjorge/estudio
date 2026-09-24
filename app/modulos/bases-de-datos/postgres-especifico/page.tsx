@@ -24,19 +24,19 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Dos requests registran el mismo email al mismo tiempo. ¿Qué lo impide de verdad?",
     opciones: [
-      "Verificar en la aplicación que no exista antes de insertar",
       "Un constraint UNIQUE en la base",
-      "Un try/catch en el controller",
+      "Un SELECT previo que verifique el email",
+      "Una transacción con READ COMMITTED",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "La verificación previa tiene una condición de carrera; UNIQUE es atómico.",
   },
   {
     pregunta: "¿Dónde encaja mejor una columna JSONB?",
     opciones: [
-      "Los ítems de un pedido",
+      "Datos que se filtran y se unen con otras tablas en cada consulta",
       "Atributos que varían según la categoría del producto",
-      "El email del usuario",
+      "Relaciones entre entidades, para evitar las foreign keys",
     ],
     respuestaCorrecta: 1,
     explicacion: "Estructura variable entre filas; los ítems merecen su tabla con foreign keys.",
@@ -46,18 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué tipo usás para guardar precios?",
-    opciones: ["real", "numeric(12,2) o enteros en centavos", "text"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "double precision, con dos decimales al mostrar",
+      "money, el tipo nativo de Postgres para montos",
+      "numeric(12,2) o enteros en centavos",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Los flotantes no representan exactamente 0,1 y acumulan errores de redondeo.",
   },
   {
     pregunta: "Hay un índice GIN sobre atributos. ¿Qué consulta lo aprovecha?",
     opciones: [
-      "WHERE atributos ->> 'color' = 'rojo'",
       "WHERE atributos @> '{\"color\": \"rojo\"}'",
-      "ORDER BY atributos ->> 'color'",
+      "WHERE atributos->>'color' LIKE 'ro%'",
+      "WHERE (atributos->>'precio')::numeric > 100",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "GIN sirve para contención (@>) y existencia de claves (?), no para ->> ni para ordenar.",
   },
 ];
@@ -66,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Con soft delete, ¿cómo hacés que el email sea único solo entre usuarios activos?",
     opciones: [
-      "UNIQUE (email)",
+      "Un UNIQUE compuesto por email y borrado_el",
       "Un índice único parcial con WHERE borrado_el IS NULL",
-      "Un CHECK que consulte la tabla",
+      "Un trigger que verifica el email antes de insertar",
     ],
     respuestaCorrecta: 1,
     explicacion: "Un CHECK no puede consultar otras filas; el índice parcial sí resuelve la unicidad condicional.",
   },
   {
     pregunta: "¿Qué permite que varios workers tomen jobs distintos de una tabla sin bloquearse?",
-    opciones: ["LISTEN/NOTIFY", "FOR UPDATE SKIP LOCKED", "SERIALIZABLE"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "LOCK TABLE ... IN SHARE MODE",
+      "SERIALIZABLE",
+      "FOR UPDATE SKIP LOCKED",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Cada worker saltea las filas que otro ya bloqueó.",
   },
 ];

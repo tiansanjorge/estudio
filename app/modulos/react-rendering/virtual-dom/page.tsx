@@ -26,20 +26,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es, literalmente, un elemento de React (lo que devuelve React.createElement)?",
     opciones: [
-      "Un nodo del DOM real, todavía sin insertar",
       "Un objeto JavaScript plano con type y props",
-      "Un string de HTML",
+      "Un nodo del DOM creado fuera del documento",
+      "Una instancia de la clase del componente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Un elemento de React es un objeto común: { type: 'button', props: {...} }. No toca el DOM ni sabe nada del navegador — es la 'materia prima' del Virtual DOM.",
   },
   {
     pregunta: "¿Por qué es más barato crear y comparar objetos del Virtual DOM que manipular el DOM real directamente?",
     opciones: [
-      "Porque los objetos JS son mágicamente más rápidos por definición",
-      "Porque un nodo DOM real es un objeto pesado del navegador, y crearlo o mutarlo puede disparar cálculos de layout y repintado",
-      "Porque el Virtual DOM usa un lenguaje distinto a JavaScript",
+      "Porque el Virtual DOM se procesa en la GPU y el DOM real en la CPU",
+      "Porque un nodo real es pesado y mutarlo puede disparar layout y repintado",
+      "Porque el DOM real se sincroniza con el servidor en cada modificación",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,11 +48,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Es cierto que 'el Virtual DOM siempre hace que React sea más rápido que JavaScript vanilla'?",
     opciones: [
-      "Sí, siempre, en cualquier escenario",
-      "No necesariamente: código vanilla bien optimizado a mano puede ser más rápido; el valor real del Virtual DOM es poder escribir UI declarativa sin perder demasiado rendimiento",
-      "No, el Virtual DOM siempre es más lento",
+      "Sí: siempre hace menos operaciones sobre el DOM que cualquier código manual equivalente",
+      "Sí, salvo en listas muy cortas, donde el costo del diffing no llega a compensarse",
+      "No: el vanilla optimizado puede ganar; el valor es poder escribir UI declarativa",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es un mito común. El Virtual DOM no gana benchmarks contra manipulación DOM optimizada a mano — su valor es dejar escribir 'así debería verse la UI' de forma declarativa, mientras mantiene un rendimiento razonable evitando tocar el DOM de más.",
   },
@@ -63,11 +63,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Crear el árbol de elementos de React en cada render tiene costo cero?",
     opciones: [
-      "Sí, es completamente gratis siempre",
-      "No, es barato comparado con el DOM pero tiene costo medible en árboles grandes — por eso React.memo también ahorra ese costo de creación, no solo el de mutación del DOM",
-      "Solo tiene costo si se usan class components",
+      "No: es barato pero medible en árboles grandes, y memo también ahorra ese costo",
+      "Sí: los elementos son objetos que React reutiliza de un render al otro sin volver a crearlos",
+      "Sí: el único costo real aparece cuando React muta el DOM durante la fase de commit",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "En árboles grandes con muchos re-renders innecesarios, el costo acumulado de crear objetos se nota. Memo evita re-ejecutar la función y recrear esa porción del árbol.",
   },
@@ -75,9 +75,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo evitan frameworks como Solid o Svelte el Virtual DOM por completo?",
     opciones: [
-      "Usan un Virtual DOM más rápido escrito en un lenguaje compilado",
-      "Con reactividad de grano fino: el compilador sabe de antemano qué nodo del DOM depende de qué estado, y genera código que actualiza ese nodo directamente, sin re-ejecutar funciones ni diffear",
-      "Ejecutan todo el renderizado en el servidor",
+      "Mutando el DOM en cada cambio de estado, sin ningún tipo de diffing",
+      "Con reactividad fina: el compilador sabe qué nodo depende de qué estado",
+      "Renderizando todo en el servidor y mandando al cliente solo HTML",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Para qué sirve la propiedad interna $$typeof (un Symbol) en los elementos de React?",
     opciones: [
-      "Es solo metadata de debugging sin efecto real",
-      "Previene un vector de XSS: un objeto malicioso inyectado vía JSON nunca puede tener ese Symbol real, porque JSON no serializa Symbols",
-      "Sirve para optimizar la comparación de props",
+      "Para que React distinga elementos de componentes de clase y de función",
+      "Para que el reconciler compare tipos más rápido que por string",
+      "Para frenar XSS: un objeto inyectado vía JSON no puede traer un Symbol real",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Si datos controlados por un atacante se guardan como JSON y se intentan hacer pasar por un elemento de React, nunca van a tener el $$typeof real — React los rechaza como elementos válidos.",
   },
@@ -102,11 +102,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué React usa delegación de eventos en la raíz en vez de un listener nativo por cada elemento con onClick?",
     opciones: [
-      "Por compatibilidad con navegadores viejos únicamente",
-      "Adjuntar y desmontar cientos de listeners nativos individuales en cada actualización sería mucho más caro que mantener un único listener raíz",
-      "Porque JSX no soporta listeners nativos",
+      "Porque un listener en la raíz sale mucho más barato que miles de listeners sueltos",
+      "Porque los listeners nativos no funcionan sobre elementos que React crea y destruye seguido",
+      "Porque los eventos nativos no burbujean fuera de los portales y así se perderían",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Desde React 17, ese listener se adjunta al contenedor de cada raíz de React (no a document), permitiendo que múltiples versiones de React convivan en la misma página sin interferir entre sí.",
   },

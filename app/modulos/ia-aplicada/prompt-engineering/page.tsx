@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué suele pasar si el prompt no dice qué stack usa el proyecto?",
-    opciones: ["El modelo lo adivina bien", "Genera código para otro framework u ORM", "No responde"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Genera código para otro framework u ORM",
+      "Pregunta siempre antes de escribir código",
+      "Detecta el stack solo, leyendo el prompt",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Completa lo que falta con lo más probable en general, no con lo de tu proyecto.",
   },
   {
     pregunta: "¿Dónde conviene guardar las convenciones del proyecto para el asistente?",
-    opciones: ["Repetirlas en cada chat", "En un archivo de instrucciones del repositorio", "En la memoria del modelo"],
+    opciones: [
+      "En cada prompt, copiadas al principio",
+      "En un archivo de instrucciones del repo",
+      "En la memoria del chat de cada persona",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Se cargan siempre, se versionan y además le sirven a las personas nuevas.",
   },
@@ -39,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué pedir un plan antes del código en una tarea ambigua?",
     opciones: [
-      "Porque el modelo escribe mejor código",
-      "Porque corregir un plan cuesta mucho menos que corregir código escrito sobre un malentendido",
-      "Porque es obligatorio",
+      "Porque el modelo escribe mejor código si primero lo planifica en texto",
+      "Porque así el asistente consume menos tokens en la respuesta final",
+      "Porque corregir un plan cuesta mucho menos que corregir código",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "El malentendido aparece en el plan, antes de las doscientas líneas.",
   },
   {
     pregunta: "El asistente propone envolver el error en un try/catch vacío. ¿Qué hacés?",
     opciones: [
-      "Aceptarlo, el error desaparece",
       "Pedir el diagnóstico de la causa antes de aceptar un arreglo",
-      "Reiniciar la conversación",
+      "Aceptarlo y agregar un log adentro para no perder el error",
+      "Aceptarlo si los tests pasan con el cambio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Esconder el síntoma no arregla el problema.",
   },
 ];
@@ -62,9 +70,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Una conversación lleva 150 mensajes y el asistente olvida decisiones del principio. ¿Qué hacés?",
     opciones: [
-      "Seguir, ya se va a acordar",
-      "Resumir el estado y las decisiones en una sesión nueva, y lo permanente llevarlo al archivo de instrucciones",
-      "Repetir todo el historial",
+      "Repetirle las decisiones importantes en cada mensaje nuevo",
+      "Resumir en una sesión nueva y llevar lo permanente al archivo de instrucciones",
+      "Seguir en la misma conversación, porque tiene todo el contexto",
     ],
     respuestaCorrecta: 1,
     explicacion: "Las conversaciones largas acumulan ruido y el contexto importante pierde peso.",
@@ -72,11 +80,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué instrucción es más útil en un archivo de reglas del proyecto?",
     opciones: [
-      "Asegurate de que el código sea bueno",
+      "Escribí código limpio y de buena calidad",
+      "Seguí las mejores prácticas de la industria",
       "Corré npx tsc --noEmit y los tests antes de terminar",
-      "Programá como un senior",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Concreta y verificable: se sabe si se cumplió.",
   },
 ];

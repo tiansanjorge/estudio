@@ -23,16 +23,20 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué estrategia tiene rollback instantáneo con un switch del balanceador?",
-    opciones: ["Recreate", "Rolling", "Blue-green"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "Blue-green",
+      "Rolling",
+      "Recreate",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "El entorno anterior sigue levantado; volver es apuntar el tráfico de nuevo a él.",
   },
   {
     pregunta: "¿Cuál es la forma más confiable de volver atrás un deploy?",
     opciones: [
-      "Revertir el commit y reconstruir",
+      "Hacer git revert del commit y dejar que el pipeline reconstruya",
       "Desplegar el artefacto anterior, ya construido y probado",
-      "Editar el código en el servidor",
+      "Restaurar el backup de la base previo al deploy",
     ],
     respuestaCorrecta: 1,
     explicacion: "Reconstruir puede producir algo distinto y tarda más.",
@@ -43,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué necesita un canary para ser útil?",
     opciones: [
-      "El doble de servidores",
+      "Que los usuarios del canary sepan que usan una versión nueva",
+      "Que el canary reciba al menos la mitad del tráfico",
       "Métricas por versión (errores, latencia) para decidir si avanzar",
-      "Un solo servidor",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Sin datos de la versión nueva, no hay con qué decidir.",
   },
   {
     pregunta: "¿Qué debería hacer la app al recibir SIGTERM?",
     opciones: [
-      "Salir inmediatamente",
       "Dejar de aceptar conexiones nuevas, terminar las activas y salir",
-      "Ignorarla",
+      "Salir en el acto para liberar la instancia lo antes posible",
+      "Ignorarla hasta que llegue SIGKILL, para no cortar requests",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Es el graceful shutdown que evita cortar requests durante el deploy.",
   },
 ];
@@ -66,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Durante un rolling, un worker v1 recibe un mensaje producido por v2. ¿Qué lo hace seguro?",
     opciones: [
-      "Nada, siempre falla",
-      "Formatos de mensaje versionados y consumidores tolerantes a campos nuevos",
-      "Apagar la cola durante el deploy",
+      "Que el broker rutee los mensajes v2 solo a workers v2",
+      "Mensajes versionados y consumidores tolerantes a campos nuevos",
+      "Pausar la cola durante todo el deploy hasta terminar",
     ],
     respuestaCorrecta: 1,
     explicacion: "Los mensajes son un contrato entre versiones, como una API.",
   },
   {
     pregunta: "¿Cuál de estas es una métrica DORA?",
-    opciones: ["Cobertura de tests", "Tasa de falla de cambios", "Líneas de código por día"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Cobertura de tests",
+      "Cantidad de PRs por semana",
+      "Tasa de falla de cambios",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Junto con frecuencia de deploy, lead time y tiempo de recuperación.",
   },
 ];

@@ -24,19 +24,19 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué decide cuánto delegar una tarea a la IA?",
     opciones: [
-      "Qué tan difícil es la tarea",
       "Cuánto cuesta un error y qué tan fácil es detectarlo",
-      "Qué tan largo es el código",
+      "Qué tan larga es la tarea y cuánto tiempo ahorra",
+      "Qué tan nueva es la tecnología para el equipo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Una tarea difícil pero bien verificable se puede delegar; una fácil pero irreversible, no tanto.",
   },
   {
     pregunta: "¿Qué es la deuda de comprensión?",
     opciones: [
-      "Código sin comentarios",
+      "Documentación que quedó desactualizada respecto del código",
       "Código mergeado que nadie del equipo entiende del todo",
-      "Tests desactualizados",
+      "Tiempo que tarda una persona nueva en entender el proyecto",
     ],
     respuestaCorrecta: 1,
     explicacion: "Se paga el día que ese código falla y nadie sabe depurarlo.",
@@ -47,17 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Necesitás depurar un error con datos de un cliente real. ¿Qué hacés?",
     opciones: [
-      "Pegar los datos tal cual en el asistente",
-      "Usar datos anonimizados o de ejemplo que reproduzcan el problema",
-      "No usar IA nunca más",
+      "Pegar los datos en el asistente, que no guarda nada",
+      "Usar un asistente local, así los datos no salen",
+      "Usar datos anonimizados o de ejemplo que lo reproduzcan",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Todo lo que entra en el contexto se envía al proveedor.",
   },
   {
     pregunta: "Un PR tiene código que el autor no puede explicar. ¿Qué corresponde?",
-    opciones: ["Aprobarlo si los tests pasan", "No mergearlo hasta que el autor lo entienda", "Pedirle a la IA que lo apruebe"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "No mergearlo hasta que el autor lo entienda",
+      "Mergearlo si los tests y el CI pasan",
+      "Mergearlo y dejar un ticket para revisarlo",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Quien abre el PR responde por cada línea.",
   },
 ];
@@ -65,14 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Con qué credenciales debería trabajar un agente de código autónomo?",
-    opciones: ["Las de producción, para que pueda probar todo", "Las de desarrollo, con el mínimo acceso necesario", "Las del administrador del equipo"],
+    opciones: [
+      "Las de la persona que lo lanzó, para heredar sus permisos",
+      "Las de desarrollo, con el mínimo acceso necesario",
+      "Las de producción, para poder verificar el resultado real",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Un error de un agente con credenciales de producción tiene efectos reales inmediatos.",
   },
   {
     pregunta: "El modelo responde con total seguridad. ¿Qué indica eso sobre la corrección?",
-    opciones: ["Que es correcto", "Nada: el tono es el mismo cuando acierta y cuando inventa", "Que es incorrecto"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Que la respuesta está respaldada por varias fuentes",
+      "Que la pregunta estaba dentro de su entrenamiento",
+      "Nada: el tono es igual cuando acierta y cuando inventa",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Por eso la verificación la hacen los tests y las herramientas, no la confianza del modelo.",
   },
 ];

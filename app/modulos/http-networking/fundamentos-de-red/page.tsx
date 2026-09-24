@@ -24,22 +24,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace el DNS?",
     opciones: [
-      "Cifra la conexión",
+      "Elige el camino más corto entre el cliente y el servidor",
+      "Asigna una dirección IP a cada dispositivo de la red",
       "Traduce un nombre de dominio a una dirección IP",
-      "Comprime el HTML",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Sin la IP no se puede abrir la conexión; por eso es el primer paso.",
   },
   {
     pregunta: "Una página hace 40 requests chicos a un servidor lejano. ¿Qué la acelera más?",
     opciones: [
-      "Duplicar el ancho de banda",
-      "Reducir la latencia (CDN cercano, menos round trips)",
-      "Usar imágenes más grandes",
+      "Reducir la latencia: CDN cercano y menos round trips",
+      "Aumentar el ancho de banda de la conexión del usuario",
+      "Comprimir cada respuesta con Brotli en vez de gzip",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Con muchos requests chicos, el costo dominante son los round trips, no el volumen.",
   },
@@ -49,9 +49,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace <link rel=\"preconnect\">?",
     opciones: [
-      "Descarga el recurso por adelantado",
+      "Descarga por adelantado los recursos de ese origen que va a usar la página",
       "Resuelve DNS y abre la conexión TCP + TLS con ese origen por adelantado",
-      "Cachea la página",
+      "Resuelve solo el DNS de ese origen, sin abrir ninguna conexión",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -60,11 +60,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Vas a migrar el dominio a otro servidor. ¿Qué hacés con el TTL del DNS?",
     opciones: [
-      "Lo subo a una semana",
+      "Lo subo antes de migrar, para que los resolvers no pregunten durante el cambio",
+      "Lo dejo como está: al cambiar el registro, los resolvers se actualizan solos",
       "Lo bajo unos días antes, migro, verifico y lo vuelvo a subir",
-      "No importa",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Con un TTL alto, los caches siguen apuntando a la IP vieja hasta que vence.",
   },
@@ -74,20 +74,20 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué el HTML inicial conviene que pese menos de ~14 KB comprimido?",
     opciones: [
-      "Porque los navegadores no aceptan más",
-      "Porque es la ventana inicial de TCP: cabe en el primer round trip",
-      "Porque es el límite de gzip",
+      "Porque es la ventana inicial de TCP: entra en el primer round trip",
+      "Porque es el tamaño máximo de un paquete TCP antes de fragmentarse",
+      "Porque los navegadores no empiezan a parsear hasta recibir 14 KB",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "TCP slow start arranca con ~10 segmentos y va duplicando por round trip.",
   },
   {
     pregunta: "¿Para qué requests es seguro usar 0-RTT?",
     opciones: [
-      "Para cualquiera",
+      "Para cualquier request, porque TLS 1.3 ya lo cifra de punta a punta",
       "Solo para requests idempotentes y sin efectos, como un GET",
-      "Solo para POST",
+      "Solo para requests autenticados, que no se pueden repetir sin el token",
     ],
     respuestaCorrecta: 1,
     explicacion:

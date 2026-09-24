@@ -23,16 +23,20 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Dónde guardás los PDFs que suben los usuarios?",
-    opciones: ["En el disco de la instancia EC2", "En un bucket de S3", "En una columna de RDS"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "En un bucket de S3",
+      "En el disco de la instancia EC2",
+      "En una columna de RDS",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Almacenamiento de objetos barato y durable, fuera del servidor.",
   },
   {
     pregunta: "¿Cómo obtiene credenciales una función Lambda para leer de S3?",
     opciones: [
-      "Con una access key guardada en una variable de entorno",
-      "Asumiendo su rol de ejecución, que da credenciales temporales",
-      "No necesita credenciales",
+      "Con access keys guardadas en sus variables de entorno",
+      "Asumiendo su rol de ejecución, con credenciales temporales",
+      "Con las credenciales del usuario que la desplegó",
     ],
     respuestaCorrecta: 1,
     explicacion: "El SDK las toma solo; no hay ninguna clave de larga vida.",
@@ -43,17 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cómo dejás que el navegador suba un archivo a un bucket privado?",
     opciones: [
-      "Haciendo público el bucket",
-      "Con una URL firmada que genera la API, válida por unos minutos",
-      "Enviando las credenciales de AWS al cliente",
+      "Haciendo público el bucket solo para escritura",
+      "Mandando al navegador credenciales de un usuario IAM",
+      "Con una URL firmada que genera la API, válida unos minutos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Da permiso temporal sobre un objeto puntual, sin exponer el bucket.",
   },
   {
     pregunta: "¿Qué base conviene para una app de negocio con relaciones y reportes?",
-    opciones: ["DynamoDB", "RDS Postgres", "S3"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "RDS Postgres",
+      "DynamoDB",
+      "ElastiCache",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "DynamoDB exige conocer los patrones de acceso de antemano y no tiene joins.",
   },
 ];
@@ -61,14 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un rol tiene Allow s3:* y la bucket policy tiene un Deny para ese rol. ¿Resultado?",
-    opciones: ["Permitido", "Denegado: un Deny explícito gana siempre", "Depende del orden"],
+    opciones: [
+      "Permitido: el Allow del rol es más específico",
+      "Denegado: un Deny explícito gana siempre",
+      "Depende de cuál de las dos políticas es más nueva",
+    ],
     respuestaCorrecta: 1,
     explicacion: "No importa cuántos Allow haya.",
   },
   {
     pregunta: "¿Qué evita pagar NAT Gateway por el tráfico de una Lambda en VPC hacia S3?",
-    opciones: ["Una IP pública", "Un VPC endpoint de tipo gateway para S3", "Más memoria en la función"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Poner la Lambda en una subred pública",
+      "Un Internet Gateway en la VPC",
+      "Un VPC endpoint gateway para S3",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Es gratuito y el tráfico a S3 no pasa por el NAT.",
   },
 ];

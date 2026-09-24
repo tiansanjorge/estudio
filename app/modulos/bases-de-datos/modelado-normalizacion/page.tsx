@@ -23,17 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "El email de un cliente está repetido en cada pedido. ¿Qué anomalía puede aparecer?",
-    opciones: ["De inserción", "De actualización: el cliente queda con emails distintos", "Ninguna"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "De actualización: el cliente queda con emails distintos",
+      "De inserción: no se puede crear un pedido sin email",
+      "De borrado: al borrar el cliente se borran sus pedidos",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Si se actualiza una fila y no las otras, el dato queda inconsistente.",
   },
   {
     pregunta: "¿Cómo se modela una relación muchos a muchos entre alumnos y cursos?",
     opciones: [
-      "Una columna con la lista de cursos en alumnos",
+      "Un array de ids de cursos en la tabla de alumnos",
       "Una tabla intermedia con una foreign key a cada lado",
-      "Duplicando los alumnos por curso",
+      "Una foreign key a cursos en la tabla de alumnos",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Guardar el precio en cada ítem del pedido es desnormalizar mal?",
     opciones: [
-      "Sí, siempre",
-      "No: es una foto histórica; el precio de compra no debe cambiar si cambia el del producto",
-      "Solo en Postgres",
+      "Sí: el precio tiene que leerse siempre del producto para estar actualizado",
+      "Sí, salvo que se sincronice con un trigger cuando cambia el del producto",
+      "No: es una foto histórica; el precio de compra no cambia con el del producto",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es un dato distinto: el precio al momento de la compra.",
   },
   {
     pregunta: "¿Por qué el UUID v4 puede empeorar los índices?",
     opciones: [
-      "Porque es muy largo",
-      "Porque es aleatorio e inserta en posiciones dispersas del B-tree",
-      "Porque no es único",
+      "Porque es aleatorio e inserta en lugares dispersos del B-tree",
+      "Porque ocupa 36 bytes como texto y el índice no lo comprime",
+      "Porque no se puede indexar con B-tree, solo con hash",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El UUID v7, ordenado por tiempo, evita esa fragmentación.",
   },
@@ -69,19 +73,23 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "En pedidos(id, cliente_id, email_cliente), ¿qué forma normal se viola?",
-    opciones: ["1FN", "2FN", "3FN: el email depende del cliente, no del pedido"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "1FN: el email no es un valor atómico",
+      "3FN: el email depende del cliente, no del pedido",
+      "2FN: el email depende de parte de la clave",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "Es una dependencia transitiva; el email va a la tabla clientes.",
   },
   {
     pregunta: "¿Qué evita el constraint EXCLUDE sobre el rango de vigencia?",
     opciones: [
-      "Precios negativos",
+      "Que un período termine antes de empezar",
+      "Que un producto quede sin ningún período vigente",
       "Que dos períodos del mismo producto se superpongan",
-      "Productos duplicados",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Así en cada fecha hay un solo precio vigente.",
   },

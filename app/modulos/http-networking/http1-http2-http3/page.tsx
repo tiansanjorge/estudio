@@ -26,30 +26,34 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué los navegadores abrían hasta 6 conexiones TCP por dominio en HTTP/1.1?",
     opciones: [
-      "Para balancear carga entre servidores",
-      "Porque cada conexión solo podía tener una petición en vuelo a la vez",
-      "Por seguridad",
+      "Porque cada conexión podía tener una sola petición en vuelo a la vez",
+      "Porque el estándar HTTP/1.1 fija un máximo de 6 conexiones por dominio",
+      "Porque TCP limita el ancho de banda de cada conexión a un sexto del total",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Sin multiplexado, una sola conexión HTTP/1.1 procesa una petición a la vez. Abrir varias conexiones en paralelo era el workaround para cargar recursos simultáneamente.",
   },
   {
     pregunta: "¿Qué problema de HTTP/1.1 resuelve el multiplexado de HTTP/2?",
     opciones: [
-      "La necesidad de abrir múltiples conexiones TCP para paralelizar peticiones",
-      "La pérdida de paquetes en la red",
-      "La compresión de imágenes",
+      "El head-of-line blocking a nivel de paquetes de TCP",
+      "Tener que abrir varias conexiones TCP para paralelizar",
+      "El handshake TLS extra en cada request nuevo",
     ],
-    respuestaCorrecta: 0,
+    respuestaCorrecta: 1,
     explicacion:
       "HTTP/2 intercala múltiples streams sobre una sola conexión TCP, así que ya no hace falta abrir 6 conexiones para cargar recursos en paralelo.",
   },
   {
     pregunta:
       "Un paquete se pierde en la red. ¿En cuál de estos protocolos bloquea a los demás streams?",
-    opciones: ["Solo en HTTP/1.1", "En HTTP/2 (por TCP), pero no en HTTP/3", "En ninguno"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "En HTTP/3, porque UDP no retransmite paquetes perdidos",
+      "En los dos: cualquier pérdida frena la conexión entera",
+      "En HTTP/2 (por TCP), pero no en HTTP/3",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "TCP garantiza orden estricto de entrega, así que un paquete perdido bloquea todos los streams de HTTP/2 hasta que se retransmite. QUIC (HTTP/3) trata cada stream de forma independiente, así que la pérdida no afecta a los demás.",
   },
@@ -59,20 +63,20 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué reemplazó a HTTP/2 Server Push?",
     opciones: [
-      "Nada, sigue siendo la recomendación",
-      "preload y la respuesta 103 Early Hints, donde el navegador decide qué pedir",
-      "WebSockets",
+      "preload y 103 Early Hints: el navegador decide qué pedir",
+      "HTTP/3 Push, que empuja recursos sobre streams de QUIC",
+      "Service Workers que precargan todo en el primer request",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El servidor no conoce el cache del navegador; con Early Hints el navegador no pide lo que ya tiene.",
   },
   {
     pregunta: "¿Cómo descubre el navegador que un servidor habla HTTP/3?",
     opciones: [
-      "Lo intenta siempre primero",
-      "Por el header Alt-Svc (o un registro DNS HTTPS) y después intenta QUIC, con fallback",
-      "Por la extensión del archivo",
+      "Por la URL: los sitios con HTTP/3 usan el esquema https3://",
+      "Por Alt-Svc (o un registro DNS HTTPS) y después intenta QUIC",
+      "Probando QUIC primero en cada conexión y cayendo a TCP si falla",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -83,7 +87,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Pasás del WiFi al 4G en medio de una descarga. ¿Qué protocolo la mantiene viva?",
-    opciones: ["HTTP/1.1 sobre TCP", "HTTP/2 sobre TCP", "HTTP/3 sobre QUIC"],
+    opciones: [
+      "HTTP/2, porque multiplexa todo en una sola conexión",
+      "Ninguno: al cambiar la IP, cualquier conexión se corta",
+      "HTTP/3 sobre QUIC",
+    ],
     respuestaCorrecta: 2,
     explicacion:
       "QUIC identifica la conexión por connection ID, no por la IP.",
@@ -91,11 +99,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué ambigüedad explota el request smuggling?",
     opciones: [
-      "El método HTTP",
       "Content-Length vs Transfer-Encoding: dónde termina el body",
-      "El orden de los headers",
+      "Host vs X-Forwarded-Host: a qué dominio va el request",
+      "GET vs HEAD: si la respuesta debería llevar body o no",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Proxy y backend interpretan distinto el largo del request sobre una conexión compartida.",
   },

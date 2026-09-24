@@ -23,14 +23,22 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué base conviene por defecto para una aplicación de negocio típica?",
-    opciones: ["Una NoSQL, porque escala", "Una relacional como Postgres", "Redis"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Una relacional como Postgres",
+      "Una de documentos como MongoDB",
+      "Una clave-valor como DynamoDB",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Consistencia, SQL flexible y JSONB para lo variable; NoSQL se elige por una necesidad concreta.",
   },
   {
     pregunta: "¿Qué operación es costosa si el nombre del cliente está embebido en cada pedido?",
-    opciones: ["Mostrar un pedido", "Cambiar el nombre del cliente", "Crear un pedido"],
+    opciones: [
+      "Leer un pedido con su cliente",
+      "Cambiar el nombre del cliente",
+      "Crear un pedido nuevo",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Hay que actualizar todas las copias, o aceptar que queden desactualizadas.",
@@ -41,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuándo referenciar en vez de embeber en una base de documentos?",
     opciones: [
-      "Cuando se lee siempre junto al padre",
-      "Cuando el dato se comparte, cambia seguido o la lista puede crecer sin límite",
-      "Nunca",
+      "Cuando el dato se lee siempre junto con el documento padre",
+      "Cuando el documento es chico y cambia muy poco",
+      "Cuando el dato se comparte, cambia seguido o crece sin límite",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Embeber es ideal para lo que pertenece al documento y está acotado.",
   },
   {
     pregunta: "¿Qué permite JSONB en Postgres?",
     opciones: [
-      "Solo guardar texto",
       "Guardar JSON indexable y consultable junto a columnas tipadas",
-      "Reemplazar las transacciones",
+      "Reemplazar las foreign keys por documentos embebidos con integridad",
+      "Guardar JSON como texto, que se parsea recién en la aplicación",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Un modelo híbrido: lo crítico en columnas, lo variable en JSONB.",
   },
@@ -65,7 +73,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Según CAP, ante una partición de red un sistema distribuido tiene que elegir entre...",
-    opciones: ["Velocidad y costo", "Consistencia y disponibilidad", "SQL y NoSQL"],
+    opciones: [
+      "Latencia y consistencia",
+      "Consistencia y disponibilidad",
+      "Disponibilidad y durabilidad",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "Muchas bases permiten elegir el nivel de consistencia por operación.",
@@ -73,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Desde dónde se diseña una tabla de DynamoDB?",
     opciones: [
-      "Desde las entidades y la normalización",
-      "Desde los patrones de acceso que va a tener la aplicación",
-      "Desde el frontend",
+      "Desde el modelo de entidades normalizado",
+      "Desde el volumen de datos que va a guardar",
+      "Desde los patrones de acceso de la aplicación",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Cada consulta tiene que ser una lectura por clave o un rango; no hay JOINs.",
   },

@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿En qué subred va la base de datos?",
-    opciones: ["Pública, para poder conectarse", "Privada, sin ruta desde internet", "Da igual"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Privada, sin ruta desde internet",
+      "Pública, con un security group estricto",
+      "Pública, con IP elástica fija",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Solo la aplicación, dentro de la VPC, necesita llegar a ella.",
   },
   {
     pregunta: "¿Cómo sale a internet un recurso de una subred privada?",
-    opciones: ["Por el Internet Gateway directo", "Por un NAT Gateway en una subred pública", "No puede salir"],
+    opciones: [
+      "Por el Internet Gateway, igual que la subred pública",
+      "Por un NAT Gateway en una subred pública",
+      "No puede salir: una subred privada no tiene internet",
+    ],
     respuestaCorrecta: 1,
     explicacion: "El NAT permite conexiones salientes pero no entrantes.",
   },
@@ -39,17 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué ventaja tiene referenciar un security group en vez de un rango de IPs?",
     opciones: [
-      "Es más rápido",
-      "La regla sigue valiendo aunque las instancias cambien de IP al escalar",
-      "Permite reglas de denegar",
+      "Que el tráfico entre instancias no paga transferencia de datos",
+      "Que la regla aplica también a recursos de otras cuentas",
+      "Que la regla sigue valiendo aunque las IPs cambien al escalar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Expresa la intención: la API puede hablar con la base, sea cual sea su IP.",
   },
   {
     pregunta: "Un cliente necesita permitir tu IP fija en su firewall. ¿Qué balanceador?",
-    opciones: ["ALB", "NLB", "Cualquiera"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "NLB",
+      "ALB",
+      "CloudFront",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "El NLB ofrece IPs estáticas por zona.",
   },
 ];
@@ -57,14 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué conviene para que un deploy nuevo no requiera invalidar el CDN?",
-    opciones: ["TTL de 1 segundo", "Nombres de assets con hash del contenido", "Desactivar el CDN"],
+    opciones: [
+      "Un TTL corto en todos los assets",
+      "Nombres de assets con hash del contenido",
+      "Cache-Control: no-cache en los assets",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Un contenido nuevo tiene un nombre nuevo; el viejo puede cachearse para siempre.",
   },
   {
     pregunta: "VPC A conectada por peering con B, y B con C. ¿A llega a C?",
-    opciones: ["Sí", "No: el peering no es transitivo", "Solo por DNS"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Sí: el peering encadena las VPC conectadas",
+      "Sí, si las tres están en la misma región",
+      "No: el peering no es transitivo",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Con muchas VPCs se usa un Transit Gateway como hub.",
   },
 ];

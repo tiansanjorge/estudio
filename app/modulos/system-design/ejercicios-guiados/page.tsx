@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué se hace primero en una entrevista de system design?",
-    opciones: ["Dibujar la arquitectura", "Acordar requisitos y alcance", "Elegir la base de datos"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Acordar requisitos y alcance",
+      "Dibujar la arquitectura de alto nivel",
+      "Elegir la base de datos",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Sin requisitos claros, el diseño no tiene contra qué evaluarse.",
   },
   {
     pregunta: "En un acortador, ¿qué redirección permite contar cada clic?",
-    opciones: ["301", "302", "Cualquiera"],
+    opciones: [
+      "301",
+      "302",
+      "308",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Los navegadores cachean las 301 y dejan de pasar por el servidor.",
   },
@@ -39,17 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema tiene el fan-out on write con celebridades?",
     opciones: [
-      "Las lecturas se vuelven lentas",
+      "Sus seguidores ven los posts con varios minutos de atraso",
+      "Sus posts no se pueden cachear por la cantidad de lecturas",
       "Un solo post genera millones de escrituras",
-      "No se puede paginar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Por eso sus posts se buscan al leer, en un esquema híbrido.",
   },
   {
     pregunta: "¿Por qué el cursor del feed combina fecha e id?",
-    opciones: ["Por estética", "Porque dos posts pueden tener la misma fecha", "Para encriptarlo"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Porque dos posts pueden tener la misma fecha",
+      "Porque el id solo no se puede indexar",
+      "Porque la fecha sola no se puede codificar en la URL",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "La posición tiene que ser única para no repetir ni saltear posts.",
   },
 ];
@@ -58,9 +70,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué define el orden de los mensajes de una conversación?",
     opciones: [
-      "El reloj de cada dispositivo",
+      "El timestamp del cliente que manda cada mensaje",
       "Un número secuencial que asigna el servidor al persistir",
-      "El orden de llegada al gateway",
+      "El orden de llegada al WebSocket de cada destinatario",
     ],
     respuestaCorrecta: 1,
     explicacion: "Los relojes de los dispositivos pueden estar desfasados.",
@@ -68,11 +80,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un cliente se desconecta 5 minutos. ¿Cómo recupera lo que se perdió?",
     opciones: [
-      "El servidor le reenvía todo el historial",
+      "El servidor le reenvía todo lo que emitió mientras no estaba",
+      "Recarga la conversación completa desde el principio",
       "Pide los mensajes posteriores al último número que vio",
-      "No se puede recuperar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "El número secuencial hace que ponerse al día sea una consulta simple.",
   },
 ];

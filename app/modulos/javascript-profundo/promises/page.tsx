@@ -26,9 +26,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Una promesa rechazada llega a un .then() que solo tiene manejador de éxito. ¿Qué pasa?",
     opciones: [
-      "Se ejecuta igual, con el error como argumento",
-      "Se salta ese .then() y el rechazo sigue propagándose hasta encontrar un catch",
-      "La aplicación se rompe",
+      "Se ejecuta ese .then() con undefined como valor y la cadena sigue como cumplida",
+      "Se saltea ese .then() y el rechazo sigue hasta el próximo .catch() de la cadena",
+      "La cadena se corta ahí: los .catch() posteriores no lo ven porque ese .then() no lo manejó",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -37,22 +37,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia a Promise.all de Promise.allSettled?",
     opciones: [
-      "all espera a todas, allSettled solo a la primera",
-      "all se rechaza apenas una falla; allSettled siempre espera a todas y te da el resultado de cada una",
-      "Son exactamente lo mismo",
+      "all espera a que todas terminen y recién ahí rechaza si alguna falló; allSettled nunca rechaza",
+      "all cancela las promesas restantes cuando una falla; allSettled las deja terminar a todas",
+      "all rechaza apenas una falla; allSettled espera a todas y devuelve el estado de cada una",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Promise.all corta apenas la primera rechaza. Promise.allSettled nunca rechaza: espera que todas terminen (éxito o error) y te devuelve un resumen de cada resultado.",
   },
   {
     pregunta: "¿Cuándo rechaza Promise.any?",
     opciones: [
-      "Apenas rechaza la primera promesa",
-      "Solo si TODAS las promesas rechazan",
-      "Nunca rechaza",
+      "Solo si todas rechazan, con un AggregateError",
+      "Apenas rechaza la primera, igual que Promise.all",
+      "Si la primera en terminar rechaza, como Promise.race",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Promise.any se cumple con la primera que tenga éxito, e ignora los rechazos individuales. Solo rechaza si absolutamente todas fallan.",
   },
@@ -63,9 +63,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Necesitás el usuario y sus preferencias, dos llamadas independientes. ¿Qué código conserva el paralelismo?",
     opciones: [
-      "const usuario = await getUsuario(); const preferencias = await getPreferencias();",
-      "const [usuario, preferencias] = await Promise.all([getUsuario(), getPreferencias()]);",
-      "Da igual, ambos tardan lo mismo",
+      "const u = await getUsuario(); const p = await getPreferencias();",
+      "const [u, p] = await Promise.all([getUsuario(), getPreferencias()]);",
+      "for (const f of [getUsuario, getPreferencias]) datos.push(await f());",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -75,11 +75,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué pasa si una Promise rechaza y nadie la maneja con .catch() o try/catch?",
     opciones: [
-      "Se ignora silenciosamente sin ningún efecto",
-      "Se dispara un evento de unhandled rejection, que en Node puede terminar el proceso",
-      "JavaScript la reintenta automáticamente",
+      "Se lanza como excepción síncrona en la línea donde se creó la promesa",
+      "Queda en memoria hasta que el garbage collector la limpia, sin ningún aviso",
+      "Se dispara un evento unhandledrejection; en Node, por defecto, termina el proceso",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es un error peligroso porque no rompe la ejecución de inmediato como una excepción síncrona: puede pasar desapercibido en desarrollo y aparecer en producción bajo cierta condición de timing.",
   },
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Si una Promise ya está cumplida cuando le agregás un .then(), ¿el callback corre sincrónicamente?",
     opciones: [
-      "Sí, porque el valor ya está disponible",
-      "No, siempre se encola como microtask, sin importar si la promesa ya estaba resuelta",
-      "Depende del motor de JavaScript",
+      "No: se encola como microtask, aunque la promesa ya esté cumplida",
+      "Sí: si el valor ya está disponible, .then() llama al callback en el acto",
+      "No: se encola como macrotask, igual que un setTimeout(fn, 0)",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es una garantía deliberada de la spec para evitar 'Zalgo': que el comportamiento síncrono o asincrónico de una función dependa de una condición de carrera, rompiendo el razonamiento sobre el orden de ejecución.",
   },
@@ -102,9 +102,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cómo se implementa cancelación real de una operación asincrónica, ya que las Promises no son cancelables?",
     opciones: [
-      "Llamando a promise.cancel()",
-      "Con AbortController: se aborta la operación underlying, que rechaza la promesa con un AbortError",
-      "No es posible cancelar una operación una vez iniciada",
+      "Con Promise.race contra un timeout: la promesa que pierde se cancela sola",
+      "Con AbortController: se aborta la operación de fondo y la promesa rechaza con AbortError",
+      "Llamando al resolve() de la promesa desde afuera, lo que corta la operación en curso",
     ],
     respuestaCorrecta: 1,
     explicacion:

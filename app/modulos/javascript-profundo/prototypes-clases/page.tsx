@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué hace JS cuando accedés a una propiedad que un objeto no tiene como propia?",
     opciones: [
-      "Devuelve undefined inmediatamente, sin buscar más",
-      "Sube por la cadena de prototipos buscando en cada nivel, hasta encontrarla o llegar a null",
-      "Lanza un error de inmediato",
+      "Sube por la cadena de prototipos hasta encontrarla o llegar a null",
+      "Busca en el prototipo directo y, si no está ahí, devuelve undefined",
+      "Busca en la clase que creó el objeto, incluyendo sus métodos estáticos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Cada objeto tiene una referencia a su prototipo. El motor recorre esa cadena nivel por nivel, igual que la scope chain con variables, hasta encontrar la propiedad o llegar al final (null).",
   },
   {
     pregunta: "¿Los métodos definidos dentro de una class se duplican en cada instancia?",
     opciones: [
-      "Sí, cada new Clase() crea su propia copia de los métodos",
-      "No, se definen una sola vez en el prototype y todas las instancias los comparten por la cadena de prototipos",
-      "Solo se duplican si la clase usa extends",
+      "Sí: cada new copia los métodos, igual que las propiedades del constructor",
+      "No: viven una vez en el prototype y todas las instancias los comparten",
+      "No, salvo los getters y setters, que se copian en cada instancia",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -46,11 +46,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué conecta extends entre Hijo y Padre?",
     opciones: [
-      "Copia todos los métodos de Padre.prototype dentro de Hijo.prototype",
-      "Hace que el prototipo de Hijo.prototype sea Padre.prototype, conectando ambos en la cadena",
-      "No tiene relación con prototipos, es un mecanismo aparte",
+      "Copia los métodos de Padre.prototype dentro de Hijo.prototype al declararse",
+      "Hace que Hijo.prototype sea el mismo objeto que Padre.prototype",
+      "Hace que el prototipo de Hijo.prototype sea Padre.prototype",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "extends conecta Hijo.prototype como un objeto cuyo prototipo es Padre.prototype, así las instancias de Hijo encuentran por la cadena tanto sus propios métodos como los heredados.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo se vuelve un problema usar herencia de clases (extends) para compartir código?",
     opciones: [
-      "Nunca, la herencia siempre es la mejor opción para reusar código",
-      "Cuando se usa entre cosas sin una relación 'es un' real: jerarquías profundas se vuelven frágiles ante cambios en la clase base",
-      "Solo si la clase base no tiene constructor",
+      "Cuando no hay una relación 'es un' real: las jerarquías profundas se vuelven frágiles",
+      "Cuando hay más de un nivel de subclases, porque super solo sube un nivel",
+      "Cuando las subclases sobrescriben métodos, porque se pierde el acceso al original",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El 'fragile base class problem': modificar un método heredado puede romper silenciosamente a todos los descendientes. La composición suele ser más flexible para compartir comportamiento sin esa relación jerárquica real.",
   },
@@ -73,9 +73,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja tiene Object.create(null) sobre {} para un diccionario con claves externas?",
     opciones: [
-      "Es más rápido de crear",
-      "No hereda de Object.prototype, así que no hay riesgo de colisión con claves como 'toString' o 'constructor'",
-      "Permite iterar las propiedades más rápido",
+      "Al no tener prototipo, cada lectura de propiedad es más rápida",
+      "No hereda de Object.prototype: claves como 'toString' no colisionan",
+      "Impide agregar propiedades que no estén declaradas de antemano",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿De qué depende super.metodo() para saber en qué prototipo buscar hacia arriba?",
     opciones: [
-      "De this, igual que cualquier acceso a propiedad",
-      "De una referencia interna ([[HomeObject]]) fijada en el momento en que el método se definió, no de this",
-      "Del prototipo del objeto global",
+      "De this: busca en el prototipo del objeto sobre el que se llamó",
+      "De this.constructor, la clase que creó la instancia",
+      "De [[HomeObject]], fijado al definir el método, no de this",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Por eso extraer un método con super y llamarlo con un this distinto (.call() sobre otro objeto) sigue resolviendo super desde el prototipo original donde se definió, no desde el de ese otro this.",
   },
@@ -100,11 +100,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Object.freeze(instancia) — ¿protege también las propiedades heredadas de su prototipo?",
     opciones: [
-      "Sí, congela toda la cadena de prototipos automáticamente",
-      "No, solo afecta las propiedades propias de esa instancia; el prototipo sigue siendo mutable salvo que también se congele",
-      "Solo protege métodos, no propiedades de datos",
+      "No: congela las propiedades propias; el prototipo sigue siendo mutable",
+      "Sí: congela la instancia y toda su cadena de prototipos",
+      "No: solo impide agregar propiedades nuevas, las existentes siguen editables",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Es un error común asumir que congelar una instancia protege todo lo que expone. Solo protege lo que le pertenece directamente; lo heredado por prototype queda intacto y mutable.",
   },

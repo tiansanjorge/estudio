@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Un request de pago da timeout. ¿Qué sabe el cliente?",
-    opciones: ["Que el pago falló", "Nada: el cobro pudo haberse hecho o no", "Que el pago se hizo"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Nada: el cobro pudo haberse hecho o no",
+      "Que el cobro falló y hay que reintentarlo",
+      "Que el cobro se hizo pero no llegó la respuesta",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Por eso reintentar tiene que ser seguro.",
   },
   {
     pregunta: "¿Qué límite evita que un cliente con un script mal hecho degrade a todos?",
-    opciones: ["Un límite global", "Un límite por tenant", "Ningún límite"],
+    opciones: [
+      "Un límite global de la API",
+      "Un límite por tenant",
+      "Un límite por endpoint",
+    ],
     respuestaCorrecta: 1,
     explicacion: "El global castiga a todos por igual cuando se alcanza.",
   },
@@ -39,17 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué resuelve la carrera entre dos requests con la misma idempotency key?",
     opciones: [
-      "Consultar si existe antes de procesar",
+      "Un SELECT previo que verifique si la clave ya existe",
+      "Guardar la respuesta en un Map en memoria del proceso",
       "Un INSERT con restricción UNIQUE: solo una request gana",
-      "Un sleep aleatorio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Verificar y después actuar sin atomicidad deja pasar a las dos.",
   },
   {
     pregunta: "Llega la misma clave con un cuerpo distinto. ¿Qué respondés?",
-    opciones: ["La respuesta guardada", "422: la clave ya se usó con otro contenido", "Procesarla de nuevo"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "422: la clave ya se usó con otro contenido",
+      "200 con la respuesta guardada de la primera",
+      "Proceso el cuerpo nuevo como otra operación",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Devolver la respuesta anterior sería un error silencioso.",
   },
 ];
@@ -58,9 +70,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Tu API llama a un proveedor de pagos. ¿Cómo evitás un doble cobro al reintentar?",
     opciones: [
-      "No reintentar nunca",
-      "Pasarle al proveedor una clave de idempotencia propia por operación",
-      "Reintentar más rápido",
+      "Reintentar solo si el proveedor respondió 5xx",
+      "Pasarle al proveedor una clave de idempotencia por operación",
+      "No reintentar nunca las llamadas al proveedor",
     ],
     respuestaCorrecta: 1,
     explicacion: "La idempotencia tiene que propagarse a cada paso.",
@@ -68,11 +80,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Redis, que guarda los contadores del rate limiter, no responde. ¿Qué es fail open?",
     opciones: [
-      "Rechazar todas las requests",
+      "Rechazar todas las requests hasta que Redis vuelva",
+      "Pasar a un límite fijo guardado en cada instancia",
       "Dejar pasar las requests sin limitar mientras tanto",
-      "Reiniciar Redis",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Prioriza disponibilidad a costa de quedar sin protección un rato.",
   },
 ];

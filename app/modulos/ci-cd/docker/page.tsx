@@ -24,19 +24,19 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué diferencia a un contenedor de una máquina virtual?",
     opciones: [
-      "Ninguna",
-      "El contenedor comparte el kernel del host; la VM trae su propio sistema operativo",
-      "El contenedor es más seguro",
+      "El contenedor comparte el kernel del host; la VM trae su propio SO",
+      "El contenedor corre en la nube; la VM corre en hardware físico propio",
+      "El contenedor no tiene red propia; la VM sí tiene interfaces de red",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Por eso arranca en milisegundos, con un aislamiento menos fuerte.",
   },
   {
     pregunta: "¿Por qué copiar package.json antes que el resto del código?",
     opciones: [
-      "Por convención",
-      "Para que un cambio en el código reutilice la capa cacheada de npm ci",
-      "Porque Docker lo exige",
+      "Porque npm ci necesita el package.json para leer las variables de entorno",
+      "Para que un cambio de código reutilice la capa cacheada de npm ci",
+      "Porque Docker copia los archivos en orden alfabético si no se aclara",
     ],
     respuestaCorrecta: 1,
     explicacion: "La cache es una cadena: una capa invalidada reconstruye todas las siguientes.",
@@ -47,21 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasa con un token pasado como ARG en el Dockerfile?",
     opciones: [
-      "Se borra al terminar el build",
-      "Queda guardado en las capas y se puede leer con docker history",
-      "Se encripta automáticamente",
+      "Se descarta al terminar el build y no queda en la imagen final",
+      "Queda disponible como variable de entorno en el contenedor",
+      "Queda guardado en las capas y se lee con docker history",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Para secretos de build se usa RUN --mount=type=secret.",
   },
   {
     pregunta: "¿Qué garantiza depends_on sin condition en docker compose?",
     opciones: [
-      "Que la base acepte conexiones",
       "Solo el orden de arranque de los contenedores",
-      "Que los servicios compartan volumen",
+      "Que la base esté lista para aceptar conexiones",
+      "Que los servicios compartan la misma red interna",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Para esperar a que esté lista hace falta un healthcheck y service_healthy.",
   },
 ];
@@ -70,17 +70,21 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "La app no se apaga con SIGTERM y la plataforma la mata a los 30 segundos. ¿Causa probable?",
     opciones: [
-      "Falta de memoria",
+      "El contenedor no tiene memoria suficiente para cerrar ordenado",
       "Corre como PID 1 (o detrás de npm) sin manejar la señal",
-      "El puerto está mal configurado",
+      "El healthcheck sigue respondiendo y bloquea el apagado",
     ],
     respuestaCorrecta: 1,
     explicacion: "El PID 1 no recibe los manejadores por default; hay que manejar SIGTERM o usar un init.",
   },
   {
     pregunta: "¿Qué mecanismo del kernel limita la memoria de un contenedor?",
-    opciones: ["Namespaces", "cgroups", "overlayfs"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "namespaces",
+      "seccomp",
+      "cgroups",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Los namespaces aíslan lo que se ve; los cgroups, lo que se puede usar.",
   },
 ];

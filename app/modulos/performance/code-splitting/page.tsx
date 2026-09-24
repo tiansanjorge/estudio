@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué dispara técnicamente el code splitting en un bundler moderno?",
     opciones: [
-      "Un comentario especial en el código",
-      "El import() dinámico: a diferencia de un import estático, le dice al bundler que ese código puede vivir en un chunk separado",
-      "Una configuración manual archivo por archivo",
+      "El import() dinámico: le indica al bundler que ese código puede ir en otro chunk",
+      "El tamaño del archivo: el bundler separa todo módulo que supere cierto límite",
+      "La cantidad de exports: cada export con nombre se emite como chunk aparte",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "React.lazy es, por debajo, simplemente un wrapper sobre esta misma técnica aplicado a componentes.",
   },
   {
     pregunta: "¿Dónde ocurre el code splitting más importante en un framework como Next.js, sin pedirlo explícitamente?",
     opciones: [
-      "A nivel de cada función individual",
-      "A nivel de ruta: cada página se divide automáticamente en su propio chunk",
-      "Solo si se instala un plugin adicional",
+      "A nivel de componente: cada componente cliente va a su propio chunk",
+      "A nivel de ruta: cada página se divide automáticamente en su chunk",
+      "A nivel de dependencia: cada paquete de npm va a un chunk separado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja de cacheo da separar un 'vendor chunk' del código propio de la app?",
     opciones: [
-      "Ninguna, es solo una convención de organización",
-      "El código de dependencias cambia poco entre deploys; separarlo permite que el navegador siga usando esa parte cacheada aunque el código propio cambie",
-      "Hace que las dependencias se descarguen más rápido en general",
+      "Que el vendor chunk se sirve desde un CDN público compartido entre sitios",
+      "Que las dependencias se comprimen mejor si están todas en un archivo",
+      "Que las dependencias cambian poco y siguen cacheadas aunque cambie tu código",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Si están mezclados en el mismo chunk, cada deploy invalida la caché de TODO el archivo, incluidas las dependencias que no cambiaron.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué dividir en demasiados chunks muy chicos puede generar un problema de 'waterfall'?",
     opciones: [
-      "No hay ningún problema, cuantos más chunks mejor",
-      "Si un chunk depende de otro que depende de otro, el navegador no puede pedirlos en paralelo — forma una cadena secuencial de requests",
-      "Los chunks chicos siempre tardan más en parsear",
+      "Porque si un chunk depende de otro, se piden en cadena y no en paralelo",
+      "Porque HTTP/2 limita la cantidad de requests simultáneos por conexión",
+      "Porque cada chunk chico se comprime peor y termina pesando más",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Cuantos más niveles de chunks anidados haya, más larga la cadena secuencial, y el tiempo total puede terminar siendo mayor.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué exportar un objeto grande con muchas propiedades desde un módulo puede sabotear tree-shaking y code splitting a la vez?",
     opciones: [
-      "No tiene ningún efecto en esas optimizaciones",
-      "El bundler no puede saber qué propiedades del objeto se usan en cada punto, así que incluye el objeto completo y no puede separar sus partes en chunks distintos",
-      "Solo afecta el tamaño del código fuente, no el bundle final",
+      "Porque los objetos exportados se evalúan antes que cualquier otro código del módulo",
+      "El bundler no sabe qué propiedades se usan y tiene que incluir el objeto entero",
+      "Porque un objeto exportado se duplica en cada chunk que lo importa",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué diferencia hay en el costo de mantenimiento entre splitting por ruta y splitting manual a nivel de componente?",
     opciones: [
-      "Son equivalentes en esfuerzo de mantenimiento",
-      "El splitting por ruta es automático y casi gratis; el splitting manual requiere decisiones continuas que pueden quedar desactualizadas con el tiempo",
-      "El splitting manual siempre es más simple de mantener",
+      "Ninguna: los dos se configuran una vez y el bundler los mantiene solos",
+      "El manual es más barato, porque el de ruta obliga a reorganizar las páginas",
+      "El de ruta es automático; el manual exige decisiones que se desactualizan",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "La recomendación práctica es empezar por el splitting automático de rutas, y reservar el manual solo para casos puntuales medidos con un bundle analyzer.",
   },

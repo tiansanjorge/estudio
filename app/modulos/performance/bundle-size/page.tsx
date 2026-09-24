@@ -25,20 +25,20 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué 200 KB de JavaScript son más caros que 200 KB de una imagen?",
     opciones: [
-      "Porque el JavaScript no se puede comprimir",
-      "Porque además de descargarse, el JS se parsea, compila y ejecuta en el hilo principal, bloqueando la interacción",
-      "Porque las imágenes se cachean y el JavaScript no",
+      "Porque el JS, además de descargarse, se parsea y ejecuta en el hilo principal",
+      "Porque el JS no se puede comprimir tanto como una imagen y viaja más pesado",
+      "Porque el JS se descarga de a un archivo por vez, y las imágenes en paralelo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La imagen se decodifica fuera del hilo principal; el JS compite con la interacción del usuario mientras se procesa.",
   },
   {
     pregunta: "¿Qué tamaño refleja mejor el costo de CPU de un bundle?",
     opciones: [
-      "El tamaño gzip, porque es lo que viaja por la red",
-      "El tamaño sin comprimir, porque es lo que el navegador parsea y ejecuta",
-      "Da igual, son proporcionales y siempre iguales",
+      "El tamaño comprimido con gzip o Brotli, que es lo que viaja por la red",
+      "El tamaño sin comprimir, que es lo que el navegador parsea y ejecuta",
+      "El tamaño minificado, antes de comprimir y después de quitar espacios",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -50,11 +50,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué requisito técnico tiene el tree-shaking?",
     opciones: [
-      "Que el código esté minificado",
-      "Que los módulos sean ES modules (import/export), analizables estáticamente",
-      "Que la librería esté escrita en TypeScript",
+      "Que el código esté minificado antes de pasar por el bundler",
+      "Que cada función exportada esté en un archivo propio",
+      "Que los módulos sean ES modules, analizables estáticamente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "require() de CommonJS es dinámico: el bundler no puede probar qué se usa, así que conserva todo.",
   },
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "Tu equipo agrega ~5 KB de JS por PR y en un año el bundle se duplicó. ¿Qué lo hubiera evitado?",
     opciones: [
-      "Revisar el bundle manualmente una vez por año",
       "Un performance budget chequeado en CI que marque cada PR que lo supere",
-      "Pasar todo a import dinámico",
+      "Minificar más agresivo en producción, con opciones extra de terser",
+      "Revisar el bundle con un analizador una vez por trimestre",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El crecimiento gradual no se nota PR a PR; solo un límite automático lo convierte en una decisión explícita.",
   },
@@ -77,9 +77,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "Marcaste tu paquete con sideEffects: false y en producción desaparecieron los estilos. ¿Por qué?",
     opciones: [
-      "Porque el CSS no se puede empaquetar con JavaScript",
-      "Porque `import './estilos.css'` no exporta nada, y el bundler lo eliminó al creer que no tenía efectos",
-      "Porque sideEffects desactiva la minificación de CSS",
+      "Porque sideEffects: false desactiva el loader de CSS en todo el paquete",
+      "Porque el import del CSS no exporta nada y el bundler lo eliminó",
+      "Porque los estilos solo se cargan si algún componente los usa en runtime",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -89,11 +89,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué problema, además del peso, causa tener dos copias de React en el bundle?",
     opciones: [
-      "Ninguno, solo ocupa más espacio",
-      "Los hooks de una copia no ven el estado ni el contexto de la otra, y la app rompe en runtime",
-      "React detecta la duplicación y descarta una copia automáticamente",
+      "Que las dos copias renderizan en paralelo y duplican cada mutación del DOM",
+      "Que el hydration falla porque el servidor usa una copia y el cliente otra",
+      "Que los hooks de una copia no ven el estado ni el contexto de la otra",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Las librerías con estado global a nivel de módulo asumen que existe una sola instancia.",
   },

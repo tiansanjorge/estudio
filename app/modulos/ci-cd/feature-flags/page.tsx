@@ -23,13 +23,21 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué permite separar un feature flag?",
-    opciones: ["El frontend del backend", "El deploy del release", "Los tests de producción"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "El deploy del release",
+      "El build del deploy",
+      "El frontend del backend",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "El código llega a producción apagado y se activa cuando se decide.",
   },
   {
     pregunta: "¿Qué tipo de flag puede ser permanente?",
-    opciones: ["Una release flag", "Un kill switch operacional", "Un experimento terminado"],
+    opciones: [
+      "Una release flag",
+      "Un kill switch operacional",
+      "Un experimento A/B",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Las release flags y los experimentos se borran cuando terminan.",
   },
@@ -39,17 +47,21 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué el rollout usa un hash del usuario y no un número aleatorio por request?",
     opciones: [
-      "Porque es más rápido",
-      "Para que cada usuario vea siempre la misma versión y conserve la suya al subir el porcentaje",
-      "Porque lo exige OpenFeature",
+      "Porque un hash es más rápido de calcular que un número aleatorio",
+      "Para que el porcentaje real quede exacto en cualquier muestra",
+      "Para que cada usuario vea siempre la misma versión, y la conserve al subir",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Un número aleatorio alternaría versiones entre requests del mismo usuario.",
   },
   {
     pregunta: "¿Qué hacer con una release flag que está al 100% hace tres meses?",
-    opciones: ["Dejarla por las dudas", "Borrarla junto con el camino viejo", "Reutilizarla para otra funcionalidad"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Borrarla junto con el camino viejo",
+      "Dejarla por si hay que volver atrás",
+      "Pasarla a un kill switch permanente",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Es código muerto con riesgo; reutilizarla es todavía peor.",
   },
 ];
@@ -58,9 +70,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "El servicio de flags se cae y la app arranca en frío. ¿Qué valor usa?",
     opciones: [
-      "Encendida para todos",
-      "El default definido en el código, que debería ser el comportamiento seguro",
-      "Falla el arranque",
+      "El último valor que la app leyó del servicio de flags",
+      "El default del código, que debería ser el comportamiento seguro",
+      "Encendida para todos, hasta que el servicio responda",
     ],
     respuestaCorrecta: 1,
     explicacion: "Por eso el default suele ser el camino viejo, ya probado.",
@@ -68,11 +80,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Un A/B configurado 50/50 muestra 53/47 con 200.000 usuarios. ¿Qué significa?",
     opciones: [
-      "Una variante ganó",
-      "Un sample ratio mismatch: algo sesga la asignación o el registro",
-      "Nada, es normal",
+      "Ruido esperable con esa cantidad de usuarios",
+      "Que la versión B convierte peor y la gente abandona",
+      "Un sample ratio mismatch: algo sesga la asignación",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Con esa muestra, la diferencia no es azar; los resultados no son confiables.",
   },
 ];

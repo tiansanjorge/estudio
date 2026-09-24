@@ -27,11 +27,11 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "Justo después de llamar a setCuenta(cuenta + 1), ¿qué valor tiene la variable 'cuenta' en ESA misma ejecución de la función?",
     opciones: [
-      "El valor nuevo, ya actualizado",
-      "El valor viejo: sigue siendo el de la closure de este render",
-      "undefined",
+      "El valor viejo: es el de la closure de este render",
+      "El valor nuevo: setState actualiza la variable en el acto",
+      "undefined, hasta que React termine el próximo render",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "setState no muta nada de forma síncrona. Programa un re-render; la variable local de esta ejecución sigue apuntando al valor que tenía cuando arrancó este render.",
   },
@@ -39,9 +39,9 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué llamar tres veces a setCuenta(cuenta + 1) seguidas no suma 3, sino 1?",
     opciones: [
-      "Porque React ignora llamadas repetidas",
-      "Porque las tres usan el mismo valor de 'cuenta' capturado en la closure, así que las tres calculan lo mismo",
-      "Porque hay un límite de un setState por evento",
+      "Porque React descarta los setState repetidos dentro de un mismo handler",
+      "Porque las tres usan el mismo 'cuenta' de la closure y calculan lo mismo",
+      "Porque el batching aplica solo el último setState de cada handler",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -50,11 +50,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál es la forma correcta de acumular varias actualizaciones basadas en el valor anterior?",
     opciones: [
-      "setCuenta(cuenta + 1) repetido",
-      "setCuenta((c) => c + 1), pasando una función que recibe el valor más reciente",
-      "Llamar a setCuenta dentro de un setTimeout",
+      "Guardar el valor en una variable local y llamar a setCuenta una sola vez al final",
+      "Envolver las llamadas en flushSync para que cada una vea la anterior",
+      "setCuenta((c) => c + 1), con una función que recibe el valor más reciente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "La función updater recibe el valor pendiente más actualizado en el momento en que React la procesa, no el valor capturado en la closure del render.",
   },
@@ -65,11 +65,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "En React 18, ¿qué pasa si llamás a dos setState dentro de un setTimeout?",
     opciones: [
-      "Cada uno dispara su propio render por separado, igual que en React 17",
-      "Se agrupan automáticamente en un solo render (automatic batching), igual que dentro de un onClick",
-      "React ignora el segundo setState",
+      "Se agrupan en un solo render (automatic batching), igual que en un onClick",
+      "Se ejecutan como dos renders separados, porque están fuera de un evento de React",
+      "Se agrupan solo si usás startTransition alrededor de las dos llamadas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Antes de React 18, el batching solo ocurría dentro de handlers de eventos de React. Desde React 18, también aplica dentro de setTimeout, promesas y handlers nativos del DOM.",
   },
@@ -77,9 +77,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué sincronizar estado derivado con un useEffect es casi siempre un antipatrón?",
     opciones: [
-      "Porque useEffect no puede actualizar estado",
-      "Porque cuesta un render extra (el efecto corre después del render) y puede desincronizarse temporalmente; calcularlo directo durante el render es más simple",
-      "Porque useEffect solo funciona con props, no con estado",
+      "Porque useEffect no puede llamar a setState sin arriesgar un loop infinito de renders",
+      "Suma un render extra y puede desincronizarse; calcularlo en el render es más simple",
+      "Porque el efecto corre antes del render y lee el estado desactualizado",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -92,11 +92,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "setN(5) cuando el estado n ya vale 5 — ¿React re-renderiza el componente?",
     opciones: [
-      "Sí, siempre re-renderiza al llamar al setter",
-      "No: React usa Object.is para comparar, y si el valor primitivo es igual al actual, evita el re-render",
-      "Solo si el componente está envuelto en React.memo",
+      "Sí: cada llamada a setState programa un render, cambie o no el valor",
+      "Sí, pero React descarta el resultado sin tocar el DOM",
+      "No: compara con Object.is y, si el valor es igual, evita el re-render",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Esto aplica a valores primitivos comparados por valor. Con objetos/arrays, Object.is compara por referencia: un objeto nuevo con el mismo contenido sí dispara re-render.",
   },
@@ -104,11 +104,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cuándo conviene useReducer en vez de varios useState sueltos?",
     opciones: [
-      "Siempre, useReducer es preferible en todos los casos",
-      "Cuando hay varias piezas de estado relacionadas que cambian juntas según distintas acciones — centraliza la lógica de transición en una función testeable aparte",
-      "Solo en componentes de clase",
+      "Cuando varios estados cambian juntos según acciones: la lógica queda en un reducer testeable",
+      "Cuando el estado es muy grande, porque useReducer re-renderiza menos veces que useState",
+      "Cuando el estado se comparte entre componentes, porque useReducer lo vuelve global",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Con useState disperso, la lógica de mantener sincronizadas varias piezas de estado relacionadas queda repartida en handlers, más fácil de romper al agregar una acción nueva.",
   },

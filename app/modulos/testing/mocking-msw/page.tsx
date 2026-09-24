@@ -24,18 +24,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué ventaja tiene MSW sobre hacer vi.mock del cliente de API?",
     opciones: [
-      "Es más rápido de escribir",
       "Tu código corre completo y el test no depende de cómo hacés los requests",
-      "No necesita handlers",
+      "Los tests corren más rápido porque MSW responde sin pasar por fetch",
+      "MSW verifica que la API real siga respondiendo con la misma forma",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Intercepta en la red: fetch, axios o React Query funcionan igual.",
   },
   {
     pregunta: "Una base de datos en memoria que implementa el mismo repositorio es un...",
-    opciones: ["Stub", "Spy", "Fake"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "Stub",
+      "Fake",
+      "Spy",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "Un fake es una implementación funcional pero simplificada.",
   },
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué simula HttpResponse.error() en MSW?",
     opciones: [
-      "Un status 500",
+      "Una respuesta 500 con un body de error en JSON",
+      "Un timeout: el fetch queda pendiente hasta que el test termina",
       "Un error de red: el fetch rechaza como si se cortara la conexión",
-      "Un timeout de 30 segundos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Un 500 resuelve el fetch con un status; un error de red lo rechaza. Son caminos distintos.",
   },
   {
     pregunta: "¿Dónde conviene mockear?",
     opciones: [
-      "En todos los módulos para aislar al máximo",
       "En los bordes: red, reloj, terceros y APIs que el entorno no tiene",
-      "En ningún lado",
+      "En cada módulo propio, para testear cada archivo en aislamiento",
+      "En los componentes hijos, para que el test solo vea el padre",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Lo propio queda real; así el test verifica integración de verdad.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué ayuda a que los handlers de MSW no queden desactualizados?",
     opciones: [
-      "Nada, es inevitable",
+      "Regenerarlos grabando respuestas reales de producción cada semana",
       "Tiparlos con tipos generados del contrato (OpenAPI o schema GraphQL)",
-      "Escribirlos en JavaScript en vez de TypeScript",
+      "Usar onUnhandledRequest: 'warn' para ver cuándo cambia la API",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Con fake timers y userEvent, el test se cuelga. ¿Qué falta?",
     opciones: [
-      "Más timeout",
+      "await vi.runAllTimersAsync() antes de cada interacción",
+      "Reemplazar userEvent por fireEvent, que no usa timers",
       "userEvent.setup({ advanceTimers: vi.advanceTimersByTime })",
-      "Quitar userEvent",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "userEvent usa timers internos que tienen que avanzar con el reloj falso.",
   },

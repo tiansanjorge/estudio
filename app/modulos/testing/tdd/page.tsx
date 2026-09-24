@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué se hace en la fase GREEN?",
     opciones: [
-      "Diseñar la solución definitiva",
       "Escribir lo mínimo para que el test pase",
-      "Escribir todos los tests de la feature",
+      "Escribir la implementación completa y limpia",
+      "Refactorizar el test para que sea más claro",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El diseño se mejora en REFACTOR, con los tests en verde como red de seguridad.",
   },
   {
     pregunta: "¿Por qué ver fallar el test antes de implementar?",
     opciones: [
-      "Por costumbre",
+      "Para medir cuánto tarda el test antes de que exista el código",
       "Para confirmar que el test realmente puede detectar el problema",
-      "Para que el CI tarde más",
+      "Porque el runner no registra tests que nunca fallaron",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿En cuál de estos casos TDD rinde más?",
     opciones: [
-      "Un prototipo de UI que probablemente se tire",
+      "El layout responsive de una landing",
+      "Un prototipo que se descarta en una semana",
       "Las reglas de cálculo de impuestos de una factura",
-      "La configuración del bundler",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Lógica con reglas claras y muchos casos: el escenario ideal.",
   },
   {
     pregunta: "¿Qué es triangular en TDD?",
     opciones: [
-      "Escribir tres tests por función",
-      "Agregar ejemplos distintos hasta que la implementación constante ya no alcance y surja la regla",
-      "Testear en tres navegadores",
+      "Sumar ejemplos hasta que una respuesta fija ya no alcance y surja la regla",
+      "Escribir tres tests por función: caso feliz, caso borde y caso de error",
+      "Validar un mismo resultado con tres implementaciones distintas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La generalización aparece forzada por los casos, no anticipada.",
   },
@@ -74,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es un test de caracterización?",
     opciones: [
-      "Un test del comportamiento deseado",
-      "Un test que fija lo que el código hace hoy, para poder refactorizar con seguridad",
-      "Un test de performance",
+      "Un test que documenta cómo debería comportarse el código según la spec",
+      "Un test que fija lo que el código hace hoy, para refactorizar seguro",
+      "Un test que mide el rendimiento del código para detectar regresiones",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -85,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué caracteriza al TDD outside-in (escuela de Londres)?",
     opciones: [
-      "Empieza por las funciones de dominio sin mocks",
-      "Empieza por un test de aceptación y baja diseñando cada capa con mocks",
-      "No usa tests unitarios",
+      "Empieza por las unidades más internas y sube sin usar mocks",
+      "Empieza por la UI y deja la lógica de negocio para el final",
+      "Empieza por un test de aceptación y baja capa por capa con mocks",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Descubre las interfaces desde el uso, a costa de tests más acoplados a interacciones.",
   },

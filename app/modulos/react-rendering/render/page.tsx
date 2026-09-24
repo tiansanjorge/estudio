@@ -26,31 +26,31 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué produce la fase de Render?",
     opciones: [
-      "Cambios directos aplicados al DOM del navegador",
-      "Una descripción de la UI (elementos React) — todavía no se tocó el DOM real",
-      "Un archivo HTML nuevo",
+      "Los cambios ya aplicados al DOM, pendientes de que el navegador pinte",
+      "El HTML final de cada componente, listo para insertar en la página",
+      "Una descripción de la UI (elementos de React), sin tocar todavía el DOM",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Render es 'preguntarle' a los componentes qué deberían mostrar. El resultado es una estructura de datos, no una actualización del DOM — eso pasa después, en Commit.",
   },
   {
     pregunta: "¿Por qué la fase de Render tiene que ser pura, sin efectos secundarios?",
     opciones: [
-      "Por una convención de estilo sin consecuencias reales",
-      "Porque React puede llamar a esa función más de una vez, pausarla o descartarla, sobre todo con renderizado concurrente",
-      "Porque JavaScript no permite side effects dentro de funciones",
+      "Porque React puede llamarla más de una vez, pausarla o descartarla",
+      "Porque el render corre en un worker que no tiene acceso al DOM",
+      "Porque React cachea el resultado y un efecto quedaría fuera del caché",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Si el cuerpo del componente muta variables externas o hace fetch directamente, esos efectos pueden dispararse de más (o de menos) cuando React reintenta, pausa o descarta un render.",
   },
   {
     pregunta: "Por default, cuando un componente padre re-renderiza, ¿qué pasa con sus hijos?",
     opciones: [
-      "Solo re-renderizan si sus props cambiaron",
-      "También re-renderizan, aunque sus props sigan siendo exactamente las mismas",
-      "Nunca re-renderizan a menos que se les pida explícitamente",
+      "Solo re-renderizan los hijos cuyas props cambiaron",
+      "También re-renderizan, aunque sus props sean las mismas",
+      "Re-renderizan solo los hijos que usan estado propio",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -62,11 +62,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuáles son los únicos disparadores reales de un render?",
     opciones: [
-      "Cualquier línea de código ejecutada dentro del componente",
-      "Montaje inicial, actualización de estado propio, re-render del padre, o cambio de un Context consumido",
-      "Solo cuando cambian las props del componente",
+      "Montaje, cambio de estado, cambio de props o cambio de una ref",
+      "Montaje, cambio de estado, cambio de un Context o cualquier evento del DOM",
+      "Montaje, cambio de estado propio, render del padre o cambio de un Context",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Mutar una ref o llamar a una función normal dentro del componente no dispara un render por sí solo, salvo que termine llamando a alguno de esos cuatro triggers.",
   },
@@ -74,11 +74,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué arquitectura interna de React permite que un render se pause o se descarte a mitad de camino?",
     opciones: [
-      "El call stack normal de JavaScript",
-      "React Fiber: una estructura de árbol enlazado propia que le permite a React ceder el control y retomar el trabajo donde quedó",
-      "Web Workers, que corren el render en un hilo aparte",
+      "Fiber: un árbol enlazado propio que permite ceder el control y retomar",
+      "El Virtual DOM: como vive en memoria, se puede pausar sin tocar el DOM",
+      "El Scheduler del navegador, que React usa a través de requestIdleCallback",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El call stack de JS no se puede pausar desde afuera. Fiber le da a React su propia estructura de datos para procesar el árbol de a pedazos, base técnica del renderizado concurrente.",
   },
@@ -89,9 +89,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué React Strict Mode llama a los componentes dos veces en desarrollo?",
     opciones: [
-      "Es un bug conocido que todavía no se corrigió",
-      "Es deliberado: expone tempranamente componentes impuros, que producirían resultados o efectos duplicados en producción bajo renderizado concurrente",
-      "Solo ocurre en componentes de clase, nunca en función",
+      "Para medir cuánto tarda cada render y avisar si supera los 16 ms",
+      "Para exponer componentes impuros, que en concurrente duplicarían efectos",
+      "Porque en desarrollo React compara los dos resultados para validar el diff",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -101,11 +101,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Es válido llamar a setState directamente en el cuerpo de un componente, durante el render?",
     opciones: [
-      "Nunca, siempre hay que usar useEffect para actualizar estado",
-      "Sí, en el patrón documentado de estado derivado: React descarta el render actual y vuelve a ejecutar la función con el estado nuevo, sin pintar la versión intermedia",
-      "Solo en componentes de clase con setState tradicional",
+      "Nunca: siempre genera un loop infinito de renders",
+      "Sí, en cualquier caso: React agrupa esa actualización con el render actual",
+      "Sí, para estado derivado con condición: React descarta ese render y repite",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es un patrón de nicho para resetear estado interno al detectar un cambio en una prop, comparándola contra un valor guardado en una ref, sin necesitar un useEffect adicional.",
   },

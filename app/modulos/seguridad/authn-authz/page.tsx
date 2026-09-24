@@ -23,14 +23,22 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "Un usuario logueado intenta borrar un producto sin ser admin. ¿Qué status corresponde?",
-    opciones: ["401", "403", "500"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "403",
+      "401",
+      "404",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "Sabemos quién es (autenticación ok), pero no tiene permiso (falla la autorización).",
   },
   {
     pregunta: "Cambiando el id en la URL, un usuario ve pedidos de otros. ¿Qué vulnerabilidad es?",
-    opciones: ["XSS", "IDOR (falla de autorización)", "CSRF"],
+    opciones: [
+      "CSRF (falsificación de requests)",
+      "IDOR (falla de autorización)",
+      "Session fixation (falla de autenticación)",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "El servidor no verifica que el recurso pertenezca al usuario autenticado.",
@@ -40,19 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Para 'Iniciar sesión con Google', ¿qué protocolo se usa?",
-    opciones: ["OAuth 2.0 solo", "OpenID Connect (sobre OAuth 2.0)", "SAML obligatoriamente"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "OAuth 2.0 a secas, con el access token como prueba de identidad",
+      "SAML, el estándar de login federado para cuentas de consumo",
+      "OpenID Connect, sobre OAuth 2.0",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "OAuth delega autorización; OIDC agrega la identidad con el ID token.",
   },
   {
     pregunta: "Ocultar el botón 'Borrar' para los no-admins, ¿es suficiente?",
     opciones: [
-      "Sí",
       "No: el endpoint tiene que verificar el permiso en el servidor",
-      "Solo si además se deshabilita con CSS",
+      "Sí, si además el botón se quita del DOM y no solo se oculta con CSS",
+      "Sí, siempre que la ruta del endpoint no sea pública ni se documente",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La UI es experiencia de usuario; cualquiera puede llamar al endpoint directo.",
   },
@@ -61,15 +73,23 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué segundo factor es resistente al phishing?",
-    opciones: ["SMS", "Código TOTP", "WebAuthn / passkeys"],
-    respuestaCorrecta: 2,
+    opciones: [
+      "Códigos TOTP de una app autenticadora",
+      "WebAuthn / passkeys",
+      "Códigos por SMS",
+    ],
+    respuestaCorrecta: 1,
     explicacion:
       "La firma está atada al dominio real: un sitio falso no puede obtenerla.",
   },
   {
     pregunta: "¿Qué guarda el servidor cuando un usuario registra una passkey?",
-    opciones: ["La contraseña hasheada", "La clave pública", "La clave privada"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "La clave privada, cifrada con la contraseña",
+      "Un hash de la huella o del rostro del usuario",
+      "La clave pública",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "La clave privada nunca sale del dispositivo; una clave pública filtrada no sirve para entrar.",
   },

@@ -24,16 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "El promedio de latencia es 150 ms. ¿Qué te dice sobre los usuarios más afectados?",
     opciones: [
-      "Que todos tardan unos 150 ms",
       "Casi nada: la cola lenta queda escondida en el promedio",
-      "Que el p99 es 300 ms",
+      "Que la mayoría de los usuarios espera cerca de 150 ms",
+      "Que ningún usuario espera más del doble de 150 ms",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion: "Para ver la cola hacen falta percentiles como el p95 y el p99.",
   },
   {
     pregunta: "¿Cuál de estas NO es una de las golden signals?",
-    opciones: ["Latencia", "Cobertura de tests", "Saturación"],
+    opciones: [
+      "Saturación",
+      "Cobertura de tests",
+      "Latencia",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Son latencia, tráfico, errores y saturación.",
   },
@@ -42,14 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Un SLO de 99,9% sobre 1 millón de requests. ¿Cuál es el error budget?",
-    opciones: ["100 requests", "1.000 requests", "10.000 requests"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "100 requests",
+      "10.000 requests",
+      "1.000 requests",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "El 0,1% de un millón.",
   },
   {
     pregunta: "¿Qué label dispara la cardinalidad de una métrica?",
-    opciones: ["status", "user_id", "método HTTP"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "user_id",
+      "status_code",
+      "method",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "Cada usuario crea una serie de tiempo nueva.",
   },
 ];
@@ -57,18 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué header propaga el contexto de una traza entre servicios según W3C?",
-    opciones: ["x-request-id", "traceparent", "authorization"],
+    opciones: [
+      "X-Request-Id",
+      "traceparent",
+      "X-B3-TraceId",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Lleva el trace id, el span padre y el flag de muestreo.",
   },
   {
     pregunta: "¿Qué ventaja tiene tail sampling sobre head sampling?",
     opciones: [
-      "Es más barato",
-      "Decide al final, así puede guardar todas las trazas con error o lentas",
-      "No necesita collector",
+      "Guarda menos trazas en total, así que sale más barato",
+      "Decide al principio, así no gasta en trazas que descarta",
+      "Decide al final, así guarda todas las trazas con error o lentas",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion: "Head sampling descarta a ciegas, antes de saber cómo termina la traza.",
   },
 ];

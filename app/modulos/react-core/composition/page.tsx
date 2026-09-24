@@ -26,9 +26,9 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema tiene un componente con muchos props booleanos como esPrimario, esGrande, tieneIcono?",
     opciones: [
-      "Ninguno, es la forma recomendada de escalar un componente",
-      "Cada variante nueva agrega otro prop, y el componente tiene que saber renderizar internamente todas las combinaciones posibles",
-      "TypeScript no permite más de 3 props booleanos",
+      "Que cada prop booleano dispara un re-render extra cuando cambia, aunque el resultado sea igual",
+      "Cada variante nueva suma otro prop, y el componente resuelve todas las combinaciones",
+      "Que TypeScript no puede tipar bien más de unos pocos booleanos opcionales",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -37,22 +37,22 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué es 'composición' en el contexto de componentes de React?",
     opciones: [
-      "Heredar de una clase base compartida",
+      "Extender un componente base con extends para heredar su comportamiento",
+      "Juntar varios componentes en un mismo archivo para compartir estado",
       "Combinar componentes chicos y enfocados para armar comportamientos más complejos",
-      "Escribir todo el CSS en un solo archivo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "React no tiene herencia entre componentes. La forma de reutilizar y extender comportamiento es combinando piezas más simples, no extendiendo una clase.",
   },
   {
     pregunta: "¿Qué diferencia hay entre usar children y usar props con nombre (como izquierda/derecha) para pasar contenido?",
     opciones: [
-      "Son exactamente lo mismo",
-      "children sirve para un único slot de contenido; props con nombre permiten varios slots independientes en el mismo componente",
-      "props con nombre solo funcionan con texto, no con JSX",
+      "children es un único slot; las props con nombre permiten varios slots independientes",
+      "children re-renderiza en cada cambio del padre; las props con nombre no",
+      "children solo acepta elementos JSX; las props con nombre aceptan cualquier valor",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "children es la prop especial para un solo bloque de contenido. Cuando un componente necesita más de un punto de inserción (como un panel con izquierda y derecha), se usan props normales cuyo valor es JSX.",
   },
@@ -63,9 +63,9 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué los hooks reemplazaron a los HOC en la mayoría de los casos de reuso de lógica?",
     opciones: [
-      "Los HOC fueron eliminados de React",
-      "Los hooks comparten la misma lógica sin agregar componentes envolventes al árbol ni riesgo de colisión de props inyectadas",
-      "Los HOC solo funcionan con TypeScript, los hooks no",
+      "Porque los HOC no funcionan con componentes de función, solo con clases",
+      "Porque reutilizan lógica sin agregar envoltorios al árbol ni colisiones de props inyectadas",
+      "Porque los hooks se ejecutan una sola vez por componente, y los HOC en cada render",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -75,11 +75,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja da tipar los slots de un componente compuesto con props explícitas en vez de un solo children?",
     opciones: [
-      "Ninguna, TypeScript trata ambos casos igual",
-      "TypeScript puede exigir que cada slot esté presente y el editor sugiere exactamente qué props existen",
-      "Solo funciona si el componente es una clase",
+      "Que React valida en runtime que cada slot reciba el tipo de elemento correcto",
+      "Que cada slot se renderiza por separado, así que se evita re-renderizar los demás",
+      "Que TypeScript puede exigir cada slot y el editor sugiere exactamente cuáles existen",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Con children genérico no hay forma de expresar 'necesito exactamente dos elementos, uno por lado' — el error de uso incorrecto recién se nota en runtime, no en compilación.",
   },
@@ -90,11 +90,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué problema resuelve el patrón 'asChild' usado en librerías como Radix UI?",
     opciones: [
-      "Mejora la performance de renderizado",
-      "Permite que un componente de comportamiento renderice como distintos elementos HTML finales (button, a) sin duplicar su lógica para cada uno",
-      "Reemplaza la necesidad de props en un componente",
+      "Renderizar el comportamiento como el elemento que le pases, sin duplicar la lógica",
+      "Que un componente hijo pueda leer el estado de su padre sin usar Context",
+      "Que un componente renderice sus hijos en otro nodo del DOM, como un portal",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Usa React.cloneElement para fusionar las props del componente de comportamiento con el único elemento hijo recibido, en vez de forzar siempre su propio elemento envolvente.",
   },
@@ -102,9 +102,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Cuál es el riesgo principal de usar React.cloneElement para inyectar props en children?",
     opciones: [
-      "Ninguno, es una API completamente segura",
-      "Asume que sabés exactamente qué tipo de elemento(s) va a recibir como children; se rompe si el consumidor pasa algo distinto a lo esperado",
-      "Solo funciona con componentes de clase",
+      "Que clonar elementos duplica el estado de los hijos en cada render",
+      "Asume qué children va a recibir y se rompe si el consumidor pasa otra cosa",
+      "Que los hijos clonados pierden sus refs y sus event handlers originales",
     ],
     respuestaCorrecta: 1,
     explicacion:

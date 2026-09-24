@@ -26,11 +26,11 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué problema de REST resuelve mejor GraphQL en el caso típico?",
     opciones: [
-      "La latencia de red",
-      "El overfetching/underfetching al combinar varios recursos",
-      "La seguridad de las peticiones",
+      "El caching, porque cada query tiene su propia clave en el CDN",
+      "La latencia, porque GraphQL usa un protocolo binario más rápido",
+      "El overfetching y underfetching al combinar varios recursos",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "GraphQL permite pedir exactamente los campos que necesitás de varios recursos relacionados en una sola query, evitando el problema típico de REST de traer de más o de menos y necesitar múltiples requests.",
   },
@@ -38,20 +38,20 @@ const preguntas: PreguntaQuiz[] = [
     pregunta:
       "¿Por qué un WebSocket es mejor que hacer polling para un chat en tiempo real?",
     opciones: [
-      "Porque WebSocket usa menos JavaScript",
-      "Porque el servidor empuja mensajes solo cuando hay algo nuevo, sin peticiones repetidas vacías",
-      "Porque WebSocket no usa HTTP",
+      "Porque el servidor empuja solo cuando hay algo nuevo, sin requests vacíos",
+      "Porque usa HTTP/2 y multiplexa los mensajes en una sola conexión",
+      "Porque los mensajes viajan cifrados y el polling no admite TLS",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El polling manda peticiones a intervalos fijos aunque no haya nada nuevo. El WebSocket mantiene una conexión abierta y el servidor push-ea solo cuando hay algo que avisar.",
   },
   {
     pregunta: "¿Qué desventaja tiene GraphQL frente a REST en cuanto a caching HTTP?",
     opciones: [
-      "GraphQL no puede devolver JSON",
-      "Al ir todo por POST a un único endpoint, se pierde el cacheo por URL que aprovechan REST y los CDNs",
-      "GraphQL no soporta autenticación",
+      "Que las respuestas no se pueden comprimir y pesan más en el CDN",
+      "Todo va por POST a un endpoint, y se pierde el cacheo por URL",
+      "Que el servidor no puede devolver ETag en respuestas de GraphQL",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -62,15 +62,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "Una query pide 50 posts con su autor y se ejecutan 51 consultas. ¿Qué lo resuelve?",
-    opciones: ["Más índices en la base", "DataLoader (batching por request)", "Pasar a REST"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Un índice en la columna autor_id",
+      "Paginar los posts de a 10",
+      "DataLoader (batching por request)",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Agrupa los ids pedidos en el mismo tick y hace una sola consulta con IN.",
   },
   {
     pregunta: "El servidor solo tiene que mandar notificaciones al cliente. ¿Qué conviene?",
-    opciones: ["WebSockets", "Server-Sent Events", "Una query GraphQL cada 100 ms"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Server-Sent Events",
+      "WebSockets",
+      "Long polling",
+    ],
+    respuestaCorrecta: 0,
     explicacion:
       "SSE es unidireccional, va sobre HTTP y trae reconexión automática.",
   },
@@ -79,7 +87,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué defensa permite aceptar solo queries GraphQL conocidas y cachearlas por GET?",
-    opciones: ["Introspección", "Persisted queries", "Alias"],
+    opciones: [
+      "Límite de profundidad",
+      "Persisted queries",
+      "Análisis de costo",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "El cliente manda el hash de una query registrada; el servidor rechaza el resto.",
@@ -87,11 +99,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Usuario A en la instancia 1 y B en la 2. ¿Cómo llega un mensaje de A a B?",
     opciones: [
-      "Solo, porque comparten el load balancer",
-      "Con un bus compartido (por ejemplo Redis pub/sub) entre instancias",
-      "No se puede",
+      "Con sticky sessions, que mandan a A y a B a la misma instancia",
+      "Guardando los mensajes en la base y que cada instancia la consulte",
+      "Con un bus compartido entre instancias, como Redis pub/sub",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Cada conexión vive en una instancia; el bus distribuye los eventos entre todas.",
   },

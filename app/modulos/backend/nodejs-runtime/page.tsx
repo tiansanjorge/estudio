@@ -24,20 +24,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Por qué Node escala bien con miles de conexiones que esperan a la base de datos?",
     opciones: [
-      "Porque crea un hilo por conexión",
-      "Porque delega las esperas de I/O y el hilo principal sigue atendiendo otros requests",
-      "Porque es compilado",
+      "Porque delega las esperas de I/O y el hilo sigue atendiendo",
+      "Porque crea un thread del sistema por cada conexión abierta",
+      "Porque cada request corre en un proceso aislado del resto",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La mayor parte del trabajo de un servidor web es esperar, no calcular.",
   },
   {
     pregunta: "Un handler genera un PDF durante 400 ms en el hilo principal. ¿Qué pasa con los demás requests?",
     opciones: [
-      "Nada, corren en paralelo",
+      "Se atienden en paralelo en el thread pool de libuv",
       "Esperan: el event loop está bloqueado hasta que termine",
-      "Se cancelan",
+      "Se atienden normal, porque el handler es async",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -48,19 +48,23 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué herramienta usás para sacar trabajo de CPU del event loop dentro de un servicio?",
-    opciones: ["setTimeout", "Worker threads (por ejemplo con un pool)", "Más réplicas del contenedor"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Promesas con async/await",
+      "setImmediate para partir el trabajo",
+      "Worker threads, con un pool",
+    ],
+    respuestaCorrecta: 2,
     explicacion:
       "Corren en otro hilo con su propio event loop; el principal queda libre.",
   },
   {
     pregunta: "¿Qué operaciones usan el thread pool de libuv?",
     opciones: [
-      "Los sockets de red",
-      "fs, dns.lookup, y crypto/zlib asincrónicos pesados",
-      "El JSON.parse",
+      "fs, dns.lookup, y crypto/zlib asíncronos",
+      "Todas las conexiones de red TCP y HTTP",
+      "Los timers y las promesas pendientes",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "La red va por los mecanismos asincrónicos del sistema operativo.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué causa típica de memory leak aparece en servidores Node?",
     opciones: [
-      "Usar const",
+      "Muchas promesas pendientes a la vez durante picos de tráfico",
       "Una cache en un Map que solo crece, sin límite ni expiración",
-      "Usar async/await",
+      "Variables locales grandes dentro de handlers que se llaman seguido",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Al recibir SIGTERM, ¿qué hace primero un graceful shutdown?",
     opciones: [
-      "process.exit(0)",
-      "Deja de aceptar conexiones nuevas y marca readiness como no listo",
-      "Borra los logs",
+      "Cierra la conexión a la base para no dejar transacciones abiertas",
+      "Llama a process.exit(0) para liberar el puerto cuanto antes",
+      "Deja de aceptar conexiones nuevas y se marca como no listo",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Después espera los requests en curso y cierra conexiones ordenadamente.",
   },

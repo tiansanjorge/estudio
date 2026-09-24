@@ -23,16 +23,20 @@ export const metadata: Metadata = {
 const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué estrategia puede perder escrituras si el caché se cae?",
-    opciones: ["Write-through", "Write-back", "Write-around"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Write-back",
+      "Write-through",
+      "Cache-aside",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "La base se actualiza después; lo que no se volcó, se pierde.",
   },
   {
     pregunta: "¿Qué hace una clave versionada como producto:7:v42?",
     opciones: [
-      "Guarda todas las versiones para siempre",
-      "Al cambiar el dato se usa una clave nueva, sin necesidad de borrar la vieja",
-      "Encripta el valor",
+      "Guarda cada versión del dato para poder volver atrás",
+      "Al cambiar el dato se usa una clave nueva, sin borrar la vieja",
+      "Hace que el caché rechace escrituras de versiones anteriores",
     ],
     respuestaCorrecta: 1,
     explicacion: "Las claves viejas dejan de leerse y vencen solas.",
@@ -42,14 +46,22 @@ const preguntas: PreguntaQuiz[] = [
 const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Para qué dato es razonable write-back?",
-    opciones: ["El estado de un pago", "Un contador de vistas", "El saldo de una cuenta"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "El saldo de una cuenta",
+      "El stock de un producto",
+      "Un contador de vistas",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "Perder algunos incrementos en una falla es tolerable; perder un pago no.",
   },
   {
     pregunta: "Un job recorre un millón de claves una sola vez y el hit ratio se desploma. ¿Qué política resiste mejor?",
-    opciones: ["LRU", "LFU", "FIFO"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "LFU",
+      "LRU",
+      "FIFO",
+    ],
+    respuestaCorrecta: 0,
     explicacion: "LFU protege las claves populares de un recorrido masivo de uso único.",
   },
 ];
@@ -57,14 +69,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
 const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "Hay caché en el CDN (5 min), en cada instancia (1 min) y en Redis (10 min). ¿Peor caso de dato viejo?",
-    opciones: ["10 minutos", "La suma: hasta 16 minutos", "1 minuto"],
+    opciones: [
+      "El más largo: hasta 10 minutos",
+      "La suma: hasta 16 minutos",
+      "El más corto: hasta 1 minuto",
+    ],
     respuestaCorrecta: 1,
     explicacion: "Cada capa puede recargar desde otra que ya tenía el dato viejo.",
   },
   {
     pregunta: "¿Qué evita que un lector lento guarde en el caché un valor viejo después de una invalidación?",
-    opciones: ["Un TTL más largo", "Leases o escrituras condicionales por versión", "Más memoria en Redis"],
-    respuestaCorrecta: 1,
+    opciones: [
+      "Un TTL más corto en todas las claves",
+      "Invalidar dos veces, antes y después de escribir",
+      "Leases o escrituras condicionales por versión",
+    ],
+    respuestaCorrecta: 2,
     explicacion: "La invalidación anula el permiso del lector para escribir su valor.",
   },
 ];

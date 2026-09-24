@@ -24,17 +24,21 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasa con el placeholder cuando el usuario empieza a escribir?",
     opciones: [
-      "Queda visible arriba del texto",
-      "Desaparece, y con él la única indicación visible de qué dato va en el campo",
-      "Se convierte en el label",
+      "Desaparece, y con él la única indicación de qué va en el campo",
+      "Se mueve arriba del campo, como una etiqueta flotante",
+      "Queda como descripción accesible que el lector sigue anunciando",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Por eso el label tiene que estar siempre visible; el placeholder solo complementa.",
   },
   {
     pregunta: "¿Qué atributo vincula un mensaje de error con su campo para el lector de pantalla?",
-    opciones: ["aria-label", "aria-describedby", "aria-hidden"],
+    opciones: [
+      "aria-labelledby",
+      "aria-describedby",
+      "aria-errormessage sin aria-invalid",
+    ],
     respuestaCorrecta: 1,
     explicacion:
       "aria-describedby apunta al id del mensaje; aria-invalid indica el estado.",
@@ -45,22 +49,22 @@ const preguntasNivel2: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál es el momento más equilibrado para mostrar un error por primera vez?",
     opciones: [
-      "En cada tecla, desde la primera",
+      "En cada tecla, para corregir mientras escribe",
+      "Solo al enviar, para no interrumpir nunca",
       "Al salir del campo (blur) o al enviar",
-      "Solo cuando el servidor responde",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Validar mientras escribe marca como error algo que el usuario todavía no terminó.",
   },
   {
     pregunta: "Un grupo de radio buttons responde a una pregunta. ¿Cómo se la asocia?",
     opciones: [
-      "Con un <p> arriba del grupo",
       "Con <fieldset> y <legend>",
-      "Con un title en cada radio",
+      "Con un <label> que envuelve a todos",
+      "Con aria-label en cada radio",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "El lector anuncia el legend al entrar al grupo, dando contexto a cada opción.",
   },
@@ -70,9 +74,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "El error aparece al hacer blur, y el lector no lo anuncia. ¿Por qué?",
     opciones: [
-      "aria-describedby no funciona con errores",
-      "La descripción se lee al recibir foco, y el foco ya se fue al campo siguiente",
-      "Porque el error tiene color rojo",
+      "Porque aria-describedby solo funciona si el error ya existía al cargar",
+      "Porque la descripción se lee al enfocar, y el foco ya pasó al siguiente campo",
+      "Porque los lectores ignoran el texto en rojo si no tiene role=\"alert\"",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -81,11 +85,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
   {
     pregunta: "¿Cuál es la forma más robusta de estilizar un checkbox?",
     opciones: [
-      "Reemplazarlo por un div con role=\"checkbox\"",
-      "Mantener el input nativo (visualmente oculto o con appearance: none) y estilizar con :checked",
-      "Ocultarlo con display: none y usar una imagen",
+      "Reemplazarlo por un div con role=\"checkbox\" y manejar el teclado a mano",
+      "Ocultarlo con display: none y dibujar el estado con un ::before",
+      "Mantener el input nativo (oculto visualmente o appearance: none) y usar :checked",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "El input nativo conserva teclado, estado, integración con el form y el foco.",
   },

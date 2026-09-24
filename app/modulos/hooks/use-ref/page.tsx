@@ -23,20 +23,20 @@ const preguntas: PreguntaQuiz[] = [
   {
     pregunta: "¿Qué pasa cuando cambiás ref.current de un useRef?",
     opciones: [
-      "Dispara un re-render, igual que setState",
-      "No dispara ningún re-render — el valor persiste, pero React no se entera del cambio",
-      "Lanza un error, los refs son de solo lectura",
+      "No dispara un re-render: el valor persiste, pero React no se entera",
+      "Dispara un re-render como setState, pero fuera del batching",
+      "El valor se pierde en el próximo render, porque la ref se reinicia",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Esa es la diferencia clave con useState: useRef sirve para guardar datos que sobreviven entre renders pero no deberían afectar visualmente lo que se muestra.",
   },
   {
     pregunta: "¿Cuándo está disponible ref.current cuando el ref apunta a un elemento del DOM?",
     opciones: [
-      "Desde el primer render, antes de que exista el DOM",
-      "Recién después del commit, cuando React conecta el ref al nodo real",
-      "Solo dentro del JSX, nunca en JavaScript",
+      "Durante el render, apenas el elemento se crea en el JSX",
+      "Después del commit, cuando React conecta el ref al nodo real",
+      "Cuando lo lee el primer useEffect, que es quien dispara la asignación",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -49,11 +49,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "¿Cuál es la pregunta clave para decidir entre useState y useRef para un valor?",
     opciones: [
-      "Si el valor es un número o un string",
-      "Si el usuario necesita VER ese valor reflejado en la UI — si sí, useState; si es puramente interno, useRef",
-      "Si el componente es de clase o de función",
+      "Si el valor cambia seguido: useRef; si cambia poco, useState",
+      "Si el valor es un objeto: useRef; si es un primitivo, useState",
+      "Si el valor tiene que verse en la UI: useState; si es interno, useRef",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "useRef evita re-renders innecesarios para datos que nunca se muestran directamente, como el id de un timer o el valor anterior de una prop para comparar.",
   },
@@ -61,11 +61,11 @@ const preguntasNivel2: PreguntaQuiz[] = [
     pregunta:
       "En React 19, ¿sigue haciendo falta forwardRef para pasarle un ref a un componente de función propio?",
     opciones: [
-      "Sí, sigue siendo obligatorio en todos los casos",
-      "No: ref se puede declarar y recibir como cualquier otro prop, sin necesitar forwardRef",
-      "Solo si el componente no usa hooks",
+      "No: ref se recibe como cualquier otra prop",
+      "Sí: sin forwardRef, React descarta el ref antes de llegar",
+      "Solo si el componente es un Server Component",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 0,
     explicacion:
       "Antes de React 19, React interceptaba ref especialmente y hacía falta envolver el componente en forwardRef((props, ref) => ...) para reenviarlo.",
   },
@@ -76,9 +76,9 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué problema resuelve useImperativeHandle cuando un componente expone un ref hacia afuera?",
     opciones: [
-      "Mejora la performance del componente",
-      "Permite exponer un objeto custom con solo los métodos que tiene sentido usar externamente, en vez del nodo del DOM completo",
-      "Convierte un componente de función en uno de clase",
+      "Exponer el nodo del DOM de un hijo sin necesidad de forwardRef",
+      "Exponer solo los métodos que tiene sentido usar, no el nodo completo",
+      "Sincronizar el ref con el estado para que sus cambios disparen un render",
     ],
     respuestaCorrecta: 1,
     explicacion:
@@ -88,11 +88,11 @@ const preguntasNivel3: PreguntaQuiz[] = [
     pregunta:
       "¿Qué ventaja tiene un callback ref sobre un ref de objeto (useRef)?",
     opciones: [
-      "Ninguna, son exactamente equivalentes",
-      "React lo invoca directamente con el nodo al montar y con null al desmontar, permitiendo reaccionar sin un useEffect aparte",
-      "Solo funciona con componentes de clase",
+      "Se ejecuta en cada render, así que siempre tiene el nodo actualizado",
+      "Permite leer el nodo durante el render, antes de que termine el commit",
+      "React lo llama con el nodo al montar y con null al desmontar",
     ],
-    respuestaCorrecta: 1,
+    respuestaCorrecta: 2,
     explicacion:
       "Es especialmente útil para listas dinámicas donde se necesita un ref por item, guardando cada nodo en un Map dentro de la función callback.",
   },
