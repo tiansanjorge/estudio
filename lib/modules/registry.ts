@@ -227,7 +227,7 @@ export const categorias: Categoria[] = [
       { slug: "estrategias-caching", titulo: "Estrategias de caching", estado: "disponible" },
       { slug: "load-balancing-escalado", titulo: "Load balancing y escalado horizontal vs vertical", estado: "disponible" },
       { slug: "colas-pub-sub", titulo: "Colas de mensajes / pub-sub (Kafka, SQS)", estado: "disponible" },
-      { slug: "idempotencia-rate-limiting", titulo: "Idempotencia y rate limiting a nivel de diseño", estado: "proximamente" },
+      { slug: "idempotencia-rate-limiting", titulo: "Idempotencia y rate limiting a nivel de diseño", estado: "disponible" },
       { slug: "estimacion", titulo: "Estimación back of the envelope", estado: "proximamente" },
       { slug: "ejercicios-guiados", titulo: "Ejercicios guiados", estado: "proximamente" },
     ],

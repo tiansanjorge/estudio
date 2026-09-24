@@ -119,6 +119,7 @@ import { entrevistaCapConsistencia } from "./system-design/cap-consistencia-entr
 import { entrevistaEstrategiasCaching } from "./system-design/estrategias-caching-entrevista";
 import { entrevistaLoadBalancing } from "./system-design/load-balancing-entrevista";
 import { entrevistaColasPubSub } from "./system-design/colas-pub-sub-entrevista";
+import { entrevistaIdempotenciaRateLimiting } from "./system-design/idempotencia-rate-limiting-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -972,5 +973,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "colas-pub-sub",
     moduloTitulo: "Colas de mensajes / pub-sub (Kafka, SQS)",
     preguntas: entrevistaColasPubSub,
+  },
+  {
+    categoriaSlug: "system-design",
+    categoriaTitulo: "System Design",
+    moduloSlug: "idempotencia-rate-limiting",
+    moduloTitulo: "Idempotencia y rate limiting a nivel de diseño",
+    preguntas: entrevistaIdempotenciaRateLimiting,
   },
 ];
