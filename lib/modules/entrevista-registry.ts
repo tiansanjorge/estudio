@@ -112,6 +112,7 @@ import { entrevistaFeatureFlags } from "./ci-cd/feature-flags-entrevista";
 import { entrevistaResponsabilidadCompartida } from "./cloud/responsabilidad-compartida-entrevista";
 import { entrevistaComputo } from "./cloud/computo-entrevista";
 import { entrevistaAwsBasico } from "./cloud/aws-basico-entrevista";
+import { entrevistaRedesBasicas } from "./cloud/redes-basicas-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -916,5 +917,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "aws-basico",
     moduloTitulo: "AWS básico (EC2, S3, Lambda, RDS)",
     preguntas: entrevistaAwsBasico,
+  },
+  {
+    categoriaSlug: "cloud",
+    categoriaTitulo: "Cloud",
+    moduloSlug: "redes-basicas",
+    moduloTitulo: "Redes básicas (VPC, load balancer, CDN)",
+    preguntas: entrevistaRedesBasicas,
   },
 ];

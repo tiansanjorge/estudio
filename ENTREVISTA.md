@@ -182,7 +182,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Modelo de responsabilidad compartida (Nivel 1/2/3 + Entrevista)
 - ✅ Cómputo: VMs vs contenedores vs serverless (Nivel 1/2/3 + Entrevista)
 - ✅ AWS básico (EC2, S3, Lambda, RDS) (Nivel 1/2/3 + Entrevista)
-- ☐ Redes básicas (VPC, load balancer, CDN)
+- ✅ Redes básicas (VPC, load balancer, CDN) (Nivel 1/2/3 + Entrevista)
 - ☐ Trade-offs de costo/escalabilidad
 - ☐ Vercel/Netlify vs AWS — cuándo usar qué
 
