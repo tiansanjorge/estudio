@@ -121,6 +121,7 @@ import { entrevistaLoadBalancing } from "./system-design/load-balancing-entrevis
 import { entrevistaColasPubSub } from "./system-design/colas-pub-sub-entrevista";
 import { entrevistaIdempotenciaRateLimiting } from "./system-design/idempotencia-rate-limiting-entrevista";
 import { entrevistaEstimacion } from "./system-design/estimacion-entrevista";
+import { entrevistaEjerciciosGuiados } from "./system-design/ejercicios-guiados-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -988,5 +989,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "estimacion",
     moduloTitulo: "Estimación back of the envelope",
     preguntas: entrevistaEstimacion,
+  },
+  {
+    categoriaSlug: "system-design",
+    categoriaTitulo: "System Design",
+    moduloSlug: "ejercicios-guiados",
+    moduloTitulo: "Ejercicios guiados",
+    preguntas: entrevistaEjerciciosGuiados,
   },
 ];

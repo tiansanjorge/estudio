@@ -193,7 +193,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Colas de mensajes / pub-sub (Kafka, SQS) (Nivel 1/2/3 + Entrevista)
 - ✅ Idempotencia y rate limiting a nivel de diseño (Nivel 1/2/3 + Entrevista)
 - ✅ Estimación "back of the envelope" (Nivel 1/2/3 + Entrevista)
-- ☐ Ejercicios guiados: diseñar un acortador de URLs, un chat en tiempo real, un feed paginado
+- ✅ Ejercicios guiados: diseñar un acortador de URLs, un chat en tiempo real, un feed paginado (Nivel 1/2/3 + Entrevista; un ejercicio por nivel: acortador, feed, chat)
 
 ### IA aplicada al desarrollo
 - ☐ Prompt engineering aplicado a desarrollo

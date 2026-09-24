@@ -229,7 +229,7 @@ export const categorias: Categoria[] = [
       { slug: "colas-pub-sub", titulo: "Colas de mensajes / pub-sub (Kafka, SQS)", estado: "disponible" },
       { slug: "idempotencia-rate-limiting", titulo: "Idempotencia y rate limiting a nivel de diseño", estado: "disponible" },
       { slug: "estimacion", titulo: "Estimación back of the envelope", estado: "disponible" },
-      { slug: "ejercicios-guiados", titulo: "Ejercicios guiados", estado: "proximamente" },
+      { slug: "ejercicios-guiados", titulo: "Ejercicios guiados", estado: "disponible" },
     ],
   },
   { slug: "ia-aplicada", titulo: "IA aplicada al desarrollo", modulos: [] },
