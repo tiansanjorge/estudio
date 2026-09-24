@@ -2,6 +2,25 @@
 
 import { useState } from "react";
 import { procesarCola, type ConfigCola } from "@/lib/modules/backend/colas-jobs";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo({ concurrencia, maxIntentos, backoffExponencial }: ConfigCola): string {
+  return [
+    'const cola = new Queue("emails", { connection: redis });',
+    "",
+    'await cola.add("enviar", { para, asunto }, {',
+    `  attempts: ${maxIntentos}, // ${maxIntentos === 1 ? "sin reintentos" : `hasta ${maxIntentos - 1} reintento${maxIntentos === 2 ? "" : "s"}`}`,
+    backoffExponencial
+      ? '  backoff: { type: "exponential", delay: 1000 }, // 1s, 2s, 4s…'
+      : "  // sin backoff: reintenta de inmediato",
+    "});",
+    "",
+    'new Worker("emails", async (job) => {',
+    "  await enviarEmail(job.data); // si lanza, BullMQ lo reintenta",
+    `}, { connection: redis, concurrency: ${concurrencia} });`,
+    "// agotados los intentos, el job queda en la lista de fallidos",
+  ].join("\n");
+}
 
 const ESCALA_MINIMA_S = 16;
 
@@ -69,6 +88,8 @@ export function ColaJobsSimulador() {
           Backoff exponencial (1 s, 2 s, 4 s…)
         </label>
       </div>
+
+      <BloqueCodigo titulo="BullMQ" codigo={generarCodigo(config)} resaltadas={[4, 5, 10]} />
 
       <ul className="flex flex-col gap-3">
         {resultados.map((r) => (

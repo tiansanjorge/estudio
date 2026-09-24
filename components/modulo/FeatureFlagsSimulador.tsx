@@ -2,6 +2,20 @@
 
 import { useId, useState } from "react";
 import { CLAVE_FLAG, USUARIOS, evaluar, type ConfigFlag } from "@/lib/modules/ci-cd/feature-flags";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo({ activa, empleados, betaPro, porcentaje }: ConfigFlag): string {
+  return [
+    "function flagEncendida(usuario) {",
+    activa ? "  // flag activa: se evalúan las reglas en orden" : "  return false; // kill switch: apagada para todos, sin deploy",
+    empleados ? "  if (usuario.empleado) return true; // regla 1" : "  // regla 1 (empleados) desactivada",
+    betaPro ? '  if (usuario.plan === "pro") return true; // regla 2' : "  // regla 2 (plan pro) desactivada",
+    `  // hash estable: el mismo usuario cae siempre en el mismo bucket`,
+    `  const bucket = hash("${CLAVE_FLAG}:" + usuario.id) % 100;`,
+    `  return bucket < ${porcentaje}; // regla 3: rollout al ${porcentaje}%`,
+    "}",
+  ].join("\n");
+}
 
 const REGLAS: { clave: "activa" | "empleados" | "betaPro"; etiqueta: string }[] = [
   { clave: "activa", etiqueta: "Flag activa (apagarla es el kill switch)" },
@@ -46,6 +60,11 @@ export function FeatureFlagsSimulador() {
           className="accent-accent"
         />
       </fieldset>
+
+      <BloqueCodigo
+        codigo={generarCodigo(config)}
+        resaltadas={config.activa ? [config.empleados && 3, config.betaPro && 4, 7].filter((n): n is number => Boolean(n)) : [2]}
+      />
 
       <ul className="grid grid-cols-2 gap-2 sm:grid-cols-4" aria-live="polite">
         {evaluaciones.map(({ usuario, encendida, motivo }) => (

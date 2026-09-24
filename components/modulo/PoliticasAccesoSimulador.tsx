@@ -11,6 +11,29 @@ import {
   type Rol,
   type Sujeto,
 } from "@/lib/modules/seguridad/rbac-abac";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO_RBAC = `
+// El permiso depende SOLO del rol
+const PERMISOS = {
+  lector: ["ver"],
+  editor: ["ver", "editar", "publicar"],
+  admin: ["ver", "editar", "publicar", "borrar"],
+};
+
+const puede = (usuario, accion) =>
+  PERMISOS[usuario.rol].includes(accion);`;
+
+const CODIGO_ABAC = `
+// Mira atributos del usuario Y del documento
+function puedeEditar(usuario, doc) {
+  if (usuario.rol === "admin") return true;
+  const mismoDepto = usuario.depto === doc.depto;
+  if (doc.confidencial && !mismoDepto) return false;
+  if (doc.estado === "publicado") return false;
+  return doc.autor === usuario.id ||
+    (usuario.rol === "editor" && mismoDepto);
+}`;
 
 function Selector<T extends string>({
   etiqueta,
@@ -154,6 +177,11 @@ export function PoliticasAccesoSimulador() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <BloqueCodigo titulo="RBAC" codigo={CODIGO_RBAC} resaltadas={[9]} />
+        <BloqueCodigo titulo="ABAC (acción: editar)" codigo={CODIGO_ABAC} resaltadas={[5, 6, 7, 8]} />
       </div>
 
       <p className="text-xs text-muted-foreground">

@@ -2,6 +2,43 @@
 
 import { useState } from "react";
 import { ejecutarPipeline, type ConfigPipeline, type EstadoJob } from "@/lib/modules/ci-cd/pipelines-github-actions";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const NEEDS_PARALELO: Record<string, string[]> = {
+  lint: [],
+  typecheck: [],
+  test: [],
+  build: ["lint", "typecheck", "test"],
+  e2e: ["build"],
+  deploy: ["build", "e2e"],
+};
+const ORDEN = ["lint", "typecheck", "test", "build", "e2e", "deploy"];
+
+/** .github/workflows/ci.yml según la configuración; devuelve también las líneas clave. */
+function generarYaml({ paralelo, cache, fallaTest }: ConfigPipeline) {
+  const lineas = ["on: [push, pull_request]", "", "jobs:"];
+  const resaltadas: number[] = [];
+  const marcar = (l: string) => {
+    lineas.push(l);
+    resaltadas.push(lineas.length);
+  };
+  ORDEN.forEach((job, i) => {
+    const needs = paralelo ? NEEDS_PARALELO[job] : i === 0 ? [] : [ORDEN[i - 1]];
+    lineas.push(`  ${job}:`);
+    if (needs.length) marcar(`    needs: [${needs.join(", ")}]`);
+    if (job === "lint") {
+      lineas.push("    runs-on: ubuntu-latest", "    steps:", "      - uses: actions/checkout@v4", "      - uses: actions/setup-node@v4");
+      if (cache) marcar("        with: { node-version: 22, cache: npm } # reusa ~/.npm entre corridas");
+      else lineas.push("        with: { node-version: 22 } # sin cache: npm ci descarga todo");
+      lineas.push("      - run: npm ci", "      - run: npm run lint");
+    } else if (job === "test" && fallaTest) {
+      marcar("    # falla → todo lo que lo necesita (directa o indirectamente) queda salteado");
+    } else {
+      lineas.push("    # mismos pasos, con su propio comando");
+    }
+  });
+  return { codigo: lineas.join("\n"), resaltadas };
+}
 
 const OPCIONES: { clave: keyof ConfigPipeline; etiqueta: string }[] = [
   { clave: "paralelo", etiqueta: "Jobs en paralelo (con needs)" },
@@ -39,6 +76,8 @@ export function PipelineSimulador() {
           </label>
         ))}
       </fieldset>
+
+      <BloqueCodigo titulo=".github/workflows/ci.yml" {...generarYaml(config)} />
 
       <div className="flex flex-col gap-2" aria-live="polite">
         {resultado.jobs.map((job) => (

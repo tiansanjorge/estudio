@@ -9,6 +9,31 @@ import {
   type ConfigFormulario,
   type Errores,
 } from "@/lib/modules/accesibilidad/formularios-accesibles";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo({ labelAsociado, errorAsociado, enfocarPrimerError }: ConfigFormulario): string {
+  return [
+    labelAsociado ? '<label htmlFor="email">Email</label>' : "{/* sin <label>: solo placeholder */}",
+    "<input",
+    '  id="email"',
+    labelAsociado ? "" : '  placeholder="Email" // desaparece al escribir y no siempre se anuncia',
+    errorAsociado ? "  aria-invalid={Boolean(error)}" : "",
+    errorAsociado ? '  aria-describedby="email-error"' : "",
+    "/>",
+    errorAsociado
+      ? '<p id="email-error">{error}</p>'
+      : '<p className="rojo">{error}</p> {/* solo visual: no está conectado */}',
+    "",
+    "function enviar(e) {",
+    "  const errores = validar(valores);",
+    enfocarPrimerError
+      ? "  if (primerError) refs[primerError].focus(); // lleva al problema"
+      : "  // (no se mueve el foco: el lector no se entera del error)",
+    "}",
+  ]
+    .filter((l, i, todas) => l !== "" || todas[i - 1]?.startsWith("<p"))
+    .join("\n");
+}
 
 const OPCIONES: { clave: keyof ConfigFormulario; etiqueta: string }[] = [
   { clave: "labelAsociado", etiqueta: "<label> asociado (no solo placeholder)" },
@@ -41,6 +66,11 @@ export function FormularioAccesibleSimulador() {
   }
 
   const campoAnunciado = CAMPOS.find((c) => c.id === campoEnfocado);
+  const codigo = generarCodigo(config);
+  // Líneas que cambian con cada opción: label, aria-*, párrafo de error y foco.
+  const resaltadas = codigo
+    .split("\n")
+    .flatMap((l, i) => (/label|placeholder|aria-|<p |focus|foco/.test(l) ? [i + 1] : []));
 
   return (
     <div className="flex flex-col gap-6">
@@ -58,6 +88,8 @@ export function FormularioAccesibleSimulador() {
           </label>
         ))}
       </fieldset>
+
+      <BloqueCodigo codigo={codigo} resaltadas={resaltadas} />
 
       <div className="grid gap-6 md:grid-cols-2">
         <form

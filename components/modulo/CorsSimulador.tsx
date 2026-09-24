@@ -2,6 +2,67 @@
 
 import { useState } from "react";
 import { evaluarCors, type MetodoCors } from "@/lib/modules/http/cors";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const ORIGEN = "https://app.com";
+
+const REQUEST: Record<MetodoCors, { linea: string; contentType?: string }> = {
+  GET: { linea: "GET /pedidos HTTP/1.1" },
+  "POST-form": {
+    linea: "POST /pedidos HTTP/1.1",
+    contentType: "application/x-www-form-urlencoded",
+  },
+  "POST-json": { linea: "POST /pedidos HTTP/1.1", contentType: "application/json" },
+  PUT: { linea: "PUT /pedidos HTTP/1.1", contentType: "application/json" },
+};
+
+/** Intercambio HTTP entre app.com y api.com; devuelve también las líneas clave. */
+function generarIntercambio(metodo: MetodoCors, origenPermitido: boolean, preflight: boolean) {
+  const lineas: string[] = [];
+  const resaltadas: number[] = [];
+  const marcar = (linea: string) => {
+    lineas.push(linea);
+    resaltadas.push(lineas.length);
+  };
+  const acao = () =>
+    origenPermitido
+      ? marcar(`Access-Control-Allow-Origin: ${ORIGEN}`)
+      : marcar("// (sin Access-Control-Allow-Origin para app.com)");
+  const { linea, contentType } = REQUEST[metodo];
+
+  if (preflight) {
+    lineas.push("// 1) preflight: lo manda el navegador solo, antes de tu fetch");
+    lineas.push(`OPTIONS /pedidos HTTP/1.1`);
+    lineas.push(`Origin: ${ORIGEN}`);
+    lineas.push(`Access-Control-Request-Method: ${linea.split(" ")[0]}`);
+    lineas.push("Access-Control-Request-Headers: content-type");
+    lineas.push("");
+    lineas.push("HTTP/1.1 204 No Content");
+    acao();
+    if (origenPermitido) {
+      lineas.push("Access-Control-Allow-Methods: GET, POST, PUT");
+      lineas.push("Access-Control-Allow-Headers: content-type");
+    } else {
+      lineas.push("");
+      marcar("// el navegador frena acá: la petición real nunca se envía");
+      return { codigo: lineas.join("\n"), resaltadas };
+    }
+    lineas.push("");
+    lineas.push("// 2) petición real");
+  }
+
+  lineas.push(linea);
+  lineas.push(`Origin: ${ORIGEN}`);
+  if (contentType) lineas.push(`Content-Type: ${contentType}`);
+  lineas.push("");
+  lineas.push("HTTP/1.1 200 OK");
+  acao();
+  if (!origenPermitido) {
+    lineas.push("");
+    marcar("// el servidor YA procesó el pedido; el navegador solo impide que tu JS lea la respuesta");
+  }
+  return { codigo: lineas.join("\n"), resaltadas };
+}
 
 const metodos: { valor: MetodoCors; etiqueta: string }[] = [
   { valor: "GET", etiqueta: "GET" },
@@ -69,6 +130,11 @@ export function CorsSimulador() {
           </button>
         </div>
       </div>
+
+      <BloqueCodigo
+        titulo="app.com → api.com"
+        {...generarIntercambio(metodo, origenPermitido, resultado.requierePreflight)}
+      />
 
       <div className="flex flex-col gap-3 rounded-xl border border-border bg-background p-5">
         <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">

@@ -7,6 +7,32 @@ import {
   reducirCache,
   type EntradaLog,
 } from "@/lib/modules/bases-de-datos/redis-caching";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo(invalidar: boolean): string {
+  return `
+async function obtenerProducto(id) {
+  const cacheado = await redis.get(\`producto:\${id}\`);
+  if (cacheado) return JSON.parse(cacheado);          // HIT
+  const producto = await db.productos.find(id);        // MISS: va a la DB
+  await redis.set(\`producto:\${id}\`, JSON.stringify(producto), "EX", ${TTL_SEGUNDOS});
+  return producto;
+}
+
+async function actualizarPrecio(id, precio) {
+  await db.productos.update(id, { precio });
+  ${invalidar ? "await redis.del(`producto:${id}`); // invalida: el próximo GET es MISS" : "// sin redis.del: Redis sigue sirviendo el precio viejo hasta el TTL"}
+}`;
+}
+
+/** Rama del código que corresponde al último evento del log. */
+const LINEAS_POR_EVENTO: Record<EntradaLog["tipo"], number[]> = {
+  hit: [2, 3],
+  "hit-viejo": [2, 3],
+  miss: [2, 4, 5],
+  escritura: [10, 11],
+  expira: [5],
+};
 
 const COLOR_LOG: Record<EntradaLog["tipo"], string> = {
   hit: "text-success",
@@ -22,6 +48,8 @@ const BOTON =
 export function CacheAsideSimulador() {
   const [estado, despachar] = useReducer(reducirCache, undefined, () => estadoInicial());
   const restante = estado.cache ? estado.cache.expiraEn - estado.segundo : 0;
+  // El log guarda el evento más reciente primero.
+  const ultimoEvento = estado.log[0];
 
   return (
     <div className="flex flex-col gap-6">
@@ -62,6 +90,11 @@ export function CacheAsideSimulador() {
           Reiniciar
         </button>
       </div>
+
+      <BloqueCodigo
+        codigo={generarCodigo(estado.invalidarAlEscribir)}
+        resaltadas={ultimoEvento ? LINEAS_POR_EVENTO[ultimoEvento.tipo] : []}
+      />
 
       <div className="flex flex-col gap-2 rounded-2xl border border-border p-4" aria-live="polite">
         <span className="text-xs font-medium text-muted-foreground">Log (segundo {estado.segundo})</span>

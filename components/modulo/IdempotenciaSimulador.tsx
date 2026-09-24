@@ -8,6 +8,55 @@ import {
   type Escenario,
   type Implementacion,
 } from "@/lib/modules/system-design/idempotencia-rate-limiting";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO: Record<Implementacion, { codigo: string; clave: number[] }> = {
+  ninguna: {
+    codigo: `
+app.post("/cobros", async (req, res) => {
+  // cada request que llega cobra otra vez
+  const cobro = await pasarela.cobrar(req.body);
+  res.json(cobro);
+});`,
+    clave: [3],
+  },
+  memoria: {
+    codigo: `
+const respuestas = new Map(); // vive solo en ESTA instancia
+
+app.post("/cobros", async (req, res) => {
+  const clave = req.header("Idempotency-Key");
+  if (respuestas.has(clave)) return res.json(respuestas.get(clave));
+  const cobro = await pasarela.cobrar(req.body); // el otro request ya pasó el if
+  respuestas.set(clave, cobro);
+  res.json(cobro);
+});`,
+    clave: [1, 5, 6],
+  },
+  tabla: {
+    codigo: `
+app.post("/cobros", async (req, res) => {
+  const clave = req.header("Idempotency-Key");
+  const huella = sha256(JSON.stringify(req.body));
+  // UNIQUE(clave): de dos requests simultáneos, solo uno inserta
+  const { rowCount } = await db.query(
+    \`INSERT INTO idempotencia (clave, huella, estado)
+     VALUES ($1, $2, 'en_curso') ON CONFLICT (clave) DO NOTHING\`,
+    [clave, huella],
+  );
+  if (rowCount === 0) {
+    const previa = await db.buscarIdempotencia(clave);
+    if (previa.huella !== huella) return res.status(422).end(); // misma clave, otro body
+    if (previa.estado === "en_curso") return res.status(409).end();
+    return res.json(previa.respuesta); // devuelve lo mismo, sin cobrar
+  }
+  const cobro = await pasarela.cobrar(req.body);
+  await db.completarIdempotencia(clave, cobro);
+  res.json(cobro);
+});`,
+    clave: [5, 6, 12, 14],
+  },
+};
 
 function Opciones<T extends string>({
   etiqueta,
@@ -54,6 +103,11 @@ export function IdempotenciaSimulador() {
       <Opciones etiqueta="Qué pasa" opciones={ESCENARIOS} valor={escenario} onCambio={setEscenario} />
       <p className="text-sm text-muted-foreground">{descripcion}</p>
       <Opciones etiqueta="Cómo está implementado" opciones={IMPLEMENTACIONES} valor={implementacion} onCambio={setImplementacion} />
+
+      <BloqueCodigo
+        codigo={CODIGO[implementacion].codigo}
+        resaltadas={CODIGO[implementacion].clave}
+      />
 
       <div
         className={`flex flex-col gap-3 rounded-2xl border p-4 ${

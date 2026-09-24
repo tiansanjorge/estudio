@@ -7,6 +7,37 @@ import {
   problemasDeConfig,
   type ConfigFoco,
 } from "@/lib/modules/accesibilidad/focus-management";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo({ moverAlAbrir, atrapar, devolverAlCerrar }: ConfigFoco): string {
+  return [
+    "useEffect(() => {",
+    moverAlAbrir
+      ? "  if (abierto) primerCampo.current.focus(); // entra al diálogo"
+      : "  // (no se mueve el foco: queda en el botón, detrás del diálogo)",
+    "}, [abierto]);",
+    "",
+    "function cerrar() {",
+    "  setAbierto(false);",
+    devolverAlCerrar
+      ? "  disparador.current.focus(); // vuelve al botón que lo abrió"
+      : "  // (no se devuelve: el foco cae en <body> y se pierde el lugar)",
+    "}",
+    "",
+    "<>",
+    atrapar
+      ? "  <main inert={abierto}>…</main> {/* el fondo no recibe foco */}"
+      : "  <main>…</main> {/* Tab se escapa al fondo */}",
+    '  <div role="dialog" aria-modal="true" aria-labelledby="titulo">',
+    '    <h2 id="titulo">Editar perfil</h2>',
+    "    <input ref={primerCampo} />",
+    "    <button onClick={cerrar}>Cerrar</button>",
+    "  </div>",
+    "</>",
+    "",
+    "// Nativo: <dialog>.showModal() ya mueve y atrapa el foco",
+  ].join("\n");
+}
 
 const OPCIONES: { clave: keyof ConfigFoco; etiqueta: string }[] = [
   { clave: "moverAlAbrir", etiqueta: "Mover el foco al abrir" },
@@ -101,6 +132,8 @@ export function FocoDialogoSimulador() {
           </label>
         ))}
       </fieldset>
+
+      <BloqueCodigo codigo={generarCodigo(config)} resaltadas={[2, 7, 11]} />
 
       <div className="grid gap-6 md:grid-cols-[1fr_16rem]">
         <div

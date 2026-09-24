@@ -7,6 +7,27 @@ import {
   simularCliente,
   type ConfigCliente,
 } from "@/lib/modules/backend/websockets-tiempo-real";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo({ resync, dedup }: ConfigCliente): string {
+  return [
+    "let ultimoId = 0;",
+    "const vistos = new Set();",
+    "",
+    'socket.on("mensaje", (m) => {',
+    dedup ? "  if (vistos.has(m.id)) return; // ya lo mostré: descartar" : "  // (sin dedup: un mensaje repetido se muestra dos veces)",
+    "  vistos.add(m.id);",
+    "  ultimoId = m.id;",
+    "  mostrar(m);",
+    "});",
+    "",
+    'socket.on("reconnect", () => {',
+    resync
+      ? '  socket.emit("resync", { desde: ultimoId }); // pedir lo perdido'
+      : "  // (sin resync: lo emitido durante el corte se pierde)",
+    "});",
+  ].join("\n");
+}
 
 export function ReconexionSimulador() {
   const [config, setConfig] = useState<ConfigCliente>({ resync: false, dedup: false });
@@ -54,6 +75,8 @@ export function ReconexionSimulador() {
           Descartar ids ya vistos
         </label>
       </fieldset>
+
+      <BloqueCodigo titulo="Cliente" codigo={generarCodigo(config)} resaltadas={[5, 12]} />
 
       <div className="flex flex-col gap-2" aria-live="polite">
         <span className="text-sm font-medium text-foreground">Lo que muestra el cliente</span>

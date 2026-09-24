@@ -2,6 +2,45 @@
 
 import { useState } from "react";
 import { simular, type ModoEjecucion } from "@/lib/modules/backend/nodejs-runtime";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+const CODIGO: Record<ModoEjecucion, { codigo: string; clave: number[] }> = {
+  "hilo-principal": {
+    codigo: `
+app.get("/reporte.pdf", (req, res) => {
+  const pdf = generarPdf(datos); // 400 ms de CPU: el event loop no atiende nada más
+  res.send(pdf);
+});
+
+app.get("/ping", (req, res) => res.send("ok")); // espera detrás del PDF`,
+    clave: [2, 6],
+  },
+  "worker-threads": {
+    codigo: `
+const pool = new Piscina({ filename: "./generar-pdf.js" }); // pool de worker threads
+
+app.get("/reporte.pdf", async (req, res) => {
+  const pdf = await pool.run(datos); // la CPU se usa en OTRO hilo
+  res.send(pdf);
+});
+
+app.get("/ping", (req, res) => res.send("ok")); // responde al instante`,
+    clave: [4, 8],
+  },
+  cluster: {
+    codigo: `
+import cluster from "node:cluster";
+
+if (cluster.isPrimary) {
+  for (let i = 0; i < 4; i++) cluster.fork(); // 4 procesos = 4 event loops
+} else {
+  app.get("/reporte.pdf", (req, res) => res.send(generarPdf(datos)));
+  app.get("/ping", (req, res) => res.send("ok"));
+  app.listen(3000); // el primario reparte conexiones en round-robin
+}`,
+    clave: [4, 8],
+  },
+};
 
 const MODOS: { id: ModoEjecucion; nombre: string; nota: string }[] = [
   {
@@ -47,6 +86,8 @@ export function NodeRuntimeSimulador() {
           </button>
         ))}
       </div>
+
+      <BloqueCodigo codigo={CODIGO[modo].codigo} resaltadas={CODIGO[modo].clave} />
 
       <ul className="flex flex-col gap-3">
         {resultados.map((r) => {

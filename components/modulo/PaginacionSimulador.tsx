@@ -8,6 +8,18 @@ import {
   paginaPorCursor,
   paginaPorOffset,
 } from "@/lib/modules/backend/diseno-apis-rest";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+/** SQL que ejecuta el backend para la PRÓXIMA página de cada estrategia. */
+function generarSql(offset: number, cursor: number | null): string {
+  return [
+    "-- Offset: \"salteá N filas\" (N cuenta posiciones, no posts)",
+    `SELECT * FROM posts ORDER BY id DESC LIMIT ${TAMANO_PAGINA} OFFSET ${offset};`,
+    "",
+    "-- Cursor: \"dame los anteriores al último que ya viste\"",
+    `SELECT * FROM posts WHERE id < ${cursor ?? "?"} ORDER BY id DESC LIMIT ${TAMANO_PAGINA};`,
+  ].join("\n");
+}
 
 interface Estado {
   dataset: number[];
@@ -136,6 +148,12 @@ export function PaginacionSimulador() {
           dataset={estado.dataset}
         />
       </div>
+
+      <BloqueCodigo
+        titulo="SQL de la próxima página"
+        codigo={generarSql(estado.offsetPaginas * TAMANO_PAGINA, ultimoCursor)}
+        resaltadas={[2, 5]}
+      />
 
       <ol className="flex flex-col gap-1 border-l border-border pl-3 text-xs text-muted-foreground" aria-live="polite">
         {estado.eventos.map((e, i) => (

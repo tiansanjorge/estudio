@@ -7,6 +7,47 @@ import {
   type EntradaCache,
   type TipoResultadoCache,
 } from "@/lib/modules/http/cache";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+interface Intercambio {
+  directiva: DirectivaCacheSimulada;
+  maxAgeSegundos: number;
+  cacheAntes: EntradaCache | null;
+  etagServidor: string;
+  tipo: TipoResultadoCache;
+}
+
+/** Request/response HTTP de la última petición, con las líneas que deciden el resultado. */
+function generarIntercambio(i: Intercambio): { codigo: string; resaltadas: number[] } {
+  if (i.tipo === "cache") {
+    return {
+      codigo: [
+        "// No sale ningún request.",
+        `// La copia tiene menos de max-age=${i.maxAgeSegundos}s:`,
+        "// el navegador la sirve desde su caché, el servidor ni se entera.",
+      ].join("\n"),
+      resaltadas: [1],
+    };
+  }
+  const cacheControl =
+    i.directiva === "max-age" ? `max-age=${i.maxAgeSegundos}` : i.directiva;
+  const lineas = ["GET /producto HTTP/1.1"];
+  if (i.cacheAntes && i.directiva !== "no-store") {
+    lineas.push(`If-None-Match: "${i.cacheAntes.etag}"`);
+  }
+  lineas.push("");
+  if (i.tipo === "revalidacion") {
+    lineas.push("HTTP/1.1 304 Not Modified", `ETag: "${i.etagServidor}"`, "// sin body: se reutiliza el cacheado");
+  } else {
+    lineas.push("HTTP/1.1 200 OK", `Cache-Control: ${cacheControl}`);
+    if (i.directiva !== "no-store") lineas.push(`ETag: "${i.etagServidor}"`);
+    lineas.push("", "{ ...body completo... }");
+  }
+  const resaltadas = lineas.flatMap((l, n) =>
+    /^(If-None-Match|HTTP\/1\.1|Cache-Control)/.test(l) ? [n + 1] : [],
+  );
+  return { codigo: lineas.join("\n"), resaltadas };
+}
 
 const directivas: { valor: DirectivaCacheSimulada; etiqueta: string }[] = [
   { valor: "no-store", etiqueta: "no-store" },
@@ -42,6 +83,7 @@ export function CacheSimulador() {
   const [cache, setCache] = useState<EntradaCache | null>(null);
   const [etagServidor, setEtagServidor] = useState("v1");
   const [log, setLog] = useState<EntradaLog[]>([]);
+  const [ultimo, setUltimo] = useState<Intercambio | null>(null);
   const contadorVersion = useRef(1);
 
   function reiniciar(nuevaDirectiva: DirectivaCacheSimulada) {
@@ -50,6 +92,7 @@ export function CacheSimulador() {
     setCache(null);
     setEtagServidor("v1");
     setLog([]);
+    setUltimo(null);
     contadorVersion.current = 1;
   }
 
@@ -61,6 +104,7 @@ export function CacheSimulador() {
       cache,
       etagServidor,
     });
+    setUltimo({ directiva, maxAgeSegundos, cacheAntes: cache, etagServidor, tipo: resultado.tipo });
     setCache(resultado.entradaCache);
     setLog((prev) => [{ mensaje: resultado.mensaje, tipo: resultado.tipo }, ...prev].slice(0, 6));
   }
@@ -146,6 +190,8 @@ export function CacheSimulador() {
           Cambiar contenido del servidor
         </button>
       </div>
+
+      {ultimo && <BloqueCodigo titulo="Última petición" {...generarIntercambio(ultimo)} />}
 
       <div className="flex flex-col gap-2">
         {log.length === 0 ? (

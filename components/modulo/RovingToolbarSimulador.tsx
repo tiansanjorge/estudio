@@ -2,6 +2,32 @@
 
 import { useRef, useState, type KeyboardEvent } from "react";
 import { paradasDeTab, siguienteIndice } from "@/lib/modules/accesibilidad/navegacion-teclado";
+import { BloqueCodigo } from "./BloqueCodigo";
+
+function generarCodigo(roving: boolean): string {
+  const boton = roving
+    ? "    <button key={h} tabIndex={i === activo ? 0 : -1}>{h}</button>"
+    : "    <button key={h}>{h}</button> {/* cada botón es una parada de Tab */}";
+  const lineas = [
+    `<div role="toolbar" aria-label="Formato"${roving ? " onKeyDown={alPresionarTecla}" : ""}>`,
+    "  {herramientas.map((h, i) => (",
+    boton,
+    "  ))}",
+    "</div>",
+  ];
+  if (roving) {
+    lineas.push(
+      "",
+      "function alPresionarTecla(e) {",
+      "  // ←/→ mueven dentro; Home/End van a los extremos",
+      "  const destino = siguienteIndice(activo, e.key);",
+      "  setActivo(destino);          // el nuevo tabIndex=0",
+      "  botones[destino].focus();",
+      "}",
+    );
+  }
+  return lineas.join("\n");
+}
 
 const HERRAMIENTAS = ["Negrita", "Cursiva", "Subrayado", "Izquierda", "Centro", "Derecha"];
 
@@ -63,6 +89,8 @@ export function RovingToolbarSimulador() {
           Tabs para cruzar la toolbar: {paradas}
         </span>
       </div>
+
+      <BloqueCodigo codigo={generarCodigo(roving)} resaltadas={roving ? [3, 10, 11] : [3]} />
 
       <div className="flex flex-col gap-3 rounded-2xl border border-border bg-background p-4">
         <button type="button" className={`${ESTILO_CONTROL} self-start border-border text-foreground`}>

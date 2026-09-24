@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { calcularRangoVisible } from "@/lib/modules/performance/virtualization";
+import { BloqueCodigo } from "./BloqueCodigo";
 
 const TOTAL_ITEMS = 5000;
 const ALTURA_FILA = 32;
@@ -52,6 +53,25 @@ export function VirtualizacionSimulador() {
           Nodos montados en el DOM: {nodosEnDom} / {TOTAL_ITEMS}
         </span>
       </div>
+
+      {virtualizado && (
+        <BloqueCodigo
+          titulo="Cálculo en cada scroll"
+          codigo={[
+            `const primera = Math.floor(scrollTop / ${ALTURA_FILA}); // scrollTop = ${Math.round(scrollTop)} → ${Math.floor(scrollTop / ALTURA_FILA)}`,
+            `const visibles = Math.ceil(${ALTURA_VIEWPORT} / ${ALTURA_FILA}); // ${Math.ceil(ALTURA_VIEWPORT / ALTURA_FILA)} filas entran en pantalla`,
+            `const inicio = Math.max(0, primera - ${OVERSCAN}); // ${rango.inicio} (overscan arriba)`,
+            `const fin = Math.min(${TOTAL_ITEMS}, primera + visibles + ${OVERSCAN}); // ${rango.fin}`,
+            "",
+            `<div style={{ height: ${TOTAL_ITEMS} * ${ALTURA_FILA} }}> {/* alto total: la barra de scroll no se entera */}`,
+            "  {items.slice(inicio, fin).map((item, i) => (",
+            `    <Fila key={inicio + i} style={{ position: "absolute", top: (inicio + i) * ${ALTURA_FILA} }} />`,
+            "  ))}",
+            "</div>",
+          ].join("\n")}
+          resaltadas={[3, 4, 7]}
+        />
+      )}
 
       <div
         className="overflow-y-auto rounded-xl border border-border bg-background"
