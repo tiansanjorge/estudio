@@ -59,7 +59,11 @@ export function EjercicioGuiado() {
           <strong className="text-foreground">Antes de revelar:</strong> {paso.consigna}
         </p>
         {/* la key reinicia el estado de "revelado" al cambiar de paso o de ejercicio */}
-        <RevelarSolucion key={`${ejercicioId}-${indice}`} etiqueta="Ver una respuesta posible">
+        <RevelarSolucion
+          key={`${ejercicioId}-${indice}`}
+          idRespuesta={`${ejercicioId}-${indice}`}
+          etiqueta="Ver una respuesta posible"
+        >
           <ul className="flex list-disc flex-col gap-2 pl-5">
             {paso.respuesta.map((linea) => (
               <li key={linea}>{linea}</li>

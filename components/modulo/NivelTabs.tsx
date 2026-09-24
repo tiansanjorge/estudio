@@ -1,7 +1,14 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import type { Nivel } from "@/lib/modules/types";
+
+const NivelActivoContext = createContext<Nivel | null>(null);
+
+/** Nivel visible en la página, o null si el contenido no está dentro de NivelTabs. */
+export function useNivelActivo() {
+  return useContext(NivelActivoContext);
+}
 
 interface NivelTabsProps {
   niveles: Partial<Record<Nivel, ReactNode>>;
@@ -35,7 +42,9 @@ export function NivelTabs({ niveles }: NivelTabsProps) {
           </button>
         ))}
       </div>
-      <div key={activo} className="flex flex-col gap-8">{niveles[activo]}</div>
+      <NivelActivoContext value={activo}>
+        <div key={activo} className="flex flex-col gap-8">{niveles[activo]}</div>
+      </NivelActivoContext>
     </div>
   );
 }

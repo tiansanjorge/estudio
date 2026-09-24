@@ -2,20 +2,25 @@
 
 import { useState } from "react";
 import type { ReactNode } from "react";
+import { RespuestaDesafio } from "./RespuestaDesafio";
 
 interface RevelarSolucionProps {
   etiqueta?: string;
+  /** Identifica el borrador cuando el mismo componente se reutiliza para varios desafíos (ej. pasos de un ejercicio). */
+  idRespuesta?: string;
   children: ReactNode;
 }
 
 export function RevelarSolucion({
   etiqueta = "Ver solución",
+  idRespuesta,
   children,
 }: RevelarSolucionProps) {
   const [visible, setVisible] = useState(false);
 
   return (
     <div className="flex flex-col gap-3">
+      <RespuestaDesafio idRespuesta={idRespuesta} />
       <button
         type="button"
         onClick={() => setVisible((v) => !v)}
