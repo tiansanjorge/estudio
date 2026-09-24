@@ -120,6 +120,7 @@ import { entrevistaEstrategiasCaching } from "./system-design/estrategias-cachin
 import { entrevistaLoadBalancing } from "./system-design/load-balancing-entrevista";
 import { entrevistaColasPubSub } from "./system-design/colas-pub-sub-entrevista";
 import { entrevistaIdempotenciaRateLimiting } from "./system-design/idempotencia-rate-limiting-entrevista";
+import { entrevistaEstimacion } from "./system-design/estimacion-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -980,5 +981,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "idempotencia-rate-limiting",
     moduloTitulo: "Idempotencia y rate limiting a nivel de diseño",
     preguntas: entrevistaIdempotenciaRateLimiting,
+  },
+  {
+    categoriaSlug: "system-design",
+    categoriaTitulo: "System Design",
+    moduloSlug: "estimacion",
+    moduloTitulo: "Estimación back of the envelope",
+    preguntas: entrevistaEstimacion,
   },
 ];
