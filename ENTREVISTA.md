@@ -180,7 +180,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 
 ### Cloud (categoría nueva)
 - ✅ Modelo de responsabilidad compartida (Nivel 1/2/3 + Entrevista)
-- ☐ Cómputo: VMs vs contenedores vs serverless
+- ✅ Cómputo: VMs vs contenedores vs serverless (Nivel 1/2/3 + Entrevista)
 - ☐ AWS básico (EC2, S3, Lambda, RDS)
 - ☐ Redes básicas (VPC, load balancer, CDN)
 - ☐ Trade-offs de costo/escalabilidad

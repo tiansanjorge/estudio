@@ -110,6 +110,7 @@ import { entrevistaVariablesSecretosCi } from "./ci-cd/variables-secretos-ci-ent
 import { entrevistaObservabilidad } from "./ci-cd/observabilidad-entrevista";
 import { entrevistaFeatureFlags } from "./ci-cd/feature-flags-entrevista";
 import { entrevistaResponsabilidadCompartida } from "./cloud/responsabilidad-compartida-entrevista";
+import { entrevistaComputo } from "./cloud/computo-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -900,5 +901,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "responsabilidad-compartida",
     moduloTitulo: "Modelo de responsabilidad compartida",
     preguntas: entrevistaResponsabilidadCompartida,
+  },
+  {
+    categoriaSlug: "cloud",
+    categoriaTitulo: "Cloud",
+    moduloSlug: "computo",
+    moduloTitulo: "Cómputo: VMs vs contenedores vs serverless",
+    preguntas: entrevistaComputo,
   },
 ];
