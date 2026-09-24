@@ -187,7 +187,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Vercel/Netlify vs AWS — cuándo usar qué (Nivel 1/2/3 + Entrevista)
 
 ### System Design / Arquitectura distribuida (categoría nueva, capstone)
-- ☐ CAP theorem, consistencia vs disponibilidad
+- ✅ CAP theorem, consistencia vs disponibilidad (Nivel 1/2/3 + Entrevista)
 - ☐ Estrategias de caching (write-through, write-back, invalidación)
 - ☐ Load balancing, escalado horizontal vs vertical
 - ☐ Colas de mensajes / pub-sub (Kafka, SQS)

@@ -115,6 +115,7 @@ import { entrevistaAwsBasico } from "./cloud/aws-basico-entrevista";
 import { entrevistaRedesBasicas } from "./cloud/redes-basicas-entrevista";
 import { entrevistaCostoEscalabilidad } from "./cloud/costo-escalabilidad-entrevista";
 import { entrevistaVercelVsAws } from "./cloud/vercel-vs-aws-entrevista";
+import { entrevistaCapConsistencia } from "./system-design/cap-consistencia-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -940,5 +941,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "vercel-vs-aws",
     moduloTitulo: "Vercel/Netlify vs AWS",
     preguntas: entrevistaVercelVsAws,
+  },
+  {
+    categoriaSlug: "system-design",
+    categoriaTitulo: "System Design",
+    moduloSlug: "cap-consistencia",
+    moduloTitulo: "CAP theorem, consistencia vs disponibilidad",
+    preguntas: entrevistaCapConsistencia,
   },
 ];

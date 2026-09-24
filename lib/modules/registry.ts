@@ -219,6 +219,19 @@ export const categorias: Categoria[] = [
       { slug: "vercel-vs-aws", titulo: "Vercel/Netlify vs AWS", estado: "disponible" },
     ],
   },
+  {
+    slug: "system-design",
+    titulo: "System Design",
+    modulos: [
+      { slug: "cap-consistencia", titulo: "CAP theorem, consistencia vs disponibilidad", estado: "disponible" },
+      { slug: "estrategias-caching", titulo: "Estrategias de caching", estado: "proximamente" },
+      { slug: "load-balancing-escalado", titulo: "Load balancing y escalado horizontal vs vertical", estado: "proximamente" },
+      { slug: "colas-pub-sub", titulo: "Colas de mensajes / pub-sub (Kafka, SQS)", estado: "proximamente" },
+      { slug: "idempotencia-rate-limiting", titulo: "Idempotencia y rate limiting a nivel de diseño", estado: "proximamente" },
+      { slug: "estimacion", titulo: "Estimación back of the envelope", estado: "proximamente" },
+      { slug: "ejercicios-guiados", titulo: "Ejercicios guiados", estado: "proximamente" },
+    ],
+  },
   { slug: "ia-aplicada", titulo: "IA aplicada al desarrollo", modulos: [] },
 ];
 
