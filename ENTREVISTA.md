@@ -188,7 +188,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 
 ### System Design / Arquitectura distribuida (categoría nueva, capstone)
 - ✅ CAP theorem, consistencia vs disponibilidad (Nivel 1/2/3 + Entrevista)
-- ☐ Estrategias de caching (write-through, write-back, invalidación)
+- ✅ Estrategias de caching (write-through, write-back, invalidación) (Nivel 1/2/3 + Entrevista)
 - ☐ Load balancing, escalado horizontal vs vertical
 - ☐ Colas de mensajes / pub-sub (Kafka, SQS)
 - ☐ Idempotencia y rate limiting a nivel de diseño

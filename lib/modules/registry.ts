@@ -224,7 +224,7 @@ export const categorias: Categoria[] = [
     titulo: "System Design",
     modulos: [
       { slug: "cap-consistencia", titulo: "CAP theorem, consistencia vs disponibilidad", estado: "disponible" },
-      { slug: "estrategias-caching", titulo: "Estrategias de caching", estado: "proximamente" },
+      { slug: "estrategias-caching", titulo: "Estrategias de caching", estado: "disponible" },
       { slug: "load-balancing-escalado", titulo: "Load balancing y escalado horizontal vs vertical", estado: "proximamente" },
       { slug: "colas-pub-sub", titulo: "Colas de mensajes / pub-sub (Kafka, SQS)", estado: "proximamente" },
       { slug: "idempotencia-rate-limiting", titulo: "Idempotencia y rate limiting a nivel de diseño", estado: "proximamente" },
