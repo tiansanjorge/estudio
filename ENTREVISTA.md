@@ -164,7 +164,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Modelado relacional & normalización (Nivel 1/2/3 + Entrevista)
 - ✅ Índices y query performance (Nivel 1/2/3 + Entrevista)
 - ✅ Transacciones & ACID (Nivel 1/2/3 + Entrevista)
-- ☐ Prisma / ORM — trade-offs
+- ✅ Prisma / ORM — trade-offs (Nivel 1/2/3 + Entrevista)
 - ☐ Migraciones
 - ☐ Postgres específico (constraints, JSONB)
 - ☐ Redis / caching

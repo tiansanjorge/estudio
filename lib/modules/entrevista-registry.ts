@@ -98,6 +98,7 @@ import { entrevistaSqlVsNosql } from "./bases-de-datos/sql-vs-nosql-entrevista";
 import { entrevistaModeladoNormalizacion } from "./bases-de-datos/modelado-normalizacion-entrevista";
 import { entrevistaIndicesPerformance } from "./bases-de-datos/indices-performance-entrevista";
 import { entrevistaTransaccionesAcid } from "./bases-de-datos/transacciones-acid-entrevista";
+import { entrevistaPrismaOrm } from "./bases-de-datos/prisma-orm-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -804,5 +805,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "transacciones-acid",
     moduloTitulo: "Transacciones & ACID",
     preguntas: entrevistaTransaccionesAcid,
+  },
+  {
+    categoriaSlug: "bases-de-datos",
+    categoriaTitulo: "Bases de datos",
+    moduloSlug: "prisma-orm",
+    moduloTitulo: "Prisma / ORM — trade-offs",
+    preguntas: entrevistaPrismaOrm,
   },
 ];
