@@ -204,7 +204,7 @@ export const categorias: Categoria[] = [
       { slug: "docker", titulo: "Docker (nociones)", estado: "disponible" },
       { slug: "variables-secretos-ci", titulo: "Variables y secretos en CI", estado: "disponible" },
       { slug: "observabilidad", titulo: "Observabilidad", estado: "disponible" },
-      { slug: "feature-flags", titulo: "Feature flags", estado: "proximamente" },
+      { slug: "feature-flags", titulo: "Feature flags", estado: "disponible" },
     ],
   },
   { slug: "ia-aplicada", titulo: "IA aplicada al desarrollo", modulos: [] },

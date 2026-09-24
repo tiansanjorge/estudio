@@ -176,7 +176,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Docker (nociones) (Nivel 1/2/3 + Entrevista)
 - ✅ Variables y secretos en CI (Nivel 1/2/3 + Entrevista)
 - ✅ Observabilidad (logs, métricas, tracing) (Nivel 1/2/3 + Entrevista)
-- ☐ Feature flags
+- ✅ Feature flags (Nivel 1/2/3 + Entrevista)
 
 ### Cloud (categoría nueva)
 - ☐ Modelo de responsabilidad compartida

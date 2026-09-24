@@ -108,6 +108,7 @@ import { entrevistaEstrategiasDeploy } from "./ci-cd/estrategias-deploy-entrevis
 import { entrevistaDocker } from "./ci-cd/docker-entrevista";
 import { entrevistaVariablesSecretosCi } from "./ci-cd/variables-secretos-ci-entrevista";
 import { entrevistaObservabilidad } from "./ci-cd/observabilidad-entrevista";
+import { entrevistaFeatureFlags } from "./ci-cd/feature-flags-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -884,5 +885,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "observabilidad",
     moduloTitulo: "Observabilidad",
     preguntas: entrevistaObservabilidad,
+  },
+  {
+    categoriaSlug: "ci-cd",
+    categoriaTitulo: "CI/CD",
+    moduloSlug: "feature-flags",
+    moduloTitulo: "Feature flags",
+    preguntas: entrevistaFeatureFlags,
   },
 ];
