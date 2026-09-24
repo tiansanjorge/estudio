@@ -123,6 +123,7 @@ import { entrevistaIdempotenciaRateLimiting } from "./system-design/idempotencia
 import { entrevistaEstimacion } from "./system-design/estimacion-entrevista";
 import { entrevistaEjerciciosGuiados } from "./system-design/ejercicios-guiados-entrevista";
 import { entrevistaPromptEngineering } from "./ia-aplicada/prompt-engineering-entrevista";
+import { entrevistaEvaluacionOutputIa } from "./ia-aplicada/evaluacion-output-ia-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -1004,5 +1005,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "prompt-engineering",
     moduloTitulo: "Prompt engineering aplicado a desarrollo",
     preguntas: entrevistaPromptEngineering,
+  },
+  {
+    categoriaSlug: "ia-aplicada",
+    categoriaTitulo: "IA aplicada al desarrollo",
+    moduloSlug: "evaluacion-output-ia",
+    moduloTitulo: "Evaluación de output de IA / code review de IA",
+    preguntas: entrevistaEvaluacionOutputIa,
   },
 ];
