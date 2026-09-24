@@ -232,7 +232,17 @@ export const categorias: Categoria[] = [
       { slug: "ejercicios-guiados", titulo: "Ejercicios guiados", estado: "disponible" },
     ],
   },
-  { slug: "ia-aplicada", titulo: "IA aplicada al desarrollo", modulos: [] },
+  {
+    slug: "ia-aplicada",
+    titulo: "IA aplicada al desarrollo",
+    modulos: [
+      { slug: "prompt-engineering", titulo: "Prompt engineering aplicado a desarrollo", estado: "disponible" },
+      { slug: "evaluacion-output-ia", titulo: "Evaluación de output de IA / code review de IA", estado: "proximamente" },
+      { slug: "mcp-servers", titulo: "MCP servers — qué son y para qué sirven", estado: "proximamente" },
+      { slug: "riesgos-limites-ia", titulo: "Riesgos y límites del desarrollo asistido por IA", estado: "proximamente" },
+      { slug: "metodologia-ia-entrevista", titulo: "Cómo comunicar tu metodología de trabajo con IA", estado: "proximamente" },
+    ],
+  },
 ];
 
 export function obtenerCategoria(slug: string): Categoria | undefined {

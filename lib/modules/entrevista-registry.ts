@@ -122,6 +122,7 @@ import { entrevistaColasPubSub } from "./system-design/colas-pub-sub-entrevista"
 import { entrevistaIdempotenciaRateLimiting } from "./system-design/idempotencia-rate-limiting-entrevista";
 import { entrevistaEstimacion } from "./system-design/estimacion-entrevista";
 import { entrevistaEjerciciosGuiados } from "./system-design/ejercicios-guiados-entrevista";
+import { entrevistaPromptEngineering } from "./ia-aplicada/prompt-engineering-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -996,5 +997,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "ejercicios-guiados",
     moduloTitulo: "Ejercicios guiados",
     preguntas: entrevistaEjerciciosGuiados,
+  },
+  {
+    categoriaSlug: "ia-aplicada",
+    categoriaTitulo: "IA aplicada al desarrollo",
+    moduloSlug: "prompt-engineering",
+    moduloTitulo: "Prompt engineering aplicado a desarrollo",
+    preguntas: entrevistaPromptEngineering,
   },
 ];

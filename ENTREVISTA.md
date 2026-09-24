@@ -196,7 +196,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Ejercicios guiados: diseñar un acortador de URLs, un chat en tiempo real, un feed paginado (Nivel 1/2/3 + Entrevista; un ejercicio por nivel: acortador, feed, chat)
 
 ### IA aplicada al desarrollo
-- ☐ Prompt engineering aplicado a desarrollo
+- ✅ Prompt engineering aplicado a desarrollo (Nivel 1/2/3 + Entrevista)
 - ☐ Evaluación de output de IA / code review de IA
 - ☐ MCP servers — qué son y para qué sirven
 - ☐ Riesgos y límites del desarrollo 100% asistido por IA
