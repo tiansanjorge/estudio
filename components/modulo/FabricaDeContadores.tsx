@@ -32,8 +32,14 @@ export function FabricaDeContadores() {
   }
 
   function incrementar(id: number) {
+    const contador = contadores.find((item) => item.id === id);
+    if (!contador) return;
+
+    // La closure muta su propia `cuenta`: se llama acá, una sola vez por
+    // click, y no dentro del updater (que Strict Mode ejecuta dos veces).
+    const valor = contador.incrementar();
     setContadores((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, valor: item.incrementar() } : item)),
+      prev.map((item) => (item.id === id ? { ...item, valor } : item)),
     );
   }
 
