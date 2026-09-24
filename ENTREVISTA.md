@@ -205,3 +205,8 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 ## Vista de repaso
 
 `/entrevista` agrega todas las preguntas de `entrevista-registry.ts`, filtradas por nivel, agrupadas por categoría/módulo. A medida que se completan módulos, esta vista crece sola — no requiere mantenimiento manual más allá de sumar la entrada al registry (paso 3 del patrón de implementación).
+
+## Pendientes de calidad
+
+- ☐ **Revisión de quizzes** (anotado 2026-09-24): 767 de 800 preguntas tienen la correcta en la opción 2 (`respuestaCorrecta: 1`), y los distractores suelen ser demasiado obvios. Dos partes: (1) posición — se puede resolver de forma mecánica mezclando las opciones en `Quiz` con un orden determinístico por pregunta (sin `Math.random` en render, para no romper la hidratación); (2) calidad — reescribir distractores para que sean errores plausibles (conceptos a medio entender, confusiones típicas), módulo por módulo.
+- ✅ **Código en playgrounds** (2026-09-24): los playgrounds muestran el código que explica lo que simulan, con `BloqueCodigo` (`components/modulo/BloqueCodigo.tsx`). Criterio para módulos nuevos: si el concepto se escribe en código (JS, React, SQL, headers, YAML, markup ARIA), el playground lo muestra; los simuladores de decisiones/trade-offs (cloud, system design, IA) no lo necesitan.
