@@ -101,6 +101,7 @@ import { entrevistaTransaccionesAcid } from "./bases-de-datos/transacciones-acid
 import { entrevistaPrismaOrm } from "./bases-de-datos/prisma-orm-entrevista";
 import { entrevistaMigraciones } from "./bases-de-datos/migraciones-entrevista";
 import { entrevistaPostgresEspecifico } from "./bases-de-datos/postgres-especifico-entrevista";
+import { entrevistaRedisCaching } from "./bases-de-datos/redis-caching-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -828,5 +829,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "postgres-especifico",
     moduloTitulo: "Postgres: constraints y JSONB",
     preguntas: entrevistaPostgresEspecifico,
+  },
+  {
+    categoriaSlug: "bases-de-datos",
+    categoriaTitulo: "Bases de datos",
+    moduloSlug: "redis-caching",
+    moduloTitulo: "Redis / caching",
+    preguntas: entrevistaRedisCaching,
   },
 ];

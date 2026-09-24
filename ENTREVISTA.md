@@ -167,7 +167,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Prisma / ORM — trade-offs (Nivel 1/2/3 + Entrevista)
 - ✅ Migraciones (Nivel 1/2/3 + Entrevista)
 - ✅ Postgres específico (constraints, JSONB) (Nivel 1/2/3 + Entrevista)
-- ☐ Redis / caching
+- ✅ Redis / caching (Nivel 1/2/3 + Entrevista)
 - ☐ Nociones de escalabilidad (réplicas, sharding)
 
 ### CI/CD (antes "DevOps")
