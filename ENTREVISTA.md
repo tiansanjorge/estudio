@@ -184,7 +184,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ AWS básico (EC2, S3, Lambda, RDS) (Nivel 1/2/3 + Entrevista)
 - ✅ Redes básicas (VPC, load balancer, CDN) (Nivel 1/2/3 + Entrevista)
 - ✅ Trade-offs de costo/escalabilidad (Nivel 1/2/3 + Entrevista)
-- ☐ Vercel/Netlify vs AWS — cuándo usar qué
+- ✅ Vercel/Netlify vs AWS — cuándo usar qué (Nivel 1/2/3 + Entrevista)
 
 ### System Design / Arquitectura distribuida (categoría nueva, capstone)
 - ☐ CAP theorem, consistencia vs disponibilidad

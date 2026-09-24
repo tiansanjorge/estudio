@@ -114,6 +114,7 @@ import { entrevistaComputo } from "./cloud/computo-entrevista";
 import { entrevistaAwsBasico } from "./cloud/aws-basico-entrevista";
 import { entrevistaRedesBasicas } from "./cloud/redes-basicas-entrevista";
 import { entrevistaCostoEscalabilidad } from "./cloud/costo-escalabilidad-entrevista";
+import { entrevistaVercelVsAws } from "./cloud/vercel-vs-aws-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -932,5 +933,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "costo-escalabilidad",
     moduloTitulo: "Trade-offs de costo/escalabilidad",
     preguntas: entrevistaCostoEscalabilidad,
+  },
+  {
+    categoriaSlug: "cloud",
+    categoriaTitulo: "Cloud",
+    moduloSlug: "vercel-vs-aws",
+    moduloTitulo: "Vercel/Netlify vs AWS",
+    preguntas: entrevistaVercelVsAws,
   },
 ];
