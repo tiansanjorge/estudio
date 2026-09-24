@@ -166,7 +166,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Transacciones & ACID (Nivel 1/2/3 + Entrevista)
 - ✅ Prisma / ORM — trade-offs (Nivel 1/2/3 + Entrevista)
 - ✅ Migraciones (Nivel 1/2/3 + Entrevista)
-- ☐ Postgres específico (constraints, JSONB)
+- ✅ Postgres específico (constraints, JSONB) (Nivel 1/2/3 + Entrevista)
 - ☐ Redis / caching
 - ☐ Nociones de escalabilidad (réplicas, sharding)
 

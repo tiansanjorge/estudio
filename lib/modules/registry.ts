@@ -190,7 +190,7 @@ export const categorias: Categoria[] = [
       { slug: "transacciones-acid", titulo: "Transacciones & ACID", estado: "disponible" },
       { slug: "prisma-orm", titulo: "Prisma / ORM — trade-offs", estado: "disponible" },
       { slug: "migraciones", titulo: "Migraciones", estado: "disponible" },
-      { slug: "postgres-especifico", titulo: "Postgres: constraints y JSONB", estado: "proximamente" },
+      { slug: "postgres-especifico", titulo: "Postgres: constraints y JSONB", estado: "disponible" },
       { slug: "redis-caching", titulo: "Redis / caching", estado: "proximamente" },
       { slug: "escalabilidad-db", titulo: "Réplicas y sharding", estado: "proximamente" },
     ],

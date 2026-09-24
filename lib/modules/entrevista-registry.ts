@@ -100,6 +100,7 @@ import { entrevistaIndicesPerformance } from "./bases-de-datos/indices-performan
 import { entrevistaTransaccionesAcid } from "./bases-de-datos/transacciones-acid-entrevista";
 import { entrevistaPrismaOrm } from "./bases-de-datos/prisma-orm-entrevista";
 import { entrevistaMigraciones } from "./bases-de-datos/migraciones-entrevista";
+import { entrevistaPostgresEspecifico } from "./bases-de-datos/postgres-especifico-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -820,5 +821,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "migraciones",
     moduloTitulo: "Migraciones",
     preguntas: entrevistaMigraciones,
+  },
+  {
+    categoriaSlug: "bases-de-datos",
+    categoriaTitulo: "Bases de datos",
+    moduloSlug: "postgres-especifico",
+    moduloTitulo: "Postgres: constraints y JSONB",
+    preguntas: entrevistaPostgresEspecifico,
   },
 ];
