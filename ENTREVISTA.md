@@ -190,7 +190,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ CAP theorem, consistencia vs disponibilidad (Nivel 1/2/3 + Entrevista)
 - ✅ Estrategias de caching (write-through, write-back, invalidación) (Nivel 1/2/3 + Entrevista)
 - ✅ Load balancing, escalado horizontal vs vertical (Nivel 1/2/3 + Entrevista)
-- ☐ Colas de mensajes / pub-sub (Kafka, SQS)
+- ✅ Colas de mensajes / pub-sub (Kafka, SQS) (Nivel 1/2/3 + Entrevista)
 - ☐ Idempotencia y rate limiting a nivel de diseño
 - ☐ Estimación "back of the envelope"
 - ☐ Ejercicios guiados: diseñar un acortador de URLs, un chat en tiempo real, un feed paginado

@@ -118,6 +118,7 @@ import { entrevistaVercelVsAws } from "./cloud/vercel-vs-aws-entrevista";
 import { entrevistaCapConsistencia } from "./system-design/cap-consistencia-entrevista";
 import { entrevistaEstrategiasCaching } from "./system-design/estrategias-caching-entrevista";
 import { entrevistaLoadBalancing } from "./system-design/load-balancing-entrevista";
+import { entrevistaColasPubSub } from "./system-design/colas-pub-sub-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -964,5 +965,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "load-balancing-escalado",
     moduloTitulo: "Load balancing y escalado horizontal vs vertical",
     preguntas: entrevistaLoadBalancing,
+  },
+  {
+    categoriaSlug: "system-design",
+    categoriaTitulo: "System Design",
+    moduloSlug: "colas-pub-sub",
+    moduloTitulo: "Colas de mensajes / pub-sub (Kafka, SQS)",
+    preguntas: entrevistaColasPubSub,
   },
 ];
