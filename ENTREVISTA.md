@@ -165,7 +165,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Índices y query performance (Nivel 1/2/3 + Entrevista)
 - ✅ Transacciones & ACID (Nivel 1/2/3 + Entrevista)
 - ✅ Prisma / ORM — trade-offs (Nivel 1/2/3 + Entrevista)
-- ☐ Migraciones
+- ✅ Migraciones (Nivel 1/2/3 + Entrevista)
 - ☐ Postgres específico (constraints, JSONB)
 - ☐ Redis / caching
 - ☐ Nociones de escalabilidad (réplicas, sharding)

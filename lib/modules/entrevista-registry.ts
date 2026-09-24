@@ -99,6 +99,7 @@ import { entrevistaModeladoNormalizacion } from "./bases-de-datos/modelado-norma
 import { entrevistaIndicesPerformance } from "./bases-de-datos/indices-performance-entrevista";
 import { entrevistaTransaccionesAcid } from "./bases-de-datos/transacciones-acid-entrevista";
 import { entrevistaPrismaOrm } from "./bases-de-datos/prisma-orm-entrevista";
+import { entrevistaMigraciones } from "./bases-de-datos/migraciones-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -812,5 +813,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "prisma-orm",
     moduloTitulo: "Prisma / ORM — trade-offs",
     preguntas: entrevistaPrismaOrm,
+  },
+  {
+    categoriaSlug: "bases-de-datos",
+    categoriaTitulo: "Bases de datos",
+    moduloSlug: "migraciones",
+    moduloTitulo: "Migraciones",
+    preguntas: entrevistaMigraciones,
   },
 ];
