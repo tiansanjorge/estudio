@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { BloqueCodigo } from "./BloqueCodigo";
 
 function crearContador() {
   let cuenta = 0;
@@ -21,20 +22,19 @@ type Operacion =
   | { tipo: "incrementar"; id: number; valor: number }
   | { tipo: "eliminar"; id: number };
 
-const CODIGO = [
-  "function crearContador() {",
-  "  let cuenta = 0;",
-  "  return () => {",
-  "    cuenta += 1;",
-  "    return cuenta;",
-  "  };",
-  "}",
-];
+const CODIGO = `
+function crearContador() {
+  let cuenta = 0;
+  return () => {
+    cuenta += 1;
+    return cuenta;
+  };
+}`;
 
 /** Líneas que se ejecutan en cada tipo de operación. */
 const LINEAS_ACTIVAS: Record<Operacion["tipo"], number[]> = {
-  crear: [1, 2, 5],
-  incrementar: [3, 4],
+  crear: [2, 3, 6],
+  incrementar: [4, 5],
   eliminar: [],
 };
 
@@ -98,26 +98,7 @@ export function FabricaDeContadores() {
         guarda su propia <code>cuenta</code>.
       </p>
 
-      <pre
-        aria-label="Código de crearContador"
-        className="overflow-x-auto rounded-xl border border-border bg-background py-3 font-mono text-xs text-foreground"
-      >
-        {CODIGO.map((linea, index) => {
-          const activa = lineasActivas.includes(index);
-          return (
-            <div
-              key={index}
-              className={`border-l-2 px-4 transition-colors ${
-                activa
-                  ? "border-accent bg-accent-soft text-accent"
-                  : "border-transparent"
-              }`}
-            >
-              {linea}
-            </div>
-          );
-        })}
-      </pre>
+      <BloqueCodigo codigo={CODIGO} resaltadas={lineasActivas} />
 
       <div className="flex flex-wrap items-center gap-3">
         <button type="button" onClick={agregarContador} className={botonBase}>
