@@ -104,6 +104,7 @@ import { entrevistaPostgresEspecifico } from "./bases-de-datos/postgres-especifi
 import { entrevistaRedisCaching } from "./bases-de-datos/redis-caching-entrevista";
 import { entrevistaEscalabilidadDb } from "./bases-de-datos/escalabilidad-db-entrevista";
 import { entrevistaPipelinesGithubActions } from "./ci-cd/pipelines-github-actions-entrevista";
+import { entrevistaEstrategiasDeploy } from "./ci-cd/estrategias-deploy-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -852,5 +853,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "pipelines-github-actions",
     moduloTitulo: "Pipelines (GitHub Actions)",
     preguntas: entrevistaPipelinesGithubActions,
+  },
+  {
+    categoriaSlug: "ci-cd",
+    categoriaTitulo: "CI/CD",
+    moduloSlug: "estrategias-deploy",
+    moduloTitulo: "Estrategias de deploy",
+    preguntas: entrevistaEstrategiasDeploy,
   },
 ];
