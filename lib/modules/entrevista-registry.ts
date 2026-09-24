@@ -107,6 +107,7 @@ import { entrevistaPipelinesGithubActions } from "./ci-cd/pipelines-github-actio
 import { entrevistaEstrategiasDeploy } from "./ci-cd/estrategias-deploy-entrevista";
 import { entrevistaDocker } from "./ci-cd/docker-entrevista";
 import { entrevistaVariablesSecretosCi } from "./ci-cd/variables-secretos-ci-entrevista";
+import { entrevistaObservabilidad } from "./ci-cd/observabilidad-entrevista";
 
 export interface BancoEntrevistaModulo {
   categoriaSlug: string;
@@ -876,5 +877,12 @@ export const bancoEntrevista: BancoEntrevistaModulo[] = [
     moduloSlug: "variables-secretos-ci",
     moduloTitulo: "Variables y secretos en CI",
     preguntas: entrevistaVariablesSecretosCi,
+  },
+  {
+    categoriaSlug: "ci-cd",
+    categoriaTitulo: "CI/CD",
+    moduloSlug: "observabilidad",
+    moduloTitulo: "Observabilidad",
+    preguntas: entrevistaObservabilidad,
   },
 ];

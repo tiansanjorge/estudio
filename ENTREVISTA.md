@@ -175,7 +175,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 - ✅ Estrategias de deploy (blue-green, canary, rolling) (Nivel 1/2/3 + Entrevista)
 - ✅ Docker (nociones) (Nivel 1/2/3 + Entrevista)
 - ✅ Variables y secretos en CI (Nivel 1/2/3 + Entrevista)
-- ☐ Observabilidad (logs, métricas, tracing)
+- ✅ Observabilidad (logs, métricas, tracing) (Nivel 1/2/3 + Entrevista)
 - ☐ Feature flags
 
 ### Cloud (categoría nueva)

@@ -203,7 +203,7 @@ export const categorias: Categoria[] = [
       { slug: "estrategias-deploy", titulo: "Estrategias de deploy", estado: "disponible" },
       { slug: "docker", titulo: "Docker (nociones)", estado: "disponible" },
       { slug: "variables-secretos-ci", titulo: "Variables y secretos en CI", estado: "disponible" },
-      { slug: "observabilidad", titulo: "Observabilidad", estado: "proximamente" },
+      { slug: "observabilidad", titulo: "Observabilidad", estado: "disponible" },
       { slug: "feature-flags", titulo: "Feature flags", estado: "proximamente" },
     ],
   },
