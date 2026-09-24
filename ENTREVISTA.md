@@ -162,7 +162,7 @@ Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion
 ### Bases de datos (categoría nueva)
 - ✅ SQL vs NoSQL (Nivel 1/2/3 + Entrevista)
 - ✅ Modelado relacional & normalización (Nivel 1/2/3 + Entrevista)
-- ☐ Índices y query performance
+- ✅ Índices y query performance (Nivel 1/2/3 + Entrevista)
 - ☐ Transacciones & ACID
 - ☐ Prisma / ORM — trade-offs
 - ☐ Migraciones
