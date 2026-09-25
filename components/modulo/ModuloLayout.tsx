@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { ModuloChevrones, ModuloNavegacion } from "./ModuloNavegacion";
+import { ModuloProgresoChevron } from "./ModuloProgreso";
 
 interface ModuloLayoutProps {
   categoriaTitulo: string;
@@ -22,7 +23,8 @@ export function ModuloLayout({
           <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
             {titulo}
           </h1>
-          <div className="pt-0.5 sm:pt-1">
+          <div className="flex shrink-0 gap-2 pt-0.5 sm:pt-1">
+            <ModuloProgresoChevron />
             <ModuloChevrones />
           </div>
         </div>

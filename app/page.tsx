@@ -1,7 +1,18 @@
 import Link from "next/link";
 import { categorias, rutaModulo } from "@/lib/modules/registry";
+import { ProgresoGlobal } from "@/components/inicio/ProgresoGlobal";
+import { IndicadorProgresoCategoria } from "@/components/inicio/IndicadorProgresoCategoria";
+import { MedallasCategoria } from "@/components/inicio/MedallasCategoria";
 
 export default function Home() {
+  const categoriasProgreso = categorias.map((categoria) => ({
+    slug: categoria.slug,
+    titulo: categoria.titulo,
+    moduloSlugs: categoria.modulos
+      .filter((modulo) => modulo.estado === "disponible")
+      .map((modulo) => modulo.slug),
+  }));
+
   return (
     <div className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 py-16 sm:px-8">
       <header className="flex flex-col gap-4">
@@ -14,21 +25,37 @@ export default function Home() {
         </p>
       </header>
 
+      <ProgresoGlobal categorias={categoriasProgreso} />
+
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {categorias.map((categoria) => (
           <div
             key={categoria.slug}
-            className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-6"
+            className="relative flex flex-col gap-3 rounded-2xl border border-border bg-surface p-6"
           >
-            <h2 className="text-lg font-semibold text-foreground">
-              {categoria.titulo}
-            </h2>
+            <MedallasCategoria
+              categoriaSlug={categoria.slug}
+              moduloSlugs={categoria.modulos
+                .filter((modulo) => modulo.estado === "disponible")
+                .map((modulo) => modulo.slug)}
+            />
+            <div className="flex flex-col gap-1.5 pr-16">
+              <h2 className="text-lg font-semibold text-foreground">
+                {categoria.titulo}
+              </h2>
+              <IndicadorProgresoCategoria
+                categoriaSlug={categoria.slug}
+                moduloSlugs={categoria.modulos
+                  .filter((modulo) => modulo.estado === "disponible")
+                  .map((modulo) => modulo.slug)}
+              />
+            </div>
             {categoria.modulos.length === 0 ? (
               <span className="text-base text-muted-foreground">
                 Próximamente
               </span>
             ) : (
-              <ul className="flex flex-wrap gap-2">
+              <ul className="flex flex-wrap gap-x-2 gap-y-3">
                 {categoria.modulos.map((modulo) => {
                   const clases =
                     "rounded-xl border px-3 py-1 text-base transition-colors " +

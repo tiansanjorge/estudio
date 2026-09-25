@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { modulosVecinos, type ModuloVecino } from "@/lib/modules/registry";
+import { ModuloProgresoBoton } from "./ModuloProgreso";
 
 /**
  * Lee el módulo actual de la URL (/modulos/<categoria>/<modulo>) para no
@@ -20,20 +21,24 @@ function useModulosVecinos() {
 /** Tarjetas "← Anterior / Siguiente →" al pie del módulo. */
 export function ModuloNavegacion() {
   const { anterior, siguiente } = useModulosVecinos();
-  if (!anterior && !siguiente) return null;
 
   return (
-    <nav
-      aria-label="Navegación entre módulos"
-      className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-    >
-      {anterior ? (
-        <EnlaceVecino vecino={anterior} direccion="anterior" />
-      ) : (
-        <span className="hidden sm:block" />
+    <div className="flex flex-col gap-4">
+      <ModuloProgresoBoton />
+      {(anterior || siguiente) && (
+        <nav
+          aria-label="Navegación entre módulos"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+        >
+          {anterior ? (
+            <EnlaceVecino vecino={anterior} direccion="anterior" />
+          ) : (
+            <span className="hidden sm:block" />
+          )}
+          {siguiente && <EnlaceVecino vecino={siguiente} direccion="siguiente" />}
+        </nav>
       )}
-      {siguiente && <EnlaceVecino vecino={siguiente} direccion="siguiente" />}
-    </nav>
+    </div>
   );
 }
 
