@@ -4,18 +4,33 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { modulosVecinos, type ModuloVecino } from "@/lib/modules/registry";
 import { ModuloProgresoBoton } from "./ModuloProgreso";
+import { EstrategiaBadge } from "./EstrategiaBadge";
 
 /**
  * Lee el módulo actual de la URL (/modulos/<categoria>/<modulo>) para no
  * tener que pasar slugs desde cada page.tsx.
  */
-function useModulosVecinos() {
+function useCategoriaSlugActual(): string | null {
   const pathname = usePathname();
   const [, raiz, categoriaSlug, moduloSlug] = pathname.split("/");
-  if (raiz !== "modulos" || !categoriaSlug || !moduloSlug) {
+  return raiz === "modulos" && categoriaSlug && moduloSlug ? categoriaSlug : null;
+}
+
+function useModulosVecinos() {
+  const categoriaSlug = useCategoriaSlugActual();
+  const pathname = usePathname();
+  const [, , , moduloSlug] = pathname.split("/");
+  if (!categoriaSlug || !moduloSlug) {
     return { anterior: null, siguiente: null };
   }
   return modulosVecinos(categoriaSlug, moduloSlug);
+}
+
+/** Badge de estrategia de repaso personal, junto al título de categoría del módulo. */
+export function EstrategiaBadgeAuto() {
+  const categoriaSlug = useCategoriaSlugActual();
+  if (!categoriaSlug) return null;
+  return <EstrategiaBadge categoriaSlug={categoriaSlug} />;
 }
 
 /** Tarjetas "← Anterior / Siguiente →" al pie del módulo. */

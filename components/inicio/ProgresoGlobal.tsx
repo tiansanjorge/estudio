@@ -22,7 +22,6 @@ export function ProgresoGlobal({ categorias }: { categorias: CategoriaProgreso[]
 
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-base font-medium text-foreground">Progreso general</span>
       {NIVELES.map((nivel) => {
         const totalLeidosNivel = conModulos.reduce(
           (acc, c) => acc + contarLeidosPorNivel(leidos, c.slug, c.moduloSlugs, nivel),
