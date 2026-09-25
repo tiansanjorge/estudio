@@ -1,4 +1,10 @@
 import type { PreguntaEntrevista } from "./types";
+import { entrevistaVariablesTipos } from "./javascript-fundamentos/variables-tipos-entrevista";
+import { entrevistaOperadoresControlFlujo } from "./javascript-fundamentos/operadores-control-flujo-entrevista";
+import { entrevistaFunciones } from "./javascript-fundamentos/funciones-entrevista";
+import { entrevistaArraysMetodos } from "./javascript-fundamentos/arrays-metodos-entrevista";
+import { entrevistaObjetos } from "./javascript-fundamentos/objetos-entrevista";
+import { entrevistaStringsTemplateLiterals } from "./javascript-fundamentos/strings-template-literals-entrevista";
 import { entrevistaEventLoop } from "./event-loop/entrevista";
 import { entrevistaClosures } from "./closures/entrevista";
 import { entrevistaPromises } from "./promises/entrevista";
@@ -141,6 +147,48 @@ export interface BancoEntrevistaModulo {
  * entrevista.ts. No todos los módulos disponibles tienen banco todavía.
  */
 export const bancoEntrevista: BancoEntrevistaModulo[] = [
+  {
+    categoriaSlug: "javascript-fundamentos",
+    categoriaTitulo: "JavaScript Fundamentos",
+    moduloSlug: "variables-tipos",
+    moduloTitulo: "Variables & tipos",
+    preguntas: entrevistaVariablesTipos,
+  },
+  {
+    categoriaSlug: "javascript-fundamentos",
+    categoriaTitulo: "JavaScript Fundamentos",
+    moduloSlug: "operadores-control-flujo",
+    moduloTitulo: "Operadores & control de flujo",
+    preguntas: entrevistaOperadoresControlFlujo,
+  },
+  {
+    categoriaSlug: "javascript-fundamentos",
+    categoriaTitulo: "JavaScript Fundamentos",
+    moduloSlug: "funciones",
+    moduloTitulo: "Funciones",
+    preguntas: entrevistaFunciones,
+  },
+  {
+    categoriaSlug: "javascript-fundamentos",
+    categoriaTitulo: "JavaScript Fundamentos",
+    moduloSlug: "arrays-metodos",
+    moduloTitulo: "Arrays & métodos",
+    preguntas: entrevistaArraysMetodos,
+  },
+  {
+    categoriaSlug: "javascript-fundamentos",
+    categoriaTitulo: "JavaScript Fundamentos",
+    moduloSlug: "objetos",
+    moduloTitulo: "Objetos",
+    preguntas: entrevistaObjetos,
+  },
+  {
+    categoriaSlug: "javascript-fundamentos",
+    categoriaTitulo: "JavaScript Fundamentos",
+    moduloSlug: "strings-template-literals",
+    moduloTitulo: "Strings & template literals",
+    preguntas: entrevistaStringsTemplateLiterals,
+  },
   {
     categoriaSlug: "javascript-profundo",
     categoriaTitulo: "JavaScript profundo",

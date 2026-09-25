@@ -23,6 +23,17 @@ Cada módulo tiene 3 niveles, todos con el mismo estándar de calidad (ninguno e
 
 El usuario decide por tema hasta qué nivel le conviene llegar; el catálogo entero debería tener Nivel 1, pero Nivel 2/3 son opcionales según prioridad.
 
+## Estrategia de repaso personal (definida 2026-09-25)
+
+El catálogo tiene ~90 módulos — leerlos todos completos (Explicación + Playground + Quiz + Entrevista, en los 3 niveles) no entra en el tiempo real disponible antes de entrevistar. La estrategia no es "leer todo", es usar el Quiz como filtro de qué releer, con distinto criterio según cuánto se confía en ese filtro por categoría:
+
+- **Grupo 1 — Leer completo (los 3 niveles enteros, sin atajos).** Categorías donde falta la base práctica, así que el quiz no es un filtro confiable (se puede reconocer la opción correcta sin entender el mecanismo): **Backend, Bases de datos, Cloud, CI/CD**.
+- **Grupo 2 — Quiz filtra los 3 niveles.** Hacer el Quiz de Nivel 1; si se aprueba, Quiz de Nivel 2; si se aprueba, Quiz de Nivel 3. Solo leer en detalle el nivel que se falle. Son las áreas de especialidad de facto, donde el trade-off ya se piensa en el día a día sin formalizarlo: **JavaScript Fundamentos, JavaScript profundo, React Core, React Rendering, Hooks, Estado, Performance, HTTP y Networking, Next.js, Accesibilidad**.
+- **Grupo 3 — Quiz filtra solo Nivel 1; Nivel 2/3 se lee directo, sin pasar por el quiz.** Son temas donde probablemente se sabe *hacer* la cosa pero nunca se tuvo que *explicar el trade-off en voz alta* — un quiz de opción múltiple no detecta bien esa brecha (se puede reconocer la respuesta correcta entre 3 opciones sin poder articularla solo): **TypeScript avanzado, Arquitectura, Seguridad, System Design, Testing**.
+- **Baja prioridad, dejar para el final:** IA aplicada al desarrollo.
+
+Si al leer un módulo de Grupo 2/3 la sensación es "esto no lo tengo tan claro como pensaba", pasa a Grupo 1 para ese módulo puntual — es una clasificación de partida, no una regla fija.
+
 ## Patrón de implementación (referencia: `event-loop`)
 
 Cada módulo, al completarse, toca estos archivos:
@@ -35,6 +46,14 @@ Cada módulo, al completarse, toca estos archivos:
 Componentes ya construidos y reutilizables, no recrear: `ModuloLayout`, `Seccion`, `Quiz`, `RevelarSolucion`, `NivelTabs`, `EntrevistaSeccion`.
 
 ## Catálogo maestro
+
+### JavaScript Fundamentos (categoría nueva; sintaxis y base del lenguaje, con la misma profundidad de niveles que el resto — no es contenido "de relleno")
+- ✅ Variables & tipos (Nivel 1/2/3 + Entrevista) — var/let/const, primitivos vs referencia, coerción, TDZ
+- ✅ Operadores & control de flujo (Nivel 1/2/3 + Entrevista) — truthy/falsy, for/for...of/for...in, switch, labels
+- ✅ Funciones (Nivel 1/2/3 + Entrevista) — declaración vs expresión vs arrow, this, call/apply/bind, arguments vs rest
+- ✅ Arrays & métodos (Nivel 1/2/3 + Entrevista) — map/filter/reduce, mutantes vs no mutantes, sort, sparse arrays
+- ✅ Objetos (Nivel 1/2/3 + Entrevista) — destructuring, spread (copia superficial), optional chaining, freeze/seal, orden de claves
+- ✅ Strings & template literals (Nivel 1/2/3 + Entrevista) — interpolación, inmutabilidad, tagged templates, Unicode (length, normalize)
 
 ### JavaScript profundo
 - ✅ Event Loop (Nivel 1/2/3 + Entrevista) — referencia del patrón

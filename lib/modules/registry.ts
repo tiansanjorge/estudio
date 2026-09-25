@@ -2,6 +2,18 @@ import type { Categoria } from "./types";
 
 export const categorias: Categoria[] = [
   {
+    slug: "javascript-fundamentos",
+    titulo: "JavaScript Fundamentos",
+    modulos: [
+      { slug: "variables-tipos", titulo: "Variables & tipos", estado: "disponible" },
+      { slug: "operadores-control-flujo", titulo: "Operadores & control de flujo", estado: "disponible" },
+      { slug: "funciones", titulo: "Funciones", estado: "disponible" },
+      { slug: "arrays-metodos", titulo: "Arrays & métodos", estado: "disponible" },
+      { slug: "objetos", titulo: "Objetos", estado: "disponible" },
+      { slug: "strings-template-literals", titulo: "Strings & template literals", estado: "disponible" },
+    ],
+  },
+  {
     slug: "javascript-profundo",
     titulo: "JavaScript profundo",
     modulos: [
